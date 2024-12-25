@@ -1,4 +1,4 @@
-variable "spot_max_price" {
+variable spot_max_price {
   default = 0.0275
 }
 variable "region" {}
@@ -90,7 +90,7 @@ variable "test_instance_types" {
     #    "t2.medium" #
 
 
-
+    
     #"t3.medium" # no instances  for now, this is commented out
   ]
 }
@@ -236,11 +236,11 @@ module "asg_dynamic_new_ami" {
 
 module "asg_dynamic_new_ami_test" {
   # built with packer
-  for_each      = toset(var.test_instance_types)
-  tags          = merge(local.tags, local.dev_tags)
-  vpc_id        = local.vpc_id
-  image_id      = local.new_ami_id
-  ec2_subnet_id = module.vpc.ec2_public_subnet_id_1
+  for_each                         = toset(var.test_instance_types)
+  tags                             = merge(local.tags, local.dev_tags)
+  vpc_id                           = local.vpc_id
+  image_id                         = local.new_ami_id
+  ec2_subnet_id                    = module.vpc.ec2_public_subnet_id_1
 
   aws_iam_instance_profile_ssm_arn = module.roles.ssm_profile_arn
   source                           = "./components/autoscaling_group/spot"
@@ -253,7 +253,7 @@ module "asg_dynamic_new_ami_test" {
 
 module "asg_dynamic_new_ami_dev" {
   # built with packer
-  #  count =0
+#  count =0
   tags                             = merge(local.tags, local.dev_tags)
   vpc_id                           = local.vpc_id
   image_id                         = local.new_ami_id
@@ -261,7 +261,7 @@ module "asg_dynamic_new_ami_dev" {
   for_each                         = toset(var.dev_instance_types)
   aws_iam_instance_profile_ssm_arn = module.roles.ssm_profile_arn
 
-  source = "./components/autoscaling_group/spot"
+  source                           = "./components/autoscaling_group/spot"
   #  security_group_id   = module.security.internal_security_group_id
   instance_type      = each.key
   name               = "docker-swarms-ami-${each.key}"
@@ -275,13 +275,13 @@ module "asg_dynamic_new_ami_dev" {
       on_demand_percentage_above_base_capacity = 0
       spot_instance_pools                      = 2
       spot_max_price                           = var.spot_max_price
-      #      spot_allocation_strategy                 = "capacity-optimized"
+#      spot_allocation_strategy                 = "capacity-optimized"
     }
 
     override = [
       {
         instance_requirements = {
-          cpu_manufacturers = ["amazon-web-services", "amd", "intel"]
+	  cpu_manufacturers     = ["amazon-web-services", "amd", "intel"]
           #cpu_manufacturers                                       = ["amd"]
           #local_storage_types                                     = ["ssd"]
           max_spot_price_as_percentage_of_optimal_on_demand_price = 60
