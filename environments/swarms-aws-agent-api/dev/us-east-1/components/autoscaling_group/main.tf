@@ -1,16 +1,16 @@
-variable use_mixed_instances_policy {
+variable "use_mixed_instances_policy" {
   default = false
 }
-variable mixed_instances_policy {
+variable "mixed_instances_policy" {
   default = null
-  type = any
+  type    = any
 }
-variable instance_requirements {
+variable "instance_requirements" {
   #default = null
-  type        = any
-  default     = {}
+  type    = any
+  default = {}
 }
-    
+
 variable "aws_iam_instance_profile_ssm_arn" {}
 variable "target_group_arn" {}
 variable "name" {}
@@ -57,7 +57,7 @@ module "autoscaling" {
   ]
   instance_type = var.instance_type
   #instance_requirements = var.instance_requirements   description = "The attribute requirements for the type of instance. If present then `instance_type` cannot be present"
-  image_id      = var.image_id
+  image_id = var.image_id
 
   create_iam_instance_profile = true
   iam_role_name               = "ssm-${var.name}"
@@ -124,10 +124,10 @@ module "autoscaling" {
     #   }
     # }
     #use_mixed_instances_policy = var.use_mixed_instances_policy
-    
+
     #mixed_instances_policy = var.mixed_instances_policy
 
-      
+
     scale-out = {
       name                      = "scale-out"
       adjustment_type           = "ExactCapacity"
