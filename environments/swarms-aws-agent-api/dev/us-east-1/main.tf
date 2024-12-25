@@ -1,3 +1,6 @@
+variable spot_max_price {
+  default = 0.0275
+}
 variable "region" {}
 variable "key_name" {
   default = "mdupont-deployer-key" # FIXME: move to settings
@@ -182,24 +185,6 @@ module "lt_dynamic_ami_docker" {
   install_script = "/opt/swarms/api/rundocker.sh"
 }
 
-module "asg_dynamic_new_ami_dev" {
-  # built with packer
-#  count =0
-  tags                             = merge(local.tags, local.dev_tags)
-  vpc_id                           = local.vpc_id
-  image_id                         = local.new_ami_id
-  ec2_subnet_id                    = module.vpc.ec2_public_subnet_id_1
-  for_each                         = toset(var.dev_instance_types)
-  aws_iam_instance_profile_ssm_arn = module.roles.ssm_profile_arn
-  source                           = "./components/autoscaling_group"
-  #  security_group_id   = module.security.internal_security_group_id
-  instance_type      = each.key
-  name               = "docker-swarms-ami-${each.key}"
-  launch_template_id = module.lt_dynamic_ami_docker[each.key].launch_template_id
-  target_group_arn   = module.alb.dev_alb_target_group_arn
-}
-
-
 module "alb" {
   source            = "./components/application_load_balancer"
   domain_name       = local.domain
@@ -258,7 +243,7 @@ module "asg_dynamic_new_ami_test" {
   ec2_subnet_id                    = module.vpc.ec2_public_subnet_id_1
 
   aws_iam_instance_profile_ssm_arn = module.roles.ssm_profile_arn
-  source                           = "./components/autoscaling_group"
+  source                           = "./components/autoscaling_group/spot"
   #  security_group_id   = module.security.internal_security_group_id
   instance_type      = each.key
   name               = "test-swarms-ami-${each.key}"
@@ -266,6 +251,59 @@ module "asg_dynamic_new_ami_test" {
   target_group_arn   = module.alb.test_alb_target_group_arn
 }
 
+module "asg_dynamic_new_ami_dev" {
+  # built with packer
+#  count =0
+  tags                             = merge(local.tags, local.dev_tags)
+  vpc_id                           = local.vpc_id
+  image_id                         = local.new_ami_id
+  ec2_subnet_id                    = module.vpc.ec2_public_subnet_id_1
+  for_each                         = toset(var.dev_instance_types)
+  aws_iam_instance_profile_ssm_arn = module.roles.ssm_profile_arn
+
+  source                           = "./components/autoscaling_group/spot"
+  #  security_group_id   = module.security.internal_security_group_id
+  instance_type      = each.key
+  name               = "docker-swarms-ami-${each.key}"
+  launch_template_id = module.lt_dynamic_ami_docker[each.key].launch_template_id
+  target_group_arn   = module.alb.dev_alb_target_group_arn
+
+  use_mixed_instances_policy = true
+  mixed_instances_policy = {
+    instances_distribution = {
+      on_demand_base_capacity                  = 0
+      on_demand_percentage_above_base_capacity = 0
+      spot_instance_pools                      = 2
+      spot_max_price                           = var.spot_max_price
+#      spot_allocation_strategy                 = "capacity-optimized"
+    }
+
+    override = [
+      {
+        instance_requirements = {
+	  cpu_manufacturers     = ["amazon-web-services", "amd", "intel"]
+          #cpu_manufacturers                                       = ["amd"]
+          #local_storage_types                                     = ["ssd"]
+          max_spot_price_as_percentage_of_optimal_on_demand_price = 60
+          memory_gib_per_vcpu = {
+            min = 2
+            max = 4
+          }
+          memory_mib = {
+            min = 2048
+          },
+          vcpu_count = {
+            min = 2
+            max = 4
+          }
+        }
+      }
+    ]
+  }
+  instance_requirements = {
+  }
+
+}
 
 output "security_group_id" {
   value = module.security.security_group_id
@@ -274,7 +312,6 @@ output "security_group_id" {
 output "vpc" {
   value = module.vpc
 }
-
 
 output "user_data_new" {
   value = module.lt_dynamic_ami_test["t3.medium"].user_data
