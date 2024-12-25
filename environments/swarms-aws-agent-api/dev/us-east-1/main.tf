@@ -76,6 +76,22 @@ variable "instance_types" {
   ]
 }
 
+variable "test_instance_types" {
+  type = list(string)
+  default = [
+    # "t4g.nano", "t3a.nano", "t3.nano", "t2.nano",
+    # "t4g.micro", "t3a.micro", "t3.micro", "t2.micro", "t1.micro",
+    #"t4g.small", "t3a.small",
+    #"t3.small",
+    #"t2.small", not working
+    #    "t2.medium" #
+
+
+    
+    #"t3.medium" # no instances  for now, this is commented out
+  ]
+}
+
 
 module "roles" {
   source = "./components/roles"
@@ -134,10 +150,23 @@ module "lt_dynamic_ami_test" {
 }
 
 
+variable "dev_instance_types" {
+  type = list(string)
+  default = [
+    # "t4g.nano", "t3a.nano", "t3.nano", "t2.nano",
+    # "t4g.micro", "t3a.micro", "t3.micro", "t2.micro", "t1.micro",
+    #"t4g.small", "t3a.small",
+    #"t3.small",
+    #"t2.small", not working
+    #    "t2.medium" #
+    "t3.small"
+  ]
+}
+
 module "lt_dynamic_ami_docker" {
   branch            = "feature/squash2-docker"
   vpc_id            = local.vpc_id
-  for_each          = toset(var.instance_types)
+  for_each          = toset(var.dev_instance_types)
   instance_type     = each.key
   name              = "swarms-docker-${each.key}"
   security_group_id = module.security.internal_security_group_id
@@ -153,6 +182,22 @@ module "lt_dynamic_ami_docker" {
   install_script = "/opt/swarms/api/rundocker.sh"
 }
 
+module "asg_dynamic_new_ami_dev" {
+  # built with packer
+#  count =0
+  tags                             = merge(local.tags, local.dev_tags)
+  vpc_id                           = local.vpc_id
+  image_id                         = local.new_ami_id
+  ec2_subnet_id                    = module.vpc.ec2_public_subnet_id_1
+  for_each                         = toset(var.dev_instance_types)
+  aws_iam_instance_profile_ssm_arn = module.roles.ssm_profile_arn
+  source                           = "./components/autoscaling_group"
+  #  security_group_id   = module.security.internal_security_group_id
+  instance_type      = each.key
+  name               = "docker-swarms-ami-${each.key}"
+  launch_template_id = module.lt_dynamic_ami_docker[each.key].launch_template_id
+  target_group_arn   = module.alb.dev_alb_target_group_arn
+}
 
 
 module "alb" {
@@ -206,12 +251,12 @@ module "asg_dynamic_new_ami" {
 
 module "asg_dynamic_new_ami_test" {
   # built with packer
-  #count =0
+  for_each                         = toset(var.test_instance_types)
   tags                             = merge(local.tags, local.dev_tags)
   vpc_id                           = local.vpc_id
   image_id                         = local.new_ami_id
   ec2_subnet_id                    = module.vpc.ec2_public_subnet_id_1
-  for_each                         = toset(var.instance_types)
+
   aws_iam_instance_profile_ssm_arn = module.roles.ssm_profile_arn
   source                           = "./components/autoscaling_group"
   #  security_group_id   = module.security.internal_security_group_id
@@ -221,22 +266,6 @@ module "asg_dynamic_new_ami_test" {
   target_group_arn   = module.alb.test_alb_target_group_arn
 }
 
-module "asg_dynamic_new_ami_dev" {
-  # built with packer
-  #count =0
-  tags                             = merge(local.tags, local.dev_tags)
-  vpc_id                           = local.vpc_id
-  image_id                         = local.new_ami_id
-  ec2_subnet_id                    = module.vpc.ec2_public_subnet_id_1
-  for_each                         = toset(var.instance_types)
-  aws_iam_instance_profile_ssm_arn = module.roles.ssm_profile_arn
-  source                           = "./components/autoscaling_group"
-  #  security_group_id   = module.security.internal_security_group_id
-  instance_type      = each.key
-  name               = "docker-swarms-ami-${each.key}"
-  launch_template_id = module.lt_dynamic_ami_docker[each.key].launch_template_id
-  target_group_arn   = module.alb.dev_alb_target_group_arn
-}
 
 output "security_group_id" {
   value = module.security.security_group_id

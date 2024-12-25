@@ -196,77 +196,77 @@ SSM command execution.
    Use the search bar to filter events based on ~EventName~ being ~StartCommand~, ~CancelCommand~,
    etc., and use the command ID ~82d43144-a4f4-4b6d-a507-23ad5179e0b4~.
 
-*** Step 4: Analyze Logs
-
-Once you have the logs, analyze them to understand the outcome of your SSM command execution. Look
-for any errors or exceptions that might have occurred during the process.
-
-By following these steps, you should be able to retrieve the necessary log outputs and related data
-for your AWS Systems Manager command execution.
 
 
-The output you provided contains details from a command invocation executed in an AWS
-environment. The command was part of the ~deploy-docker~ document and targeted the instance
-~i-0a3dae164f8f3c09a~. Here is a summary of the results:
 
-*** Command Summary
++ aws ssm list-command-invocations --command-id 6c96c523-2970-4071-9d5d-f95a041703ef --details --region us-east-2
+{
+  "CommandInvocations": [
+    {
+      "CommandId": "6c96c523-2970-4071-9d5d-f95a041703ef",
+      "InstanceId": "i-0a3dae164f8f3c09a",
+      "InstanceName": "ip-10-0-4-93.us-east-2.compute.internal",
+      "Comment": "",
+      "DocumentName": "deploy-docker",
+      "DocumentVersion": "$LATEST",
+      "RequestedDateTime": 1735058288.722,
+      "Status": "Success",
+      "StatusDetails": "Success",
+      "StandardOutputUrl": "https://s3.us-east-2.amazonaws.com/swarms-session-logs-20241221151754799300000003/6c96c523-2970-4071-9d5d-f95a041703ef/i-0a3dae164f8f3c09a/awsrunShellScript/DeployDocker/stdout",
+      "StandardErrorUrl": "https://s3.us-east-2.amazonaws.com/swarms-session-logs-20241221151754799300000003/6c96c523-2970-4071-9d5d-f95a041703ef/i-0a3dae164f8f3c09a/awsrunShellScript/DeployDocker/stderr",
+      "CommandPlugins": [
+        {
+          "Name": "DeployDocker",
+          "Status": "Success",
+          "StatusDetails": "Success",
+          "ResponseCode": 0,
+          "ResponseStartDateTime": 1735058288.981,
+          "ResponseFinishDateTime": 1735058293.354,
+          "Output": "cd /opt/swarms/\nexport HOME=/home/swarms/\ngit config --global user.email \"git-agent@swarms.ai\"\ngit config --global user.name \"git agent\"\ngit remote add mdupont https://github.com/jmikedupont2/swarms  || echo oops\ngit remote set-url mdupont https://github.com/jmikedupont2/swarms  || echo oops2\necho git url https://github.com/jmikedupont2/swarms\ngit fetch --all|| echo oops        \ngit pull mdupont  feature/squash2-docker|| echo oops        \ngit checkout --force feature/squash2-docker || echo checkout\ngit log -3 || echo git fail\nls /opt/swarms/api/*.sh || echo no files\noops\ngit url https://github.com/jmikedupont2/swarms\nFetching origin\nFetching mdupont\nUpdating 62a7b307..68755906\nFast-forward\n api/docker-boot.sh                | 16 +++++++++\n api/rundocker.sh                  | 76 +++++++++++++++++++++++++++++++++++++++\n api/systemd/swarms-docker.service | 25 +++++++++++++\n 3 files changed, 117 insertions(+)\n create mode 100644 api/docker-boot.sh\n create mode 100644 api/rundocker.sh\n create mode 100644 api/systemd/swarms-docker.service\nYour branch is up to date with 'origin/feature/squash2-docker'.\ncommit 68755906be19d73deb0c8c5144323ecd3c203068\nAuthor: mike dupont <mike.dupont@introspector.local>\nD\n---Output truncated---\n----------ERROR-------\n+ chown -R swarms:swarms /opt/swarms\n+ tee /opt/swarms/update_docker_swarms.sh\n+ sudo chown swarms /opt/swarms/update_docker_swarms.sh\n+ su -c 'bash -e -x /opt/swarms/update_docker_swarms.sh' swarms\n+ cd /opt/swarms/\n+ export HOME=/home/swarms/\n+ HOME=/home/swarms/\n+ git config --global user.email git-agent@swarms.ai\n+ git config --global user.name 'git agent'\n+ git remote add mdupont https://github.com/jmikedupont2/swarms\nerror: remote mdupont already exists.\n+ echo oops\n+ git remote set-url mdupont https://github.com/jmikedupont2/swarms\n+ echo git url https://github.com/jmikedupont2/swarms\n+ git fetch --all\nFrom https://github.com/jmikedupont2/swarms\n   62a7b307..68755906  feature/squash2-docker -> origin/feature/squash2-docker\n+ git pull mdupont feature/squash2-docker\nFrom https://github.com/jmikedupont2/swarms\n * branch              feature/squash2-docker -> FETCH_HEAD\n+ git checkout --force feature/squash2-docker\nAlready on 'feature/squash2-docker'\n+ git log -3\n+ ls /opt/swarms/api/boot.sh /opt/swarms/api/boot_fast.sh /opt/swarms/api/docker-boot.sh /opt/swarms/api/install.sh /opt/swarms/api/just_run.sh /opt/swarms/api/rerun-git.sh /opt/swarms/api/rerun.sh /opt/swarms/api/run_logs.sh /opt/swa\n---Error truncated----",
+          "StandardOutputUrl": "https://s3.us-east-2.amazonaws.com/swarms-session-logs-20241221151754799300000003/6c96c523-2970-4071-9d5d-f95a041703ef/i-0a3dae164f8f3c09a/awsrunShellScript/DeployDocker/stdout",
+          "StandardErrorUrl": "
+          "OutputS3Region": "us-east-2",
+          "OutputS3BucketName": "swarms-session-logs-20241221151754799300000003",
+          "OutputS3KeyPrefix": "6c96c523-2970-4071-9d5d-f95a041703ef/i-0a3dae164f8f3c09a/awsrunShellScript"
+        }
+      ],
+      "ServiceRole": "",
+      "NotificationConfig": {
+        "NotificationArn": "",
+        "NotificationEvents": [],
+        "NotificationType": ""
+      },
+      "CloudWatchOutputConfig": {
+        "CloudWatchLogGroupName": "/ssm/session-logs-20241221151803393300000006",
+        "CloudWatchOutputEnabled": true
+      }
+    }
+  ]
+}
 
-- *Command ID*: ~82d43144-a4f4-4b6d-a507-23ad5179e0b4~
-- *Instance ID*: ~i-0a3dae164f8f3c09a~
-- *Instance Name*: ~ip-10-0-4-93.us-east-2.compute.internal~
-- *Document Name*: ~deploy-docker~
-- *Document Version*: ~1~
-- *Requested DateTime*: ~1735005232.999~ (Epoch time, approximately December 18, 2024)
-- *Status*: ~Success~
-- *Output S3 Bucket and Key*: 
-  - ~Region~: ~us-east-2~
-  - ~Bucket Name~: ~swarms-session-logs-20241221151754799300000003~
-  - ~Key Prefix~: ~82d43144-a4f4-4b6d-a507-23ad5179e0b4/i-0a3dae164f8f3c09a/awsrunShellScript~
+aws logs get-log-events --log-group-name /ssm/session-logs-20241221151803393300000006 
+#aws logs describe-log-streams        --log-group-name "CloudWatchLogGroupName": "/ssm/session-logs-20241221151803393300000006 --profile swarms --region us-east-2
+#aws logs describe-log-streams        --log-group-name /ssm/session-logs-20241221151803393300000006 --profile swarms --region us-east-2
+aws logs describe-log-streams        --log-group-name /ssm/session-logs-20241221151803393300000006 --profile swarms --region us-east-2 --output json | jq . > logstreams.json
+aws logs get-log-events --log-group-name /ssm/session-logs-20241221151803393300000006  --log-stream-name $(jq ".logStreams[0].logStreamName" logstreams.json) --region us-east-2 --profile swarms
 
-*** Output and Error Details
+#jq ".logStreams[0].logStreamName" logstreams.json
+  awslogs groups
 
-The output of the command contained several issues:
+  /aws/application-signals/data
+/aws/appsignals/ec2
+/aws/appsignals/eks
+/aws/appsignals/generic
+/aws/appsignals/k8s
 
-1. *Git Status*:
-#+END_SRC
-   Your branch is up to date with 'origin/feature/squash2-docker'.
-#+END_SRC
+  /ec2/init
+/ec2/secure
+/ec2/system
+/ssm/session-logs-20241221151803393300000006
+/swarms/nginx_error
+/swarms/ngnix_access
+/swarms/systemd
 
-2. *Git Remote Issue*:
-#+END_SRC
-   -- 
-   No entries --
-   ----------ERROR-------
-   error: remote mdupont already exists.
-   Already on 'feature/squash2-docker'
-   bash: /opt/swarms/api/docker-boot.sh: No such file or directory
-   Failed to restart swarms-docker.service: Unit swarms-docker.service not found.
-#+END_SRC
+  awslogs get /swarms/systemd
 
-*** Summary of Errors:
-
-- *Git Remote Conflict*: The ~mdupont~ remote already exists in the repository. You need to either
-   remove or update this remote.
-- *Missing Script File*: ~/opt/swarms/api/docker-boot.sh~ does not exist on the server.
-- *Service Not Found*: ~swarms-docker.service~ is not found on the system.
-
-*** Recommendations:
-
-1. *Remove Duplicate Remote*:
-#+BEGIN_SRC sh
-   git remote remove mdupont
-#+END_SRC
-
-2. *Verify Script Location*:
-   - Ensure that ~/opt/swarms/api/docker-boot.sh~ exists and has the correct permissions.
-   - If it doesn't exist, you may need to upload or create this script on the server.
-
-3. *Check Service Availability*:
-   - Verify if ~swarms-docker.service~ is available on your system.
-   - If not, you might need to install or create this service unit file.
-
-4. *Review Logs*:
-   - Access the logs from S3 for more detailed error messages and context.
-
-This should help in troubleshooting and resolving the issues encountered during the command
-execution.
+  awslogs get /ssm/session-logs-20241221151803393300000006
