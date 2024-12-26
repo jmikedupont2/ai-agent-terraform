@@ -41,10 +41,12 @@ module "autoscaling" {
   
   health_check_type      = "EC2"
   desired_capacity       = 1
-  max_size               = 5
+  desired_capacity_type       = "units"
+  max_size               = 2
   min_size               = 1
   create = true
-  #capacity_rebalance     = true
+  capacity_rebalance     = false
+  
   create_launch_template = false
   update_default_version = true
 
