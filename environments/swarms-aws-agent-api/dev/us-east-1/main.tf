@@ -167,7 +167,8 @@ variable "dev_instance_types" {
 }
 
 module "lt_dynamic_ami_docker" {
-  branch            = "feature/squash2-docker"
+  #branch            = "feature/squash2-docker"
+  branch            = "feature/merge_latest_675"
   vpc_id            = local.vpc_id
   for_each          = toset(var.dev_instance_types)
   instance_type     = each.key
@@ -286,11 +287,11 @@ module "asg_dynamic_new_ami_dev" {
           #local_storage_types                                     = ["ssd"]
           max_spot_price_as_percentage_of_optimal_on_demand_price = 60
           memory_gib_per_vcpu = {
-            min = 2
+            min = 4
             max = 12
           }
           memory_mib = {
-            min = 2048
+            min = 4096
           },
           vcpu_count = {
             min = 2
@@ -316,3 +317,7 @@ output "vpc" {
 output "user_data_new" {
   value = module.lt_dynamic_ami_test["t3.medium"].user_data
 }
+output "user_data_docker" {
+  value = module.lt_dynamic_ami_docker["t3.small"].user_data
+}
+
