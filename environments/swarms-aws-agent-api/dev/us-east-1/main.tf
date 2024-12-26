@@ -1,5 +1,5 @@
 variable spot_max_price {
-  default = 0.0275
+  default = 0.028
 }
 variable "region" {}
 variable "key_name" {
@@ -273,7 +273,7 @@ module "asg_dynamic_new_ami_dev" {
     instances_distribution = {
       on_demand_base_capacity                  = 0
       on_demand_percentage_above_base_capacity = 0
-      spot_instance_pools                      = 2
+      spot_instance_pools                      = 1
       spot_max_price                           = var.spot_max_price
 #      spot_allocation_strategy                 = "capacity-optimized"
     }
@@ -287,14 +287,14 @@ module "asg_dynamic_new_ami_dev" {
           max_spot_price_as_percentage_of_optimal_on_demand_price = 60
           memory_gib_per_vcpu = {
             min = 2
-            max = 4
+            max = 12
           }
           memory_mib = {
             min = 2048
           },
           vcpu_count = {
             min = 2
-            max = 4
+            max = 12
           }
         }
       }

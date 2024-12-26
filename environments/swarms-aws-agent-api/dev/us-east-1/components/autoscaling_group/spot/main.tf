@@ -32,11 +32,19 @@ module "autoscaling" {
   version = "8.0.0"
   name    = var.name
 
+  traffic_source_attachments = {
+    ex-alb = {
+      traffic_source_identifier = var.target_group_arn
+      traffic_source_type       = "elbv2" # default
+    }
+  }
+  
   health_check_type      = "EC2"
   desired_capacity       = 1
   max_size               = 5
   min_size               = 1
-  capacity_rebalance     = true
+  create = true
+  #capacity_rebalance     = true
   create_launch_template = false
   update_default_version = true
 
@@ -73,12 +81,7 @@ module "autoscaling" {
   }
 
   #    target_group_arn = 
-  traffic_source_attachments = {
-    ex-alb = {
-      traffic_source_identifier = var.target_group_arn
-      traffic_source_type       = "elbv2" # default
-    }
-  }
+
   use_mixed_instances_policy = var.use_mixed_instances_policy
   mixed_instances_policy     = var.mixed_instances_policy
 
