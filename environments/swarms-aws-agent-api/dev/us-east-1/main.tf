@@ -162,7 +162,20 @@ variable "dev_instance_types" {
     #"t3.small",
     #"t2.small", not working
     #    "t2.medium" #
-    "t3.small"
+#    "t3.small"
+  ]
+}
+
+variable "dev2_instance_types" {
+  type = list(string)
+  default = [
+    # "t4g.nano", "t3a.nano", "t3.nano", "t2.nano",
+    # "t4g.micro", "t3a.micro", "t3.micro", "t2.micro", "t1.micro",
+    #"t4g.small", "t3a.small",
+    #"t3.small",
+    #"t2.small", not working
+        #    "t2.medium" #
+	     "t3.medium"
   ]
 }
 
@@ -171,6 +184,26 @@ module "lt_dynamic_ami_docker" {
   branch            = "feature/merge_latest_675"
   vpc_id            = local.vpc_id
   for_each          = toset(var.dev_instance_types)
+  instance_type     = each.key
+  name              = "swarms-docker-${each.key}"
+  security_group_id = module.security.internal_security_group_id
+  ami_id            = local.new_ami_id
+  tags = merge(local.tags, {
+    environment = "test"
+  })
+  source                             = "./components/launch_template_docker"
+  key_name                           = var.key_name #"mdupont-deployer-key"
+  ssm_parameter_name_cw_agent_config = "arn:aws:ssm:${var.region}:${var.aws_account_id}:parameter/cloudwatch-agent/config/details"
+  iam_instance_profile_name          = module.roles.ssm_profile_name
+  #install_script = "/opt/swarms/api/docker-boot.sh" this is called from ssm for a refresh
+  install_script = "/opt/swarms/api/rundocker.sh"
+}
+
+module "lt_dynamic_ami_docker_normal" {
+  #branch            = "feature/squash2-docker"
+  branch            = "feature/merge_latest_675"
+  vpc_id            = local.vpc_id
+  for_each          = toset(var.dev2_instance_types)
   instance_type     = each.key
   name              = "swarms-docker-${each.key}"
   security_group_id = module.security.internal_security_group_id
@@ -236,6 +269,7 @@ module "asg_dynamic_new_ami" {
 }
 
 module "asg_dynamic_new_ami_test" {
+  
   # built with packer
   for_each                         = toset(var.test_instance_types)
   tags                             = merge(local.tags, local.dev_tags)
@@ -252,7 +286,7 @@ module "asg_dynamic_new_ami_test" {
   target_group_arn   = module.alb.test_alb_target_group_arn
 }
 
-module "asg_dynamic_new_ami_dev" {
+module "asg_dynamic_new_ami_dev_spot" {
   # built with packer
 #  count =0
   tags                             = merge(local.tags, local.dev_tags)
@@ -303,6 +337,26 @@ module "asg_dynamic_new_ami_dev" {
   }
   instance_requirements = {
   }
+}
+
+module "asg_dynamic_new_ami_dev_normal" {
+  # built with packer
+#  count =0
+
+  tags                             = merge(local.tags, local.dev_tags)
+  vpc_id                           = local.vpc_id
+  image_id                         = local.new_ami_id
+  ec2_subnet_id                    = module.vpc.ec2_public_subnet_id_1
+  for_each                         = toset(var.dev2_instance_types)
+  aws_iam_instance_profile_ssm_arn = module.roles.ssm_profile_arn
+
+  source                           = "./components/autoscaling_group/spot"
+  #  security_group_id   = module.security.internal_security_group_id
+  instance_type      = each.key
+  name               = "docker-swarms-ami-${each.key}"
+  launch_template_id = module.lt_dynamic_ami_docker_normal[each.key].launch_template_id
+  target_group_arn   = module.alb.dev_alb_target_group_arn
+
 
 }
 
@@ -318,6 +372,6 @@ output "user_data_new" {
   value = module.lt_dynamic_ami_test["t3.medium"].user_data
 }
 output "user_data_docker" {
-  value = module.lt_dynamic_ami_docker["t3.small"].user_data
+  value = module.lt_dynamic_ami_docker_normal["t3.medium"].user_data
 }
 
