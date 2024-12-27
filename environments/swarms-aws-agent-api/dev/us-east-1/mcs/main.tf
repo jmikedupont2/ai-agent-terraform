@@ -1,19 +1,19 @@
-variable ec2_subnet_id{}
-variable alb_target_group_arn {}
+variable "ec2_subnet_id" {}
+variable "alb_target_group_arn" {}
 variable "aws_account_id" {}
 variable "vpc_id" {}
 # FIXME security, we use the ami of swarms for speed but want to split
 variable "ami_id" {}
 # FIXME security, we use the sg of swarms for speed but want to split
-variable internal_security_group_id {}
+variable "internal_security_group_id" {}
 
 # FIXME security, we use the profile of swarms for speed but want to split
-variable iam_instance_profile_name {}
-variable ssm_profile_arn {}
+variable "iam_instance_profile_name" {}
+variable "ssm_profile_arn" {}
 variable "key_name" {}
 variable "region" {}
 variable "tags" {}
-       
+
 variable "instance_types" {
   type = list(string)
   default = [
@@ -32,8 +32,8 @@ module "lt_docker" {
   name              = "mcs-docker-${each.key}"
   security_group_id = var.internal_security_group_id
   ami_id            = var.ami_id
-  git_repo = "https://github.com/jmikedupont2/swarms-MedicalCoderSwarm-deployment.git"
-  app_name  = "mcs" # used to construct /opt/mcs for where we install to
+  git_repo          = "https://github.com/jmikedupont2/swarms-MedicalCoderSwarm-deployment.git"
+  app_name          = "mcs" # used to construct /opt/mcs for where we install to
   tags = merge(var.tags, {
     environment = "mcs"
   })
