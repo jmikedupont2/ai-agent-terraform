@@ -64,10 +64,9 @@ locals {
     git clone https://github.com/jmikedupont2/swarms "/opt/swarms/"
   fi
   cd "/opt/swarms/" || exit 1
-  export BRANCH=${var.branch}
   git stash
   git fetch --all # get the latest version
-  git checkout --force $BRANCH
+  git checkout --track --force "origin/${var.branch}"
 
   bash -x ${var.install_script}
   EOF
