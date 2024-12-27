@@ -42,7 +42,7 @@ resource "aws_route53_record" "api-cname-dev" {
 
 }
 
-resource "aws_route53_record" "api-cname-dev" {
+resource "aws_route53_record" "api-cname-mcs" {
   zone_id = data.aws_route53_zone.primary.zone_id
   name    = "mcs.${var.domain_name}"
   type    = "CNAME"

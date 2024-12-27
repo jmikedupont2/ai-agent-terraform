@@ -52,19 +52,7 @@ module "kp" {
   source = "./components/keypairs"
 }
 
-# module "lt" {
-#   instance_type = local.instance_type
-#   security_group_id = module.security.security_group_id
-#   source = "./components/launch_template"
-# }
 
-# module "asg" {
-#   source = "./components/autoscaling_group"
-#   name="swarms"
-#   security_group_id = module.security.security_group_id
-#   instance_type = local.instance_type
-#   launch_template_id = module.lt.launch_template_id
-# }
 
 variable "instance_types" {
   type = list(string)
@@ -101,20 +89,6 @@ module "roles" {
   tags   = local.tags
 }
 
-# module "lt_dynamic" {
-#   vpc_id = local.vpc_id
-#   branch =  "feature/ec2"
-#   for_each = toset(var.instance_types)
-#   instance_type       = each.key
-#   name       = "swarms-size-${each.key}"
-#   security_group_id = module.security.internal_security_group_id
-#   ami_id = var.ami_id
-#   tags= local.tags
-#   source = "./components/launch_template"
-#   iam_instance_profile_name = module.roles.ssm_profile_name
-#   #aws_iam_instance_profile.ssm.name
-#   install_script = "/opt/swarms/api/install.sh"
-# }
 
 module "lt_dynamic_ami_prod" {
   vpc_id            = local.vpc_id
@@ -218,6 +192,7 @@ module "lt_dynamic_ami_docker_normal" {
   #install_script = "/opt/swarms/api/docker-boot.sh" this is called from ssm for a refresh
   install_script = "/opt/swarms/api/rundocker.sh"
 }
+
 
 module "alb" {
   source            = "./components/application_load_balancer"
@@ -362,6 +337,21 @@ module "asg_dynamic_new_ami_dev_normal" {
 
 output "security_group_id" {
   value = module.security.security_group_id
+}
+
+module mcs {
+  source = "./mcs"
+  alb_target_group_arn = module.alb.mcs_alb_target_group_arn
+  ssm_profile_arn = module.roles.ssm_profile_arn
+  ec2_subnet_id                    = module.vpc.ec2_public_subnet_id_1
+  iam_instance_profile_name          = module.roles.ssm_profile_name
+  key_name = var.key_name
+  aws_account_id = var.aws_account_id
+  region = var.region
+  internal_security_group_id = module.security.internal_security_group_id
+  tags = local.tags
+  ami_id            = local.new_ami_id
+  vpc_id = local.vpc_id
 }
 
 output "vpc" {
