@@ -15,7 +15,7 @@ variable "instance_type" {}
 
 locals {
   tags = {
-    project       = "swarms"
+    project       = "mcs"
     instance_type = var.instance_type
     name          = var.name
   }
@@ -65,7 +65,7 @@ locals {
   if [ ! -d "/opt/${var.app_name}/" ]; then
     git clone ${var.git_repo} "/opt/${var.app_name}/"
   fi
-  cd "/opt/swarms/" || exit 1
+  cd "/opt/${var.app_name}/" || exit 1
   git stash
   git fetch --all # get the latest version
   git checkout --track --force "origin/${var.branch}"
