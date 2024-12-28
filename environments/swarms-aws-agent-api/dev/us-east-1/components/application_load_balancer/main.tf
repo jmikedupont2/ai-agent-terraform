@@ -66,6 +66,7 @@ module "tg_dev" {
 module "tg_mcs" {
   source      = "./target_group/"
   name_prefix = "mcs"
+  check_path = "/v1/medical-coder/patients" # this does not have a docs api yet
   vpc_id      = var.vpc_id # module.vpc.vpc_id
 }
 
