@@ -149,7 +149,7 @@ variable "dev2_instance_types" {
     #"t3.small",
     #"t2.small", not working
     #    "t2.medium" #
-    "t3.medium"
+    #"t3.medium"
   ]
 }
 
@@ -362,6 +362,7 @@ output "user_data_new" {
   value = module.lt_dynamic_ami_test["t3.medium"].user_data
 }
 output "user_data_docker" {
-  value = module.lt_dynamic_ami_docker_normal["t3.medium"].user_data
+  value = ""
+  #module.lt_dynamic_ami_docker_normal["t3.medium"].user_data
 }
 
