@@ -1,3 +1,4 @@
+#from itertools import combinations
 # # in python
 # open up logs/*.log and read out json
 
@@ -61,7 +62,7 @@ def process1(v,path):
         #print("DEBUG3",qk2,v,seen[qk2])
             #process1("1",path2)
 
-
+report = {}
 for log_file in log_files:
     with open(log_file, 'r') as f:
         try:
@@ -88,20 +89,24 @@ for log_file in log_files:
                         seen[qk] = seen[qk] +1
                     process1(v,qualified_path)
 
-                    
-                    # DEBUG EventId 14ac0923-bb3d-4140-8c8e-3e0d493139fc
-                    # DEBUG EventName LookupEvents
-                    # DEBUG ReadOnly true
-                    # DEBUG AccessKeyId AKIA5K4H36GTYFFWXUGH
-                    # DEBUG EventTime 1734893533.0
-                    # DEBUG EventSource cloudtrail.amazonaws.com
-                    # DEBUG Username dupont
-                    # DEBUG Resources []
-                    # DEBUG CloudTrailEvent {"eventVersion":"1.11","userIdentity":{"type":"IAMUser","principalId":"AIDA5K4H36GT5MJLQHPRT","arn":"arn:aws:iam::916723593639:user/dupont","accountId":"916723593639","accessKeyId":"AKIA5K4H36GTYFFWXUGH","userName":"dupont"},"eventTime":"2024-12-22T18:52:13Z","eventSource":"cloudtrail.amazonaws.com","eventName":"LookupEvents","awsRegion":"us-east-2","sourceIPAddress":"98.110.51.114","userAgent":"aws-cli/1.32.85 md/Botocore#1.34.85 ua/2.0 os/linux#6.8.0-49-generic md/arch#x86_64 lang/python#3.10.12 md/pyimpl#CPython cfg/retry-mode#legacy botocore/1.34.85","requestParameters":{"startTime":"Dec 22, 2024, 8:52:29 AM","nextToken":"shqJhJryg7NPAzxDKddA7KOR5HR3qgzsO4Bskd7FRV/sRIOCCBsmD6H0dhqNTGZ0"},"responseElements":null,"requestID":"9c3ffb5a-05aa-4a31-b3e2-12914ed9c7b7","eventID":"14ac0923-bb3d-4140-8c8e-3e0d493139fc","readOnly":true,"eventType":"AwsApiCall","managementEvent":true,"recipientAccountId":"916723593639","eventCategory":"Management","tlsDetails":{"tlsVersion":"TLSv1.3","cipherSuite":"TLS_AES_128_GCM_SHA256","clientProvidedHostHeader":"cloudtrail.us-east-2.amazonaws.com"}}
-            #all_events.extend(e1)
-for x in seen:
-    v = seen[x]
-    print("\t".join([str(v),x]))
+            # now report on the event
+            facts = sorted(seen.keys())
+            seen = {}
+            #for x in facts:
+            #    v = seen[x]
+            #    if (v>0):
+                #facts.append("\t".join([str(v),x]))
+            #    seen[x] =0 # reset
+            #for p in combinations(facts,3):
+            print(facts)
+            for f in facts:
+                #k = ".".join(p)
+                if f not in report:
+                    report[f] = 1                    
+                else:
+                    report[f] =  report[f] + 1
+for k in report:
+    print(k,report[k])
 #print(all_events)  # or process the events as needed
 
 # ### Explanation:
