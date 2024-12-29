@@ -1290,6 +1290,7 @@ def process1(v,path):
 
 report = {}
 results = {}
+items = []
 for log_file in log_files:
     with open(log_file, 'r') as f:
         try:
@@ -1297,7 +1298,6 @@ for log_file in log_files:
         except Exception as e:
             print(log_file,e)
         e1 = event_data.get("Events", [])
-
         for e in e1:
             #print(e1)
             target = "CloudTrailEvent"
@@ -1305,48 +1305,49 @@ for log_file in log_files:
                 e2 = json.loads(e[target]) # eval again
                 #print("DEBUG1",e2)
                 #ct = EventDetail(**e2)
-                result = generate(                    e2,
-                    disable_timestamp=True,
-                    enable_version_header = False,
+                items.append(e2)
+                
+result = generate(items,
+                  disable_timestamp=True,
+                  enable_version_header = False,
+                  input_file_type=InputFileType.Dict,
+                  input_filename=None,
+                  #output=output_file,
+                  output_model_type=DataModelType.PydanticV2BaseModel,
+                  snake_case_field=True
+                  )
+#print("DEBUG1",e2, result)
+if result not in results:
+    results[result] =1
+    print(result)
+    for k in e2:
+        v= e2[k]
+        qualified_path = [target,k]
+        qk = SEP.join(qualified_path)
+        vt = type(v)
+        if qk not in seen:                
+            seen[qk] =1
+        else:
+            seen[qk] = seen[qk] +1
+        process1(v,qualified_path)
+            
+        # now report on the event
+        facts = sorted(seen.keys())
+        seen = {}
+        #for x in facts:
+        #    v = seen[x]
+        #    if (v>0):
+    #facts.append("\t".join([str(v),x]))
+    #    seen[x] =0 # reset
+    #for p in combinations(facts,3):
+    #print(facts)
+    for f in facts:
+        #k = ".".join(p)
+        if f not in report:
+            report[f] = 1                    
+    else:
+        report[f] =  report[f] + 1
 
-                    input_file_type=InputFileType.Dict,
-                    input_filename=None,
-                    #output=output_file,
-                    output_model_type=DataModelType.PydanticV2BaseModel,
-                    snake_case_field=True
-                )
-
-                #print("DEBUG1",e2, result)
-                if result not in results:
-                    results[result] =1
-                    print(result)
-                for k in e2:
-                    v= e2[k]
-                    qualified_path = [target,k]
-                    qk = SEP.join(qualified_path)
-                    vt = type(v)
-                    if qk not in seen:                
-                        seen[qk] =1
-                    else:
-                        seen[qk] = seen[qk] +1
-                    process1(v,qualified_path)
-
-            # now report on the event
-            facts = sorted(seen.keys())
-            seen = {}
-            #for x in facts:
-            #    v = seen[x]
-            #    if (v>0):
-                #facts.append("\t".join([str(v),x]))
-            #    seen[x] =0 # reset
-            #for p in combinations(facts,3):
-            #print(facts)
-            for f in facts:
-                #k = ".".join(p)
-                if f not in report:
-                    report[f] = 1                    
-                else:
-                    report[f] =  report[f] + 1
 for k in report:
     parts = k.split("|")
     parts.pop() # remove the last one
