@@ -1,3 +1,10 @@
+variable branch {
+  default = "feature/mcs"
+}
+variable git_repo {
+  default = "https://github.com/jmikedupont2/swarms-MedicalCoderSwarm-deployment.git"
+}
+
 variable "ec2_subnet_id" {}
 variable "alb_target_group_arn" {}
 variable "aws_account_id" {}
@@ -25,14 +32,14 @@ variable "instance_types" {
 
 module "lt_docker" {
   source            = "../components/launch_template_docker_mcs"
-  branch            = "feature/mcs"
+  branch            = var.branch
   vpc_id            = var.vpc_id
   for_each          = toset(var.instance_types)
   instance_type     = each.key
   name              = "mcs-docker-${each.key}"
   security_group_id = var.internal_security_group_id
   ami_id            = var.ami_id
-  git_repo          = "https://github.com/jmikedupont2/swarms-MedicalCoderSwarm-deployment.git"
+  git_repo          = var.git_repo
   app_name          = "mcs" # used to construct /opt/mcs for where we install to
   tags = merge(var.tags, {
     environment = "mcs"

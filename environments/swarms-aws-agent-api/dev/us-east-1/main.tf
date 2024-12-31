@@ -341,7 +341,27 @@ output "security_group_id" {
 
 module "mcs" {
   source                     = "./mcs"
+  branch =    "feature/mcs"
+  git_repo = "https://github.com/jmikedupont2/swarms-MedicalCoderSwarm-deployment.git"
   alb_target_group_arn       = module.alb.mcs_alb_target_group_arn
+  ssm_profile_arn            = module.roles.ssm_profile_arn
+  ec2_subnet_id              = module.vpc.ec2_public_subnet_id_1
+  iam_instance_profile_name  = module.roles.ssm_profile_name
+  key_name                   = var.key_name
+  aws_account_id             = var.aws_account_id
+  region                     = var.region
+  internal_security_group_id = module.security.internal_security_group_id
+  tags                       = local.tags
+  ami_id                     = local.new_ami_id
+  vpc_id                     = local.vpc_id
+}
+
+module "mcs_dev" {
+  source                     = "./mcs"
+  branch =    "feature/mcs_dev"
+  git_repo = "https://github.com/jmikedupont2/swarms-MedicalCoderSwarm-deployment.git"
+    
+  alb_target_group_arn       = module.alb.mcs_dev_alb_target_group_arn
   ssm_profile_arn            = module.roles.ssm_profile_arn
   ec2_subnet_id              = module.vpc.ec2_public_subnet_id_1
   iam_instance_profile_name  = module.roles.ssm_profile_name

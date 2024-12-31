@@ -70,6 +70,13 @@ module "tg_mcs" {
   vpc_id      = var.vpc_id # module.vpc.vpc_id
 }
 
+module "tg_mcs_dev" {
+  source      = "./target_group/"
+  name_prefix = "mcs-dev"
+  check_path = "/v1/medical-coder/patients" # this does not have a docs api yet
+  vpc_id      = var.vpc_id # module.vpc.vpc_id
+}
+
 module "https" {
   source = "./https/"
   #  vpc_id  = var.vpc_id # module.vpc.vpc_id
@@ -80,6 +87,7 @@ module "https" {
   test_target_group_arn = module.tg_test.alb_target_group_arn
   dev_target_group_arn  = module.tg_dev.alb_target_group_arn
   mcs_target_group_arn  = module.tg_mcs.alb_target_group_arn
+  mcs_dev_target_group_arn  = module.tg_mcs_dev.alb_target_group_arn
 }
 
 
@@ -97,4 +105,8 @@ output "dev_alb_target_group_arn" {
 
 output "mcs_alb_target_group_arn" {
   value = module.tg_mcs.alb_target_group_arn
+}
+
+output "mcs_dev_alb_target_group_arn" {
+  value = module.tg_mcs_dev.alb_target_group_arn
 }
