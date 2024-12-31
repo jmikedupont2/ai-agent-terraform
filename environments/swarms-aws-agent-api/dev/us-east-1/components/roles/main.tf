@@ -48,6 +48,24 @@ data "aws_iam_policy_document" "default" {
     effect    = "Allow"
   }
 
+  # statement {
+  #   actions = [
+  #     "ecr:CompleteLayerUpload",
+  #     "ecr:UploadLayerPart",
+  #     "ecr:InitiateLayerUpload",
+  #     "ecr:BatchCheckLayerAvailability",
+  #     "ecr:PutImage",
+  #     "ecr:BatchGetImage"
+  #   ]
+    
+  #   resources = [
+  #     "arn:aws:ecr:us-east-2:916723593639:swarms/mcs"
+  #   ]
+    
+  #   effect    = "Allow"
+  # }
+
+  
   statement {
     effect    = "Allow"
     resources = ["arn:aws:s3:::swarms-session-logs*"]
