@@ -337,10 +337,12 @@ module "mcs" {
   tags                       = local.tags
   ami_id                     = local.new_ami_id
   vpc_id                     = local.vpc_id
+  name = "docker-mcs-ami"
 }
 
 module "mcs_dev" {
   source                     = "./mcs"
+  name = "mcs-dev"
   branch =    "feature/mcs_dev"
   git_repo = "https://github.com/jmikedupont2/swarms-MedicalCoderSwarm-deployment.git"
     
@@ -355,6 +357,10 @@ module "mcs_dev" {
   tags                       = local.tags
   ami_id                     = local.new_ami_id
   vpc_id                     = local.vpc_id
+
+  instance_types= [
+    "t3.medium"
+  ]
 }
 
 output "vpc" {

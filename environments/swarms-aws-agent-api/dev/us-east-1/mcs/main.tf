@@ -1,6 +1,8 @@
+variable name {}
 variable branch {
   default = "feature/mcs"
 }
+
 variable git_repo {
   default = "https://github.com/jmikedupont2/swarms-MedicalCoderSwarm-deployment.git"
 }
@@ -66,7 +68,7 @@ module "asg" {
 
   #  security_group_id   = module.security.internal_security_group_id
   instance_type      = each.key
-  name               = "docker-mcs-ami-${each.key}"
+  name               = "${var.name}-${each.key}"
   launch_template_id = module.lt_docker[each.key].launch_template_id
   target_group_arn   = var.alb_target_group_arn
 }
