@@ -209,23 +209,6 @@ output "alb" {
 }
 
 
-# this is the slow one, use the ami
-# module "asg_dynamic" {
-#   tags = local.tags
-#   vpc_id = local.vpc_id
-#   image_id = local.ami_id
-#   ec2_subnet_id = module.vpc.ec2_public_subnet_id_1
-#   for_each = toset(var.instance_types)
-#   aws_iam_instance_profile_ssm_arn = module.roles.ssm_profile_arn
-#   #iam_instance_profile_name = module.roles.ssm_profile_name
-#   source              = "./components/autoscaling_group"
-# #  security_group_id   = module.security.internal_security_group_id
-#   instance_type       = each.key
-#   name       = "swarms-size-${each.key}"
-#   launch_template_id   = module.lt_dynamic[each.key].launch_template_id
-#   target_group_arn = module.alb.alb_target_group_arn
-# }
-
 module "asg_dynamic_new_ami" {
   # built with packer
   #count =0

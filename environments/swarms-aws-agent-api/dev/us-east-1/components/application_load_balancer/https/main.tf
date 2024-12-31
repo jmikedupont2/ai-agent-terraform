@@ -5,6 +5,7 @@ variable "prod_target_group_arn" {}
 variable "test_target_group_arn" {}
 variable "dev_target_group_arn" {}
 variable "mcs_target_group_arn" {}
+variable "mcs_dev_target_group_arn" {}
 
 module "acm" {
   #  count = 0

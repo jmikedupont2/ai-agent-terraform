@@ -50,7 +50,7 @@ resource "aws_route53_record" "api-cname-mcs" {
   ttl     = 300
 }
 
-resource "aws_route53_record" "api-cname-mcs" {
+resource "aws_route53_record" "api-cname-mcs-dev" {
   zone_id = data.aws_route53_zone.primary.zone_id
   name    = "dev.mcs.${var.domain_name}"
   type    = "CNAME"
