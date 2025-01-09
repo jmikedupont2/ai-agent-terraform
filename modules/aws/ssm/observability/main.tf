@@ -421,18 +421,18 @@ locals {
             },
 
             # nginx
-            {
-              file_path       = "/var/log/nginx/swarms/access.log"
-              log_group_name  = "/swarms/ngnix_access"
-              log_stream_name = "{instance_id}"
-              timezone        = "UTC"
-            },
-            {
-              file_path       = "/var/log/nginx/swarms/error.log"
-              log_group_name  = "/swarms/nginx_error"
-              log_stream_name = "{instance_id}"
-              timezone        = "UTC"
-            },
+            # {
+            #   file_path       = "/var/log/nginx/swarms/access.log"
+            #   log_group_name  = "/swarms/ngnix_access"
+            #   log_stream_name = "{instance_id}"
+            #   timezone        = "UTC"
+            # },
+            # {
+            #   file_path       = "/var/log/nginx/swarms/error.log"
+            #   log_group_name  = "/swarms/nginx_error"
+            #   log_stream_name = "{instance_id}"
+            #   timezone        = "UTC"
+            # },
 
             {
               file_path       = "/var/log/cloud-init-output.log"
@@ -441,8 +441,8 @@ locals {
               timezone        = "UTC"
             },
             {
-              file_path       = "/var/log/swarms_systemd.log"
-              log_group_name  = "/swarms/systemd"
+              file_path       = "/var/log/eliza_systemd.log"
+              log_group_name  = "/eliza/systemd"
               log_stream_name = "{instance_id}"
               timezone        = "UTC"
             },
@@ -483,25 +483,25 @@ resource "aws_ssm_association" "update_cloudwatch_config" {
 
 resource "aws_cloudwatch_log_group" "log_groups" {
   for_each = toset([
-    "/swarms/ngnix_access",
-    "/swarms/nginx_error",
-  "/swarms/systemd", "/ec2/init"])
+#    "/swarms/ngnix_access",
+#    "/swarms/nginx_error",
+  "/eliza/systemd", "/ec2/init"])
   name              = each.key
   retention_in_days = 30
-  kms_key_id        = "arn:aws:kms:us-east-2:916723593639:key/cc8e1ee7-a05b-4642-bd81-ba5548635590"
+  #kms_key_id        = "arn:aws:kms:us-east-2:916723593639:key/cc8e1ee7-a05b-4642-bd81-ba5548635590"
 }
 
 # CloudWatch Log Groups for collected logs
 resource "aws_cloudwatch_log_group" "system_logs" {
   name              = "/ec2/system"
   retention_in_days = 30
-  kms_key_id        = "arn:aws:kms:us-east-2:916723593639:key/cc8e1ee7-a05b-4642-bd81-ba5548635590"
+  #kms_key_id        = "arn:aws:kms:us-east-2:916723593639:key/cc8e1ee7-a05b-4642-bd81-ba5548635590"
 }
 
 resource "aws_cloudwatch_log_group" "secure_logs" {
   name              = "/ec2/secure"
   retention_in_days = 30
-  kms_key_id        = "arn:aws:kms:us-east-2:916723593639:key/cc8e1ee7-a05b-4642-bd81-ba5548635590"
+  #kms_key_id        = "arn:aws:kms:us-east-2:916723593639:key/cc8e1ee7-a05b-4642-bd81-ba5548635590"
 }
 
 # SSM Document for CloudWatch agent troubleshooting

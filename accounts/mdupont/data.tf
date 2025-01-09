@@ -1,7 +1,4 @@
 # task create an output file for this module to expose all interesting data, include the ids of each resource.
-provider "aws" {
-  region = var.aws_region
-}
 
 data "aws_iam_user" "example_user" {
   user_name = var.iam_user

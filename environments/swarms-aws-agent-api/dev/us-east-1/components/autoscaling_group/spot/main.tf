@@ -13,7 +13,7 @@ variable "instance_requirements" {
 }
 
 variable "aws_iam_instance_profile_ssm_arn" {}
-variable "target_group_arn" {}
+#variable "target_group_arn" {}
 variable "name" {}
 variable "instance_type" {}
 variable "launch_template_id" {}
@@ -32,12 +32,12 @@ module "autoscaling" {
   version = "8.0.0"
   name    = var.name
 
-  traffic_source_attachments = {
-    ex-alb = {
-      traffic_source_identifier = var.target_group_arn
-      traffic_source_type       = "elbv2" # default
-    }
-  }
+#  traffic_source_attachments = {
+#    ex-alb = {
+#      traffic_source_identifier = var.target_group_arn
+#      traffic_source_type       = "elbv2" # default
+#    }
+#  }
 
   health_check_type     = "EC2"
   desired_capacity      = 1
@@ -81,8 +81,6 @@ module "autoscaling" {
   iam_role_policies = {
     AmazonSSMManagedInstanceCore = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
   }
-
-  #    target_group_arn = 
 
   use_mixed_instances_policy = var.use_mixed_instances_policy
   mixed_instances_policy     = var.mixed_instances_policy

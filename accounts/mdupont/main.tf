@@ -1,14 +1,25 @@
+provider "aws" {
+  region  = "us-east-2"
+  profile = "mdupont"
+}
+
 #variable "google_oauth_client_secret" {}
 #variable "google_oauth_client_id" {} 
 
-module ses {
-  verify_dkim=true
-  domain="introspector.meme" # put the mail at the top level
-  #verify_domain =true
-  verify_domain =false # not on aws
-  group_name="introspector"
-  source = "../../environments/swarms-aws-agent-api/dev/us-east-1/components/ses"
+locals {
+  ami_name = "ubuntu-minimal/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-minimal-*" # useast2id=
+  dns      = "eliza.introspector.meme"
+  region   = "us-east-2"
 }
+  
+# module ses {
+#   verify_dkim=true
+#   domain="introspector.meme" # put the mail at the top level
+#   #verify_domain =true
+#   verify_domain =false # not on aws
+#   group_name="introspector"
+#   source = "../../environments/swarms-aws-agent-api/dev/us-east-1/components/ses"
+# }
 
 # module ses_verification {
 #   verify_dkim=true
@@ -20,7 +31,7 @@ module ses {
 # }
 
 #module cognito {
-#  aws_account  =var.aws_account_id
+
 #  myemail ="jmdupont"
 #  mydomain ="introspector"
 #  mydomain_suffix = "meme"
@@ -40,3 +51,33 @@ module ses {
 #  value = module.cognito
 #  sensitive = true
 #}
+
+
+data "aws_ami" "ami" { # slow
+   most_recent      = true
+   name_regex       = "^${local.ami_name}"
+ }
+
+ module "eliza_server" {
+   count = 0
+  #aws_account_id = local.account
+  aws_account_id  =var.aws_account_id
+  region         = local.region
+  source         = "../../environments/swarms-aws-agent-api/dev/us-east-1" # FIXME rename
+  domain         = local.dns
+  ami_id = data.aws_ami.ami.id
+  name = "eliza"
+  tags = { project = "eliza" }
+}
+
+module "ssm_observer" {
+  source = "../../modules/aws/ssm/observability"
+  ami_id = data.aws_ami.ami.id
+}
+ 
+module "ssm_setup" {
+  source = "../../modules/aws/ssm/setup"
+  bucket_name = "tine-session-logs"
+  access_log_bucket_name = "tine-session-access-logs"
+  project = "tine"
+ }

@@ -9,10 +9,10 @@ locals {
   #  instance_type = "t3.large"
   #  instance_type = "t3.medium"
   ami_name = "ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-server-*"
-  name     = "swarms"
+  name     = "eliza"
   domain   = var.domain
   tags = {
-    project = "swarms"
+    project = "eliza"
   }
   dev_tags = {
     sandbox = "kye"
@@ -27,7 +27,7 @@ variable "name" {}
 
 locals {
   ami_id     = var.ami_id
-  new_ami_id = "ami-08093b6770af41b14" # environments/swarms-aws-agent-api/dev/us-east-1/components/machine_image/Readme.md
+#  new_ami_id = "ami-08093b6770af41b14" # environments/eliza-aws-agent-api/dev/us-east-1/components/machine_image/Readme.md
 }
 
 # SLOW
@@ -52,8 +52,6 @@ module "kp" {
   source = "./components/keypairs"
 }
 
-
-
 variable "instance_types" {
   type = list(string)
   default = [
@@ -76,9 +74,6 @@ variable "test_instance_types" {
     #"t3.small",
     #"t2.small", not working
     #    "t2.medium" #
-
-
-
     #"t3.medium" # no instances  for now, this is commented out
   ]
 }
@@ -94,16 +89,16 @@ module "lt_dynamic_ami_prod" {
   vpc_id            = local.vpc_id
   for_each          = toset(var.instance_types)
   instance_type     = each.key
-  name              = "swarms-ami-${each.key}"
+  name              = "eliza-ami-${each.key}"
   security_group_id = module.security.internal_security_group_id
-  ami_id            = local.new_ami_id
+  ami_id            = local.ami_id
   key_name          = var.key_name
   tags = merge(local.tags, {
     environment = "production"
   })
   source                             = "./components/launch_template"
   iam_instance_profile_name          = module.roles.ssm_profile_name
-  install_script                     = "/opt/swarms/api/just_run.sh"
+  install_script                     = "/opt/eliza/api/just_run.sh"
   ssm_parameter_name_cw_agent_config = "arn:aws:ssm:${var.region}:${var.aws_account_id}:parameter/cloudwatch-agent/config"
   branch                             = "feature/ec2"
 }
@@ -113,9 +108,9 @@ module "lt_dynamic_ami_test" {
   vpc_id            = local.vpc_id
   for_each          = toset(var.instance_types)
   instance_type     = each.key
-  name              = "swarms-ami-${each.key}"
+  name              = "eliza-ami-${each.key}"
   security_group_id = module.security.internal_security_group_id
-  ami_id            = local.new_ami_id
+  ami_id            = local.ami_id
   tags = merge(local.tags, {
     environment = "test"
   })
@@ -123,7 +118,7 @@ module "lt_dynamic_ami_test" {
   key_name                           = var.key_name #"mdupont-deployer-key"
   ssm_parameter_name_cw_agent_config = "arn:aws:ssm:${var.region}:${var.aws_account_id}:parameter/cloudwatch-agent/config/details"
   iam_instance_profile_name          = module.roles.ssm_profile_name
-  install_script                     = "/opt/swarms/api/just_run.sh"
+  install_script                     = "/opt/eliza/api/just_run.sh"
 }
 
 
@@ -159,9 +154,9 @@ module "lt_dynamic_ami_docker" {
   vpc_id            = local.vpc_id
   for_each          = toset(var.dev_instance_types)
   instance_type     = each.key
-  name              = "swarms-docker-${each.key}"
+  name              = "eliza-docker-${each.key}"
   security_group_id = module.security.internal_security_group_id
-  ami_id            = local.new_ami_id
+  ami_id            = local.ami_id
   tags = merge(local.tags, {
     environment = "test"
   })
@@ -169,8 +164,8 @@ module "lt_dynamic_ami_docker" {
   key_name                           = var.key_name #"mdupont-deployer-key"
   ssm_parameter_name_cw_agent_config = "arn:aws:ssm:${var.region}:${var.aws_account_id}:parameter/cloudwatch-agent/config/details"
   iam_instance_profile_name          = module.roles.ssm_profile_name
-  #install_script = "/opt/swarms/api/docker-boot.sh" this is called from ssm for a refresh
-  install_script = "/opt/swarms/api/rundocker.sh"
+  #install_script = "/opt/eliza/api/docker-boot.sh" this is called from ssm for a refresh
+  install_script = "/opt/eliza/api/rundocker.sh"
 }
 
 module "lt_dynamic_ami_docker_normal" {
@@ -179,9 +174,9 @@ module "lt_dynamic_ami_docker_normal" {
   vpc_id            = local.vpc_id
   for_each          = toset(var.dev2_instance_types)
   instance_type     = each.key
-  name              = "swarms-docker-${each.key}"
+  name              = "eliza-docker-${each.key}"
   security_group_id = module.security.internal_security_group_id
-  ami_id            = local.new_ami_id
+  ami_id            = local.ami_id
   tags = merge(local.tags, {
     environment = "test"
   })
@@ -189,113 +184,114 @@ module "lt_dynamic_ami_docker_normal" {
   key_name                           = var.key_name #"mdupont-deployer-key"
   ssm_parameter_name_cw_agent_config = "arn:aws:ssm:${var.region}:${var.aws_account_id}:parameter/cloudwatch-agent/config/details"
   iam_instance_profile_name          = module.roles.ssm_profile_name
-  #install_script = "/opt/swarms/api/docker-boot.sh" this is called from ssm for a refresh
-  install_script = "/opt/swarms/api/rundocker.sh"
+  #install_script = "/opt/eliza/api/docker-boot.sh" this is called from ssm for a refresh
+  install_script = "/opt/eliza/api/rundocker.sh"
 }
 
 
-module "alb" {
-  source            = "./components/application_load_balancer"
-  domain_name       = local.domain
-  security_group_id = module.security.security_group_id # allowed to talk to internal
-  public_subnets = [
-    local.ec2_public_subnet_id_1,
-  local.ec2_public_subnet_id_2]
-  vpc_id = local.vpc_id
-  name   = local.name
-}
-output "alb" {
-  value = module.alb
-}
+# module "alb" {
+#   count = 0 # none for now
+#   source            = "./components/application_load_balancer"
+#   domain_name       = local.domain
+#   security_group_id = module.security.security_group_id # allowed to talk to internal
+#   public_subnets = [
+#     local.ec2_public_subnet_id_1,
+#   local.ec2_public_subnet_id_2]
+#   vpc_id = local.vpc_id
+#   name   = local.name
+# }
+# output "alb" {
+#   value = module.alb
+# }
 
 
-module "asg_dynamic_new_ami" {
-  # built with packer
-  #count =0
-  tags                             = local.tags
-  vpc_id                           = local.vpc_id
-  image_id                         = local.new_ami_id
-  ec2_subnet_id                    = module.vpc.ec2_public_subnet_id_1
-  for_each                         = toset(var.instance_types)
-  aws_iam_instance_profile_ssm_arn = module.roles.ssm_profile_arn
-  source                           = "./components/autoscaling_group"
-  #  security_group_id   = module.security.internal_security_group_id
-  instance_type      = each.key
-  name               = "swarms-ami-${each.key}"
-  launch_template_id = module.lt_dynamic_ami_prod[each.key].launch_template_id
-  target_group_arn   = module.alb.prod_alb_target_group_arn
-}
+# module "asg_dynamic_new_ami" {
+#   # built with packer
+#   #count =0
+#   tags                             = local.tags
+#   vpc_id                           = local.vpc_id
+#   image_id                         = local.new_ami_id
+#   ec2_subnet_id                    = module.vpc.ec2_public_subnet_id_1
+#   for_each                         = toset(var.instance_types)
+#   aws_iam_instance_profile_ssm_arn = module.roles.ssm_profile_arn
+#   source                           = "./components/autoscaling_group"
+#   #  security_group_id   = module.security.internal_security_group_id
+#   instance_type      = each.key
+#   name               = "eliza-ami-${each.key}"
+#   launch_template_id = module.lt_dynamic_ami_prod[each.key].launch_template_id
+#   target_group_arn   = module.alb.prod_alb_target_group_arn
+# }
 
-module "asg_dynamic_new_ami_test" {
+# module "asg_dynamic_new_ami_test" {
 
-  # built with packer
-  for_each      = toset(var.test_instance_types)
-  tags          = merge(local.tags, local.dev_tags)
-  vpc_id        = local.vpc_id
-  image_id      = local.new_ami_id
-  ec2_subnet_id = module.vpc.ec2_public_subnet_id_1
+#   # built with packer
+#   for_each      = toset(var.test_instance_types)
+#   tags          = merge(local.tags, local.dev_tags)
+#   vpc_id        = local.vpc_id
+#   image_id      = local.new_ami_id
+#   ec2_subnet_id = module.vpc.ec2_public_subnet_id_1
 
-  aws_iam_instance_profile_ssm_arn = module.roles.ssm_profile_arn
-  source                           = "./components/autoscaling_group/spot"
-  #  security_group_id   = module.security.internal_security_group_id
-  instance_type      = each.key
-  name               = "test-swarms-ami-${each.key}"
-  launch_template_id = module.lt_dynamic_ami_test[each.key].launch_template_id
-  target_group_arn   = module.alb.test_alb_target_group_arn
-}
+#   aws_iam_instance_profile_ssm_arn = module.roles.ssm_profile_arn
+#   source                           = "./components/autoscaling_group/spot"
+#   #  security_group_id   = module.security.internal_security_group_id
+#   instance_type      = each.key
+#   name               = "test-eliza-ami-${each.key}"
+#   launch_template_id = module.lt_dynamic_ami_test[each.key].launch_template_id
+#   target_group_arn   = module.alb.test_alb_target_group_arn
+# }
 
-module "asg_dynamic_new_ami_dev_spot" {
-  # built with packer
-  #  count =0
-  tags                             = merge(local.tags, local.dev_tags)
-  vpc_id                           = local.vpc_id
-  image_id                         = local.new_ami_id
-  ec2_subnet_id                    = module.vpc.ec2_public_subnet_id_1
-  for_each                         = toset(var.dev_instance_types)
-  aws_iam_instance_profile_ssm_arn = module.roles.ssm_profile_arn
+# module "asg_dynamic_new_ami_dev_spot" {
+#   # built with packer
+#   #  count =0
+#   tags                             = merge(local.tags, local.dev_tags)
+#   vpc_id                           = local.vpc_id
+#   image_id                         = local.new_ami_id
+#   ec2_subnet_id                    = module.vpc.ec2_public_subnet_id_1
+#   for_each                         = toset(var.dev_instance_types)
+#   aws_iam_instance_profile_ssm_arn = module.roles.ssm_profile_arn
 
-  source = "./components/autoscaling_group/spot"
-  #  security_group_id   = module.security.internal_security_group_id
-  instance_type      = each.key
-  name               = "docker-swarms-ami-${each.key}"
-  launch_template_id = module.lt_dynamic_ami_docker[each.key].launch_template_id
-  target_group_arn   = module.alb.dev_alb_target_group_arn
+#   source = "./components/autoscaling_group/spot"
+#   #  security_group_id   = module.security.internal_security_group_id
+#   instance_type      = each.key
+#   name               = "docker-eliza-ami-${each.key}"
+#   launch_template_id = module.lt_dynamic_ami_docker[each.key].launch_template_id
+#   target_group_arn   = module.alb.dev_alb_target_group_arn
 
-  use_mixed_instances_policy = true
-  mixed_instances_policy = {
-    instances_distribution = {
-      on_demand_base_capacity                  = 0
-      on_demand_percentage_above_base_capacity = 0
-      spot_instance_pools                      = 1
-      spot_max_price                           = var.spot_max_price
-      #      spot_allocation_strategy                 = "capacity-optimized"
-    }
+#   use_mixed_instances_policy = true
+#   mixed_instances_policy = {
+#     instances_distribution = {
+#       on_demand_base_capacity                  = 0
+#       on_demand_percentage_above_base_capacity = 0
+#       spot_instance_pools                      = 1
+#       spot_max_price                           = var.spot_max_price
+#       #      spot_allocation_strategy                 = "capacity-optimized"
+#     }
 
-    override = [
-      {
-        instance_requirements = {
-          cpu_manufacturers = ["amazon-web-services", "amd", "intel"]
-          #cpu_manufacturers                                       = ["amd"]
-          #local_storage_types                                     = ["ssd"]
-          max_spot_price_as_percentage_of_optimal_on_demand_price = 60
-          memory_gib_per_vcpu = {
-            min = 4
-            max = 12
-          }
-          memory_mib = {
-            min = 4096
-          },
-          vcpu_count = {
-            min = 2
-            max = 12
-          }
-        }
-      }
-    ]
-  }
-  instance_requirements = {
-  }
-}
+#     override = [
+#       {
+#         instance_requirements = {
+#           cpu_manufacturers = ["amazon-web-services", "amd", "intel"]
+#           #cpu_manufacturers                                       = ["amd"]
+#           #local_storage_types                                     = ["ssd"]
+#           max_spot_price_as_percentage_of_optimal_on_demand_price = 60
+#           memory_gib_per_vcpu = {
+#             min = 4
+#             max = 12
+#           }
+#           memory_mib = {
+#             min = 4096
+#           },
+#           vcpu_count = {
+#             min = 2
+#             max = 12
+#           }
+#         }
+#       }
+#     ]
+#   }
+#   instance_requirements = {
+#   }
+# }
 
 module "asg_dynamic_new_ami_dev_normal" {
   # built with packer
@@ -303,7 +299,7 @@ module "asg_dynamic_new_ami_dev_normal" {
 
   tags                             = merge(local.tags, local.dev_tags)
   vpc_id                           = local.vpc_id
-  image_id                         = local.new_ami_id
+  image_id                         = local.ami_id
   ec2_subnet_id                    = module.vpc.ec2_public_subnet_id_1
   for_each                         = toset(var.dev2_instance_types)
   aws_iam_instance_profile_ssm_arn = module.roles.ssm_profile_arn
@@ -311,9 +307,9 @@ module "asg_dynamic_new_ami_dev_normal" {
   source = "./components/autoscaling_group/spot"
   #  security_group_id   = module.security.internal_security_group_id
   instance_type      = each.key
-  name               = "docker-swarms-ami-${each.key}"
+  name               = "docker-eliza-ami-${each.key}"
   launch_template_id = module.lt_dynamic_ami_docker_normal[each.key].launch_template_id
-  target_group_arn   = module.alb.dev_alb_target_group_arn
+#  target_group_arn   = module.alb.dev_alb_target_group_arn
 
 
 }
@@ -322,11 +318,12 @@ output "security_group_id" {
   value = module.security.security_group_id
 }
 
-module "mcs" {
-  source                     = "./mcs"
-  branch =    "feature/mcs"
-  git_repo = "https://github.com/jmikedupont2/swarms-MedicalCoderSwarm-deployment.git"
-  alb_target_group_arn       = module.alb.mcs_alb_target_group_arn
+module "eliza" {
+  source                     = "./mcs" # fixme rename to eliza
+  branch =    "feature/reduce_modules_discord"
+  #git_repo = "https://github.com/meta-introspector/eliza-MedicalCoderSwarm-deployment.git"
+  git_repo = "https://github.com/meta-introspector/cloud-deployment-eliza/"
+#  alb_target_group_arn       = module.alb.mcs_alb_target_group_arn
   ssm_profile_arn            = module.roles.ssm_profile_arn
   ec2_subnet_id              = module.vpc.ec2_public_subnet_id_1
   iam_instance_profile_name  = module.roles.ssm_profile_name
@@ -335,33 +332,33 @@ module "mcs" {
   region                     = var.region
   internal_security_group_id = module.security.internal_security_group_id
   tags                       = local.tags
-  ami_id                     = local.new_ami_id
+  ami_id                     = local.ami_id
   vpc_id                     = local.vpc_id
   name = "docker-mcs-ami"
 }
 
-module "mcs_dev" {
-  source                     = "./mcs"
-  name = "mcs-dev"
-  branch =    "feature/mcs_dev"
-  git_repo = "https://github.com/jmikedupont2/swarms-MedicalCoderSwarm-deployment.git"
+# module "agent_dev" {
+#   source                     = "./agent"
+#   name = "agent-dev"
+#   branch =    "feature/agent_dev"
+#   git_repo = "https://github.com/jmikedupont2/eliza-MedicalCoderSwarm-deployment.git"
     
-  alb_target_group_arn       = module.alb.mcs_dev_alb_target_group_arn
-  ssm_profile_arn            = module.roles.ssm_profile_arn
-  ec2_subnet_id              = module.vpc.ec2_public_subnet_id_1
-  iam_instance_profile_name  = module.roles.ssm_profile_name
-  key_name                   = var.key_name
-  aws_account_id             = var.aws_account_id
-  region                     = var.region
-  internal_security_group_id = module.security.internal_security_group_id
-  tags                       = local.tags
-  ami_id                     = local.new_ami_id
-  vpc_id                     = local.vpc_id
+#   alb_target_group_arn       = module.alb.agent_dev_alb_target_group_arn
+#   ssm_profile_arn            = module.roles.ssm_profile_arn
+#   ec2_subnet_id              = module.vpc.ec2_public_subnet_id_1
+#   iam_instance_profile_name  = module.roles.ssm_profile_name
+#   key_name                   = var.key_name
+#   aws_account_id             = var.aws_account_id
+#   region                     = var.region
+#   internal_security_group_id = module.security.internal_security_group_id
+#   tags                       = local.tags
+#   ami_id                     = local.ami_id
+#   vpc_id                     = local.vpc_id
 
-  instance_types= [
-    "t3.medium"
-  ]
-}
+#   instance_types= [
+#     "t3.medium"
+#   ]
+# }
 
 output "vpc" {
   value = module.vpc

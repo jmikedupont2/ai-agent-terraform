@@ -8,7 +8,7 @@ variable git_repo {
 }
 
 variable "ec2_subnet_id" {}
-variable "alb_target_group_arn" {}
+#variable "alb_target_group_arn" {}
 variable "aws_account_id" {}
 variable "vpc_id" {}
 # FIXME security, we use the ami of swarms for speed but want to split
@@ -70,5 +70,5 @@ module "asg" {
   instance_type      = each.key
   name               = "${var.name}-${each.key}"
   launch_template_id = module.lt_docker[each.key].launch_template_id
-  target_group_arn   = var.alb_target_group_arn
+#  target_group_arn   = var.alb_target_group_arn
 }
