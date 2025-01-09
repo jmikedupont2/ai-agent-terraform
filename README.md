@@ -1,6 +1,6 @@
-# swarms-terraform
+# ai-agent-terraform
 
-Terraform project for deploying swarms api infrastructure across multiple environments and regions, following best practices with modular structure and automated syntax checks (GitHub Actions)
+Terraform project for deploying [elizaos/eliza, swarms, any other ai chat] api infrastructure across multiple environments and regions, following best practices with modular structure and automated syntax checks (GitHub Actions)
 
 ## Repo structure
 
