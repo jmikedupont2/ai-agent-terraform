@@ -293,7 +293,7 @@ module "lt_dynamic_ami_docker_normal" {
 #   }
 # }
 
-module "asg_dynamic_new_ami_dev_normal" {
+module "asg" {
   # built with packer
   #  count =0
 

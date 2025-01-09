@@ -7,7 +7,7 @@ provider "aws" {
 #variable "google_oauth_client_id" {} 
 
 locals {
-  ami_name = "ubuntu-minimal/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-minimal-*" # useast2id=
+
   dns      = "eliza.introspector.meme"
   region   = "us-east-2"
 }
@@ -53,26 +53,21 @@ locals {
 #}
 
 
-data "aws_ami" "ami" { # slow
-   most_recent      = true
-   name_regex       = "^${local.ami_name}"
- }
+#locals {   ami_name = "ubuntu-minimal/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-minimal-*" }
+# data "aws_ami" "ami" { # slow
+#    most_recent      = true
+#    name_regex       = "^${local.ami_name}"
+#  }
 
- module "eliza_server" {
-   count = 0
-  #aws_account_id = local.account
-  aws_account_id  =var.aws_account_id
-  region         = local.region
-  source         = "../../environments/swarms-aws-agent-api/dev/us-east-1" # FIXME rename
-  domain         = local.dns
-  ami_id = data.aws_ami.ami.id
-  name = "eliza"
-  tags = { project = "eliza" }
+locals {
+  # hard coded to save time , fixme use a caching system
+  # we could generate a tf file
+  ami_id = "ami-0325b9a2dfb474b2d"
 }
-
 module "ssm_observer" {
   source = "../../modules/aws/ssm/observability"
-  ami_id = data.aws_ami.ami.id
+  #ami_id = data.aws_ami.ami.id
+  ami_id = local.ami_id
 }
  
 module "ssm_setup" {
@@ -81,3 +76,18 @@ module "ssm_setup" {
   access_log_bucket_name = "tine-session-access-logs"
   project = "tine"
  }
+
+
+ # now after we create the above resources, we can do the following,
+ # FIXME need to add dependencies
+ module "eliza_server" {
+   #count = 0
+  #aws_account_id = local.account
+  aws_account_id  =var.aws_account_id
+  region         = local.region
+  source         = "../../environments/swarms-aws-agent-api/dev/us-east-1" # FIXME rename
+  domain         = local.dns
+  ami_id = local.ami_id #data.aws_ami.ami.id
+  name = "eliza"
+  tags = { project = "eliza" }
+}
