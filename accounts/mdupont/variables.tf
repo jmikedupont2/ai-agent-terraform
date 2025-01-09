@@ -1,6 +1,11 @@
 variable "project_name" {
   type    = string
-  default = "swarms"
+  default = "meta-meme"
+}
+
+variable "profile" {
+  type    = string
+  default = "default"
 }
 
 variable "aws_region" {
@@ -18,10 +23,10 @@ variable "iam_user" {
   default = "mdupont"
 }
 
-variable "table_name" {
-  type    = string
-  default = "swarms"
-}
+#  variable "table_name" {
+#    type    = string
+#    default = "meta-meme"
+#  }
 
 variable "lock_resource" {
   type    = string
