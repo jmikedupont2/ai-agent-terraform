@@ -68,7 +68,7 @@ data "aws_iam_policy_document" "default" {
   
   statement {
     effect    = "Allow"
-    resources = ["arn:aws:s3:::swarms-session-logs*"]
+    resources = ["arn:aws:s3:::tine-session-logs*"] # FIXME must match
     actions = [
       "s3:GetEncryptionConfiguration"
     ]
@@ -145,7 +145,7 @@ data "aws_iam_policy" "AmazonSSMManagedInstanceCore" {
 
 
 resource "aws_iam_role" "ssm" {
-  name = "ssm-swarms-role"
+  name = "ssm-agent-role"
   tags = var.tags
 
   assume_role_policy = jsonencode({
@@ -164,7 +164,7 @@ resource "aws_iam_role" "ssm" {
 }
 
 resource "aws_iam_instance_profile" "ssm" {
-  name = "ssm-swarms-profile"
+  name = "ssm-agent-profile"
   role = aws_iam_role.ssm.name
   tags = var.tags
 }
