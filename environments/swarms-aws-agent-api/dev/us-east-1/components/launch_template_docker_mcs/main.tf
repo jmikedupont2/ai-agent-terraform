@@ -15,7 +15,7 @@ variable "instance_type" {}
 
 locals {
   tags = {
-    project       = "mcs"
+    project       = "agent"
     instance_type = var.instance_type
     name          = var.name
   }

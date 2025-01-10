@@ -85,23 +85,23 @@ module "roles" {
 }
 
 
-module "lt_dynamic_ami_prod" {
-  vpc_id            = local.vpc_id
-  for_each          = toset(var.instance_types)
-  instance_type     = each.key
-  name              = "eliza-ami-${each.key}"
-  security_group_id = module.security.internal_security_group_id
-  ami_id            = local.ami_id
-  key_name          = var.key_name
-  tags = merge(local.tags, {
-    environment = "production"
-  })
-  source                             = "./components/launch_template"
-  iam_instance_profile_name          = module.roles.ssm_profile_name
-  install_script                     = "/opt/eliza/api/just_run.sh"
-  ssm_parameter_name_cw_agent_config = "arn:aws:ssm:${var.region}:${var.aws_account_id}:parameter/cloudwatch-agent/config"
-  branch                             = "feature/ec2"
-}
+# module "lt_dynamic_ami_prod" {
+#   vpc_id            = local.vpc_id
+#   for_each          = toset(var.instance_types)
+#   instance_type     = each.key
+#   name              = "eliza-ami-${each.key}"
+#   security_group_id = module.security.internal_security_group_id
+#   ami_id            = local.ami_id
+#   key_name          = var.key_name
+#   tags = merge(local.tags, {
+#     environment = "production"
+#   })
+#   source                             = "./components/launch_template"
+#   iam_instance_profile_name          = module.roles.ssm_profile_name
+#   install_script                     = "/opt/eliza/api/just_run.sh"
+#   ssm_parameter_name_cw_agent_config = "arn:aws:ssm:${var.region}:${var.aws_account_id}:parameter/cloudwatch-agent/config"
+#   branch                             = "feature/ec2"
+# }
 
 module "lt_dynamic_ami_test" {
   branch            = "feature/cloudwatch"
@@ -320,7 +320,7 @@ output "security_group_id" {
 
 module "eliza" {
   source                     = "./mcs" # fixme rename to eliza
-  branch =    "feature/reduce_modules_discord"
+  branch =    "feature/aws"
   #git_repo = "https://github.com/meta-introspector/eliza-MedicalCoderSwarm-deployment.git"
   git_repo = "https://github.com/meta-introspector/cloud-deployment-eliza/"
 #  alb_target_group_arn       = module.alb.mcs_alb_target_group_arn
@@ -334,7 +334,7 @@ module "eliza" {
   tags                       = local.tags
   ami_id                     = local.ami_id
   vpc_id                     = local.vpc_id
-  name = "docker-mcs-ami"
+  name = "docker-agent-ami"
 }
 
 # module "agent_dev" {

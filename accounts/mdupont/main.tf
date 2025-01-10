@@ -61,7 +61,7 @@ locals {
 
 locals {
   # hard coded to save time , fixme use a caching system
-  # we could generate a tf file
+
   ami_id = "ami-0325b9a2dfb474b2d"
 }
 module "ssm_observer" {

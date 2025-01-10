@@ -1,7 +1,5 @@
 variable name {}
-variable branch {
-  default = "feature/mcs"
-}
+variable branch {}
 
 variable git_repo {
   default = "https://github.com/jmikedupont2/swarms-MedicalCoderSwarm-deployment.git"
@@ -38,20 +36,20 @@ module "lt_docker" {
   vpc_id            = var.vpc_id
   for_each          = toset(var.instance_types)
   instance_type     = each.key
-  name              = "mcs-docker-${each.key}"
+  name              = "agent-docker-${each.key}"
   security_group_id = var.internal_security_group_id
   ami_id            = var.ami_id
   git_repo          = var.git_repo
-  app_name          = "mcs" # used to construct /opt/mcs for where we install to
+  app_name          = "agent" # used to construct /opt/agent for where we install to
   tags = merge(var.tags, {
-    environment = "mcs"
+    environment = "agent"
   })
 
   key_name                           = var.key_name #"mdupont-deployer-key"
   ssm_parameter_name_cw_agent_config = "arn:aws:ssm:${var.region}:${var.aws_account_id}:parameter/cloudwatch-agent/config/details"
   iam_instance_profile_name          = var.iam_instance_profile_name
-  #install_script = "/opt/mcs/api/docker-boot.sh" this is called from ssm for a refresh
-  install_script = "/opt/mcs/api/rundocker.sh"
+  #install_script = "/opt/agent/api/docker-boot.sh" this is called from ssm for a refresh
+  install_script = "/opt/agent/rundocker.sh"
 }
 
 

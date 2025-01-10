@@ -439,3 +439,6 @@ This structure facilitates a modular, maintainable, and automated approach to in
 
 
 It seems you might want to continue with a task or scenario related to the previous content but haven't specified what you'd like next. If you need more details or a specific aspect of the Terraform setup, architecture diagram, or other inquiries, please let me know, and I'll be glad to assist!
+
+
+aws ssm start-session --target i-0e156165e86473c93 --profile mdupont --region us-east-2
