@@ -26,7 +26,18 @@ variable "instance_types" {
   default = [
     #"t3.small",
     #    "t2.medium" #
-    "t3.medium"
+    #"t3.medium"
+    #    "t4g.nano",
+    "t3a.nano", "t3.nano", "t2.nano",
+    #    "t4g.micro",
+    "t3a.micro", "t3.micro", "t2.micro",
+    #"t1.micro",
+#    "t4g.small",
+    "t3a.small",
+    "t3.small",
+    "t2.small", 
+    "t3.medium"  # works for sure
+    # fixme pass this list in
   ]
 }
 
