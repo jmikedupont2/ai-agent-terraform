@@ -9,14 +9,10 @@ locals {
   project  = "ai-token-team" # dont change
 }
 
-locals {
-  # hard coded to save time , fixme use a caching system
-#  ami_id = "ami-0325b9a2dfb474b2d"
-}
 module "ssm_observer" {
   source = "../../modules/aws/ssm/observability"
-  #ami_id = data.aws_ami.ami.id
-  ami_id = local.ami_id
+  ami_id = data.aws_ami.ami.id
+
 }
  
 module "ssm_setup" {
@@ -26,17 +22,34 @@ module "ssm_setup" {
   project = local.project
  }
 
+locals {   ami_name = "ubuntu-minimal/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-minimal-*" }
+ data "aws_ami" "ami" { # slow
+    most_recent      = true
+    name_regex       = "^${local.ami_name}"
+  }
 
  module "eliza_server" {
    #count = 0
    #aws_account_id = local.account
    aws_account_id  =var.aws_account_id
    region         = local.region
-   source         = "../../environments/swarms-aws-agent-api/dev/us-east-1" # FIXME rename
+   source         = "../../environments/eliza-agent-api/" # FIXME rename
    domain         = local.dns
-   ami_id = local.ami_id #data.aws_ami.ami.id
+   ami_id = data.aws_ami.ami.id
    name = local.project
-   key_name=  = "ai-token-deployer-key"
+   project = local.project
+   key_name =  "ai-token-deployer-key"
    tags = { project = local.project }
-   ami_name = "ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-server-*"
-}
+
+   branch = "feature/AI_Token_Team"
+   spot_max_price  = 0.028
+   instance_types = [
+    "t3a.small",
+#    "t3.small",
+#    "t2.small", 
+#    "t3.medium"  # works for sure
+
+ ]
+
+   aws_availability_zones = ["us-west-1a","us-west-1b","us-west-1c"]
+ }

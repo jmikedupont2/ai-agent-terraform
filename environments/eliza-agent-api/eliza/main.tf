@@ -1,20 +1,14 @@
 variable name {}
+#variable ami_name {}
 variable branch {}
-
-variable git_repo {
-  default = "https://github.com/jmikedupont2/swarms-MedicalCoderSwarm-deployment.git"
-}
+variable git_repo {}
 
 variable "ec2_subnet_id" {}
 #variable "alb_target_group_arn" {}
 variable "aws_account_id" {}
 variable "vpc_id" {}
-# FIXME security, we use the ami of swarms for speed but want to split
 variable "ami_id" {}
-# FIXME security, we use the sg of swarms for speed but want to split
 variable "internal_security_group_id" {}
-
-# FIXME security, we use the profile of swarms for speed but want to split
 variable "iam_instance_profile_name" {}
 variable "ssm_profile_arn" {}
 variable "key_name" {}
@@ -23,24 +17,6 @@ variable "tags" {}
 
 variable "instance_types" {
   type = list(string)
-  default = [
-    #"t3.small",
-    #    "t2.medium" #
-    #"t3.medium"
-    #    "t4g.nano",
-    #"t3a.nano", "t3.nano", "t2.nano",  connection refused
-    #    "t4g.micro",
-    #"t3a.micro",
-    #"t3.micro",
-    #"t2.micro", failed to boot docker
-    #"t1.micro",
-#    "t4g.small",
-    "t3a.small",
-    "t3.small",
-    "t2.small", 
-    "t3.medium"  # works for sure
-    # fixme pass this list in
-  ]
 }
 
 module "lt_docker" {
