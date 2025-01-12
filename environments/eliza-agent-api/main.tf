@@ -1,28 +1,27 @@
-variable "spot_max_price" {
+vasriable "spot_max_price" {
   default = 0.028
 }
 variable "region" {}
-variable "key_name" {
-  default = "mdupont-deployer-key" # FIXME: move to settings
-}
-locals {
-  #  instance_type = "t3.large"
-  #  instance_type = "t3.medium"
-  ami_name = "ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-server-*"
-  name     = "eliza"
-  domain   = var.domain
-  tags = {
-    project = "eliza"
-  }
-  dev_tags = {
-    sandbox = "kye"
-  }
-}
 variable "domain" {}
 variable "aws_account_id" {}
 variable "ami_id" {}
 variable "tags" {}
 variable "name" {}
+
+variable "key_name" {
+#  default = "mdupont-deployer-key" # FIXME: move to settings
+}
+locals {
+  #  instance_type = "t3.large"
+  #  instance_type = "t3.medium"
+  ami_name = "ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-server-*"
+  name     = var.project
+  domain   = var.domain
+  tags = {
+    project = var.project
+  }
+  dev_tags = {  }
+}
 
 
 locals {

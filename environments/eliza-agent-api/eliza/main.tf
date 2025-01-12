@@ -28,9 +28,11 @@ variable "instance_types" {
     #    "t2.medium" #
     #"t3.medium"
     #    "t4g.nano",
-    "t3a.nano", "t3.nano", "t2.nano",
+    #"t3a.nano", "t3.nano", "t2.nano",  connection refused
     #    "t4g.micro",
-    "t3a.micro", "t3.micro", "t2.micro",
+    #"t3a.micro",
+    #"t3.micro",
+    #"t2.micro", failed to boot docker
     #"t1.micro",
 #    "t4g.small",
     "t3a.small",
