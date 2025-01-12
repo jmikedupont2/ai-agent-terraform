@@ -1,14 +1,12 @@
+variable aws_availability_zones {}
 variable instance_types {}
 variable "spot_max_price" {}
 variable "branch" {}
 variable "project" {}
-
 variable "region" {}
 variable "domain" {}
 variable "aws_account_id" {}
 variable "ami_id" {}
-#variable "ami_name" {}
-
 variable "tags" {}
 variable "name" {}
 variable "key_name" {}
