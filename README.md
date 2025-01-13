@@ -442,3 +442,42 @@ It seems you might want to continue with a task or scenario related to the previ
 
 
 aws ssm start-session --target i-0e156165e86473c93 --profile mdupont --region us-east-2
+
+aws ssm put-parameter     --name "agent_openai_key"  --value "${OPENAI_API_KEY}" --type String
+
+│ Error: reading SSM Parameter (arn:aws:ssm:us-east-1:AKIA4SYAMCQ5MMLC6NU3:parameter/cloudwatch-agent/config/details): operation error SSM: GetParameter, https response error StatusCode: 400, RequestID: 159177cb-91f0-4c2e-a354-07cdc2e64041, api error ValidationException: Invalid Account Id in: arn:aws:ssm:us-east-1:AKIA4SYAMCQ5MMLC6NU3:parameter/cloudwatch-agent/config/details
+│ 
+│   with module.eliza_server.module.eliza.module.lt_docker["t3a.small"].data.aws_ssm_parameter.cw_agent_config,
+│   on ../../environments/eliza-agent-api/components/launch_template_docker_mcs/main.tf line 77, in data "aws_ssm_parameter" "cw_agent_config":
+│   77: data "aws_ssm_parameter" "cw_agent_config" {
+
+tofu apply --target module.ssm_observer.aws_ssm_parameter.cw_agent_config --target module.ssm_observer.aws_ssm_parameter.cw_agent_config_details
+
++`aws ecr list-images --profile swarms --region us-east-2 --repository-name swarms/mcs`
+
+docker login -u AWS -p $(aws ecr get-login-password --region us-east-2) 767503528736.dkr.ecr.us-east-2.amazonaws.com'       767503528736.dkr.ecr.us-east-2.amazonaws.com/agent/eliza:latest
+
+# setup 
+we dont use terraform for the ecr or the secrets because they will change so often here are the simple aws scripts for them.
+
+`aws ecr create-repository --repository-name agent/eliza`
+
+`set_secrets.sh` calls
+`aws ssm put-parameter     --name "agent_openai_key"  --value "${OPENAI_API_KEY}" --type String`
+
+## connecting with server
+
+`ssh-ssm.py` to find the server
+ 
+for example:
+`aws ssm start-session --target i-0e156165e86473c93 --profile mdupont --region us-east-2`
+
+## terraform-aws-oidc-github
+https://github.com/jmikedupont2/terraform-aws-oidc-github
+
+in my time 2024/12/18/terraform-aws-oidc-github on branch
+run the tofu apply in the example after editing the variables and files.
+
+# debug
+`pnpm start:debug --characters=./characters/eliza.character.json`
+start direct client here 

@@ -12,7 +12,6 @@ locals {
 module "ssm_observer" {
   source = "../../modules/aws/ssm/observability"
   ami_id = data.aws_ami.ami.id
-
 }
  
 module "ssm_setup" {
@@ -22,10 +21,13 @@ module "ssm_setup" {
   project = local.project
  }
 
-locals {   ami_name = "ubuntu-minimal/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-minimal-*" }
+ locals {
+   ami_name = "ubuntu-minimal/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-minimal-*"
+ }
  data "aws_ami" "ami" { # slow
-    most_recent      = true
-    name_regex       = "^${local.ami_name}"
+   most_recent      = true
+   owners       = ["679593333241"]
+   name_regex       = "^${local.ami_name}"
   }
 
  module "eliza_server" {
