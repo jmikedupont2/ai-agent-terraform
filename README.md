@@ -481,3 +481,19 @@ run the tofu apply in the example after editing the variables and files.
 # debug
 `pnpm start:debug --characters=./characters/eliza.character.json`
 start direct client here 
+
+# set the az 
+	 #~/terraform/accounts/AI_Token_Team/main.tf
+edit 
+   aws_availability_zones = ["us-west-1a","us-west-1b","us-west-1c"]
+
+if you ge the errro :
+00000003]
+module.ssm_setup.module.ssm.aws_s3_bucket_lifecycle_configuration.access_log_bucket: Creation complete after 32s [id=ai-token-team-session-access-logs-20250113203757298300000002]
+╷
+│ Error: creating EC2 Subnet: operation error EC2: CreateSubnet, https response error StatusCode: 400, RequestID: 05eeaa25-0855-4d71-8945-04b0d6233520, api error InvalidParameterValue: Value (us-west-1b) for parameter availabilityZone is invalid. Subnets can currently only be created in the following availability zones: us-east-1a, us-east-1b, us-east-1c, us-east-1d, us-east-1e, us-east-1f.
+│ 
+│   with module.eliza_server.module.vpc.module.vpc.aws_subnet.public[1],
+│   on .terraform/modules/eliza_server.vpc.vpc/main.tf line 98, in resource "aws_subnet" "public":
+│   98: resource "aws_subnet" "public" {
+│ 
