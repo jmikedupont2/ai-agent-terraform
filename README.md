@@ -497,3 +497,24 @@ module.ssm_setup.module.ssm.aws_s3_bucket_lifecycle_configuration.access_log_buc
 │   on .terraform/modules/eliza_server.vpc.vpc/main.tf line 98, in resource "aws_subnet" "public":
 │   98: resource "aws_subnet" "public" {
 │ 
+
+
+nter a value: yes
+
+# key pair
+module.eliza_server.module.eliza.module.asg["t3a.small"].module.autoscaling.aws_autoscaling_group.this[0]: Creating...
+╷
+│ Error: creating Auto Scaling Group (docker-agent-ami-t3a.small-20250113205357496400000001): operation error Auto Scaling: CreateAutoScalingGroup, https response error StatusCode: 400, RequestID: 380d0f57-bf60-40fd-ace6-d86563107c85, api error ValidationError: You must use a valid fully-formed launch template. The key pair  does not exist
+│ 
+│   with module.eliza_server.module.eliza.module.asg["t3a.small"].module.autoscaling.aws_autoscaling_group.this[0],
+│   on .terraform/modules/eliza_server.eliza.asg.autoscaling/main.tf line 347, in resource "aws_autoscaling_group" "this":
+│  347: resource "aws_autoscaling_group" "this" {
+│
+edit 
+~/terraform/environments/eliza-agent-api/components/keypairs/main.tf
+
+resource "aws_key_pair" "deployer" {
+   key_name   = "ai-token-deployer-key"
+   public_key = "<insert your personal cat ~/.ssh/id_pub.rsa"
+}
+
