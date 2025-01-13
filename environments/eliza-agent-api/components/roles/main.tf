@@ -27,11 +27,11 @@ data "aws_iam_policy_document" "default" {
     resources = ["*"]
   }
  
-  statement {
-    actions   = ["kms:Decrypt"]
-    resources = ["arn:aws:kms:us-east-2:916723593639:key/cc8e1ee7-a05b-4642-bd81-ba5548635590"]
-    effect    = "Allow"
-  }
+#  statement {
+#    actions   = ["kms:Decrypt"]
+#    resources = ["arn:aws:kms:us-east-2:916723593639:key/cc8e1ee7-a05b-4642-bd81-ba5548635590"]
+#    effect    = "Allow"
+#  }
 
   statement {
     actions = [
@@ -68,7 +68,7 @@ data "aws_iam_policy_document" "default" {
   
   statement {
     effect    = "Allow"
-    resources = ["arn:aws:s3:::tine-session-logs*"] # FIXME must match
+    resources = ["arn:aws:s3:::*session-logs*"] # FIXME must match
     actions = [
       "s3:GetEncryptionConfiguration"
     ]
