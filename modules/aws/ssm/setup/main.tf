@@ -20,13 +20,13 @@ resource "aws_cloudwatch_log_group" "app_signals" {
   for_each          = toset(["ec2", "eks", "generic", "k8s"])
   name              = "/aws/appsignals/${each.key}"
   retention_in_days = 30
-  kms_key_id        = "arn:aws:kms:us-east-2:916723593639:key/cc8e1ee7-a05b-4642-bd81-ba5548635590"
+#  kms_key_id        = "arn:aws:kms:us-east-2:916723593639:key/cc8e1ee7-a05b-4642-bd81-ba5548635590"
 }
 
 resource "aws_cloudwatch_log_group" "app_signals2" {
   for_each          = toset(["data"])
   name              = "/aws/application-signals/${each.key}"
   retention_in_days = 30
-  kms_key_id        = "arn:aws:kms:us-east-2:916723593639:key/cc8e1ee7-a05b-4642-bd81-ba5548635590"
+#  kms_key_id        = "arn:aws:kms:us-east-2:916723593639:key/cc8e1ee7-a05b-4642-bd81-ba5548635590"
 }
 
