@@ -1,6 +1,7 @@
 provider "aws" {
   region  = "us-west-1"
-  profile = "ai-token-team"
+  #profile = "ai-token-team"
+  profile = "default"
 }
 
 locals {
@@ -16,8 +17,8 @@ module "ssm_observer" {
  
 module "ssm_setup" {
   source = "../../modules/aws/ssm/setup"
-  bucket_name = "${local.project}session-logs"
-  access_log_bucket_name = "${local.project}-session-access-logs"
+  bucket_name = "${local.project}-session-logs"
+  access_log_bucket_name = "${local.project}-ssm-access-logs"
   project = local.project
  }
 
