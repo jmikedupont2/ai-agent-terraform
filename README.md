@@ -3,6 +3,8 @@
 ```
 git clone https://github.com/aitokenteam/ai-agent-terraform.git
 cd ai-agent-terraform/accounts/AI_Token_Team/
+git checkout feature/aitokenteam
+
 tofu init
 
 aws ecr create-repository --repository-name agent/eliza
