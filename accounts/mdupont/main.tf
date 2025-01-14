@@ -103,3 +103,8 @@ module "ssm_setup" {
   name = "eliza"
   tags = { project = "eliza" }
 }
+
+
+module "codebuild" {
+  source         = "./codebuild"
+}
