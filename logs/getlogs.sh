@@ -40,4 +40,5 @@ NEW_DATE=$(date -u -r ${FILENAME} +%FT%TZ)
 echo NEW_DATE $NEW_DATE
 
 # now look for the latest logs/$(date -d "today" +"%Y%m%d%H%M").log files and get the start time of them and use that -10 seconds to start the new one, we want all events newer than our latest 
-aws cloudtrail lookup-events  --profile swarms --region us-east-2 --max-items 1000 --start-time $NEW_DATE  --output json >>  logs/$(date -d "today" +"%Y%m%d%H%M").log
+aws cloudtrail lookup-events  --profile swarms --region us-east-2 --start-time $NEW_DATE  --output json >>  logs/$(date -d "today" +"%Y%m%d%H%M").log
+# --max-items 1000 

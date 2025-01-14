@@ -1,5 +1,8 @@
 variable "vpc_id" {}
 variable "name_prefix" {}
+variable "check_path" {
+default =     "/v1/docs" # the docs api
+}
 resource "aws_lb_target_group" "this" {
   name_prefix          = var.name_prefix
   protocol             = "HTTP"
@@ -13,7 +16,9 @@ resource "aws_lb_target_group" "this" {
   protocol_version = "HTTP1"
   #
   health_check {
-    path                = "/v1/docs" # the docs api
+    path                = var.check_path #"/v1/docs" # the docs api
+    #"/v1/medical-coder/patients"
+    
     enabled             = true
     healthy_threshold   = 10
     interval            = 130

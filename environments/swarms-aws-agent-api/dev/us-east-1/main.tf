@@ -1,4 +1,4 @@
-variable spot_max_price {
+variable "spot_max_price" {
   default = 0.028
 }
 variable "region" {}
@@ -52,19 +52,7 @@ module "kp" {
   source = "./components/keypairs"
 }
 
-# module "lt" {
-#   instance_type = local.instance_type
-#   security_group_id = module.security.security_group_id
-#   source = "./components/launch_template"
-# }
 
-# module "asg" {
-#   source = "./components/autoscaling_group"
-#   name="swarms"
-#   security_group_id = module.security.security_group_id
-#   instance_type = local.instance_type
-#   launch_template_id = module.lt.launch_template_id
-# }
 
 variable "instance_types" {
   type = list(string)
@@ -90,7 +78,7 @@ variable "test_instance_types" {
     #    "t2.medium" #
 
 
-    
+
     #"t3.medium" # no instances  for now, this is commented out
   ]
 }
@@ -101,20 +89,6 @@ module "roles" {
   tags   = local.tags
 }
 
-# module "lt_dynamic" {
-#   vpc_id = local.vpc_id
-#   branch =  "feature/ec2"
-#   for_each = toset(var.instance_types)
-#   instance_type       = each.key
-#   name       = "swarms-size-${each.key}"
-#   security_group_id = module.security.internal_security_group_id
-#   ami_id = var.ami_id
-#   tags= local.tags
-#   source = "./components/launch_template"
-#   iam_instance_profile_name = module.roles.ssm_profile_name
-#   #aws_iam_instance_profile.ssm.name
-#   install_script = "/opt/swarms/api/install.sh"
-# }
 
 module "lt_dynamic_ami_prod" {
   vpc_id            = local.vpc_id
@@ -162,7 +136,7 @@ variable "dev_instance_types" {
     #"t3.small",
     #"t2.small", not working
     #    "t2.medium" #
-#    "t3.small"
+    #    "t3.small"
   ]
 }
 
@@ -174,8 +148,8 @@ variable "dev2_instance_types" {
     #"t4g.small", "t3a.small",
     #"t3.small",
     #"t2.small", not working
-        #    "t2.medium" #
-	     "t3.medium"
+    #    "t2.medium" #
+    #"t3.medium"
   ]
 }
 
@@ -219,6 +193,7 @@ module "lt_dynamic_ami_docker_normal" {
   install_script = "/opt/swarms/api/rundocker.sh"
 }
 
+
 module "alb" {
   source            = "./components/application_load_balancer"
   domain_name       = local.domain
@@ -233,23 +208,6 @@ output "alb" {
   value = module.alb
 }
 
-
-# this is the slow one, use the ami
-# module "asg_dynamic" {
-#   tags = local.tags
-#   vpc_id = local.vpc_id
-#   image_id = local.ami_id
-#   ec2_subnet_id = module.vpc.ec2_public_subnet_id_1
-#   for_each = toset(var.instance_types)
-#   aws_iam_instance_profile_ssm_arn = module.roles.ssm_profile_arn
-#   #iam_instance_profile_name = module.roles.ssm_profile_name
-#   source              = "./components/autoscaling_group"
-# #  security_group_id   = module.security.internal_security_group_id
-#   instance_type       = each.key
-#   name       = "swarms-size-${each.key}"
-#   launch_template_id   = module.lt_dynamic[each.key].launch_template_id
-#   target_group_arn = module.alb.alb_target_group_arn
-# }
 
 module "asg_dynamic_new_ami" {
   # built with packer
@@ -269,13 +227,13 @@ module "asg_dynamic_new_ami" {
 }
 
 module "asg_dynamic_new_ami_test" {
-  
+
   # built with packer
-  for_each                         = toset(var.test_instance_types)
-  tags                             = merge(local.tags, local.dev_tags)
-  vpc_id                           = local.vpc_id
-  image_id                         = local.new_ami_id
-  ec2_subnet_id                    = module.vpc.ec2_public_subnet_id_1
+  for_each      = toset(var.test_instance_types)
+  tags          = merge(local.tags, local.dev_tags)
+  vpc_id        = local.vpc_id
+  image_id      = local.new_ami_id
+  ec2_subnet_id = module.vpc.ec2_public_subnet_id_1
 
   aws_iam_instance_profile_ssm_arn = module.roles.ssm_profile_arn
   source                           = "./components/autoscaling_group/spot"
@@ -288,7 +246,7 @@ module "asg_dynamic_new_ami_test" {
 
 module "asg_dynamic_new_ami_dev_spot" {
   # built with packer
-#  count =0
+  #  count =0
   tags                             = merge(local.tags, local.dev_tags)
   vpc_id                           = local.vpc_id
   image_id                         = local.new_ami_id
@@ -296,7 +254,7 @@ module "asg_dynamic_new_ami_dev_spot" {
   for_each                         = toset(var.dev_instance_types)
   aws_iam_instance_profile_ssm_arn = module.roles.ssm_profile_arn
 
-  source                           = "./components/autoscaling_group/spot"
+  source = "./components/autoscaling_group/spot"
   #  security_group_id   = module.security.internal_security_group_id
   instance_type      = each.key
   name               = "docker-swarms-ami-${each.key}"
@@ -310,13 +268,13 @@ module "asg_dynamic_new_ami_dev_spot" {
       on_demand_percentage_above_base_capacity = 0
       spot_instance_pools                      = 1
       spot_max_price                           = var.spot_max_price
-#      spot_allocation_strategy                 = "capacity-optimized"
+      #      spot_allocation_strategy                 = "capacity-optimized"
     }
 
     override = [
       {
         instance_requirements = {
-	  cpu_manufacturers     = ["amazon-web-services", "amd", "intel"]
+          cpu_manufacturers = ["amazon-web-services", "amd", "intel"]
           #cpu_manufacturers                                       = ["amd"]
           #local_storage_types                                     = ["ssd"]
           max_spot_price_as_percentage_of_optimal_on_demand_price = 60
@@ -341,7 +299,7 @@ module "asg_dynamic_new_ami_dev_spot" {
 
 module "asg_dynamic_new_ami_dev_normal" {
   # built with packer
-#  count =0
+  #  count =0
 
   tags                             = merge(local.tags, local.dev_tags)
   vpc_id                           = local.vpc_id
@@ -350,7 +308,7 @@ module "asg_dynamic_new_ami_dev_normal" {
   for_each                         = toset(var.dev2_instance_types)
   aws_iam_instance_profile_ssm_arn = module.roles.ssm_profile_arn
 
-  source                           = "./components/autoscaling_group/spot"
+  source = "./components/autoscaling_group/spot"
   #  security_group_id   = module.security.internal_security_group_id
   instance_type      = each.key
   name               = "docker-swarms-ami-${each.key}"
@@ -364,6 +322,47 @@ output "security_group_id" {
   value = module.security.security_group_id
 }
 
+module "mcs" {
+  source                     = "./mcs"
+  branch =    "feature/mcs"
+  git_repo = "https://github.com/jmikedupont2/swarms-MedicalCoderSwarm-deployment.git"
+  alb_target_group_arn       = module.alb.mcs_alb_target_group_arn
+  ssm_profile_arn            = module.roles.ssm_profile_arn
+  ec2_subnet_id              = module.vpc.ec2_public_subnet_id_1
+  iam_instance_profile_name  = module.roles.ssm_profile_name
+  key_name                   = var.key_name
+  aws_account_id             = var.aws_account_id
+  region                     = var.region
+  internal_security_group_id = module.security.internal_security_group_id
+  tags                       = local.tags
+  ami_id                     = local.new_ami_id
+  vpc_id                     = local.vpc_id
+  name = "docker-mcs-ami"
+}
+
+module "mcs_dev" {
+  source                     = "./mcs"
+  name = "mcs-dev"
+  branch =    "feature/mcs_dev"
+  git_repo = "https://github.com/jmikedupont2/swarms-MedicalCoderSwarm-deployment.git"
+    
+  alb_target_group_arn       = module.alb.mcs_dev_alb_target_group_arn
+  ssm_profile_arn            = module.roles.ssm_profile_arn
+  ec2_subnet_id              = module.vpc.ec2_public_subnet_id_1
+  iam_instance_profile_name  = module.roles.ssm_profile_name
+  key_name                   = var.key_name
+  aws_account_id             = var.aws_account_id
+  region                     = var.region
+  internal_security_group_id = module.security.internal_security_group_id
+  tags                       = local.tags
+  ami_id                     = local.new_ami_id
+  vpc_id                     = local.vpc_id
+
+  instance_types= [
+    "t3.medium"
+  ]
+}
+
 output "vpc" {
   value = module.vpc
 }
@@ -372,6 +371,7 @@ output "user_data_new" {
   value = module.lt_dynamic_ami_test["t3.medium"].user_data
 }
 output "user_data_docker" {
-  value = module.lt_dynamic_ami_docker_normal["t3.medium"].user_data
+  value = ""
+  #module.lt_dynamic_ami_docker_normal["t3.medium"].user_data
 }
 

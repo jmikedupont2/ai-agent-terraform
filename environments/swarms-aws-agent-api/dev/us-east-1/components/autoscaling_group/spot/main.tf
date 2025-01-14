@@ -38,15 +38,15 @@ module "autoscaling" {
       traffic_source_type       = "elbv2" # default
     }
   }
-  
-  health_check_type      = "EC2"
-  desired_capacity       = 1
-  desired_capacity_type       = "units"
-  max_size               = 2
-  min_size               = 1
-  create = true
-  capacity_rebalance     = false
-  
+
+  health_check_type     = "EC2"
+  desired_capacity      = 1
+  desired_capacity_type = "units"
+  max_size              = 2
+  min_size              = 1
+  create                = true
+  capacity_rebalance    = false
+
   create_launch_template = false
   update_default_version = true
 

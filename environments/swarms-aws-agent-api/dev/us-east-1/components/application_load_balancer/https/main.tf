@@ -4,6 +4,8 @@ variable "zone_id" {}
 variable "prod_target_group_arn" {}
 variable "test_target_group_arn" {}
 variable "dev_target_group_arn" {}
+variable "mcs_target_group_arn" {}
+variable "mcs_dev_target_group_arn" {}
 
 module "acm" {
   #  count = 0
@@ -61,6 +63,38 @@ resource "aws_lb_listener_rule" "route_v1_api_dev" {
   condition {
     host_header {
       values = ["dev.api.swarms.ai"]
+    }
+  }
+}
+
+resource "aws_lb_listener_rule" "route_v1_api_mcs" {
+  listener_arn = aws_lb_listener.this.arn
+  priority     = 101 # Set priority as needed, must be unique
+
+  action {
+    type             = "forward"
+    target_group_arn = var.mcs_target_group_arn # New target group's ARN
+  }
+
+  condition {
+    host_header {
+      values = ["mcs.api.swarms.ai"]
+    }
+  }
+}
+
+resource "aws_lb_listener_rule" "route_v1_api_mcs_dev" {
+  listener_arn = aws_lb_listener.this.arn
+  priority     = 102 # Set priority as needed, must be unique
+
+  action {
+    type             = "forward"
+    target_group_arn = var.mcs_dev_target_group_arn # New target group's ARN
+  }
+
+  condition {
+    host_header {
+      values = ["dev.mcs.api.swarms.ai"]
     }
   }
 }

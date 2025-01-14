@@ -173,7 +173,21 @@ tofu apply   -var "github_token=$(gh auth token)"
 see this branch for the pike generated policies
 https://github.com/jmikedupont2/terraform-aws-oidc-github/pull/1
 
+Latest repos added here:
+https://github.com/unfunco/terraform-aws-oidc-github/commit/041576683835e6db4b2a62da7db93f15e52b29ee
+
+see usage here:
+https://github.com/jmikedupont2/swarms-terraform/blob/feature/call_swarms/.github/workflows/call-swarms.yml
 
 ```
 tofu apply -target "module.swarms_api.module.asg_dynamic_new_ami_dev[\"t3.small\"].module.autoscaling.aws_autoscaling_group.this[0]"
 ```
+
+check the build
+`aws ecr list-images --profile swarms --region us-east-2 --repository-name swarms/mcs`
+
+
+# policy
+see ~/2024/12/18/terraform-aws-oidc-github/examples/complete
+arn:aws:iam::916723593639:policy/terraform_pike20241218205424118000000001
+iam_role_arn = "arn:aws:iam::916723593639:role/github

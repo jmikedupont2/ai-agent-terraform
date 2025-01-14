@@ -35,9 +35,12 @@ https://github.com/cloudposse/terraform-aws-ssm-iam-role.git
 9. look at  natgw alternatives
 that costs money https://aws.amazon.com/vpc/pricing/
 10. check in copy of swagger
-
 11. swarms router
 12. fluid api
 13. agent service discovery
 14. setup ticketing interface
-15. 
+10. packer ami for ubuntu python uvicorn fastapi nginx systemd server with custom git modules
+11. setup cicd
+12. create job to generate diagrams and documentation from site
+13. use agent to improve code
+

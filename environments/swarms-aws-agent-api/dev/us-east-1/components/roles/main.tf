@@ -7,6 +7,26 @@ data "aws_iam_policy_document" "default" {
     effect    = "Allow"
   }
 
+
+  statement  {
+    effect= "Allow"
+    actions= [
+      "ecr:GetAuthorizationToken",
+      "ecr:BatchCheckLayerAvailability",
+      "ecr:GetDownloadUrlForLayer",
+      "ecr:GetRepositoryPolicy",
+      "ecr:DescribeRepositories",
+      "ecr:ListImages",
+      "ecr:DescribeImages",
+      "ecr:BatchGetImage",
+      "ecr:GetLifecyclePolicy",
+      "ecr:GetLifecyclePolicyPreview",
+      "ecr:ListTagsForResource",
+      "ecr:DescribeImageScanFindings"
+    ]
+    resources = ["*"]
+  }
+ 
   statement {
     actions   = ["kms:Decrypt"]
     resources = ["arn:aws:kms:us-east-2:916723593639:key/cc8e1ee7-a05b-4642-bd81-ba5548635590"]
@@ -28,6 +48,24 @@ data "aws_iam_policy_document" "default" {
     effect    = "Allow"
   }
 
+  # statement {
+  #   actions = [
+  #     "ecr:CompleteLayerUpload",
+  #     "ecr:UploadLayerPart",
+  #     "ecr:InitiateLayerUpload",
+  #     "ecr:BatchCheckLayerAvailability",
+  #     "ecr:PutImage",
+  #     "ecr:BatchGetImage"
+  #   ]
+    
+  #   resources = [
+  #     "arn:aws:ecr:us-east-2:916723593639:swarms/mcs"
+  #   ]
+    
+  #   effect    = "Allow"
+  # }
+
+  
   statement {
     effect    = "Allow"
     resources = ["arn:aws:s3:::swarms-session-logs*"]

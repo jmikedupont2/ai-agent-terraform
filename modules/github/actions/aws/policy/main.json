@@ -62,7 +62,7 @@
             "Action": [
                 "xray:PutTraceSegments",
                 "xray:PutTelemetryRecords"
-            ],
+m            ],
             "Resource": "*"
         },
         {
