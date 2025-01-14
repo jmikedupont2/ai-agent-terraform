@@ -89,10 +89,10 @@ module "ssm_setup" {
   source         = "../../environments/eliza-agent-api" 
    domain         = local.dns
    key_name = "mdupont-deployer-key"
-   branch = "feature/micro"
+   branch = "feature/arm64_fastembed"
    project = "tine"
-   #   instance_types = ["t4g.small"] # not big enough for building
-   instance_types = ["t4g.medium"] 
+    instance_types = ["t4g.small"] # not big enough for building
+   #instance_types = ["t4g.medium"] 
    aws_availability_zones =["us-east-2a",
      "us-east-2b",
      "us-east-2c"
