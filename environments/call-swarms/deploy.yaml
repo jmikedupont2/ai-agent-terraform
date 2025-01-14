@@ -1,6 +1,6 @@
 ---
 description: |
-  ### Document name - Deploy Swarms 
+  ### Document name - Deploy Swarms
   ## What does this document do?
   It runs swarms commands
   ## Input Parameters
@@ -25,14 +25,16 @@ parameters:
     allowedPattern: "^.+$"
 
 mainSteps:
-  - action: aws:runShellScript
-    name: Deploy
-    description:Run the script
-    inputs:
-      runCommand:
-        - |
-          #!/bin/bash
-	  cd /opt/swarms/
-	  sudo git remote add {{GitName}} {{GitUrl}}  || echo oops
-          sudo git checkout --force {{GitVersion}}
-	  sudo bash -x /opt/swarms/api/install.sh
+- action: aws:runShellScript
+  name: Deploy
+  inputs:
+    runCommand:
+      - |
+        #!/bin/bash
+        cd /opt/swarms/
+        sudo git remote add {{GitName}} {{GitUrl}}  || echo oops
+        sudo git checkout --force {{GitVersion}}
+        #sudo bash -x /opt/swarms/api/install.sh
+        sudo su -c "bash -e -x /var/swarms/agent_workspace/boot.sh" swarms
+        sudo systemctl daemon-reload
+        systemctl restart swarms-uvicorn || journalctl -xeu swarms-uvicorn.service
