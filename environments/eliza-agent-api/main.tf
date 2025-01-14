@@ -1,3 +1,4 @@
+variable repo{}
 variable aws_availability_zones {}
 variable instance_types {}
 variable "spot_max_price" {}
@@ -62,7 +63,7 @@ module "eliza" {
   source                     = "./eliza" # fixme rename to eliza
 #  ami_name = var.ami_name
   branch =    var.branch
-  git_repo = "https://github.com/meta-introspector/cloud-deployment-eliza/"
+  git_repo = var.repo
   ssm_profile_arn            = module.roles.ssm_profile_arn
   ec2_subnet_id              = module.vpc.ec2_public_subnet_id_1
   iam_instance_profile_name  = module.roles.ssm_profile_name

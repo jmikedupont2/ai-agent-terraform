@@ -92,7 +92,8 @@ module "ssm_setup" {
    branch = "feature/arm64_fastembed"
    project = "tine"
     instance_types = ["t4g.small"] # not big enough for building
-   #instance_types = ["t4g.medium"] 
+   #instance_types = ["t4g.medium"]
+   repo = "https://github.com/meta-introspector/cloud-deployment-eliza/"
    aws_availability_zones =["us-east-2a",
      "us-east-2b",
      "us-east-2c"

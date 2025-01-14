@@ -26,7 +26,6 @@ locals {
   export HOME=/root
   apt update
   apt-get install -y ec2-instance-connect git 
-
   # Install docker
   apt-get install -y cloud-utils apt-transport-https ca-certificates curl software-properties-common
   curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
@@ -37,11 +36,9 @@ locals {
   apt-get update
   apt-get install -y docker-ce
   usermod -aG docker ubuntu
-
-  # Install docker-compose
+  # Install docker-compose FIXME remove this as not needed?
   curl -L https://github.com/docker/compose/releases/download/1.21.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
   chmod +x /usr/local/bin/docker-compose
-
   snap install amazon-ssm-agent --classic || echo oops1
   snap start amazon-ssm-agent || echo oops2
   apt-get install -y --no-install-recommends ca-certificates=20230311 curl=7.88.1-10+deb12u7 |  echo oops
@@ -56,12 +53,10 @@ locals {
   # Enable and start the service using systemctl
   systemctl enable amazon-cloudwatch-agent
   systemctl start amazon-cloudwatch-agent
-
   # Clean up downloaded files
   rm -f amazon-cloudwatch-agent.deb
   # Verify installation
   systemctl status amazon-cloudwatch-agent
-
   if [ ! -d "/opt/${var.app_name}/" ]; then
     git clone ${var.git_repo} "/opt/${var.app_name}/"
   fi
@@ -69,10 +64,8 @@ locals {
   git stash
   git fetch --all # get the latest version
   git checkout --track --force "origin/${var.branch}"
-
   bash -x ${var.install_script}
   EOF
-
 }
 data "aws_ssm_parameter" "cw_agent_config" {
   name = var.ssm_parameter_name_cw_agent_config
