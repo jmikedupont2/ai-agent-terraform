@@ -53,6 +53,8 @@ module "ssm_setup" {
 #    "t3.medium"  # works for sure
 
  ]
-
-   aws_availability_zones = ["us-west-1a","us-west-1b","us-west-1c"]
+   repo = "https://github.com/meta-introspector/cloud-deployment-eliza/"
+   aws_availability_zones = ["us-west-1a",
+     #"us-west-1b",
+     "us-west-1c"]
  }
