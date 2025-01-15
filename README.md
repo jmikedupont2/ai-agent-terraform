@@ -149,3 +149,31 @@ resource "aws_key_pair" "deployer" {
    public_key = "<insert your personal cat ~/.ssh/id_pub.rsa"
 }
 
+# connect via ssm
+
+switch to su 
+`sudo su -`
+
+`cd /opt/agent `
+`git pull `
+`git fetch --all`
+`docker ps`
+`cat /var/log/cloud-init-output`
+`cat /var/log/agent-docker`
+`cat /etc/systemd/system/agent-docker.service`
+`bash /opt/agent/rundocker.sh`
+`aws sts get-caller-identity`
+
+instance/ security/ security group,
+click on security group 
+edit inbound rules, 
+add new rule, do not edit existing.
+custom tcp, port 3000, source (my ip),blank
+use my eliza starter
+https://github.com/meta-introspector/eliza-starter
+
+docker inspect agent-docker.service
+docker logs agent-docker.service
+lsof -iTCP:3000
+
+"TINE-IntrospectorIsNotEliza"

@@ -12,7 +12,7 @@
 module "build" {
   source = "cloudposse/cicd/aws"
   # Cloud Posse recommends pinning every module to a specific version
-  version = "0.22.0"
+  version = "0.20.0"
   namespace   = "main"
   stage       = "staging"
   name        = "arm64-tokenizers"
