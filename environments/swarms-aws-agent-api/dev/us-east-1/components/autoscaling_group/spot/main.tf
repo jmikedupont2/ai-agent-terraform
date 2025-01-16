@@ -1,5 +1,19 @@
+variable "use_mixed_instances_policy" {
+  default = true
+}
+#variable spot_max_price {}
+variable "mixed_instances_policy" {
+  default = null
+  type    = any
+}
+variable "instance_requirements" {
+  #default = null
+  type    = any
+  default = {}
+}
+
 variable "aws_iam_instance_profile_ssm_arn" {}
-#variable target_group_arn{}
+variable "target_group_arn" {}
 variable "name" {}
 variable "instance_type" {}
 variable "launch_template_id" {}
@@ -18,11 +32,21 @@ module "autoscaling" {
   version = "8.0.0"
   name    = var.name
 
-  health_check_type = "EC2"
-  desired_capacity  = 1
-  max_size          = 5
-  min_size          = 1
-
+  traffic_source_attachments = {
+    ex-alb = {
+      traffic_source_identifier = var.target_group_arn
+      traffic_source_type       = "elbv2" # default
+    }
+  }
+  
+  health_check_type      = "EC2"
+  desired_capacity       = 1
+  desired_capacity_type       = "units"
+  max_size               = 2
+  min_size               = 1
+  create = true
+  capacity_rebalance     = false
+  
   create_launch_template = false
   update_default_version = true
 
@@ -43,7 +67,8 @@ module "autoscaling" {
     }
   ]
   instance_type = var.instance_type
-  image_id      = var.image_id
+  #instance_requirements = var.instance_requirements   description = "The attribute requirements for the type of instance. If present then `instance_type` cannot be present"
+  image_id = var.image_id
 
   create_iam_instance_profile = true
   iam_role_name               = "ssm-${var.name}"
@@ -57,13 +82,10 @@ module "autoscaling" {
     AmazonSSMManagedInstanceCore = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
   }
 
-  # #    target_group_arn = 
-  # traffic_source_attachments = {
-  #   ex-alb = {
-  #     traffic_source_identifier = var.target_group_arn
-  #     traffic_source_type       = "elbv2" # default
-  #   }
-  # }
+  #    target_group_arn = 
+
+  use_mixed_instances_policy = var.use_mixed_instances_policy
+  mixed_instances_policy     = var.mixed_instances_policy
 
   # Target scaling policy schedule based on average CPU load
   scaling_policies = {
@@ -109,6 +131,7 @@ module "autoscaling" {
     #     target_value = 800
     #   }
     # }
+
     scale-out = {
       name                      = "scale-out"
       adjustment_type           = "ExactCapacity"

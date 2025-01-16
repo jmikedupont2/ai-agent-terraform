@@ -172,3 +172,8 @@ tofu apply   -var "github_token=$(gh auth token)"
 
 see this branch for the pike generated policies
 https://github.com/jmikedupont2/terraform-aws-oidc-github/pull/1
+
+
+```
+tofu apply -target "module.swarms_api.module.asg_dynamic_new_ami_dev[\"t3.small\"].module.autoscaling.aws_autoscaling_group.this[0]"
+```
