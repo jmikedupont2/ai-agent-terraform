@@ -1,3 +1,57 @@
+# solfunmeme branch of ai-agent terraform
+
+This will deploy the :
+1. solfunmeme dao agent to work for the solfunmeme dao
+1.1. (eliza)
+
+2. solfunmeme web server(done)
+2.1 to vercel 
+2.1.1. (done, manually not terraformed) 
+2.2 to aws (TBD)
+https://codeberg.org/introspector/SOLFUNMEME/issues/25
+
+stakeholders will login via the phantom wallet compatible web app with wallet and be able to vote on important decisions :
+
+3. terraform to admin discord :
+who is admin in 
+	telegram
+	discord
+	
+what versions of what bots with what permissions do we have in telegram
+what software projects are important to work on
+what marketing and listing should we persue
+etc.
+This will be the core of the dao, I will use this as my oracle for every day decisions and try and act in the best interest of the team and hope all of us will.
+
+We are going to build something amazing, I have tons of work ready, many ideas ready to launch when we have this running.
+
+3. the dns records to namecheap. 
+3.1 done manually
+3.2 add terraform
+
+4. cognito with web3 Integration
+https://codeberg.org/introspector/SOLFUNMEME/issues/5
+
+## agent spec : 
+ 
+What the agent will do
+
+resolve tickets :
+	in codeberg and 
+	in github and 
+	later in gitlab, jira
+	
+but talk in: 
+	discord, 
+	telegram, 
+	twitter it should 
+	
+the agent will update the main web page as well.
+we will deploy the main page to terraform as well. 
+
+LANGUAGE API:
+Deploy open lite llm server, connect to multiple backends.
+
 # terraform-template
 
 ```
