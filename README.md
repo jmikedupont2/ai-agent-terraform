@@ -1,3 +1,15 @@
+# one click installer plan
+
+Using cloudformation
+https://github.com/meta-introspector/cfn-tf-meta-introspector/issues/1 still need someone to try this
+
+we want a step by step instructions to setup your aws
+and then they click on this
+https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=tfcfn-custom-type-resources&templateURL=https://s3.amazonaws.com/ianmckay-us-east-1/cfn-tf-custom-types/template.yml
+
+and then we port our repo https://github.com/meta-introspector/ai-agent-terraform/tree/feature/aitokenteam into running inside of cloudformation
+
+
 # solfunmeme branch of ai-agent terraform
 
 This will deploy the :
@@ -172,7 +184,7 @@ start direct client here
 edit 
    aws_availability_zones = ["us-west-1a","us-west-1b","us-west-1c"]
 
-if you ge the errro :
+if you ge the errror:
 00000003]
 module.ssm_setup.module.ssm.aws_s3_bucket_lifecycle_configuration.access_log_bucket: Creation complete after 32s [id=ai-token-team-session-access-logs-20250113203757298300000002]
 ╷
