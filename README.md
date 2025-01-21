@@ -1,3 +1,14 @@
+# cloudformation files
+
+here are files from terraform in clouformation, needs to be cleaned up.
+
+Idea:
+results of cloudformation created from terraformed results.
+use terraform to deploy
+capture as cloudformation
+parameterize
+create one click deploy of cloudformation.
+
 # one click installer plan
 
 Using cloudformation
