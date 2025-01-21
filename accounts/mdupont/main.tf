@@ -105,6 +105,6 @@ module "ssm_setup" {
 }
 
 
-module "codebuild" {
-  source         = "./codebuild"
-}
+#module "codebuild" {
+#  source         = "./codebuild"
+#}
