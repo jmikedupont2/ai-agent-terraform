@@ -1,0 +1,2491 @@
+---
+Metadata:
+  AWSToolsMetrics:
+    IaC_Generator: "arn:aws:cloudformation:us-east-2:767503528736:generatedTemplate/76194614-4a9d-4dd0-93ca-062ee787c2e8"
+Resources:
+  LogsLogStream00i0aa8ffc75f1df9a9400agFEm:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Retain"
+    Properties:
+      LogStreamName: "i-0aa8ffc75f1df9a94"
+      LogGroupName:
+        Ref: "LogsLogGroup00ec2init00XdSv1"
+  IAMRole00ssmmaintenancewindowrole00eX5o1:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::IAM::Role"
+    DeletionPolicy: "Retain"
+    Properties:
+      Path: "/"
+      ManagedPolicyArns:
+      - "arn:aws:iam::aws:policy/service-role/AmazonSSMMaintenanceWindowRole"
+      MaxSessionDuration: 3600
+      RoleName: "ssm-maintenance-window-role"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Action: "sts:AssumeRole"
+          Effect: "Allow"
+          Principal:
+            Service: "ssm.amazonaws.com"
+  EC2SubnetNetworkAclAssociation00aclassoc09db5ff036e7c08c000ldnMC:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::SubnetNetworkAclAssociation"
+    DeletionPolicy: "Retain"
+    Properties:
+      NetworkAclId:
+        Ref: "EC2NetworkAcl00acl0b87f33426d400f4600fIWpi"
+      SubnetId:
+        Ref: "EC2Subnet00subnet0c759a0e56ace0cf300kuJCZ"
+  IAMRole00ecsTaskExecutionRole00P3aho:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::IAM::Role"
+    DeletionPolicy: "Retain"
+    Properties:
+      Path: "/"
+      ManagedPolicyArns:
+      - "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+      MaxSessionDuration: 3600
+      RoleName: "ecsTaskExecutionRole"
+      AssumeRolePolicyDocument:
+        Version: "2008-10-17"
+        Statement:
+        - Action: "sts:AssumeRole"
+          Effect: "Allow"
+          Principal:
+            Service: "ecs-tasks.amazonaws.com"
+          Sid: ""
+
+  LogsLogGroup00elizasystemd006L6Co:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::Logs::LogGroup"
+    DeletionPolicy: "Retain"
+    Properties:
+      FieldIndexPolicies: []
+      LogGroupClass: "STANDARD"
+      RetentionInDays: 30
+      LogGroupName: "/eliza/systemd"
+      DataProtectionPolicy: {}
+  LogsLogGroup00ec2secure00HLf5p:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::Logs::LogGroup"
+    DeletionPolicy: "Retain"
+    Properties:
+      FieldIndexPolicies: []
+      LogGroupClass: "STANDARD"
+      RetentionInDays: 30
+      LogGroupName: "/ec2/secure"
+      DataProtectionPolicy: {}
+  EC2RouteTable00rtb02d2f406c8000f6cf00DdHRf:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::RouteTable"
+    DeletionPolicy: "Retain"
+    Properties:
+      VpcId:
+        Ref: "EC2VPC00vpc0598df0b71c53d43100Engvj"
+      Tags:
+      - Value: "tine-private-us-east-2b"
+        Key: "Name"
+      - Value: "tine"
+        Key: "project"
+  LogsLogStream00i0d3773e4d8aa853650078ZSo:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Retain"
+    Properties:
+      LogStreamName: "i-0d3773e4d8aa85365"
+      LogGroupName:
+        Ref: "LogsLogGroup00ec2init00XdSv1"
+  LogsLogStream00i023f35a2d1ff3959f00fje9T:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Retain"
+    Properties:
+      LogStreamName: "i-023f35a2d1ff3959f"
+      LogGroupName:
+        Ref: "LogsLogGroup00ec2init00XdSv1"
+  CloudFrontOriginRequestPolicy0059781a5b390341f3afcbaf62929ccde100x4TP2:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::CloudFront::OriginRequestPolicy"
+    DeletionPolicy: "Retain"
+    Properties:
+      OriginRequestPolicyConfig:
+        QueryStringsConfig:
+          QueryStringBehavior: "none"
+        Comment: "Policy for custom origin with CORS"
+        HeadersConfig:
+          HeaderBehavior: "whitelist"
+          Headers:
+          - "origin"
+        CookiesConfig:
+          CookieBehavior: "none"
+        Name: "Managed-CORS-CustomOrigin"
+  EC2Route00rtb062cf3e661b03297400GJWbK:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::Route"
+    DeletionPolicy: "Retain"
+    Properties:
+      RouteTableId:
+        Ref: "EC2RouteTable00rtb062cf3e661b03297400OlCLI"
+      DestinationCidrBlock:
+        Fn::GetAtt:
+        - "EC2VPC00vpc0598df0b71c53d43100Engvj"
+        - "CidrBlock"
+      GatewayId: "local"
+      VpcEndpointId: "local"
+  SSMAssociation002f6841b91bc74cf4a7bbba92cb6ad04400TR2EY:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::SSM::Association"
+    DeletionPolicy: "Retain"
+    Properties:
+      Targets:
+      - Values:
+        - "enabled"
+        Key: "tag:Monitoring"
+      Parameters:
+        name:
+        - "AmazonCloudWatchAgent"
+        action:
+        - "Install"
+      ApplyOnlyAtCronInterval: false
+      DocumentVersion: "$DEFAULT"
+      Name: "AWS-ConfigureAWSPackage"
+  IAMManagedPolicy00policyssms3cwlaccessuseast200FQ3Lk:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::IAM::ManagedPolicy"
+    DeletionPolicy: "Retain"
+    Properties:
+      ManagedPolicyName: "ssm_s3_cwl_access-us-east-2"
+      Path: "/"
+      Description: ""
+      Groups: []
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Resource:
+          - "arn:aws:s3:::tine-session-logs-20250109201131290200000001/*"
+          - "arn:aws:s3:::tine-session-logs-20250109201131290200000001"
+          Action:
+          - "s3:PutObjectVersionAcl"
+          - "s3:PutObjectAcl"
+          - "s3:PutObject"
+          Effect: "Allow"
+          Sid: "S3BucketAccessForSessionManager"
+        - Resource: "arn:aws:s3:::tine-session-logs-20250109201131290200000001"
+          Action: "s3:GetEncryptionConfiguration"
+          Effect: "Allow"
+          Sid: "S3EncryptionForSessionManager"
+        - Resource: "*"
+          Action:
+          - "logs:PutLogEvents"
+          - "logs:DescribeLogStreams"
+          - "logs:DescribeLogGroups"
+          - "logs:CreateLogStream"
+          Effect: "Allow"
+          Sid: "CloudWatchLogsAccessForSessionManager"
+        - Resource: "arn:aws:kms:us-east-2:767503528736:key/fe2fb040-de7a-48f1-b54d-c99cbb00ed66"
+          Action:
+          - "kms:GenerateDataKey"
+          - "kms:Encrypt"
+          - "kms:DescribeKey"
+          - "kms:Decrypt"
+          Effect: "Allow"
+          Sid: "KMSEncryptionForSessionManager"
+      Roles:
+      - Ref: "IAMRole00ssmrole2025010920113165040000000300qt0Bs"
+      Users: []
+  IAMRole00AWSServiceRoleForAmazonSSM00lFf4f:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::IAM::Role"
+    DeletionPolicy: "Retain"
+    Properties:
+      Path: "/aws-service-role/ssm.amazonaws.com/"
+      ManagedPolicyArns:
+      - "arn:aws:iam::aws:policy/aws-service-role/AmazonSSMServiceRolePolicy"
+      MaxSessionDuration: 3600
+      RoleName: "AWSServiceRoleForAmazonSSM"
+      Description: "Provides access to AWS Resources managed or used by Amazon SSM."
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Action: "sts:AssumeRole"
+          Effect: "Allow"
+          Principal:
+            Service: "ssm.amazonaws.com"
+  EC2Subnet00subnetc2279c8e00EVut3:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::Subnet"
+    DeletionPolicy: "Retain"
+    Properties:
+      VpcId:
+        Ref: "EC2VPC00vpce594698e00DxfEz"
+      MapPublicIpOnLaunch: true
+      EnableDns64: false
+      AvailabilityZoneId: "use2-az3"
+      PrivateDnsNameOptionsOnLaunch:
+        EnableResourceNameDnsARecord: false
+        HostnameType: "ip-name"
+        EnableResourceNameDnsAAAARecord: false
+      CidrBlock: "172.31.32.0/20"
+      Ipv6Native: false
+      Tags: []
+  LogsLogStream00i0f7fa98ce5a02fe4b00fg7Yi:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Retain"
+    Properties:
+      LogStreamName: "i-0f7fa98ce5a02fe4b"
+      LogGroupName:
+        Ref: "LogsLogGroup00ec2init00XdSv1"
+  EC2Volume00vol0b34bd73171cab6b600nTg0s:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::Volume"
+    DeletionPolicy: "Retain"
+    Properties:
+      MultiAttachEnabled: false
+      SnapshotId: "snap-0e559681afbed732d"
+      VolumeType: "gp3"
+      KmsKeyId: "arn:aws:kms:us-east-2:767503528736:key/7d87df39-8226-4141-b1f2-1479f0e66872"
+      Encrypted: true
+      Size: 30
+      AutoEnableIO: true
+      AvailabilityZone: "us-east-2a"
+      Throughput: 125
+      Iops: 3000
+      Tags: []
+  IAMRole00AWSServiceRoleForSupport00zlfSl:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::IAM::Role"
+    DeletionPolicy: "Retain"
+    Properties:
+      Path: "/aws-service-role/support.amazonaws.com/"
+      ManagedPolicyArns:
+      - "arn:aws:iam::aws:policy/aws-service-role/AWSSupportServiceRolePolicy"
+      MaxSessionDuration: 3600
+      RoleName: "AWSServiceRoleForSupport"
+      Description: "Enables resource access for AWS to provide billing, administrative\
+        \ and support services"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Action: "sts:AssumeRole"
+          Effect: "Allow"
+          Principal:
+            Service: "support.amazonaws.com"
+  LogsLogGroup00awsappsignalsgeneric00oG8nu:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::Logs::LogGroup"
+    DeletionPolicy: "Retain"
+    Properties:
+      FieldIndexPolicies: []
+      LogGroupClass: "STANDARD"
+      RetentionInDays: 30
+      LogGroupName: "/aws/appsignals/generic"
+      DataProtectionPolicy: {}
+  CloudFrontOriginRequestPolicy00775133bc15f249f9abeaafb2e0bf67d2007wsSo:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::CloudFront::OriginRequestPolicy"
+    DeletionPolicy: "Retain"
+    Properties:
+      OriginRequestPolicyConfig:
+        QueryStringsConfig:
+          QueryStringBehavior: "all"
+        Comment: "Policy for Elemental MediaTailor Origin"
+        HeadersConfig:
+          HeaderBehavior: "whitelist"
+          Headers:
+          - "origin"
+          - "access-control-request-headers"
+          - "x-forwarded-for"
+          - "access-control-request-method"
+          - "user-agent"
+        CookiesConfig:
+          CookieBehavior: "none"
+        Name: "Managed-Elemental-MediaTailor-PersonalizedManifests"
+  LogsLogStream00i06773863f7394835a00XsCzB:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Retain"
+    Properties:
+      LogStreamName: "i-06773863f7394835a"
+      LogGroupName:
+        Ref: "LogsLogGroup00ec2init00XdSv1"
+  LogsLogStream00i06d130346fbcfa34500725aT:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Retain"
+    Properties:
+      LogStreamName: "i-06d130346fbcfa345"
+      LogGroupName:
+        Ref: "LogsLogGroup00ec2init00XdSv1"
+  LogsLogStream00i0963715114226236d00O93Sk:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Retain"
+    Properties:
+      LogStreamName: "i-0963715114226236d"
+      LogGroupName:
+        Ref: "LogsLogGroup00ec2init00XdSv1"
+  EC2InternetGateway00igwc9a43ba1001DwUS:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::InternetGateway"
+    DeletionPolicy: "Retain"
+    Properties:
+      Tags: []
+  LogsLogStream00i0c631b4946259b48e00fr3gx:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Retain"
+    Properties:
+      LogStreamName: "i-0c631b4946259b48e"
+      LogGroupName:
+        Ref: "LogsLogGroup00ec2init00XdSv1"
+  LogsLogStream00i0121f107ec7c865cb00lmMji:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Retain"
+    Properties:
+      LogStreamName: "i-0121f107ec7c865cb"
+      LogGroupName:
+        Ref: "LogsLogGroup00ec2init00XdSv1"
+  LogsLogGroup00awsappsignalsk8s00CoxU0:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::Logs::LogGroup"
+    DeletionPolicy: "Retain"
+    Properties:
+      FieldIndexPolicies: []
+      LogGroupClass: "STANDARD"
+      RetentionInDays: 30
+      LogGroupName: "/aws/appsignals/k8s"
+      DataProtectionPolicy: {}
+  IAMRole00AWSServiceRoleForElasticLoadBalancing00cHn50:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::IAM::Role"
+    DeletionPolicy: "Retain"
+    Properties:
+      Path: "/aws-service-role/elasticloadbalancing.amazonaws.com/"
+      ManagedPolicyArns:
+      - "arn:aws:iam::aws:policy/aws-service-role/AWSElasticLoadBalancingServiceRolePolicy"
+      MaxSessionDuration: 3600
+      RoleName: "AWSServiceRoleForElasticLoadBalancing"
+      Description: "Allows ELB to call AWS services on your behalf."
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Action: "sts:AssumeRole"
+          Effect: "Allow"
+          Principal:
+            Service: "elasticloadbalancing.amazonaws.com"
+  MemoryDBParameterGroup00defaultmemorydbvalkey700FldFv:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::MemoryDB::ParameterGroup"
+    DeletionPolicy: "Retain"
+    Properties:
+      ParameterGroupName: "default.memorydb-valkey7"
+      Family: "memorydb_valkey7"
+      Description: "Default parameter group for memorydb_valkey7"
+  IAMRole00AWSServiceRoleForAmazonCognitoIdpEmailService00bJJJQ:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::IAM::Role"
+    DeletionPolicy: "Retain"
+    Properties:
+      Path: "/aws-service-role/email.cognito-idp.amazonaws.com/"
+      ManagedPolicyArns:
+      - "arn:aws:iam::aws:policy/aws-service-role/AmazonCognitoIdpEmailServiceRolePolicy"
+      MaxSessionDuration: 3600
+      RoleName: "AWSServiceRoleForAmazonCognitoIdpEmailService"
+      Description: "Service linked role for Amazon Cognito User Pools service to send\
+        \ emails on your behalf"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Action: "sts:AssumeRole"
+          Effect: "Allow"
+          Principal:
+            Service: "email.cognito-idp.amazonaws.com"
+  EC2SubnetNetworkAclAssociation00aclassoc5f99fc3300xYKWF:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::SubnetNetworkAclAssociation"
+    DeletionPolicy: "Retain"
+    Properties:
+      NetworkAclId:
+        Ref: "EC2NetworkAcl00acl9ff72ff400fNe6Y"
+      SubnetId:
+        Ref: "EC2Subnet00subnet48c2272300eAslM"
+  EC2SubnetNetworkAclAssociation00aclassoc08db119f861b1b6cb00Na1wV:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::SubnetNetworkAclAssociation"
+    DeletionPolicy: "Retain"
+    Properties:
+      NetworkAclId:
+        Ref: "EC2NetworkAcl00acl0b87f33426d400f4600fIWpi"
+      SubnetId:
+        Ref: "EC2Subnet00subnet0819e6b6f7ea0e72c00Q1DJl"
+  LogsLogStream00i0d39c5738c5b3676700JO0eh:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Retain"
+    Properties:
+      LogStreamName: "i-0d39c5738c5b36767"
+      LogGroupName:
+        Ref: "LogsLogGroup00ec2init00XdSv1"
+
+  IAMRole00cdkhnb659fdsdeployrole767503528736useast100bdUq5:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::IAM::Role"
+    DeletionPolicy: "Retain"
+    Properties:
+      Path: "/"
+      MaxSessionDuration: 3600
+      RoleName: "cdk-hnb659fds-deploy-role-767503528736-us-east-1"
+      Description: ""
+      Policies:
+      - PolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+          - Resource: "*"
+            Action:
+            - "cloudformation:CreateChangeSet"
+            - "cloudformation:DeleteChangeSet"
+            - "cloudformation:DescribeChangeSet"
+            - "cloudformation:DescribeStacks"
+            - "cloudformation:ExecuteChangeSet"
+            - "cloudformation:CreateStack"
+            - "cloudformation:UpdateStack"
+            - "cloudformation:RollbackStack"
+            - "cloudformation:ContinueUpdateRollback"
+            Effect: "Allow"
+            Sid: "CloudFormationPermissions"
+          - Condition:
+              StringNotEquals:
+                s3:ResourceAccount: "767503528736"
+            Resource: "*"
+            Action:
+            - "s3:GetObject*"
+            - "s3:GetBucket*"
+            - "s3:List*"
+            - "s3:Abort*"
+            - "s3:DeleteObject*"
+            - "s3:PutObject*"
+            Effect: "Allow"
+            Sid: "PipelineCrossAccountArtifactsBucket"
+          - Condition:
+              StringEquals:
+                kms:ViaService: "s3.us-east-1.amazonaws.com"
+            Resource: "*"
+            Action:
+            - "kms:Decrypt"
+            - "kms:DescribeKey"
+            - "kms:Encrypt"
+            - "kms:ReEncrypt*"
+            - "kms:GenerateDataKey*"
+            Effect: "Allow"
+            Sid: "PipelineCrossAccountArtifactsKey"
+          - Resource: "arn:aws:iam::767503528736:role/cdk-hnb659fds-cfn-exec-role-767503528736-us-east-1"
+            Action: "iam:PassRole"
+            Effect: "Allow"
+          - Resource: "*"
+            Action:
+            - "cloudformation:DescribeStackEvents"
+            - "cloudformation:GetTemplate"
+            - "cloudformation:DeleteStack"
+            - "cloudformation:UpdateTerminationProtection"
+            - "sts:GetCallerIdentity"
+            - "cloudformation:GetTemplateSummary"
+            Effect: "Allow"
+            Sid: "CliPermissions"
+          - Resource:
+            - "arn:aws:s3:::cdk-hnb659fds-assets-767503528736-us-east-1"
+            - "arn:aws:s3:::cdk-hnb659fds-assets-767503528736-us-east-1/*"
+            Action:
+            - "s3:GetObject*"
+            - "s3:GetBucket*"
+            - "s3:List*"
+            Effect: "Allow"
+            Sid: "CliStagingBucket"
+          - Resource:
+            - "arn:aws:ssm:us-east-1:767503528736:parameter/cdk-bootstrap/hnb659fds/version"
+            Action:
+            - "ssm:GetParameter"
+            - "ssm:GetParameters"
+            Effect: "Allow"
+            Sid: "ReadVersion"
+        PolicyName: "default"
+      AssumeRolePolicyDocument:
+        Version: "2008-10-17"
+        Statement:
+        - Action: "sts:TagSession"
+          Effect: "Allow"
+          Principal:
+            AWS: "arn:aws:iam::767503528736:root"
+        - Action: "sts:AssumeRole"
+          Effect: "Allow"
+          Principal:
+            AWS: "arn:aws:iam::767503528736:root"
+      Tags:
+      - Value: "deploy"
+        Key: "aws-cdk:bootstrap-role"
+  IAMRole00AWSServiceRoleForAPIGateway00XXPNf:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::IAM::Role"
+    DeletionPolicy: "Retain"
+    Properties:
+      Path: "/aws-service-role/ops.apigateway.amazonaws.com/"
+      ManagedPolicyArns:
+      - "arn:aws:iam::aws:policy/aws-service-role/APIGatewayServiceRolePolicy"
+      MaxSessionDuration: 3600
+      RoleName: "AWSServiceRoleForAPIGateway"
+      Description: "The Service Linked Role is used by Amazon API Gateway."
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Action: "sts:AssumeRole"
+          Effect: "Allow"
+          Principal:
+            Service: "ops.apigateway.amazonaws.com"
+  KMSAlias00aliasssmkey2025010920114496710000000900SXVkD:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::KMS::Alias"
+    DeletionPolicy: "Retain"
+    Properties:
+      TargetKeyId:
+        Ref: "KMSKey00fe2fb040de7a48f1b54dc99cbb00ed66008yFV0"
+      AliasName: "alias/ssm-key-20250109201144967100000009"
+  CloudFrontCachePolicy007e5fad67ee984ad0b05a394999eefc1a006plTZ:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::CloudFront::CachePolicy"
+    DeletionPolicy: "Retain"
+    Properties:
+      CachePolicyConfig:
+        Comment: "Amplify cache policy for static content"
+        MinTTL: 0
+        MaxTTL: 3.1536E7
+        ParametersInCacheKeyAndForwardedToOrigin:
+          QueryStringsConfig:
+            QueryStringBehavior: "none"
+          EnableAcceptEncodingBrotli: true
+          HeadersConfig:
+            HeaderBehavior: "whitelist"
+            Headers:
+            - "Authorization"
+            - "Host"
+          CookiesConfig:
+            CookieBehavior: "none"
+          EnableAcceptEncodingGzip: true
+        DefaultTTL: 0
+        Name: "Managed-Amplify-StaticContent"
+  LogsLogGroup00awsappsignalseks009lbsM:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::Logs::LogGroup"
+    DeletionPolicy: "Retain"
+    Properties:
+      FieldIndexPolicies: []
+      LogGroupClass: "STANDARD"
+      RetentionInDays: 30
+      LogGroupName: "/aws/appsignals/eks"
+      DataProtectionPolicy: {}
+  MemoryDBACL00openaccess00Zioy3:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::MemoryDB::ACL"
+    DeletionPolicy: "Retain"
+    Properties:
+      ACLName: "open-access"
+      Tags: []
+      UserNames:
+      - "default"
+  IAMInstanceProfile00ssmprofile2025010920113202560000000600owCWA:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::IAM::InstanceProfile"
+    DeletionPolicy: "Retain"
+    Properties:
+      Path: "/"
+      Roles:
+      - Ref: "IAMRole00ssmrole2025010920113165040000000300qt0Bs"
+      InstanceProfileName: "ssm_profile-20250109201132025600000006"
+  IAMRole00AWSServiceRoleForAmazonEKS00rGxCD:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::IAM::Role"
+    DeletionPolicy: "Retain"
+    Properties:
+      Path: "/aws-service-role/eks.amazonaws.com/"
+      ManagedPolicyArns:
+      - "arn:aws:iam::aws:policy/aws-service-role/AmazonEKSServiceRolePolicy"
+      MaxSessionDuration: 3600
+      RoleName: "AWSServiceRoleForAmazonEKS"
+      Description: "Allows Amazon EKS to call AWS services on your behalf."
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Action: "sts:AssumeRole"
+          Effect: "Allow"
+          Principal:
+            Service: "eks.amazonaws.com"
+  KMSKey0086f04bdd123940be90faa99eb1ef806f00XIRtK:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::KMS::Key"
+    DeletionPolicy: "Retain"
+    Properties:
+      Origin: "AWS_KMS"
+      MultiRegion: false
+      Description: "Default master key that protects my Secrets Manager data when\
+        \ no other key is defined"
+      KeyPolicy:
+        Version: "2012-10-17"
+        Statement:
+        - Condition:
+            StringEquals:
+              kms:ViaService: "secretsmanager.us-east-2.amazonaws.com"
+              kms:CallerAccount: "767503528736"
+          Resource: "*"
+          Action:
+          - "kms:Encrypt"
+          - "kms:Decrypt"
+          - "kms:ReEncrypt*"
+          - "kms:CreateGrant"
+          - "kms:DescribeKey"
+          Effect: "Allow"
+          Principal:
+            AWS: "*"
+          Sid: "Allow access through AWS Secrets Manager for all principals in the\
+            \ account that are authorized to use AWS Secrets Manager"
+        - Condition:
+            StringEquals:
+              kms:CallerAccount: "767503528736"
+            StringLike:
+              kms:ViaService: "secretsmanager.*.amazonaws.com"
+          Resource: "*"
+          Action: "kms:GenerateDataKey*"
+          Effect: "Allow"
+          Principal:
+            AWS: "*"
+          Sid: "Allow access through AWS Secrets Manager for all principals in the\
+            \ account that are authorized to use AWS Secrets Manager"
+        - Resource: "*"
+          Action:
+          - "kms:Describe*"
+          - "kms:Get*"
+          - "kms:List*"
+          - "kms:RevokeGrant"
+          Effect: "Allow"
+          Principal:
+            AWS: "arn:aws:iam::767503528736:root"
+          Sid: "Allow direct access to key metadata to the account"
+        Id: "auto-secretsmanager-2"
+      KeySpec: "SYMMETRIC_DEFAULT"
+      Enabled: true
+      EnableKeyRotation: true
+      KeyUsage: "ENCRYPT_DECRYPT"
+      Tags: []
+  LogsLogStream00i090305ed25524597800tVZvs:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Retain"
+    Properties:
+      LogStreamName: "i-090305ed255245978"
+      LogGroupName:
+        Ref: "LogsLogGroup00ec2init00XdSv1"
+  S3Bucket00cdkhnb659fdsassets767503528736useast1001IAed:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::S3::Bucket"
+    DeletionPolicy: "Retain"
+    Properties:
+      PublicAccessBlockConfiguration:
+        RestrictPublicBuckets: true
+        IgnorePublicAcls: true
+        BlockPublicPolicy: true
+        BlockPublicAcls: true
+      BucketName: "cdk-hnb659fds-assets-767503528736-us-east-1"
+      OwnershipControls:
+        Rules:
+        - ObjectOwnership: "BucketOwnerEnforced"
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+        - BucketKeyEnabled: false
+          ServerSideEncryptionByDefault:
+            SSEAlgorithm: "aws:kms"
+      LifecycleConfiguration:
+        TransitionDefaultMinimumObjectSize: "all_storage_classes_128K"
+        Rules:
+        - Status: "Enabled"
+          Id: "CleanupOldVersions"
+          Prefix: ""
+          NoncurrentVersionExpiration:
+            NoncurrentDays: 30
+        - Status: "Enabled"
+          Id: "AbortIncompleteMultipartUploads"
+          Prefix: ""
+          AbortIncompleteMultipartUpload:
+            DaysAfterInitiation: 1
+      VersioningConfiguration:
+        Status: "Enabled"
+      Tags: []
+  EC2Route00rtb059627df836e8839e00PpgDW:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::Route"
+    DeletionPolicy: "Retain"
+    Properties:
+      RouteTableId:
+        Ref: "EC2RouteTable00rtb059627df836e8839e00Br9xm"
+      DestinationCidrBlock: "0.0.0.0/0"
+      GatewayId:
+        Ref: "EC2InternetGateway00igw0fdd7b93e1ae82bc400rTmkK"
+      VpcEndpointId: "igw-0fdd7b93e1ae82bc4"
+  EC2SubnetRouteTableAssociation00rtbassoc00f0bd0f34fe3169800YEp6a:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::SubnetRouteTableAssociation"
+    DeletionPolicy: "Retain"
+    Properties:
+      RouteTableId:
+        Ref: "EC2RouteTable00rtb05e8d3da5753d86b0003YFHB"
+      SubnetId:
+        Ref: "EC2Subnet00subnet03bb47d77ce5d75cd00RMVAK"
+
+  IAMRole00AWSServiceRoleForEC2Spot00Yak9L:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::IAM::Role"
+    DeletionPolicy: "Retain"
+    Properties:
+      Path: "/aws-service-role/spot.amazonaws.com/"
+      ManagedPolicyArns:
+      - "arn:aws:iam::aws:policy/aws-service-role/AWSEC2SpotServiceRolePolicy"
+      MaxSessionDuration: 3600
+      RoleName: "AWSServiceRoleForEC2Spot"
+      Description: "Default EC2 Spot Service Linked Role"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Action: "sts:AssumeRole"
+          Effect: "Allow"
+          Principal:
+            Service: "spot.amazonaws.com"
+  EC2VPCDHCPOptionsAssociation00vpc0598df0b71c53d43100ggY28:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::VPCDHCPOptionsAssociation"
+    DeletionPolicy: "Retain"
+    Properties:
+      VpcId:
+        Ref: "EC2VPC00vpc0598df0b71c53d43100Engvj"
+      DhcpOptionsId:
+        Ref: "EC2DHCPOptions00dopt3528ff5e00FCUQN"
+  LogsLogGroup00ec2system00QaQkO:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::Logs::LogGroup"
+    DeletionPolicy: "Retain"
+    Properties:
+      FieldIndexPolicies: []
+      LogGroupClass: "STANDARD"
+      RetentionInDays: 30
+      LogGroupName: "/ec2/system"
+      DataProtectionPolicy: {}
+  EventsRule00rulepatchcompliancemonitoring00EkbgR:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::Events::Rule"
+    DeletionPolicy: "Retain"
+    Properties:
+      EventBusName:
+        Ref: "EventsEventBus00default005k49N"
+      EventPattern:
+        detail-type:
+        - "Patch Compliance State Change"
+        source:
+        - "aws.ssm"
+      Description: "Monitor patch compliance state changes"
+      State: "ENABLED"
+      Targets:
+      - Arn:
+          Ref: "SNSTopic00patchcompliancenotifications00MJpUA"
+        Id: "PatchComplianceNotification"
+      Id: "patch-compliance-monitoring"
+      Name: "patch-compliance-monitoring"
+  EC2NetworkAcl00acl9ff72ff400fNe6Y:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::NetworkAcl"
+    DeletionPolicy: "Retain"
+    Properties:
+      VpcId:
+        Ref: "EC2VPC00vpce594698e00DxfEz"
+      Tags: []
+  MemoryDBParameterGroup00defaultmemorydbredis700poZbZ:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::MemoryDB::ParameterGroup"
+    DeletionPolicy: "Retain"
+    Properties:
+      ParameterGroupName: "default.memorydb-redis7"
+      Family: "memorydb_redis7"
+      Description: "Default parameter group for memorydb_redis7"
+  LogsLogStream00i0e5d8a39903c59b0900IxTrV:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Retain"
+    Properties:
+      LogStreamName: "i-0e5d8a39903c59b09"
+      LogGroupName:
+        Ref: "LogsLogGroup00ec2init00XdSv1"
+  IAMRole00AWSServiceRoleForECS00TMTFF:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::IAM::Role"
+    DeletionPolicy: "Retain"
+    Properties:
+      Path: "/aws-service-role/ecs.amazonaws.com/"
+      ManagedPolicyArns:
+      - "arn:aws:iam::aws:policy/aws-service-role/AmazonECSServiceRolePolicy"
+      MaxSessionDuration: 3600
+      RoleName: "AWSServiceRoleForECS"
+      Description: "Role to enable Amazon ECS to manage your cluster."
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Action: "sts:AssumeRole"
+          Effect: "Allow"
+          Principal:
+            Service: "ecs.amazonaws.com"
+  S3Bucket00mybilling12300f4wf9:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::S3::Bucket"
+    DeletionPolicy: "Retain"
+    Properties:
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+        - BucketKeyEnabled: false
+          ServerSideEncryptionByDefault:
+            SSEAlgorithm: "AES256"
+      BucketName: "mybilling123"
+  EC2Route00rtb6540fa0e00YdelC:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::Route"
+    DeletionPolicy: "Retain"
+    Properties:
+      RouteTableId:
+        Ref: "EC2RouteTable00rtb6540fa0e00Z3DdC"
+      DestinationCidrBlock: "0.0.0.0/0"
+      GatewayId:
+        Ref: "EC2InternetGateway00igwc9a43ba1001DwUS"
+      VpcEndpointId: "igw-c9a43ba1"
+  LogsLogStream00i0b97a18037d0bbaa000oGfOJ:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Retain"
+    Properties:
+      LogStreamName: "i-0b97a18037d0bbaa0"
+      LogGroupName:
+        Ref: "LogsLogGroup00ec2init00XdSv1"
+  CloudFrontCachePolicy000862726205a94f769dedb50ca2e3a84f00bXmMV:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::CloudFront::CachePolicy"
+    DeletionPolicy: "Retain"
+    Properties:
+      CachePolicyConfig:
+        Comment: "Policy for Elemental MediaPackage Origin"
+        MinTTL: 0
+        MaxTTL: 3.1536E7
+        ParametersInCacheKeyAndForwardedToOrigin:
+          QueryStringsConfig:
+            QueryStrings:
+            - "aws.manifestfilter"
+            - "start"
+            - "end"
+            - "m"
+            QueryStringBehavior: "whitelist"
+          EnableAcceptEncodingBrotli: false
+          HeadersConfig:
+            HeaderBehavior: "whitelist"
+            Headers:
+            - "origin"
+          CookiesConfig:
+            CookieBehavior: "none"
+          EnableAcceptEncodingGzip: true
+        DefaultTTL: 86400
+        Name: "Managed-Elemental-MediaPackage"
+  IAMManagedPolicy00policyserviceroleAmazonSageMakerExecutionPolicy20190301T050342008sWLS:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::IAM::ManagedPolicy"
+    DeletionPolicy: "Retain"
+    Properties:
+      ManagedPolicyName: "AmazonSageMaker-ExecutionPolicy-20190301T050342"
+      Path: "/service-role/"
+      Description: ""
+      Groups: []
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Resource:
+          - "arn:aws:s3:::*"
+          Action:
+          - "s3:GetObject"
+          - "s3:PutObject"
+          - "s3:DeleteObject"
+          - "s3:ListBucket"
+          Effect: "Allow"
+      Roles:
+      - Ref: "IAMRole00AmazonSageMakerExecutionRole20190301T05034200KHq2b"
+      Users: []
+  EC2SubnetNetworkAclAssociation00aclassoc0cbacb258927ba85800cntSp:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::SubnetNetworkAclAssociation"
+    DeletionPolicy: "Retain"
+    Properties:
+      NetworkAclId:
+        Ref: "EC2NetworkAcl00acl0b87f33426d400f4600fIWpi"
+      SubnetId:
+        Ref: "EC2Subnet00subnet0644d115fdb35bb9b00fXX1Q"
+  IAMRole00AWSServiceRoleForComputeOptimizer00cnyEi:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::IAM::Role"
+    DeletionPolicy: "Retain"
+    Properties:
+      Path: "/aws-service-role/compute-optimizer.amazonaws.com/"
+      ManagedPolicyArns:
+      - "arn:aws:iam::aws:policy/aws-service-role/ComputeOptimizerServiceRolePolicy"
+      MaxSessionDuration: 3600
+      RoleName: "AWSServiceRoleForComputeOptimizer"
+      Description: "Allows ComputeOptimizer to call AWS services and collect workload\
+        \ details on your behalf."
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Action: "sts:AssumeRole"
+          Effect: "Allow"
+          Principal:
+            Service: "compute-optimizer.amazonaws.com"
+  LogsLogStream00i078fa0ffc231b10df00yQJ2h:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Retain"
+    Properties:
+      LogStreamName: "i-078fa0ffc231b10df"
+      LogGroupName:
+        Ref: "LogsLogGroup00ec2init00XdSv1"
+  EC2RouteTable00rtb062cf3e661b03297400OlCLI:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::RouteTable"
+    DeletionPolicy: "Retain"
+    Properties:
+      VpcId:
+        Ref: "EC2VPC00vpc0598df0b71c53d43100Engvj"
+      Tags:
+      - Value: "tine-private-us-east-2a"
+        Key: "Name"
+      - Value: "tine"
+        Key: "project"
+  IAMRole00AWSServiceRoleForAmazonEKSNodegroup00UJ9Qo:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::IAM::Role"
+    DeletionPolicy: "Retain"
+    Properties:
+      Path: "/aws-service-role/eks-nodegroup.amazonaws.com/"
+      ManagedPolicyArns:
+      - "arn:aws:iam::aws:policy/aws-service-role/AWSServiceRoleForAmazonEKSNodegroup"
+      MaxSessionDuration: 3600
+      RoleName: "AWSServiceRoleForAmazonEKSNodegroup"
+      Description: "This policy allows Amazon EKS to create and manage Nodegroups"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Action: "sts:AssumeRole"
+          Effect: "Allow"
+          Principal:
+            Service: "eks-nodegroup.amazonaws.com"
+  EC2SecurityGroup00sg05b3e06d1e9ce47da00W73Xc:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::SecurityGroup"
+    DeletionPolicy: "Retain"
+    Properties:
+      GroupDescription: "default VPC security group"
+      GroupName: "default"
+      VpcId:
+        Ref: "EC2VPC00vpc0598df0b71c53d43100Engvj"
+      Tags:
+      - Value: "tine"
+        Key: "project"
+      - Value: "tine-default"
+        Key: "Name"
+  EC2Subnet00subnet03bb47d77ce5d75cd00RMVAK:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::Subnet"
+    DeletionPolicy: "Retain"
+    Properties:
+      VpcId:
+        Ref: "EC2VPC00vpc0598df0b71c53d43100Engvj"
+      MapPublicIpOnLaunch: false
+      EnableDns64: false
+      AvailabilityZoneId: "use2-az3"
+      PrivateDnsNameOptionsOnLaunch:
+        EnableResourceNameDnsARecord: false
+        HostnameType: "ip-name"
+        EnableResourceNameDnsAAAARecord: false
+      CidrBlock: "10.0.2.0/24"
+      Ipv6Native: false
+      Tags:
+      - Value: "tine"
+        Key: "project"
+      - Value: "tine-private-us-east-2c"
+        Key: "Name"
+  EC2RouteTable00rtb0676a70082adef2bf00625sn:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::RouteTable"
+    DeletionPolicy: "Retain"
+    Properties:
+      VpcId:
+        Ref: "EC2VPC00vpc0598df0b71c53d43100Engvj"
+      Tags:
+      - Value: "tine"
+        Key: "project"
+      - Value: "tine-default"
+        Key: "Name"
+  IAMInstanceProfile00ec2monitoringprofile00frkiI:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::IAM::InstanceProfile"
+    DeletionPolicy: "Retain"
+    Properties:
+      Path: "/"
+      Roles:
+      - Ref: "IAMRole00ec2monitoringrole00SgsVo"
+      InstanceProfileName: "ec2-monitoring-profile"
+  IAMRole00ec2monitoringrole00SgsVo:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::IAM::Role"
+    DeletionPolicy: "Retain"
+    Properties:
+      Path: "/"
+      ManagedPolicyArns:
+      - "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
+      - "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+      MaxSessionDuration: 3600
+      RoleName: "ec2-monitoring-role"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Action: "sts:AssumeRole"
+          Effect: "Allow"
+          Principal:
+            Service: "ec2.amazonaws.com"
+
+  LogsLogStream00i08091f7988cc082ed00LSlC2:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Retain"
+    Properties:
+      LogStreamName: "i-08091f7988cc082ed"
+      LogGroupName:
+        Ref: "LogsLogGroup00ec2init00XdSv1"
+  EC2VPCDHCPOptionsAssociation00vpce594698e00iAx9d:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::VPCDHCPOptionsAssociation"
+    DeletionPolicy: "Retain"
+    Properties:
+      VpcId:
+        Ref: "EC2VPC00vpce594698e00DxfEz"
+      DhcpOptionsId:
+        Ref: "EC2DHCPOptions00dopt3528ff5e00FCUQN"
+  LogsLogStream00i0128959ee9c35a06600CMbck:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Retain"
+    Properties:
+      LogStreamName: "i-0128959ee9c35a066"
+      LogGroupName:
+        Ref: "LogsLogGroup00ec2init00XdSv1"
+  IAMRole00AmazonSageMakerExecutionRole20190301T05034200KHq2b:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::IAM::Role"
+    DeletionPolicy: "Retain"
+    Properties:
+      Path: "/service-role/"
+      ManagedPolicyArns:
+      - "arn:aws:iam::767503528736:policy/service-role/AmazonSageMaker-ExecutionPolicy-20190301T050342"
+      - "arn:aws:iam::aws:policy/AmazonSageMakerFullAccess"
+      MaxSessionDuration: 3600
+      RoleName: "AmazonSageMaker-ExecutionRole-20190301T050342"
+      Description: "SageMaker execution role created from the SageMaker AWS Management\
+        \ Console."
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Action: "sts:AssumeRole"
+          Effect: "Allow"
+          Principal:
+            Service: "sagemaker.amazonaws.com"
+  EC2SubnetRouteTableAssociation00rtbassoc0ab1897ac75ffada300lc9z8:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::SubnetRouteTableAssociation"
+    DeletionPolicy: "Retain"
+    Properties:
+      RouteTableId:
+        Ref: "EC2RouteTable00rtb059627df836e8839e00Br9xm"
+      SubnetId:
+        Ref: "EC2Subnet00subnet054f21347240af41200Xbl5M"
+  LogsLogGroup00awsappsignalsec200i5xzW:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::Logs::LogGroup"
+    DeletionPolicy: "Retain"
+    Properties:
+      FieldIndexPolicies: []
+      LogGroupClass: "STANDARD"
+      RetentionInDays: 30
+      LogGroupName: "/aws/appsignals/ec2"
+      DataProtectionPolicy: {}
+  MemoryDBParameterGroup00defaultmemorydbvalkey7search00Ui58F:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::MemoryDB::ParameterGroup"
+    DeletionPolicy: "Retain"
+    Properties:
+      ParameterGroupName: "default.memorydb-valkey7.search"
+      Family: "memorydb_valkey7"
+      Description: "Customized default parameter group for memorydb_valkey7 with search-enabled\
+        \ yes"
+  EC2VPC00vpce594698e00DxfEz:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::VPC"
+    DeletionPolicy: "Retain"
+    Properties:
+      CidrBlock: "172.31.0.0/16"
+      EnableDnsSupport: true
+      InstanceTenancy: "default"
+      EnableDnsHostnames: true
+      Tags: []
+  S3Bucket00tinesessionlogs20250109201131290200000001007lmHV:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::S3::Bucket"
+    DeletionPolicy: "Retain"
+    Properties:
+      PublicAccessBlockConfiguration:
+        RestrictPublicBuckets: true
+        IgnorePublicAcls: true
+        BlockPublicPolicy: true
+        BlockPublicAcls: true
+      BucketName: "tine-session-logs-20250109201131290200000001"
+      OwnershipControls:
+        Rules:
+        - ObjectOwnership: "BucketOwnerEnforced"
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+        - BucketKeyEnabled: false
+          ServerSideEncryptionByDefault:
+            SSEAlgorithm: "aws:kms"
+            KMSMasterKeyID:
+              Fn::GetAtt:
+              - "KMSKey00fe2fb040de7a48f1b54dc99cbb00ed66008yFV0"
+              - "Arn"
+      LoggingConfiguration:
+        DestinationBucketName: "tine-session-logs-20250109201131290200000001"
+        LogFilePrefix: "log/"
+      LifecycleConfiguration:
+        TransitionDefaultMinimumObjectSize: "all_storage_classes_128K"
+        Rules:
+        - Status: "Enabled"
+          Id: "archive_after_X_days"
+          Prefix: ""
+          Transitions:
+          - StorageClass: "GLACIER"
+            TransitionInDays: 30
+          ExpirationInDays: 365
+      VersioningConfiguration:
+        Status: "Enabled"
+      Tags:
+      - Value: "tine"
+        Key: "project"
+  LogsLogStream00i00c0c1b8d54eeb80b00Eejuh:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Retain"
+    Properties:
+      LogStreamName: "i-00c0c1b8d54eeb80b"
+      LogGroupName:
+        Ref: "LogsLogGroup00ec2init00XdSv1"
+
+  EC2SubnetNetworkAclAssociation00aclassoc0e375c54de9f39e5b00d6zk9:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::SubnetNetworkAclAssociation"
+    DeletionPolicy: "Retain"
+    Properties:
+      NetworkAclId:
+        Ref: "EC2NetworkAcl00acl0b87f33426d400f4600fIWpi"
+      SubnetId:
+        Ref: "EC2Subnet00subnet054f21347240af41200Xbl5M"
+  SNSTopic00patchcompliancenotifications00MJpUA:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::SNS::Topic"
+    DeletionPolicy: "Retain"
+    Properties:
+      FifoTopic: false
+      ArchivePolicy: {}
+      TopicName: "patch-compliance-notifications"
+  Route53ResolverResolverRuleAssociation00rslvrautodefinedassocvpc0598df0b71c53d431internetresolver00YQklY:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::Route53Resolver::ResolverRuleAssociation"
+    DeletionPolicy: "Retain"
+    Properties:
+      VPCId:
+        Ref: "EC2VPC00vpc0598df0b71c53d43100Engvj"
+      ResolverRuleId: "rslvr-autodefined-rr-internet-resolver"
+      Name: "System Rule Association"
+  EC2Route00rtb6540fa0e00LVuBo:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::Route"
+    DeletionPolicy: "Retain"
+    Properties:
+      RouteTableId:
+        Ref: "EC2RouteTable00rtb6540fa0e00Z3DdC"
+      DestinationCidrBlock:
+        Fn::GetAtt:
+        - "EC2VPC00vpce594698e00DxfEz"
+        - "CidrBlock"
+      GatewayId: "local"
+      VpcEndpointId: "local"
+  IAMRole00AWSServiceRoleForGlobalAccelerator007LeX2:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::IAM::Role"
+    DeletionPolicy: "Retain"
+    Properties:
+      Path: "/aws-service-role/globalaccelerator.amazonaws.com/"
+      ManagedPolicyArns:
+      - "arn:aws:iam::aws:policy/aws-service-role/AWSGlobalAcceleratorSLRPolicy"
+      MaxSessionDuration: 3600
+      RoleName: "AWSServiceRoleForGlobalAccelerator"
+      Description: "Allows Global Accelerator to call AWS services on customer's behalf"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Action: "sts:AssumeRole"
+          Effect: "Allow"
+          Principal:
+            Service: "globalaccelerator.amazonaws.com"
+  LogsLogStream00i0727d600082a7da37009b3ZM:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Retain"
+    Properties:
+      LogStreamName: "i-0727d600082a7da37"
+      LogGroupName:
+        Ref: "LogsLogGroup00ec2init00XdSv1"
+  Route53ResolverResolverRuleAssociation00rslvrautodefinedassocvpce594698einternetresolver00RyPbi:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::Route53Resolver::ResolverRuleAssociation"
+    DeletionPolicy: "Retain"
+    Properties:
+      VPCId:
+        Ref: "EC2VPC00vpce594698e00DxfEz"
+      ResolverRuleId: "rslvr-autodefined-rr-internet-resolver"
+      Name: "System Rule Association"
+  IAMRole00firstexecutionrole00THC19:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::IAM::Role"
+    DeletionPolicy: "Retain"
+    Properties:
+      Path: "/service-role/"
+      ManagedPolicyArns:
+      - "arn:aws:iam::767503528736:policy/service-role/AWSLambdaBasicExecutionRole-6b02bd9d-58e2-43e8-ad47-02ec50ea8760"
+      - "arn:aws:iam::767503528736:policy/service-role/AWSLambdaS3ExecutionRole-3c2f91fe-ca50-4ec8-ad18-210052cbcbc7"
+      MaxSessionDuration: 3600
+      RoleName: "first_execution_role"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Action: "sts:AssumeRole"
+          Effect: "Allow"
+          Principal:
+            Service: "lambda.amazonaws.com"
+  EC2SubnetNetworkAclAssociation00aclassoc0c3fd6f2ab603814600qQgHw:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::SubnetNetworkAclAssociation"
+    DeletionPolicy: "Retain"
+    Properties:
+      NetworkAclId:
+        Ref: "EC2NetworkAcl00acl0b87f33426d400f4600fIWpi"
+      SubnetId:
+        Ref: "EC2Subnet00subnet03bb47d77ce5d75cd00RMVAK"
+  EC2SubnetNetworkAclAssociation00aclassoc0093c3ea3c57a72d700mqFHb:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::SubnetNetworkAclAssociation"
+    DeletionPolicy: "Retain"
+    Properties:
+      NetworkAclId:
+        Ref: "EC2NetworkAcl00acl0b87f33426d400f4600fIWpi"
+      SubnetId:
+        Ref: "EC2Subnet00subnet0b2a03db9dc372c8900WF7tM"
+  LogsLogGroup00ec2init00XdSv1:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::Logs::LogGroup"
+    DeletionPolicy: "Retain"
+    Properties:
+      FieldIndexPolicies: []
+      LogGroupClass: "STANDARD"
+      RetentionInDays: 30
+      LogGroupName: "/ec2/init"
+      DataProtectionPolicy: {}
+  IAMRole00AWSServiceRoleForCostOptimizationHub00sBPab:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::IAM::Role"
+    DeletionPolicy: "Retain"
+    Properties:
+      Path: "/aws-service-role/cost-optimization-hub.bcm.amazonaws.com/"
+      ManagedPolicyArns:
+      - "arn:aws:iam::aws:policy/aws-service-role/CostOptimizationHubServiceRolePolicy"
+      MaxSessionDuration: 3600
+      RoleName: "AWSServiceRoleForCostOptimizationHub"
+      Description: "Allows Cost Optimization Hub to retrieve organization information\
+        \ and collect optimization-related data and metadata."
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Action: "sts:AssumeRole"
+          Effect: "Allow"
+          Principal:
+            Service: "cost-optimization-hub.bcm.amazonaws.com"
+
+  EC2SecurityGroup00sg937549f100qfFEo:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::SecurityGroup"
+    DeletionPolicy: "Retain"
+    Properties:
+      GroupDescription: "default VPC security group"
+      GroupName: "default"
+      VpcId:
+        Ref: "EC2VPC00vpce594698e00DxfEz"
+      SecurityGroupIngress:
+      - IpProtocol: "-1"
+        FromPort: -1
+        SourceSecurityGroupId:
+          Fn::GetAtt:
+          - "EC2VPC00vpce594698e00DxfEz"
+          - "DefaultSecurityGroup"
+        ToPort: -1
+        SourceSecurityGroupOwnerId: "767503528736"
+      SecurityGroupEgress:
+      - CidrIp: "0.0.0.0/0"
+        IpProtocol: "-1"
+        FromPort: -1
+        ToPort: -1
+  CloudFrontCachePolicy002e54312d136d493c8eb9b001f22f67d200UgSjp:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::CloudFront::CachePolicy"
+    DeletionPolicy: "Retain"
+    Properties:
+      CachePolicyConfig:
+        Comment: "Policy for Amplify Origin"
+        MinTTL: 2
+        MaxTTL: 600
+        ParametersInCacheKeyAndForwardedToOrigin:
+          QueryStringsConfig:
+            QueryStringBehavior: "all"
+          EnableAcceptEncodingBrotli: true
+          HeadersConfig:
+            HeaderBehavior: "whitelist"
+            Headers:
+            - "Authorization"
+            - "CloudFront-Viewer-Country"
+            - "Host"
+          CookiesConfig:
+            CookieBehavior: "all"
+          EnableAcceptEncodingGzip: true
+        DefaultTTL: 2
+        Name: "Managed-Amplify"
+  EC2NetworkInterface00eni0e6080d324bda3d0200BFGN7:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::NetworkInterface"
+    DeletionPolicy: "Retain"
+    Properties:
+      Description: ""
+      PrivateIpAddress: "10.0.4.156"
+      PrivateIpAddresses:
+      - PrivateIpAddress: "10.0.4.156"
+        Primary: true
+      SecondaryPrivateIpAddressCount: 0
+      Ipv6PrefixCount: 0
+      Ipv4Prefixes: []
+      Ipv4PrefixCount: 0
+      GroupSet:
+      - "sg-0044cf7473740011f"
+      Ipv6Prefixes: []
+      SubnetId:
+        Ref: "EC2Subnet00subnet0819e6b6f7ea0e72c00Q1DJl"
+      SourceDestCheck: true
+      InterfaceType: "interface"
+      Tags: []
+  EC2Subnet00subnet0819e6b6f7ea0e72c00Q1DJl:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::Subnet"
+    DeletionPolicy: "Retain"
+    Properties:
+      VpcId:
+        Ref: "EC2VPC00vpc0598df0b71c53d43100Engvj"
+      MapPublicIpOnLaunch: false
+      EnableDns64: false
+      AvailabilityZoneId: "use2-az1"
+      PrivateDnsNameOptionsOnLaunch:
+        EnableResourceNameDnsARecord: false
+        HostnameType: "ip-name"
+        EnableResourceNameDnsAAAARecord: false
+      CidrBlock: "10.0.4.0/24"
+      Ipv6Native: false
+      Tags:
+      - Value: "tine"
+        Key: "project"
+      - Value: "tine-public-us-east-2a"
+        Key: "Name"
+  S3Bucket00tinesessionaccesslogs2025010920113163760000000200e8icM:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::S3::Bucket"
+    DeletionPolicy: "Retain"
+    Properties:
+      PublicAccessBlockConfiguration:
+        RestrictPublicBuckets: true
+        IgnorePublicAcls: true
+        BlockPublicPolicy: true
+        BlockPublicAcls: true
+      BucketName: "tine-session-access-logs-20250109201131637600000002"
+      OwnershipControls:
+        Rules:
+        - ObjectOwnership: "BucketOwnerEnforced"
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+        - BucketKeyEnabled: false
+          ServerSideEncryptionByDefault:
+            SSEAlgorithm: "aws:kms"
+            KMSMasterKeyID:
+              Fn::GetAtt:
+              - "KMSKey00fe2fb040de7a48f1b54dc99cbb00ed66008yFV0"
+              - "Arn"
+      LifecycleConfiguration:
+        TransitionDefaultMinimumObjectSize: "all_storage_classes_128K"
+        Rules:
+        - Status: "Enabled"
+          Id: "delete_after_X_days"
+          Prefix: ""
+          ExpirationInDays: 30
+      VersioningConfiguration:
+        Status: "Enabled"
+      Tags:
+      - Value: "tine"
+        Key: "project"
+  IAMRole00AWSServiceRoleForTrustedAdvisor007YtXp:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::IAM::Role"
+    DeletionPolicy: "Retain"
+    Properties:
+      Path: "/aws-service-role/trustedadvisor.amazonaws.com/"
+      ManagedPolicyArns:
+      - "arn:aws:iam::aws:policy/aws-service-role/AWSTrustedAdvisorServiceRolePolicy"
+      MaxSessionDuration: 3600
+      RoleName: "AWSServiceRoleForTrustedAdvisor"
+      Description: "Access for the AWS Trusted Advisor Service to help reduce cost,\
+        \ increase performance, and improve security of your AWS environment."
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Action: "sts:AssumeRole"
+          Effect: "Allow"
+          Principal:
+            Service: "trustedadvisor.amazonaws.com"
+  LogsLogStream00i0634ab81e53eb199800iTM2B:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Retain"
+    Properties:
+      LogStreamName: "i-0634ab81e53eb1998"
+      LogGroupName:
+        Ref: "LogsLogGroup00ec2init00XdSv1"
+  EC2SubnetNetworkAclAssociation00aclassoc5899fc3400lIdTH:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::SubnetNetworkAclAssociation"
+    DeletionPolicy: "Retain"
+    Properties:
+      NetworkAclId:
+        Ref: "EC2NetworkAcl00acl9ff72ff400fNe6Y"
+      SubnetId:
+        Ref: "EC2Subnet00subnet2481d25e00NqeA0"
+  IAMRole00cdkhnb659fdslookuprole767503528736useast100PgCVM:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::IAM::Role"
+    DeletionPolicy: "Retain"
+    Properties:
+      Path: "/"
+      ManagedPolicyArns:
+      - "arn:aws:iam::aws:policy/ReadOnlyAccess"
+      MaxSessionDuration: 3600
+      RoleName: "cdk-hnb659fds-lookup-role-767503528736-us-east-1"
+      Description: ""
+      Policies:
+      - PolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+          - Resource: "*"
+            Action:
+            - "kms:Decrypt"
+            Effect: "Deny"
+            Sid: "DontReadSecrets"
+        PolicyName: "LookupRolePolicy"
+      AssumeRolePolicyDocument:
+        Version: "2008-10-17"
+        Statement:
+        - Action: "sts:TagSession"
+          Effect: "Allow"
+          Principal:
+            AWS: "arn:aws:iam::767503528736:root"
+        - Action: "sts:AssumeRole"
+          Effect: "Allow"
+          Principal:
+            AWS: "arn:aws:iam::767503528736:root"
+      Tags:
+      - Value: "lookup"
+        Key: "aws-cdk:bootstrap-role"
+  IAMRole00cdkhnb659fdsfilepublishingrole767503528736useast100Z8Geh:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::IAM::Role"
+    DeletionPolicy: "Retain"
+    Properties:
+      Path: "/"
+      MaxSessionDuration: 3600
+      RoleName: "cdk-hnb659fds-file-publishing-role-767503528736-us-east-1"
+      Description: ""
+      Policies:
+      - PolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+          - Condition:
+              StringEquals:
+                aws:ResourceAccount:
+                - "767503528736"
+            Resource:
+            - "arn:aws:s3:::cdk-hnb659fds-assets-767503528736-us-east-1"
+            - "arn:aws:s3:::cdk-hnb659fds-assets-767503528736-us-east-1/*"
+            Action:
+            - "s3:GetObject*"
+            - "s3:GetBucket*"
+            - "s3:GetEncryptionConfiguration"
+            - "s3:List*"
+            - "s3:DeleteObject*"
+            - "s3:PutObject*"
+            - "s3:Abort*"
+            Effect: "Allow"
+          - Resource: "arn:aws:kms:us-east-1:767503528736:key/AWS_MANAGED_KEY"
+            Action:
+            - "kms:Decrypt"
+            - "kms:DescribeKey"
+            - "kms:Encrypt"
+            - "kms:ReEncrypt*"
+            - "kms:GenerateDataKey*"
+            Effect: "Allow"
+        PolicyName: "cdk-hnb659fds-file-publishing-role-default-policy-767503528736-us-east-1"
+      AssumeRolePolicyDocument:
+        Version: "2008-10-17"
+        Statement:
+        - Action: "sts:TagSession"
+          Effect: "Allow"
+          Principal:
+            AWS: "arn:aws:iam::767503528736:root"
+        - Action: "sts:AssumeRole"
+          Effect: "Allow"
+          Principal:
+            AWS: "arn:aws:iam::767503528736:root"
+      Tags:
+      - Value: "file-publishing"
+        Key: "aws-cdk:bootstrap-role"
+  LogsLogStream00i0fdaa693183df747100fDeTc:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Retain"
+    Properties:
+      LogStreamName: "i-0fdaa693183df7471"
+      LogGroupName:
+        Ref: "LogsLogGroup00ec2init00XdSv1"
+  EC2Route00rtb059627df836e8839e00QEtPM:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::Route"
+    DeletionPolicy: "Retain"
+    Properties:
+      RouteTableId:
+        Ref: "EC2RouteTable00rtb059627df836e8839e00Br9xm"
+      DestinationCidrBlock:
+        Fn::GetAtt:
+        - "EC2VPC00vpc0598df0b71c53d43100Engvj"
+        - "CidrBlock"
+      GatewayId: "local"
+      VpcEndpointId: "local"
+  LogsLogStream00i088f84158ed76528000xf2d1:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Retain"
+    Properties:
+      LogStreamName: "i-088f84158ed765280"
+      LogGroupName:
+        Ref: "LogsLogGroup00ec2init00XdSv1"
+  EC2Route00rtb0676a70082adef2bf00EyCVi:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::Route"
+    DeletionPolicy: "Retain"
+    Properties:
+      RouteTableId:
+        Ref: "EC2RouteTable00rtb0676a70082adef2bf00625sn"
+      DestinationCidrBlock:
+        Fn::GetAtt:
+        - "EC2VPC00vpc0598df0b71c53d43100Engvj"
+        - "CidrBlock"
+      GatewayId: "local"
+      VpcEndpointId: "local"
+  LogsLogStream00i0e156165e86473c9300NJvpb:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Retain"
+    Properties:
+      LogStreamName: "i-0e156165e86473c93"
+      LogGroupName:
+        Ref: "LogsLogGroup00ec2init00XdSv1"
+  IAMRole00testAgentApiCloudWatchRoleE73E953660usCQqYREAo00Gx0r7:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::IAM::Role"
+    DeletionPolicy: "Retain"
+    Properties:
+      Path: "/"
+      ManagedPolicyArns:
+      - "arn:aws:iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs"
+      MaxSessionDuration: 3600
+      RoleName: "test-AgentApiCloudWatchRoleE73E9536-60usCQqYREAo"
+      Description: ""
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Action: "sts:AssumeRole"
+          Effect: "Allow"
+          Principal:
+            Service: "apigateway.amazonaws.com"
+  KMSKey00747aecfeb515457fbe315225b7f647a2002vaEE:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::KMS::Key"
+    DeletionPolicy: "Retain"
+    Properties:
+      Origin: "AWS_KMS"
+      MultiRegion: false
+      Description: "Default key that protects my SSM parameters when no other key\
+        \ is defined"
+      KeyPolicy:
+        Version: "2012-10-17"
+        Statement:
+        - Condition:
+            StringEquals:
+              kms:ViaService: "ssm.us-east-2.amazonaws.com"
+              kms:CallerAccount: "767503528736"
+          Resource: "*"
+          Action:
+          - "kms:Encrypt"
+          - "kms:Decrypt"
+          - "kms:ReEncrypt*"
+          - "kms:GenerateDataKey*"
+          - "kms:DescribeKey"
+          Effect: "Allow"
+          Principal:
+            AWS: "*"
+          Sid: "Allow access through SSM for all principals in the account that are\
+            \ authorized to use SSM"
+        - Resource: "*"
+          Action:
+          - "kms:Describe*"
+          - "kms:Get*"
+          - "kms:List*"
+          Effect: "Allow"
+          Principal:
+            AWS: "arn:aws:iam::767503528736:root"
+          Sid: "Allow direct access to key metadata to the account"
+        Id: "auto-ssm-1"
+      KeySpec: "SYMMETRIC_DEFAULT"
+      Enabled: true
+      EnableKeyRotation: true
+      KeyUsage: "ENCRYPT_DECRYPT"
+      Tags: []
+  XRayGroup00groupDefault009EOeb:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::XRay::Group"
+    DeletionPolicy: "Retain"
+    Properties:
+      GroupName: "Default"
+      InsightsConfiguration:
+        InsightsEnabled: false
+        NotificationsEnabled: false
+      Tags: []
+  CloudFrontOriginRequestPolicy00216adef65c7f47e4b9895492eafa07d300Zo6lf:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::CloudFront::OriginRequestPolicy"
+    DeletionPolicy: "Retain"
+    Properties:
+      OriginRequestPolicyConfig:
+        QueryStringsConfig:
+          QueryStringBehavior: "all"
+        Comment: "Policy to forward all parameters in viewer requests"
+        HeadersConfig:
+          HeaderBehavior: "allViewer"
+        CookiesConfig:
+          CookieBehavior: "all"
+        Name: "Managed-AllViewer"
+  EC2SubnetRouteTableAssociation00rtbassoc09165ec59675ea69c008neq8:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::SubnetRouteTableAssociation"
+    DeletionPolicy: "Retain"
+    Properties:
+      RouteTableId:
+        Ref: "EC2RouteTable00rtb059627df836e8839e00Br9xm"
+      SubnetId:
+        Ref: "EC2Subnet00subnet0644d115fdb35bb9b00fXX1Q"
+  IAMInstanceProfile00gamesminecraftinstanceprofile00TSMPR:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::IAM::InstanceProfile"
+    DeletionPolicy: "Retain"
+    Properties:
+      Path: "/"
+      Roles:
+      - Ref: "IAMRole00gamesminecraftallowec2tos300ZTluN"
+      InstanceProfileName: "games-minecraft-instance-profile"
+  IAMRole00gamesminecraftallowec2tos300ZTluN:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::IAM::Role"
+    DeletionPolicy: "Retain"
+    Properties:
+      Path: "/"
+      ManagedPolicyArns:
+      - "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+      MaxSessionDuration: 3600
+      RoleName: "games-minecraft-allow-ec2-to-s3"
+      Policies:
+      - PolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+          - Resource:
+            - "arn:aws:s3:::games-minecraft-sut9a14se5ic"
+            Action:
+            - "s3:ListBucket"
+            Effect: "Allow"
+          - Resource:
+            - "arn:aws:s3:::games-minecraft-sut9a14se5ic/*"
+            Action:
+            - "s3:PutObject"
+            - "s3:GetObject"
+            - "s3:DeleteObject"
+            Effect: "Allow"
+        PolicyName: "games-minecraft-allow-ec2-to-s3"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Action: "sts:AssumeRole"
+          Effect: "Allow"
+          Principal:
+            Service: "ec2.amazonaws.com"
+          Sid: ""
+  EC2Route00rtb02d2f406c8000f6cf00Plb58:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::Route"
+    DeletionPolicy: "Retain"
+    Properties:
+      RouteTableId:
+        Ref: "EC2RouteTable00rtb02d2f406c8000f6cf00DdHRf"
+      DestinationCidrBlock:
+        Fn::GetAtt:
+        - "EC2VPC00vpc0598df0b71c53d43100Engvj"
+        - "CidrBlock"
+      GatewayId: "local"
+      VpcEndpointId: "local"
+  IAMRole00AWSServiceRoleForAutoScaling00MYNiG:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::IAM::Role"
+    DeletionPolicy: "Retain"
+    Properties:
+      Path: "/aws-service-role/autoscaling.amazonaws.com/"
+      ManagedPolicyArns:
+      - "arn:aws:iam::aws:policy/aws-service-role/AutoScalingServiceRolePolicy"
+      MaxSessionDuration: 3600
+      RoleName: "AWSServiceRoleForAutoScaling"
+      Description: "Default Service-Linked Role enables access to AWS Services and\
+        \ Resources used or managed by Auto Scaling"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Action: "sts:AssumeRole"
+          Effect: "Allow"
+          Principal:
+            Service: "autoscaling.amazonaws.com"
+  EC2SecurityGroup00sg065604e7249aa8e0b00NlF6N:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::SecurityGroup"
+    DeletionPolicy: "Retain"
+    Properties:
+      GroupDescription: "external group"
+      GroupName: "tine-external-20250112144600250300000004"
+      VpcId:
+        Ref: "EC2VPC00vpc0598df0b71c53d43100Engvj"
+      SecurityGroupIngress:
+      - CidrIp: "0.0.0.0/0"
+        IpProtocol: "tcp"
+        Description: "HTTP"
+        FromPort: 80
+        ToPort: 80
+      - CidrIp: "0.0.0.0/0"
+        IpProtocol: "tcp"
+        Description: "HTTPS"
+        FromPort: 443
+        ToPort: 443
+      SecurityGroupEgress:
+      - CidrIp: "0.0.0.0/0"
+        IpProtocol: "-1"
+        Description: "All protocols"
+        FromPort: -1
+        ToPort: -1
+      - CidrIpv6: "::/0"
+        IpProtocol: "-1"
+        Description: "All protocols"
+        FromPort: -1
+        ToPort: -1
+      Tags:
+      - Value: "tine"
+        Key: "project"
+      - Value: "tine-external"
+        Key: "Name"
+  EventsEventBus00default005k49N:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::Events::EventBus"
+    DeletionPolicy: "Retain"
+    Properties:
+      Tags: []
+      Name: "default"
+  EC2DHCPOptions00dopt3528ff5e00FCUQN:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::DHCPOptions"
+    DeletionPolicy: "Retain"
+    Properties:
+      DomainName: "us-east-2.compute.internal"
+      DomainNameServers:
+      - "AmazonProvidedDNS"
+      Tags: []
+
+  EC2SubnetRouteTableAssociation00rtbassoc0edc0c59412cfed5300GXSeJ:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::SubnetRouteTableAssociation"
+    DeletionPolicy: "Retain"
+    Properties:
+      RouteTableId:
+        Ref: "EC2RouteTable00rtb062cf3e661b03297400OlCLI"
+      SubnetId:
+        Ref: "EC2Subnet00subnet0c759a0e56ace0cf300kuJCZ"
+  IAMManagedPolicy00policyserviceroleAWSLambdaBasicExecutionRole6b02bd9d58e243e8ad4702ec50ea876000fvsyf:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::IAM::ManagedPolicy"
+    DeletionPolicy: "Retain"
+    Properties:
+      ManagedPolicyName: "AWSLambdaBasicExecutionRole-6b02bd9d-58e2-43e8-ad47-02ec50ea8760"
+      Path: "/service-role/"
+      Description: ""
+      Groups: []
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Resource: "arn:aws:logs:us-east-2:767503528736:*"
+          Action: "logs:CreateLogGroup"
+          Effect: "Allow"
+        - Resource:
+          - "arn:aws:logs:us-east-2:767503528736:log-group:/aws/lambda/live_count:*"
+          Action:
+          - "logs:CreateLogStream"
+          - "logs:PutLogEvents"
+          Effect: "Allow"
+      Roles:
+      - Ref: "IAMRole00firstexecutionrole00THC19"
+      Users: []
+
+  EC2SubnetRouteTableAssociation00rtbassoc05105640ed7569c2500LH9R7:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::SubnetRouteTableAssociation"
+    DeletionPolicy: "Retain"
+    Properties:
+      RouteTableId:
+        Ref: "EC2RouteTable00rtb059627df836e8839e00Br9xm"
+      SubnetId:
+        Ref: "EC2Subnet00subnet0819e6b6f7ea0e72c00Q1DJl"
+  EC2NetworkAcl00acl0b87f33426d400f4600fIWpi:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::NetworkAcl"
+    DeletionPolicy: "Retain"
+    Properties:
+      VpcId:
+        Ref: "EC2VPC00vpc0598df0b71c53d43100Engvj"
+      Tags:
+      - Value: "tine-default"
+        Key: "Name"
+      - Value: "tine"
+        Key: "project"
+  CloudFrontCachePolicy001c6db51aa33f469a8245dae26771f53000qU3zv:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::CloudFront::CachePolicy"
+    DeletionPolicy: "Retain"
+    Properties:
+      CachePolicyConfig:
+        Comment: "Amplify cache policy for image optimization"
+        MinTTL: 0
+        MaxTTL: 3.1536E7
+        ParametersInCacheKeyAndForwardedToOrigin:
+          QueryStringsConfig:
+            QueryStringBehavior: "all"
+          EnableAcceptEncodingBrotli: true
+          HeadersConfig:
+            HeaderBehavior: "whitelist"
+            Headers:
+            - "Authorization"
+            - "Accept"
+            - "Host"
+          CookiesConfig:
+            CookieBehavior: "none"
+          EnableAcceptEncodingGzip: true
+        DefaultTTL: 0
+        Name: "Managed-Amplify-ImageOptimization"
+  EC2Subnet00subnet2481d25e00NqeA0:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::Subnet"
+    DeletionPolicy: "Retain"
+    Properties:
+      VpcId:
+        Ref: "EC2VPC00vpce594698e00DxfEz"
+      MapPublicIpOnLaunch: true
+      EnableDns64: false
+      AvailabilityZoneId: "use2-az2"
+      PrivateDnsNameOptionsOnLaunch:
+        EnableResourceNameDnsARecord: false
+        HostnameType: "ip-name"
+        EnableResourceNameDnsAAAARecord: false
+      CidrBlock: "172.31.16.0/20"
+      Ipv6Native: false
+      Tags: []
+  LogsLogStream00i0eadf5e69d93a5cfa007syzZ:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Retain"
+    Properties:
+      LogStreamName: "i-0eadf5e69d93a5cfa"
+      LogGroupName:
+        Ref: "LogsLogGroup00ec2init00XdSv1"
+
+  EC2Subnet00subnet48c2272300eAslM:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::Subnet"
+    DeletionPolicy: "Retain"
+    Properties:
+      VpcId:
+        Ref: "EC2VPC00vpce594698e00DxfEz"
+      MapPublicIpOnLaunch: true
+      EnableDns64: false
+      AvailabilityZoneId: "use2-az1"
+      PrivateDnsNameOptionsOnLaunch:
+        EnableResourceNameDnsARecord: false
+        HostnameType: "ip-name"
+        EnableResourceNameDnsAAAARecord: false
+      CidrBlock: "172.31.0.0/20"
+      Ipv6Native: false
+      Tags: []
+  EC2RouteTable00rtb6540fa0e00Z3DdC:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::RouteTable"
+    DeletionPolicy: "Retain"
+    Properties:
+      VpcId:
+        Ref: "EC2VPC00vpce594698e00DxfEz"
+  LogsLogStream00i06b64c746c6ed6f3800YnaXA:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Retain"
+    Properties:
+      LogStreamName: "i-06b64c746c6ed6f38"
+      LogGroupName:
+        Ref: "LogsLogGroup00ec2init00XdSv1"
+  CloudFrontOriginRequestPolicy00b689b0a853d040abbaf268738e2966ac00T0QgU:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::CloudFront::OriginRequestPolicy"
+    DeletionPolicy: "Retain"
+    Properties:
+      OriginRequestPolicyConfig:
+        QueryStringsConfig:
+          QueryStringBehavior: "all"
+        Comment: "Policy to forward all parameters in viewer requests except for the\
+          \ Host header"
+        HeadersConfig:
+          HeaderBehavior: "allExcept"
+          Headers:
+          - "host"
+        CookiesConfig:
+          CookieBehavior: "all"
+        Name: "Managed-AllViewerExceptHostHeader"
+  EC2InternetGateway00igw0fdd7b93e1ae82bc400rTmkK:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::InternetGateway"
+    DeletionPolicy: "Retain"
+    Properties:
+      Tags:
+      - Value: "tine"
+        Key: "Name"
+      - Value: "tine"
+        Key: "project"
+  LogsLogStream00i0bbdb8d9fcf7a324a00pEoVR:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Retain"
+    Properties:
+      LogStreamName: "i-0bbdb8d9fcf7a324a"
+      LogGroupName:
+        Ref: "LogsLogGroup00ec2init00XdSv1"
+  IAMRole00cdkhnb659fdscfnexecrole767503528736useast100hKwDp:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::IAM::Role"
+    DeletionPolicy: "Retain"
+    Properties:
+      Path: "/"
+      ManagedPolicyArns:
+      - "arn:aws:iam::aws:policy/AdministratorAccess"
+      MaxSessionDuration: 3600
+      RoleName: "cdk-hnb659fds-cfn-exec-role-767503528736-us-east-1"
+      Description: ""
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Action: "sts:AssumeRole"
+          Effect: "Allow"
+          Principal:
+            Service: "cloudformation.amazonaws.com"
+  EC2SubnetNetworkAclAssociation00aclassoc5999fc3500qLVpn:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::SubnetNetworkAclAssociation"
+    DeletionPolicy: "Retain"
+    Properties:
+      NetworkAclId:
+        Ref: "EC2NetworkAcl00acl9ff72ff400fNe6Y"
+      SubnetId:
+        Ref: "EC2Subnet00subnetc2279c8e00EVut3"
+
+  LogsLogGroup00ssmsessionlogs2025010920114496730000000a00ogGAF:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::Logs::LogGroup"
+    DeletionPolicy: "Retain"
+    Properties:
+      FieldIndexPolicies: []
+      RetentionInDays: 30
+      KmsKeyId:
+        Fn::GetAtt:
+        - "KMSKey00fe2fb040de7a48f1b54dc99cbb00ed66008yFV0"
+        - "Arn"
+      LogGroupClass: "STANDARD"
+      LogGroupName: "/ssm/session-logs-2025010920114496730000000a"
+      Tags:
+      - Value: "tine"
+        Key: "project"
+      DataProtectionPolicy: {}
+  IAMRole00testAgentApiCloudWatchRoleE73E9536skCYhECU2aQw007ylnm:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::IAM::Role"
+    DeletionPolicy: "Retain"
+    Properties:
+      Path: "/"
+      ManagedPolicyArns:
+      - "arn:aws:iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs"
+      MaxSessionDuration: 3600
+      RoleName: "test-AgentApiCloudWatchRoleE73E9536-skCYhECU2aQw"
+      Description: ""
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Action: "sts:AssumeRole"
+          Effect: "Allow"
+          Principal:
+            Service: "apigateway.amazonaws.com"
+  CloudFrontCachePolicy00b2884449e4de46a7ac3670bc7f1ddd6d009C0yT:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::CloudFront::CachePolicy"
+    DeletionPolicy: "Retain"
+    Properties:
+      CachePolicyConfig:
+        Comment: "Default policy when compression is disabled"
+        MinTTL: 1
+        MaxTTL: 3.1536E7
+        ParametersInCacheKeyAndForwardedToOrigin:
+          QueryStringsConfig:
+            QueryStringBehavior: "none"
+          EnableAcceptEncodingBrotli: false
+          HeadersConfig:
+            HeaderBehavior: "none"
+          CookiesConfig:
+            CookieBehavior: "none"
+          EnableAcceptEncodingGzip: false
+        DefaultTTL: 86400
+        Name: "Managed-CachingOptimizedForUncompressedObjects"
+
+  EC2Subnet00subnet054f21347240af41200Xbl5M:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::Subnet"
+    DeletionPolicy: "Retain"
+    Properties:
+      VpcId:
+        Ref: "EC2VPC00vpc0598df0b71c53d43100Engvj"
+      MapPublicIpOnLaunch: false
+      EnableDns64: false
+      AvailabilityZoneId: "use2-az2"
+      PrivateDnsNameOptionsOnLaunch:
+        EnableResourceNameDnsARecord: false
+        HostnameType: "ip-name"
+        EnableResourceNameDnsAAAARecord: false
+      CidrBlock: "10.0.5.0/24"
+      Ipv6Native: false
+      Tags:
+      - Value: "tine"
+        Key: "project"
+      - Value: "tine-public-us-east-2b"
+        Key: "Name"
+  EC2SubnetRouteTableAssociation00rtbassoc05a6c0320dbfa557800mRmNA:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::SubnetRouteTableAssociation"
+    DeletionPolicy: "Retain"
+    Properties:
+      RouteTableId:
+        Ref: "EC2RouteTable00rtb02d2f406c8000f6cf00DdHRf"
+      SubnetId:
+        Ref: "EC2Subnet00subnet0b2a03db9dc372c8900WF7tM"
+  EC2Route00rtb05e8d3da5753d86b000XZ6tI:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::Route"
+    DeletionPolicy: "Retain"
+    Properties:
+      RouteTableId:
+        Ref: "EC2RouteTable00rtb05e8d3da5753d86b0003YFHB"
+      DestinationCidrBlock:
+        Fn::GetAtt:
+        - "EC2VPC00vpc0598df0b71c53d43100Engvj"
+        - "CidrBlock"
+      GatewayId: "local"
+      VpcEndpointId: "local"
+
+
+  LogsLogStream00i08e3aaabc104968e600l83hK:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Retain"
+    Properties:
+      LogStreamName: "i-08e3aaabc104968e6"
+      LogGroupName:
+        Ref: "LogsLogGroup00ec2init00XdSv1"
+  MemoryDBParameterGroup00defaultmemorydbredis600VtEkx:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::MemoryDB::ParameterGroup"
+    DeletionPolicy: "Retain"
+    Properties:
+      ParameterGroupName: "default.memorydb-redis6"
+      Family: "memorydb_redis6"
+      Description: "Default parameter group for memorydb_redis6"
+  KMSKey000315ba93de8443a8b8a4b5c80966a3a5004rQrb:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::KMS::Key"
+    DeletionPolicy: "Retain"
+    Properties:
+      Origin: "AWS_KMS"
+      MultiRegion: false
+      Description: "Default key that protects my ACM private keys when no other key\
+        \ is defined"
+      KeyPolicy:
+        Version: "2012-10-17"
+        Statement:
+        - Condition:
+            StringEquals:
+              kms:CallerAccount: "767503528736"
+              kms:ViaService: "acm.us-east-2.amazonaws.com"
+            ForAllValues:StringEquals:
+              kms:GrantOperations: "Decrypt"
+            Bool:
+              kms:GrantIsForAWSResource: "true"
+          Resource: "*"
+          Action: "kms:CreateGrant"
+          Effect: "Allow"
+          Principal:
+            AWS: "*"
+          Sid: "Allow creation of decryption grants"
+        - Condition:
+            StringEquals:
+              kms:CallerAccount: "767503528736"
+              kms:ViaService: "acm.us-east-2.amazonaws.com"
+            ForAllValues:StringEquals:
+              kms:GrantOperations:
+              - "Encrypt"
+              - "ReEncryptFrom"
+              - "ReEncryptTo"
+            Bool:
+              kms:GrantIsForAWSResource: "true"
+          Resource: "*"
+          Action: "kms:CreateGrant"
+          Effect: "Allow"
+          Principal:
+            AWS: "*"
+          Sid: "Allow creation of encryption grant"
+        - Condition:
+            StringEquals:
+              kms:CallerAccount: "767503528736"
+          Resource: "*"
+          Action:
+          - "kms:DescribeKey"
+          - "kms:ListGrants"
+          - "kms:RevokeGrant"
+          - "kms:GetKeyPolicy"
+          Effect: "Allow"
+          Principal:
+            AWS: "*"
+          Sid: "Allowed operations for the key owner"
+        - Condition:
+            Bool:
+              kms:ReEncryptOnSameKey: "false"
+          Resource: "*"
+          Action: "kms:ReEncrypt*"
+          Effect: "Deny"
+          Principal:
+            AWS: "*"
+          Sid: "Deny re-encryption to any other key"
+        - Condition:
+            StringEquals:
+              kms:CallerAccount: "767503528736"
+              kms:ViaService: "acm.us-east-2.amazonaws.com"
+          Resource: "*"
+          Action: "kms:Decrypt"
+          Effect: "Allow"
+          Principal:
+            AWS: "*"
+          Sid: "Allow decrypt"
+        Id: "auto-acm-4"
+      KeySpec: "SYMMETRIC_DEFAULT"
+      Enabled: true
+      KeyUsage: "ENCRYPT_DECRYPT"
+  EC2NetworkInterfaceAttachment00eniattach03a9bebc83f203bf000JEIm3:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::NetworkInterfaceAttachment"
+    DeletionPolicy: "Retain"
+    Properties:
+      NetworkInterfaceId: "eni-0e6080d324bda3d02"
+      InstanceId: "i-00c0c1b8d54eeb80b"
+      DeviceIndex: "0"
+      DeleteOnTermination: true
+  LogsLogGroup00awsapplicationsignalsdata00ntDJa:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::Logs::LogGroup"
+    DeletionPolicy: "Retain"
+    Properties:
+      FieldIndexPolicies: []
+      LogGroupClass: "STANDARD"
+      RetentionInDays: 30
+      LogGroupName: "/aws/application-signals/data"
+      DataProtectionPolicy: {}
+  LogsLogStream00i0ebac7b7bf4a6e7bb00n4wha:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::Logs::LogStream"
+    DeletionPolicy: "Retain"
+    Properties:
+      LogStreamName: "i-0ebac7b7bf4a6e7bb"
+      LogGroupName:
+        Ref: "LogsLogGroup00ec2init00XdSv1"
+  IAMInstanceProfile00ssmagentprofile00veSz9:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::IAM::InstanceProfile"
+    DeletionPolicy: "Retain"
+    Properties:
+      Path: "/"
+      Roles:
+      - Ref: "IAMRole00ssmagentrole00oSb5U"
+      InstanceProfileName: "ssm-agent-profile"
+  CloudFrontOriginRequestPolicy0088a5eaf42fd44709b370b4c650ea3fcf009kaKv:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::CloudFront::OriginRequestPolicy"
+    DeletionPolicy: "Retain"
+    Properties:
+      OriginRequestPolicyConfig:
+        QueryStringsConfig:
+          QueryStringBehavior: "none"
+        Comment: "Policy for S3 origin with CORS"
+        HeadersConfig:
+          HeaderBehavior: "whitelist"
+          Headers:
+          - "origin"
+          - "access-control-request-headers"
+          - "access-control-request-method"
+        CookiesConfig:
+          CookieBehavior: "none"
+        Name: "Managed-CORS-S3Origin"
+  SSMAssociation00b641a87a31d2420283778a4d25ac4ac200iU9SD:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::SSM::Association"
+    DeletionPolicy: "Retain"
+    Properties:
+      Targets:
+      - Values:
+        - "enabled"
+        Key: "tag:Monitoring"
+      Parameters:
+        commands:
+        - "amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -s -c ssm:/cloudwatch-agent/config\n\
+          \      systemctl restart amazon-cloudwatch-agent"
+      ApplyOnlyAtCronInterval: false
+      DocumentVersion: "$DEFAULT"
+      Name: "AWS-RunShellScript"
+  IAMManagedPolicy00policyserviceroleAWSLambdaS3ExecutionRole3c2f91feca504ec8ad18210052cbcbc700xdDS0:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::IAM::ManagedPolicy"
+    DeletionPolicy: "Retain"
+    Properties:
+      ManagedPolicyName: "AWSLambdaS3ExecutionRole-3c2f91fe-ca50-4ec8-ad18-210052cbcbc7"
+      Path: "/service-role/"
+      Description: ""
+      Groups: []
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Resource: "arn:aws:s3:::*"
+          Action:
+          - "s3:GetObject"
+          Effect: "Allow"
+      Roles:
+      - Ref: "IAMRole00firstexecutionrole00THC19"
+      Users: []
+  IAMRole00ssmrole2025010920113165040000000300qt0Bs:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::IAM::Role"
+    DeletionPolicy: "Retain"
+    Properties:
+      Path: "/"
+      ManagedPolicyArns:
+      - "arn:aws:iam::767503528736:policy/ssm_s3_cwl_access-us-east-2"
+      - "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+      MaxSessionDuration: 3600
+      RoleName: "ssm_role-20250109201131650400000003"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Action: "sts:AssumeRole"
+          Effect: "Allow"
+          Principal:
+            Service: "ec2.amazonaws.com"
+          Sid: ""
+      Tags:
+      - Value: "tine"
+        Key: "project"
+  CloudFrontCachePolicy00658327eaf89d4faba63d7e88639e58f600QejqV:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::CloudFront::CachePolicy"
+    DeletionPolicy: "Retain"
+    Properties:
+      CachePolicyConfig:
+        Comment: "Policy with caching enabled. Supports Gzip and Brotli compression."
+        MinTTL: 1
+        MaxTTL: 3.1536E7
+        ParametersInCacheKeyAndForwardedToOrigin:
+          QueryStringsConfig:
+            QueryStringBehavior: "none"
+          EnableAcceptEncodingBrotli: true
+          HeadersConfig:
+            HeaderBehavior: "none"
+          CookiesConfig:
+            CookieBehavior: "none"
+          EnableAcceptEncodingGzip: true
+        DefaultTTL: 86400
+        Name: "Managed-CachingOptimized"
+  EC2VolumeAttachment00vol0b34bd73171cab6b600YZeTD:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::VolumeAttachment"
+    DeletionPolicy: "Retain"
+    Properties:
+      InstanceId: "i-00c0c1b8d54eeb80b"
+      VolumeId: "vol-0b34bd73171cab6b6"
+      Device: "/dev/sda1"
+  MemoryDBParameterGroup00defaultmemorydbredis7search00GBZaJ:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::MemoryDB::ParameterGroup"
+    DeletionPolicy: "Retain"
+    Properties:
+      ParameterGroupName: "default.memorydb-redis7.search"
+      Family: "memorydb_redis7"
+      Description: "Customized default parameter group for memorydb_redis7 with search-enabled\
+        \ yes"
+
+  CloudFrontOriginRequestPolicy00acba4595bd2849b8b9fe13317c0390fa00R0GMS:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::CloudFront::OriginRequestPolicy"
+    DeletionPolicy: "Retain"
+    Properties:
+      OriginRequestPolicyConfig:
+        QueryStringsConfig:
+          QueryStringBehavior: "none"
+        Comment: "Policy to forward user-agent and referer headers to origin"
+        HeadersConfig:
+          HeaderBehavior: "whitelist"
+          Headers:
+          - "referer"
+          - "user-agent"
+        CookiesConfig:
+          CookieBehavior: "none"
+        Name: "Managed-UserAgentRefererHeaders"
+  KMSKey007d87df3982264141b1f21479f0e6687200GxWsH:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::KMS::Key"
+    DeletionPolicy: "Retain"
+    Properties:
+      Origin: "AWS_KMS"
+      MultiRegion: false
+      Description: "Default key that protects my EBS volumes when no other key is\
+        \ defined"
+      KeyPolicy:
+        Version: "2012-10-17"
+        Statement:
+        - Condition:
+            StringEquals:
+              kms:CallerAccount: "767503528736"
+              kms:ViaService: "ec2.us-east-2.amazonaws.com"
+          Resource: "*"
+          Action:
+          - "kms:Encrypt"
+          - "kms:Decrypt"
+          - "kms:ReEncrypt*"
+          - "kms:GenerateDataKey*"
+          - "kms:CreateGrant"
+          - "kms:DescribeKey"
+          Effect: "Allow"
+          Principal:
+            AWS: "*"
+          Sid: "Allow access through EBS for all principals in the account that are\
+            \ authorized to use EBS"
+        - Resource: "*"
+          Action:
+          - "kms:Describe*"
+          - "kms:Get*"
+          - "kms:List*"
+          - "kms:RevokeGrant"
+          Effect: "Allow"
+          Principal:
+            AWS: "arn:aws:iam::767503528736:root"
+          Sid: "Allow direct access to key metadata to the account"
+        Id: "auto-ebs-2"
+      KeySpec: "SYMMETRIC_DEFAULT"
+      Enabled: true
+      EnableKeyRotation: true
+      KeyUsage: "ENCRYPT_DECRYPT"
+      Tags: []
+  MemoryDBUser00default00wG0VA:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::MemoryDB::User"
+    DeletionPolicy: "Retain"
+    Properties:
+      Tags: []
+      UserName: "default"
+  EC2Subnet00subnet0b2a03db9dc372c8900WF7tM:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::Subnet"
+    DeletionPolicy: "Retain"
+    Properties:
+      VpcId:
+        Ref: "EC2VPC00vpc0598df0b71c53d43100Engvj"
+      MapPublicIpOnLaunch: false
+      EnableDns64: false
+      AvailabilityZoneId: "use2-az2"
+      PrivateDnsNameOptionsOnLaunch:
+        EnableResourceNameDnsARecord: false
+        HostnameType: "ip-name"
+        EnableResourceNameDnsAAAARecord: false
+      CidrBlock: "10.0.1.0/24"
+      Ipv6Native: false
+      Tags:
+      - Value: "Private Subnet Two"
+        Key: "Name"
+      - Value: "tine"
+        Key: "project"
