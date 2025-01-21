@@ -1,0 +1,44 @@
+  IAMRole00cdkhnb659fdsimagepublishingrole767503528736useast100kkdnQ:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::IAM::Role"
+    DeletionPolicy: "Retain"
+    Properties:
+      Path: "/"
+      MaxSessionDuration: 3600
+      RoleName: "cdk-hnb659fds-image-publishing-role-767503528736-us-east-1"
+      Description: ""
+      Policies:
+      - PolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+          - Resource: "arn:aws:ecr:us-east-1:767503528736:repository/cdk-hnb659fds-container-assets-767503528736-us-east-1"
+            Action:
+            - "ecr:PutImage"
+            - "ecr:InitiateLayerUpload"
+            - "ecr:UploadLayerPart"
+            - "ecr:CompleteLayerUpload"
+            - "ecr:BatchCheckLayerAvailability"
+            - "ecr:DescribeRepositories"
+            - "ecr:DescribeImages"
+            - "ecr:BatchGetImage"
+            - "ecr:GetDownloadUrlForLayer"
+            Effect: "Allow"
+          - Resource: "*"
+            Action:
+            - "ecr:GetAuthorizationToken"
+            Effect: "Allow"
+        PolicyName: "cdk-hnb659fds-image-publishing-role-default-policy-767503528736-us-east-1"
+      AssumeRolePolicyDocument:
+        Version: "2008-10-17"
+        Statement:
+        - Action: "sts:TagSession"
+          Effect: "Allow"
+          Principal:
+            AWS: "arn:aws:iam::767503528736:root"
+        - Action: "sts:AssumeRole"
+          Effect: "Allow"
+          Principal:
+            AWS: "arn:aws:iam::767503528736:root"
+      Tags:
+      - Value: "image-publishing"
+        Key: "aws-cdk:bootstrap-role"
