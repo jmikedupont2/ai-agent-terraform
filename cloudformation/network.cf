@@ -1,0 +1,82 @@
+  EC2RouteTable00rtb05e8d3da5753d86b0003YFHB:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::RouteTable"
+    DeletionPolicy: "Retain"
+    Properties:
+      VpcId:
+        Ref: "EC2VPC00vpc0598df0b71c53d43100Engvj"
+      Tags:
+      - Value: "tine-private-us-east-2c"
+        Key: "Name"
+      - Value: "tine"
+        Key: "project"
+  EC2VPC00vpc0598df0b71c53d43100Engvj:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::VPC"
+    DeletionPolicy: "Retain"
+    Properties:
+      CidrBlock: "10.0.0.0/16"
+      EnableDnsSupport: true
+      InstanceTenancy: "default"
+      EnableDnsHostnames: true
+      Tags:
+      - Value: "tine"
+        Key: "project"
+      - Value: "tine"
+        Key: "Name"
+  EC2RouteTable00rtb059627df836e8839e00Br9xm:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::RouteTable"
+    DeletionPolicy: "Retain"
+    Properties:
+      VpcId:
+        Ref: "EC2VPC00vpc0598df0b71c53d43100Engvj"
+      Tags:
+      - Value: "tine-public"
+        Key: "Name"
+      - Value: "tine"
+        Key: "project"
+
+
+  EC2Subnet00subnet0c759a0e56ace0cf300kuJCZ:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::Subnet"
+    DeletionPolicy: "Retain"
+    Properties:
+      VpcId:
+        Ref: "EC2VPC00vpc0598df0b71c53d43100Engvj"
+      MapPublicIpOnLaunch: false
+      EnableDns64: false
+      AvailabilityZoneId: "use2-az1"
+      PrivateDnsNameOptionsOnLaunch:
+        EnableResourceNameDnsARecord: false
+        HostnameType: "ip-name"
+        EnableResourceNameDnsAAAARecord: false
+      CidrBlock: "10.0.0.0/24"
+      Ipv6Native: false
+      Tags:
+      - Value: "Private Subnet One"
+        Key: "Name"
+      - Value: "tine"
+        Key: "project"
+  EC2Subnet00subnet0644d115fdb35bb9b00fXX1Q:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::Subnet"
+    DeletionPolicy: "Retain"
+    Properties:
+      VpcId:
+        Ref: "EC2VPC00vpc0598df0b71c53d43100Engvj"
+      MapPublicIpOnLaunch: false
+      EnableDns64: false
+      AvailabilityZoneId: "use2-az3"
+      PrivateDnsNameOptionsOnLaunch:
+        EnableResourceNameDnsARecord: false
+        HostnameType: "ip-name"
+        EnableResourceNameDnsAAAARecord: false
+      CidrBlock: "10.0.6.0/24"
+      Ipv6Native: false
+      Tags:
+      - Value: "tine"
+        Key: "project"
+      - Value: "tine-public-us-east-2c"
+        Key: "Name"

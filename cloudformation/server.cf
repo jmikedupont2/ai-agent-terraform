@@ -1,0 +1,73 @@
+  EC2Instance00i00c0c1b8d54eeb80b00C4SuW:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::Instance"
+    DeletionPolicy: "Retain"
+    Properties:
+      Tenancy: "default"
+      SecurityGroups:
+      - "tine-internal-20250112144600184400000003"
+      PrivateIpAddress: "10.0.4.156"
+      UserData: "IyEvYmluL2Jhc2gKZXhwb3J0IEhPTUU9L3Jvb3QKYXB0IHVwZGF0ZQphcHQtZ2V0IGluc3RhbGwgLXkgZWMyLWluc3RhbmNlLWNvbm5lY3QgZ2l0IAoKIyBJbnN0YWxsIGRvY2tlcgphcHQtZ2V0IGluc3RhbGwgLXkgY2xvdWQtdXRpbHMgYXB0LXRyYW5zcG9ydC1odHRwcyBjYS1jZXJ0aWZpY2F0ZXMgY3VybCBzb2Z0d2FyZS1wcm9wZXJ0aWVzLWNvbW1vbgpjdXJsIC1mc1NMIGh0dHBzOi8vZG93bmxvYWQuZG9ja2VyLmNvbS9saW51eC91YnVudHUvZ3BnIHwgc3VkbyBhcHQta2V5IGFkZCAtCmFkZC1hcHQtcmVwb3NpdG9yeSBcCiAiZGViIFthcmNoPWFtZDY0XSBodHRwczovL2Rvd25sb2FkLmRvY2tlci5jb20vbGludXgvdWJ1bnR1IFwKICQobHNiX3JlbGVhc2UgLWNzKSBcCiBzdGFibGUiCmFwdC1nZXQgdXBkYXRlCmFwdC1nZXQgaW5zdGFsbCAteSBkb2NrZXItY2UKdXNlcm1vZCAtYUcgZG9ja2VyIHVidW50dQoKIyBJbnN0YWxsIGRvY2tlci1jb21wb3NlCmN1cmwgLUwgaHR0cHM6Ly9naXRodWIuY29tL2RvY2tlci9jb21wb3NlL3JlbGVhc2VzL2Rvd25sb2FkLzEuMjEuMC9kb2NrZXItY29tcG9zZS0kKHVuYW1lIC1zKS0kKHVuYW1lIC1tKSAtbyAvdXNyL2xvY2FsL2Jpbi9kb2NrZXItY29tcG9zZQpjaG1vZCAreCAvdXNyL2xvY2FsL2Jpbi9kb2NrZXItY29tcG9zZQoKc25hcCBpbnN0YWxsIGFtYXpvbi1zc20tYWdlbnQgLS1jbGFzc2ljIHx8IGVjaG8gb29wczEKc25hcCBzdGFydCBhbWF6b24tc3NtLWFnZW50IHx8IGVjaG8gb29wczIKYXB0LWdldCBpbnN0YWxsIC15IC0tbm8taW5zdGFsbC1yZWNvbW1lbmRzIGNhLWNlcnRpZmljYXRlcz0yMDIzMDMxMSBjdXJsPTcuODguMS0xMCtkZWIxMnU3IHwgIGVjaG8gb29wcwpjdXJsIC1PICJodHRwczovL3MzLmFtYXpvbmF3cy5jb20vYW1hem9uY2xvdWR3YXRjaC1hZ2VudC91YnVudHUvJChkcGtnIC0tcHJpbnQtYXJjaGl0ZWN0dXJlKS9sYXRlc3QvYW1hem9uLWNsb3Vkd2F0Y2gtYWdlbnQuZGViIgpkcGtnIC1pIC1FIGFtYXpvbi1jbG91ZHdhdGNoLWFnZW50LmRlYgojIEluc3RhbGwgcHJlcmVxdWlzaXRlIHBhY2thZ2VzCmFwdC1nZXQgaW5zdGFsbCAteSB3Z2V0IHVuemlwIHN5c3RlbWQKIyBJbiBjYXNlIG9mIG1pc3NpbmcgZGVwZW5kZW5jaWVzCiMgYXB0LWdldCBpbnN0YWxsIC1mIC15CiMgQ29uZmlndXJlIGFuZCBzdGFydCB0aGUgQ2xvdWRXYXRjaCBhZ2VudAovb3B0L2F3cy9hbWF6b24tY2xvdWR3YXRjaC1hZ2VudC9iaW4vYW1hem9uLWNsb3Vkd2F0Y2gtYWdlbnQtY3RsIC1hIGZldGNoLWNvbmZpZyAtbSBlYzIgLXMgLWMgInNzbTovY2xvdWR3YXRjaC1hZ2VudC9jb25maWcvZGV0YWlscyIKIyBFbmFibGUgYW5kIHN0YXJ0IHRoZSBzZXJ2aWNlIHVzaW5nIHN5c3RlbWN0bApzeXN0ZW1jdGwgZW5hYmxlIGFtYXpvbi1jbG91ZHdhdGNoLWFnZW50CnN5c3RlbWN0bCBzdGFydCBhbWF6b24tY2xvdWR3YXRjaC1hZ2VudAoKIyBDbGVhbiB1cCBkb3dubG9hZGVkIGZpbGVzCnJtIC1mIGFtYXpvbi1jbG91ZHdhdGNoLWFnZW50LmRlYgojIFZlcmlmeSBpbnN0YWxsYXRpb24Kc3lzdGVtY3RsIHN0YXR1cyBhbWF6b24tY2xvdWR3YXRjaC1hZ2VudAoKaWYgWyAhIC1kICIvb3B0L2FnZW50LyIgXTsgdGhlbgogIGdpdCBjbG9uZSBodHRwczovL2dpdGh1Yi5jb20vbWV0YS1pbnRyb3NwZWN0b3IvY2xvdWQtZGVwbG95bWVudC1lbGl6YS8gIi9vcHQvYWdlbnQvIgpmaQpjZCAiL29wdC9hZ2VudC8iIHx8IGV4aXQgMQpnaXQgc3Rhc2gKZ2l0IGZldGNoIC0tYWxsICMgZ2V0IHRoZSBsYXRlc3QgdmVyc2lvbgpnaXQgY2hlY2tvdXQgLS10cmFjayAtLWZvcmNlICJvcmlnaW4vZmVhdHVyZS9hcm02NF9mYXN0ZW1iZWQiCgpiYXNoIC14IC9vcHQvYWdlbnQvcnVuZG9ja2VyLnNoCg=="
+      BlockDeviceMappings:
+      - Ebs:
+          SnapshotId: "snap-0e559681afbed732d"
+          VolumeType: "gp3"
+          KmsKeyId:
+            Fn::GetAtt:
+            - "KMSKey007d87df3982264141b1f21479f0e6687200GxWsH"
+            - "Arn"
+          Encrypted: true
+          Iops: 3000
+          VolumeSize: 30
+          DeleteOnTermination: true
+        DeviceName: "/dev/sda1"
+      IamInstanceProfile:
+        Ref: "IAMInstanceProfile00ssmagentprofile00veSz9"
+      SubnetId:
+        Ref: "EC2Subnet00subnet0819e6b6f7ea0e72c00Q1DJl"
+      EbsOptimized: false
+      Volumes:
+      - VolumeId: "vol-0b34bd73171cab6b6"
+        Device: "/dev/sda1"
+      NetworkInterfaces:
+      - PrivateIpAddresses:
+        - PrivateIpAddress: "10.0.4.156"
+          Primary: true
+        SecondaryPrivateIpAddressCount: 0
+        DeviceIndex: "0"
+        GroupSet:
+        - Ref: "EC2SecurityGroup00sg0044cf7473740011f001O9Yb"
+        Ipv6Addresses: []
+        SubnetId:
+          Ref: "EC2Subnet00subnet0819e6b6f7ea0e72c00Q1DJl"
+        AssociatePublicIpAddress: true
+        NetworkInterfaceId:
+          Ref: "EC2NetworkInterface00eni0e6080d324bda3d0200BFGN7"
+        DeleteOnTermination: true
+      ImageId: "ami-0e44962f5c9a2baab"
+      InstanceType: "t4g.small"
+      Monitoring: false
+      Tags:
+      - Value: "docker-agent-ami-t4g.small"
+        Key: "Name"
+      InstanceInitiatedShutdownBehavior: "stop"
+      CpuOptions:
+        ThreadsPerCore: 1
+        CoreCount: 2
+      AvailabilityZone: "us-east-2a"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsARecord: false
+        HostnameType: "ip-name"
+        EnableResourceNameDnsAAAARecord: false
+      SecurityGroupIds:
+      - "sg-0044cf7473740011f"
+      DisableApiTermination: false
+      KeyName: "mdupont-deployer-key"
+      SourceDestCheck: true
+      PlacementGroupName: ""
+      VpcId: "vpc-0598df0b71c53d431"
+      State:
+        Code: "16"
+        Name: "running"
+      CreditSpecification:
+        CPUCredits: "unlimited"
