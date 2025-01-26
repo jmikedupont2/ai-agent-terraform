@@ -1,4 +1,4 @@
-variable "project_name" {
+variable "dns_name" {
   type    = string
   default = "np.introspector.meme"
 }
