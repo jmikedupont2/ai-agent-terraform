@@ -1,3 +1,77 @@
+# one click installer plan
+
+Using cloudformation
+https://github.com/meta-introspector/cfn-tf-meta-introspector/issues/1 still need someone to try this
+
+we want a step by step instructions to setup your aws
+and then they click on this
+https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=tfcfn-custom-type-resources&templateURL=https://s3.amazonaws.com/ianmckay-us-east-1/cfn-tf-custom-types/template.yml
+
+and then we port our repo https://github.com/meta-introspector/ai-agent-terraform/tree/feature/aitokenteam into running inside of cloudformation
+
+TODO : Great asset
+    transform our terraform resources into cloudformation yaml to use tf provider
+	we could deploy azure or gcp from aws in terraform.
+	
+For the mean time, we will deploy terraform.
+
+Another alternative is 
+https://runatlantis.io/
+
+# solfun meme branch of ai-agent terraform
+
+This will deploy the :
+1. solfunmeme dao agent to work for the solfunmeme dao
+1.1. (eliza)
+
+2. solfunmeme web server(done)
+2.1 to vercel 
+2.1.1. (done, manually not terraformed) 
+2.2 to aws (TBD)
+https://codeberg.org/introspector/SOLFUNMEME/issues/25
+
+stakeholders will login via the phantom wallet compatible web app with wallet and be able to vote on important decisions :
+
+3. terraform to admin discord :
+who is admin in 
+	telegram
+	discord
+	
+what versions of what bots with what permissions do we have in telegram
+what software projects are important to work on
+what marketing and listing should we persue
+etc.
+This will be the core of the dao, I will use this as my oracle for every day decisions and try and act in the best interest of the team and hope all of us will.
+
+We are going to build something amazing, I have tons of work ready, many ideas ready to launch when we have this running.
+
+3. the dns records to namecheap. 
+3.1 done manually
+3.2 add terraform
+
+4. cognito with web3 Integration
+https://codeberg.org/introspector/SOLFUNMEME/issues/5
+
+## agent spec : 
+ 
+What the agent will do
+
+resolve tickets :
+	in codeberg and 
+	in github and 
+	later in gitlab, jira
+	
+but talk in: 
+	discord, 
+	telegram, 
+	twitter it should 
+	
+the agent will update the main web page as well.
+we will deploy the main page to terraform as well. 
+
+LANGUAGE API:
+Deploy open lite llm server, connect to multiple backends.
+
 # terraform-template
 
 ```
@@ -5,14 +79,15 @@ git clone https://github.com/aitokenteam/ai-agent-terraform.git
 cd ai-agent-terraform/accounts/AI_Token_Team/
 git checkout feature/aitokenteam
 
-tofu init
+terraform init
 
 aws ecr create-repository --repository-name agent/eliza
+aws ecr create-repository --repository-name nodemodules/sql-lite-vec
 
 aws ssm put-parameter     --name "agent_openai_key"  --value "${OPENAI_API_KEY}" --type String
 
-tofu apply --target module.ssm_observer.aws_ssm_parameter.cw_agent_config --target module.ssm_observer.aws_ssm_parameter.cw_agent_config_details
-tofu apply 
+terraform apply --target module.ssm_observer.aws_ssm_parameter.cw_agent_config --target module.ssm_observer.aws_ssm_parameter.cw_agent_config_details
+terraform apply 
 ```
 
 Terraform project template for deploying infrastructure across multiple environments and regions, following best practices with modular structure and automated syntax checks (GitHub Actions)
@@ -118,7 +193,7 @@ start direct client here
 edit 
    aws_availability_zones = ["us-west-1a","us-west-1b","us-west-1c"]
 
-if you ge the errro :
+if you ge the errror:
 00000003]
 module.ssm_setup.module.ssm.aws_s3_bucket_lifecycle_configuration.access_log_bucket: Creation complete after 32s [id=ai-token-team-session-access-logs-20250113203757298300000002]
 ╷

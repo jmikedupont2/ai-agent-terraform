@@ -11,17 +11,18 @@
 
 module "build" {
   source = "cloudposse/cicd/aws"
+  # 2025/01/14/terraform-aws-cicd
   # Cloud Posse recommends pinning every module to a specific version
   version = "0.20.0"
   namespace   = "main"
+  repo_owner  = "meta-introspector"
   stage       = "staging"
   name        = "arm64-tokenizers"
   enabled             = true
   # Application repository on GitHub
-#  github_oauth_token  = "(Required) <GitHub Oauth Token with permissions to access private repositories>"
-#  repo_owner          = "<GitHub Organization or Person name>"
-#  repo_name           = "<GitHub repository name of the application to be built and deployed to Elastic Beanstalk>"
-#  branch              = "<Branch of the GitHub repository>"
+  github_oauth_token  = "(Required) <GitHub Oauth Token with permissions to access private repositories>"
+  repo_name           = "test"
+  branch              = "test"
 
   # http://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref.html
   # http://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html
@@ -32,8 +33,8 @@ module "build" {
   image_tag           = "latest"
 
    build_image         = "aws/codebuild/amazonlinux2-aarch64-standard:3.0"
-   build_type  = "ARM_CONTAINER"
-   build_timeout       = 60
+ #  build_type  = "ARM_CONTAINER"
+#   build_timeout       = 60
   
 #   image_repo_name     = "nodemodules/tokenizer"
 #   image_tag           = "latest"
