@@ -1,21 +1,7 @@
 variable "dns_name" {
   type    = string
+  description =  "DNS name not used yet by default"
   default = "np.introspector.meme"
-}
-
-variable "codename" {
-  type    = string
-  default  = "hanuman"
-}
-   
-variable "project_name" {
-  type    = string
-  default = "np-introspector"
-}
-
-variable "profile" {
-  type    = string
-  default = "np-introspector"
 }
 
 variable "aws_region" {
@@ -32,6 +18,12 @@ variable "iam_user" {
   type    = string
   default = "np_introspector"
 }
+
+# dont expose PII
+#variable "user_name" {
+#  type    = string
+#  default = ""
+#}
 
 
 

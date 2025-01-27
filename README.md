@@ -1,3 +1,10 @@
+# status
+
+1. deployed to us-east-2
+2. want to deploy second test instance 
+3. dont want to disturb existing servers.
+4. create second instance of agent module with new branch for testing.
+
 # one click installer plan
 
 Using cloudformation
@@ -223,6 +230,7 @@ resource "aws_key_pair" "deployer" {
    key_name   = "ai-token-deployer-key"
    public_key = "<insert your personal cat ~/.ssh/id_pub.rsa"
 }
+
 
 # connect via ssm
 

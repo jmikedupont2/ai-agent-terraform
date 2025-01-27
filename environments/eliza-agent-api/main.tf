@@ -10,7 +10,7 @@ variable "aws_account_id" {}
 variable "ami_id" {}
 variable "tags" {}
 variable "name" {}
-variable "key_name" {}
+#variable "key_name" {}
 
 locals {
   name     = var.project
@@ -67,7 +67,7 @@ module "eliza" {
   ssm_profile_arn            = module.roles.ssm_profile_arn
   ec2_subnet_id              = module.vpc.ec2_public_subnet_id_1
   iam_instance_profile_name  = module.roles.ssm_profile_name
-  key_name                   = var.key_name
+#  key_name                   = var.key_name
   instance_types = var.instance_types
   aws_account_id             = var.aws_account_id
   region                     = var.region

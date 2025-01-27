@@ -7,7 +7,7 @@ variable "name" {}
 variable "vpc_id" {}
 variable "ami_id" {}
 variable "tags" {}
-variable "key_name" {}
+#variable "key_name" {}
 variable "instance_type" {}
 
 locals {
@@ -63,7 +63,7 @@ data "aws_ssm_parameter" "cw_agent_config" {
 resource "aws_launch_template" "ec2_launch_template" {
   name_prefix   = "${var.name}-launch-template-"
   image_id      = var.ami_id
-  key_name      = var.key_name
+#  key_name      = var.key_name
   instance_type = var.instance_type
   network_interfaces {
     associate_public_ip_address = true

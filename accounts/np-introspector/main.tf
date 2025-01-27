@@ -3,7 +3,7 @@ provider "aws" {
   profile = "np-introspector"
 }
 
-locals {   ami_name = "ubuntu-minimal/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-minimal-*" }
+locals {   ami_name = "ubuntu-minimal/images/hvm-ssd-gp3/ubuntu-noble-24.04-arm64-minimal-*" }
 
 data "aws_ami" "ami" { # slow
     most_recent      = true
@@ -46,7 +46,7 @@ module "ssm_setup" {
   region         = var.aws_region
   source         = "../../environments/eliza-agent-api" 
    domain         = var.dns_name
-   key_name = "mdupont-deployer-key"
+   key_name = "deployer-key"
    branch = "feature/arm64_fastembed"
    project = var.codename
     instance_types = ["t4g.small"] # not big enough for building

@@ -53,7 +53,7 @@ locals {
 #}
 
 
-#locals {   ami_name = "ubuntu-minimal/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-minimal-*" }
+#locals {   ami_name = "ubuntu-minimal/images/hvm-ssd-gp3/ubuntu-noble-24.04-arm64-minimal-*" }
 # data "aws_ami" "ami" { # slow
 #    most_recent      = true
 #    name_regex       = "^${local.ami_name}"
@@ -61,7 +61,7 @@ locals {
 
 locals {
   # hard coded to save time , fixme use a caching system
-  # ami_id = "ami-0325b9a2dfb474b2d" for ami_name = "ubuntu-minimal/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-minimal-*" }
+  # ami_id = "ami-0325b9a2dfb474b2d" for ami_name = "ubuntu-minimal/images/hvm-ssd-gp3/ubuntu-noble-24.04-arm64-minimal-*" }
   ami_id = "ami-0e44962f5c9a2baab"
 }
 
@@ -88,7 +88,7 @@ module "ssm_setup" {
   region         = local.region
   source         = "../../environments/eliza-agent-api" 
    domain         = local.dns
-   key_name = "mdupont-deployer-key"
+#   key_name = "mdupont-deployer-key"
    branch = "feature/arm64_fastembed"
    project = "tine"
     instance_types = ["t4g.small"] # not big enough for building
@@ -104,6 +104,39 @@ module "ssm_setup" {
   tags = { project = "eliza" }
 }
 
+
+locals {
+  dev_region ="us-east-1"
+}
+
+locals {   ami_name = "ubuntu-minimal/images/hvm-ssd-gp3/ubuntu-noble-24.04-arm64-minimal-*" }
+data "aws_ami" "dev_ami" { # slow
+   most_recent      = true
+   name_regex       = "^${local.ami_name}"
+}
+
+locals {
+  dev_ami_id = data.aws_ami.dev_ami.id
+}
+
+module "eliza_test_server" {
+  aws_account_id  =var.aws_account_id
+  region         = local.dev_region
+  source         = "../../environments/eliza-agent-api" 
+  domain         = local.dns
+#   key_name = "mdupont-deployer-key"
+   branch = "feature/systemd-parameters"
+   project = "tine-dev"
+    instance_types = ["t4g.small"] # 
+   repo = "https://github.com/meta-introspector/cloud-deployment-eliza/"
+   aws_availability_zones =["${local.dev_region}a","${local.dev_region}b",
+   			  "${local.dev_region}c"
+   ]
+   spot_max_price= 0.01
+  ami_id = local.dev_ami_id #data.aws_ami.ami.id
+  name = "eliza"
+  tags = { project = "eliza_dev" }
+}
 
 #module "codebuild" {
 #  source         = "./codebuild"
