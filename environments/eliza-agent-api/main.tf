@@ -2,6 +2,7 @@ variable repo{}
 variable aws_availability_zones {}
 variable instance_types {}
 variable "spot_max_price" {}
+variable "ssm_region" {}
 variable "branch" {}
 variable "project" {}
 variable "region" {}
@@ -71,6 +72,7 @@ module "eliza" {
   instance_types = var.instance_types
   aws_account_id             = var.aws_account_id
   region                     = var.region
+  ssm_region                 = var.ssm_region
   internal_security_group_id = module.security.internal_security_group_id
   tags                       = local.tags
   ami_id                     = local.ami_id

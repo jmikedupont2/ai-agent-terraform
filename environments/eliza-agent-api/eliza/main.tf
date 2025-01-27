@@ -13,6 +13,7 @@ variable "iam_instance_profile_name" {}
 variable "ssm_profile_arn" {}
 #variable "key_name" {}
 variable "region" {}
+variable "ssm_region" {}
 variable "tags" {}
 
 variable "instance_types" {
@@ -35,7 +36,7 @@ module "lt_docker" {
   })
 
 #  key_name                           = var.key_name #"mdupont-deployer-key"
-  ssm_parameter_name_cw_agent_config = "arn:aws:ssm:${var.region}:${var.aws_account_id}:parameter/cloudwatch-agent/config/details"
+  ssm_parameter_name_cw_agent_config = "arn:aws:ssm:${var.ssm_region}:${var.aws_account_id}:parameter/cloudwatch-agent/config/details"
   iam_instance_profile_name          = var.iam_instance_profile_name
   #install_script = "/opt/agent/api/docker-boot.sh" this is called from ssm for a refresh
   install_script = "/opt/agent/rundocker.sh"

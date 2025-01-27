@@ -85,7 +85,8 @@ module "ssm_setup" {
    #count = 0
   #aws_account_id = local.account
   aws_account_id  =var.aws_account_id
-  region         = local.region
+   region         = local.region
+   ssm_region         = local.region
   source         = "../../environments/eliza-agent-api" 
    domain         = local.dns
 #   key_name = "mdupont-deployer-key"
@@ -122,6 +123,7 @@ locals {
 module "eliza_test_server" {
   aws_account_id  =var.aws_account_id
   region         = local.dev_region
+  ssm_region         = local.region
   source         = "../../environments/eliza-agent-api" 
   domain         = local.dns
 #   key_name = "mdupont-deployer-key"
