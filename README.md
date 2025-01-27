@@ -260,3 +260,15 @@ docker logs agent-docker.service
 lsof -iTCP:3000
 
 "TINE-IntrospectorIsNotEliza"
+
+
+# terraform partial apply
+
+terraform plan , edit to list of items you want to apply in targets.txt
+
+for x in `cat targets.txt`; do echo "--target \"$x\""; done  | sed -e "s;\n;;g" | tr -d '\n'
+
+^Jmdupont@mdupont-G470:~/terraform/accounts/mdupont$ for x in `cat targets.txt`; do echo "--target \"$x\""; done  | sed -e "s;\n;;g" | tr -d '\n'
+for x in `cat targets.txt`; do echo " --target '$x'"; done  | sed -e "s;\n;;g" | tr -d '\n'^J
+
+terraform apply  --target 'module.eliza_test_server.module.eliza.module.asg["t4g.small"].module.autoscaling.aws_autoscaling_group.this[0]' --target 'module.eliza_test_server.module.eliza.module.asg["t4g.small"].module.autoscaling.aws_autoscaling_policy.this["avg-cpu-policy-greater-than-50"]' --target 'module.eliza_test_server.module.eliza.module.asg["t4g.small"].module.autoscaling.aws_autoscaling_policy.this["predictive-scaling"]' --target 'module.eliza_test_server.module.eliza.module.asg["t4g.small"].module.autoscaling.aws_autoscaling_policy.this["scale-out"]' --target 'module.eliza_test_server.module.eliza.module.lt_docker["t4g.small"].aws_launch_template.ec2_launch_template' --target 'module.eliza_test_server.module.roles.aws_iam_instance_profile.ssm' --target 'module.eliza_test_server.module.roles.aws_iam_policy.default' --target 'module.eliza_test_server.module.roles.aws_iam_role.ssm' --target 'module.eliza_test_server.module.roles.aws_iam_role_policy_attachment.AmazonSSMManagedEC2InstanceDefaultPolicy' --target 'module.eliza_test_server.module.roles.aws_iam_role_policy_attachment.SSM-role-policy-attach' --target 'module.eliza_test_server.module.roles.aws_iam_role_policy_attachment.default' --target 'module.eliza_test_server.module.vpc.module.vpc.aws_route_table_association.private[0]' --target 'module.eliza_test_server.module.vpc.module.vpc.aws_route_table_association.private[1]' --target 'module.eliza_test_server.module.vpc.module.vpc.aws_route_table_association.private[2]' --target 'module.eliza_test_server.module.vpc.module.vpc.aws_route_table_association.public[0]' --target 'module.eliza_test_server.module.vpc.module.vpc.aws_route_table_association.public[1]' --target 'module.eliza_test_server.module.vpc.module.vpc.aws_route_table_association.public[2]' --target 'module.eliza_test_server.module.vpc.module.vpc.aws_subnet.private[0]' --target 'module.eliza_test_server.module.vpc.module.vpc.aws_subnet.private[1]' --target 'module.eliza_test_server.module.vpc.module.vpc.aws_subnet.private[2]' --target 'module.eliza_test_server.module.vpc.module.vpc.aws_subnet.public[0]' --target 'module.eliza_test_server.module.vpc.module.vpc.aws_subnet.public[1]' --target 'module.eliza_test_server.module.vpc.module.vpc.aws_subnet.public[2]'

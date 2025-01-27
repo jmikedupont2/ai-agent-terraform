@@ -1,3 +1,13 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+  }
+}
+
+
 variable repo{}
 variable aws_availability_zones {}
 variable instance_types {}
@@ -52,6 +62,7 @@ module "kp" {
 
 module "roles" {
   source = "./components/roles"
+  name = var.name
   tags   = local.tags
 }
 

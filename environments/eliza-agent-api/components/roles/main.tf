@@ -1,4 +1,6 @@
 variable "tags" {}
+variable "name" {
+}
 
 data "aws_iam_policy_document" "default" {
   statement {
@@ -119,7 +121,7 @@ data "aws_iam_policy_document" "default" {
 }
 
 resource "aws_iam_policy" "default" {
-  name        = "swarms-ssm"
+  name        = "${var.name}-ssm"
   description = "Allow SSM actions"
   policy      = data.aws_iam_policy_document.default.json
 }
@@ -146,7 +148,7 @@ data "aws_iam_policy" "AmazonSSMManagedInstanceCore" {
 
 
 resource "aws_iam_role" "ssm" {
-  name = "ssm-agent-role"
+  name = "ssm-${var.name}-agent-role"
   tags = var.tags
 
   assume_role_policy = jsonencode({
@@ -165,7 +167,7 @@ resource "aws_iam_role" "ssm" {
 }
 
 resource "aws_iam_instance_profile" "ssm" {
-  name = "ssm-agent-profile"
+  name = "ssm-${var.name}-agent-profile"
   role = aws_iam_role.ssm.name
   tags = var.tags
 }

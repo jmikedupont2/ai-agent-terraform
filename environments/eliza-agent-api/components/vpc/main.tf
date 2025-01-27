@@ -22,6 +22,7 @@ module "vpc" {
   name            = local.name
   cidr            = local.vpc_cidr
   azs             = local.azs
+#  provider        = 
   private_subnets = [for k, v in local.azs : cidrsubnet(local.vpc_cidr, 8, k)]
   public_subnets  = [for k, v in local.azs : cidrsubnet(local.vpc_cidr, 8, k + 4)]
   #   database_subnets    = [for k, v in local.azs : cidrsubnet(local.vpc_cidr, 8, k + 8)]

@@ -3,6 +3,12 @@ provider "aws" {
   profile = "mdupont"
 }
 
+provider "aws" {
+  alias = "us_east_1"
+  region  = "us-east-1"
+  profile = "mdupont"
+}
+
 #variable "google_oauth_client_secret" {}
 #variable "google_oauth_client_id" {} 
 
@@ -99,6 +105,14 @@ module "ssm_setup" {
      "us-east-2b",
      "us-east-2c"
    ]
+
+   depends_on = [
+   #    module.ssm_setup.
+   #│ arn:aws:ssm:ap-south-2:084375543224:parameter/cloudwatch-agent/config/details
+    module.ssm_observer #.aws_ssm_parameter.cw_agent_config,
+    #    module.ssm_observer.aws_ssm_parameter.cw_agent_config_details
+  ]
+
    spot_max_price= 0.01
   ami_id = local.ami_id #data.aws_ami.ami.id
   name = "eliza"
@@ -120,10 +134,32 @@ locals {
   dev_ami_id = data.aws_ami.dev_ami.id
 }
 
+module "ssm_observer2" {
+  source = "../../modules/aws/ssm/observability"
+  #ami_id = data.aws_ami.ami.id
+  ami_id = local.ami_id
+    providers = {
+    aws= aws.us_east_1
+  }
+
+}
+
 module "eliza_test_server" {
+
+     depends_on = [
+   #    module.ssm_setup.
+   #│ arn:aws:ssm:ap-south-2:084375543224:parameter/cloudwatch-agent/config/details
+    module.ssm_observer2 #.aws_ssm_parameter.cw_agent_config,
+    #    module.ssm_observer.aws_ssm_parameter.cw_agent_config_details
+  ]
+
+  
   aws_account_id  =var.aws_account_id
   region         = local.dev_region
   ssm_region         = local.region
+  providers = {
+    aws= aws.us_east_1
+  }
   source         = "../../environments/eliza-agent-api" 
   domain         = local.dns
 #   key_name = "mdupont-deployer-key"
@@ -136,7 +172,7 @@ module "eliza_test_server" {
    ]
    spot_max_price= 0.01
   ami_id = local.dev_ami_id #data.aws_ami.ami.id
-  name = "eliza"
+  name = "eliza_dev"
   tags = { project = "eliza_dev" }
 }
 
