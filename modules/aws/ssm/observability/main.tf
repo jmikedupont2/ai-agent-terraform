@@ -7,7 +7,7 @@ variable "ami_id" {}
 variable "aws_region" {
   description = "AWS region"
   type        = string
-  default     = "us-east-2"
+#  default     = "us-east-2"
 }
 
 variable "instance_type" {
@@ -24,7 +24,7 @@ variable "patch_schedule" {
 
 # Update EC2 role to include SSM permissions
 resource "aws_iam_role" "ec2_monitoring_role" {
-  name = "ec2-monitoring-role"
+  name = "ec2-monitoring-role-${var.aws_region}"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -53,7 +53,7 @@ resource "aws_iam_role_policy_attachment" "cloudwatch_agent_policy" {
 
 # Previous instance profile configuration remains the same
 resource "aws_iam_instance_profile" "monitoring_profile" {
-  name = "ec2-monitoring-profile"
+  name = "ec2-monitoring-profile-${var.aws_region}"
   role = aws_iam_role.ec2_monitoring_role.name
 }
 
@@ -141,7 +141,7 @@ resource "aws_ssm_maintenance_window_task" "patch_task" {
 
 # Maintenance Window Role
 resource "aws_iam_role" "maintenance_window_role" {
-  name = "ssm-maintenance-window-role"
+  name = "ssm-maintenance-window-role-${var.aws_region}"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -188,7 +188,7 @@ resource "aws_iam_role_policy_attachment" "maintenance_window_policy" {
 
 # Add CloudWatch Event Rule for Patch Compliance Monitoring
 resource "aws_cloudwatch_event_rule" "patch_compliance" {
-  name        = "patch-compliance-monitoring"
+  name        = "patch-compliance-monitoring-${var.aws_region}"
   description = "Monitor patch compliance state changes"
 
   event_pattern = jsonencode({
@@ -205,7 +205,7 @@ resource "aws_cloudwatch_event_target" "patch_compliance_sns" {
 
 # SNS Topic for Patch Notifications
 resource "aws_sns_topic" "patch_notifications" {
-  name = "patch-compliance-notifications"
+  name = "patch-compliance-notifications-${var.aws_region}"
 }
 
 
@@ -485,6 +485,7 @@ resource "aws_cloudwatch_log_group" "log_groups" {
   for_each = toset([
 #    "/swarms/ngnix_access",
 #    "/swarms/nginx_error",
+# FIXME revisitg
   "/eliza/systemd", "/ec2/init"])
   name              = each.key
   retention_in_days = 30

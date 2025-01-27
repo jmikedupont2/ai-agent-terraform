@@ -75,6 +75,8 @@ module "ssm_observer" {
   source = "../../modules/aws/ssm/observability"
   #ami_id = data.aws_ami.ami.id
   ami_id = local.ami_id
+  
+  aws_region = var.aws_region
 }
  
 module "ssm_setup" {
@@ -126,8 +128,9 @@ locals {
 
 locals {   ami_name = "ubuntu-minimal/images/hvm-ssd-gp3/ubuntu-noble-24.04-arm64-minimal-*" }
 data "aws_ami" "dev_ami" { # slow
-   most_recent      = true
-   name_regex       = "^${local.ami_name}"
+  most_recent      = true
+  provider = aws.us_east_1
+  name_regex       = "^${local.ami_name}"
 }
 
 locals {
@@ -135,6 +138,7 @@ locals {
 }
 
 module "ssm_observer2" {
+  aws_region = local.dev_region
   source = "../../modules/aws/ssm/observability"
   #ami_id = data.aws_ami.ami.id
   ami_id = local.ami_id
@@ -156,7 +160,7 @@ module "eliza_test_server" {
   
   aws_account_id  =var.aws_account_id
   region         = local.dev_region
-  ssm_region         = local.region
+  ssm_region         = local.dev_region
   providers = {
     aws= aws.us_east_1
   }
