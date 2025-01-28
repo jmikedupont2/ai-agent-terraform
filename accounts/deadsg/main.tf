@@ -13,8 +13,13 @@ data "aws_ami" "ami" { # slow
 
 locals {
   # hard coded to save time , fixme use a caching system
+<<<<<<< HEAD
   # ami_id = "ami-0325b9a2dfb474b2d" for ami_name = "ubuntu-minimal/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-minimal-*" }
   # ami_id = "ami-0e44962f5c9a2baab"
+=======
+  ami_id = "ami-0325b9a2dfb474b2d" for ami_name = "ubuntu-minimal/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-minimal-*" }
+  ami_id = "ami-0e44962f5c9a2baab"
+>>>>>>> deadsg/feature/deadsg
   ami_id =     data.aws_ami.ami.id
 }
 

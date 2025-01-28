@@ -21,7 +21,7 @@ variable "aws_account_id" {}
 variable "ami_id" {}
 variable "tags" {}
 variable "name" {}
-#variable "key_name" {}
+##variable "key_name" {}
 
 locals {
   name     = var.project
