@@ -59,22 +59,15 @@ locals {
 #}
 
 
-#locals {   ami_name = "ubuntu-minimal/images/hvm-ssd-gp3/ubuntu-noble-24.04-arm64-minimal-*" }
-# data "aws_ami" "ami" { # slow
-#    most_recent      = true
-#    name_regex       = "^${local.ami_name}"
-#  }
-
-locals {
-  # hard coded to save time , fixme use a caching system
-  # ami_id = "ami-0325b9a2dfb474b2d" for ami_name = "ubuntu-minimal/images/hvm-ssd-gp3/ubuntu-noble-24.04-arm64-minimal-*" }
-  ami_id = "ami-0e44962f5c9a2baab"
-}
+locals {   ami_name = "ubuntu-minimal/images/hvm-ssd-gp3/ubuntu-noble-24.04-arm64-minimal-*" }
+ data "aws_ami" "ami" { # slow
+    most_recent      = true
+    name_regex       = "^${local.ami_name}"
+  }
 
 module "ssm_observer" {
   source = "../../modules/aws/ssm/observability"
-  #ami_id = data.aws_ami.ami.id
-  ami_id = local.ami_id
+  ami_id = data.aws_ami.ami.id
   
   aws_region = var.aws_region
 }
@@ -116,7 +109,7 @@ module "ssm_setup" {
   ]
 
    spot_max_price= 0.01
-  ami_id = local.ami_id #data.aws_ami.ami.id
+  ami_id = data.aws_ami.ami.id
   name = "eliza"
   tags = { project = "eliza" }
 }
