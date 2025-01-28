@@ -42,6 +42,7 @@ module "ssm_setup" {
   #aws_account_id = var.account
   aws_account_id  =var.aws_account_id
   region         = var.aws_region
+  ssm_region         = var.aws_region
   source         = "../../environments/eliza-agent-api" 
    domain         = var.dns_name
    key_name = "mdupont-deployer-key"
