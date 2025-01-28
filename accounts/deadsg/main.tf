@@ -33,10 +33,7 @@ module "ssm_setup" {
  # FIXME need to add dependencies
  module "eliza_server" {
    depends_on = [
-   #    module.ssm_setup.
-   #│ arn:aws:ssm:ap-south-2:084375543224:parameter/cloudwatch-agent/config/details
-    module.ssm_observer #.aws_ssm_parameter.cw_agent_config,
-    #    module.ssm_observer.aws_ssm_parameter.cw_agent_config_details
+    module.ssm_observer #.aws_ssm_parameter.cw_agent_config
   ]
 #count = 0
   #aws_account_id = var.account
