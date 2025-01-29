@@ -35,18 +35,14 @@ module "ssm_setup" {
  # FIXME need to add dependencies
  module "eliza_server" {
    depends_on = [
-   #    module.ssm_setup.
-   #│ arn:aws:ssm:ap-south-2:084375543224:parameter/cloudwatch-agent/config/details
     module.ssm_observer #.aws_ssm_parameter.cw_agent_config,
-    #    module.ssm_observer.aws_ssm_parameter.cw_agent_config_details
   ]
-#count = 0
-  #aws_account_id = var.account
   aws_account_id  =var.aws_account_id
   region         = var.aws_region
+  ssm_region     = var.aws_region
   source         = "../../environments/eliza-agent-api" 
    domain         = var.dns_name
-   key_name = "deployer-key"
+#   key_name = "deployer-key"
    branch = "feature/arm64_fastembed"
    project = var.codename
     instance_types = ["t4g.small"] # not big enough for building
