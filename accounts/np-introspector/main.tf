@@ -46,7 +46,8 @@ module "ssm_setup" {
   source         = "../../environments/eliza-agent-api" 
    domain         = var.dns_name
 #   key_name = "deployer-key"
-   branch = "feature/arm64_fastembed"
+#   branch = "feature/arm64_fastembed"
+branch = var.branch
    project = var.codename
     instance_types = ["t4g.small"] # not big enough for building
 

@@ -19,8 +19,12 @@ variable "iam_user" {
   default = "np_introspector"
 }
 
+variable branch {
+ default = "feature/systemd-parameters"
+}
+
 variable codename {
-  default = "hanumen"
+  default = "hanuman"
 }
 
 # dont expose PII
