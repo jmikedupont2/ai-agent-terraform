@@ -17,6 +17,7 @@ locals {
 }
 
 module "ssm_observer" {
+  aws_region = "us-east-2"
   source = "../../modules/aws/ssm/observability"
   ami_id = local.ami_id
 }
@@ -42,7 +43,6 @@ module "ssm_setup" {
   ssm_region         = var.aws_region
   source         = "../../environments/eliza-agent-api" 
    domain         = var.dns_name
-   key_name = "mdupont-deployer-key"
    branch = "feature/arm64_fastembed"
    project = var.codename
     instance_types = ["t4g.small"] # not big enough for building
