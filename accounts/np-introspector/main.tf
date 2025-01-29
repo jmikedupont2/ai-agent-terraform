@@ -1,6 +1,8 @@
+
 provider "aws" {
   region  = "ap-south-1"
-  profile = "np-introspector"
+#  profile = "np-introspector"
+  profile = "default"
 }
 
 locals {   ami_name = "ubuntu-minimal/images/hvm-ssd-gp3/ubuntu-noble-24.04-arm64-minimal-*" }
