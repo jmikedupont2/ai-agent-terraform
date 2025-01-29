@@ -19,6 +19,10 @@ variable "iam_user" {
   default = "np_introspector"
 }
 
+variable codename {
+  default = "hanumen"
+}
+
 # dont expose PII
 #variable "user_name" {
 #  type    = string

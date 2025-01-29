@@ -21,6 +21,7 @@ locals {
 module "ssm_observer" {
   source = "../../modules/aws/ssm/observability"
   ami_id = local.ami_id
+  aws_region         = var.aws_region
 }
  
 module "ssm_setup" {
