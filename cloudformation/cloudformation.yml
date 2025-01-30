@@ -152,54 +152,6 @@ Resources:
 
 
 
-    AutoScalingScalingPolicy:
-        Type: "AWS::AutoScaling::ScalingPolicy"
-        Properties:
-            AutoScalingGroupName: !Sub "docker-agent-ami-t4g.small-20${SSMParameter.Value}0127184935601900000001"
-            PolicyType: "TargetTrackingScaling"
-            EstimatedInstanceWarmup: 1200
-            TargetTrackingConfiguration: 
-                PredefinedMetricSpecification: 
-                    PredefinedMetricType: "ASGAverageCPUUtilization"
-                TargetValue: 50
-                DisableScaleIn: false
-
-    AutoScalingScalingPolicy2:
-        Type: "AWS::AutoScaling::ScalingPolicy"
-        Properties:
-            AutoScalingGroupName: !Sub "docker-agent-ami-t4g.small-20${SSMParameter.Value}0127184935601900000001"
-            PolicyType: "StepScaling"
-            AdjustmentType: "ExactCapacity"
-            StepAdjustments: 
-              - 
-                MetricIntervalLowerBound: 0
-                MetricIntervalUpperBound: 10
-                ScalingAdjustment: 1
-              - 
-                MetricIntervalLowerBound: 10
-                ScalingAdjustment: 2
-            MetricAggregationType: "Average"
-            EstimatedInstanceWarmup: 120
-
-    AutoScalingScalingPolicy3:
-        Type: "AWS::AutoScaling::ScalingPolicy"
-        Properties:
-            AutoScalingGroupName: !Sub "docker-agent-ami-t4g.small-20${SSMParameter.Value}0127184935601900000001"
-            PolicyType: "PredictiveScaling"
-            PredictiveScalingConfiguration: 
-                MetricSpecifications: 
-                  - 
-                    TargetValue: 32
-                    PredefinedScalingMetricSpecification: 
-                        PredefinedMetricType: "ASGAverageCPUUtilization"
-                        ResourceLabel: !Sub "${CURReportDefinition}Label"
-                    PredefinedLoadMetricSpecification: 
-                        PredefinedMetricType: "ASGTotalCPUUtilization"
-                        ResourceLabel: !Sub "${CURReportDefinition}Label"
-                Mode: "ForecastAndScale"
-                SchedulingBufferTime: 10
-                MaxCapacityBreachBehavior: "IncreaseMaxCapacity"
-                MaxCapacityBuffer: 10
 
 
 
@@ -235,31 +187,6 @@ Resources:
                 Values: 
                   - "enabled"
 
-    EC2LaunchTemplate:
-        Type: "AWS::EC2::LaunchTemplate"
-        Properties:
-            LaunchTemplateName: !Sub "agent-docker-t4g.small-launch-template-20${SSMParameter.Value}0127182650467300000007"
-            LaunchTemplateData: 
-                UserData: !Sub "IyEvYmluL2Jhc2gKZXhwb3J0IEhPTUU9L3Jvb3QKYXB0IHVwZGF0ZQphcHQtZ2V0IGluc3RhbGwgLXkgZWMyLWluc3RhbmNlLWNvbm5lY3QgZ2l0IAojIEluc3RhbGwgZG9ja2VyCmFwdC1nZXQgaW5zdGFsbCAteSBjbG91ZC11dGlscyBhcHQtdHJhbnNwb3J0LWh0dHBzIGNhLWNlcnRpZmljYXRlcyBjdXJsIHNvZnR3YXJlLXByb3BlcnRpZXMtY29tbW9uCmN1cmwgLWZzU0wgaHR0cHM6Ly9kb3dubG9hZC5kb2NrZXIuY29tL2xpbnV4L3VidW50dS9ncGcgfCBzdWRvIGFwdC1rZXkgYWRkIC0KYWRkLWFwdC1yZXBvc2l0b3J5IFwKICJkZWIgW2FyY2g9YW1kNjRdIGh0dHBzOi8vZG93bmxvYWQuZG9ja2VyLmNvbS9saW51eC91YnVudHUgXAogJChsc2JfcmVsZWFzZSAtY3MpIFwKIHN0YWJsZSIKYXB0LWdldCB1cGRhdGUKYXB0LWdldCBpbnN0YWxsIC15IGRvY2tlci1jZQp1c2VybW9kIC1hRyBkb2NrZXIgdWJ1bnR1CiMgSW5zdGFsbCBkb2NrZXItY29tcG9zZSBGSVhNRSByZW1vdmUgdGhpcyBhcyBub3QgbmVlZGVkPwpjdXJsIC1MIGh0dHBzOi8vZ2l0aHViLmNvbS9kb2NrZXIvY29tcG9zZS9yZWxlYXNlcy9kb3dubG9hZC8xLjIxLjAvZG9ja2VyLWNvbXBvc2UtJCh1bmFtZSAtcyktJCh1bmFtZSAtbSkgLW8gL3Vzci9sb2NhbC9iaW4vZG9ja2VyLWNvbXBvc2UKY2htb2QgK3ggL3Vzci9sb2NhbC9iaW4vZG9ja2VyLWNvbXBvc2UKc${SSMParameter.Value}hcCBpbnN0YWxsIGFtYXpvbi1zc20tYWdlbnQgLS1jbGFzc2ljIHx8IGVjaG8gb29wczEKc${SSMParameter.Value}hcCBzdGFydCBhbWF6b24tc3NtLWFnZW50IHx8IGVjaG8gb29wczIKYXB0LWdldCBpbnN0YWxsIC15IC0tbm8taW5zdGFsbC1yZWNvbW1lbmRzIGNhLWNlcnRpZmljYXRlcz0yMDIzMDMxMSBjdXJsPTcuODguMS0xMCtkZWIxMnU3IHwgIGVjaG8gb29wcwpjdXJsIC1PICJodHRwczovL3MzLmFtYXpvbmF3cy5jb20vYW1hem9uY2xvdWR3YXRjaC1hZ2VudC91YnVudHUvJChkcGtnIC0tcHJpbnQtYXJjaGl0ZWN0dXJlKS9sYXRlc3QvYW1hem9uLWNsb3Vkd2F0Y2gtYWdlbnQuZGViIgpkcGtnIC1pIC1FIGFtYXpvbi1jbG91ZHdhdGNoLWFnZW50LmRlYgojIEluc3RhbGwgcHJlcmVxdWlzaXRlIHBhY2thZ2VzCmFwdC1nZXQgaW5zdGFsbCAteSB3Z2V0IHVuemlwIHN5c3RlbWQKIyBJbiBjYXNlIG9mIG1pc3NpbmcgZGVwZW5kZW5jaWVzCiMgYXB0LWdldCBpbnN0YWxsIC1mIC15CiMgQ29uZmlndXJlIGFuZCBzdGFydCB0aGUgQ2xvdWRXYXRjaCBhZ2VudAovb3B0L2F3cy9hbWF6b24tY2xvdWR3YXRjaC1hZ2VudC9iaW4vYW1hem9uLWNsb3Vkd2F0Y2gtYWdlbnQtY3RsIC1hIGZldGNoLWNvbmZpZyAtbSBlYzIgLXMgLWMgInNzbTovY2xvdWR3YXRjaC1hZ2VudC9jb${SSMParameter.Value}maWcvZGV0YWlscyIKIyBFbmFibGUgYW5kIHN0YXJ0IHRoZSBzZXJ2aWNlIHVzaW5nIHN5c3RlbWN0bApzeXN0ZW1jdGwgZW5hYmxlIGFtYXpvbi1jbG91ZHdhdGNoLWFnZW50CnN5c3RlbWN0bCBzdGFydCBhbWF6b24tY2xvdWR3YXRjaC1hZ2VudAojIENsZWFuIHVwIGRvd${SSMParameter.Value}sb2FkZWQgZmlsZXMKcm0gLWYgYW1hem9uLWNsb3Vkd2F0Y2gtYWdlbnQuZGViCiMgVmVyaWZ5IGluc3RhbGxhdGlvbgpzeXN0ZW1jdGwgc3RhdHVzIGFtYXpvbi1jbG91ZHdhdGNoLWFnZW50CmlmIFsgISAtZCAiL29wdC9hZ2VudC8iIF07IHRoZW4KICBnaXQgY2xvbmUgaHR0cHM6Ly9naXRodWIuY29tL21ldGEtaW50cm9zcGVjdG9yL2Nsb3VkLWRlcGxveW1lbnQtZWxpemEvICIvb3B0L2FnZW50LyIKZmkKY2QgIi9vcHQvYWdlbnQvIiB8fCBleGl0IDEKZ2l0IHN0YXNoCmdpdCBmZXRjaCAtLWFsbCAjIGdldCB0aGUgbGF0ZXN0IHZlcnNpb24KZ2l0IGNoZWNrb3V0IC0tdHJhY2sgLS1mb3JjZSAib3JpZ2luL2ZlYXR1cmUvc3lzdGVtZC1wYXJhbWV0ZXJzIgpiYXNoIC14IC9vcHQvYWdlbnQvcnVuZG9ja2VyLnNoCg=="
-                BlockDeviceMappings: 
-                  - 
-                    DeviceName: "/dev/sda1"
-                    Ebs: 
-                        Encrypted: true
-                        VolumeSize: 30
-                        VolumeType: "gp3"
-                IamInstanceProfile: 
-                    Name: "ssm-eliza_dev-agent-profile"
-                NetworkInterfaces: 
-                  - 
-                    AssociatePublicIpAddress: true
-                    DeleteOnTermination: true
-                    DeviceIndex: 0
-                    Groups: 
-                      - !Ref EC2SecurityGroup
-                    NetworkCardIndex: 0
-                ImageId: !Sub "ami-015e5cd4${SSMParameter.Value}3df9de1"
-                InstanceType: "t4g.small"
 
 
 
@@ -629,29 +556,7 @@ Resources:
             AWSServiceName: "ssm.amazonaws.com"
             Description: "Provides access to AWS Resources managed or used by Amazon SSM."
 
-    IAMRole:
-        Type: "AWS::IAM::Role"
-        Properties:
-            Path: "/"
-            RoleName: "cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}"
-            AssumeRolePolicyDocument: "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"cloudformation.amazonaws.com\"},\"Action\":\"sts:AssumeRole\"}]}"
-            MaxSessionDuration: 3600
-            ManagedPolicyArns: 
-              - "arn:aws:iam::aws:policy/AdministratorAccess"
-            Description: ""
 
-    IAMRole2:
-        Type: "AWS::IAM::Role"
-        Properties:
-            Path: "/"
-            RoleName: "cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}"
-            AssumeRolePolicyDocument: "{\"Version\":\"2008-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:iam::${AWS::AccountId}:root\"},\"Action\":\"sts:TagSession\"},{\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:iam::${AWS::AccountId}:root\"},\"Action\":\"sts:AssumeRole\"}]}"
-            MaxSessionDuration: 3600
-            Description: ""
-            Tags: 
-              - 
-                Key: "aws-cdk:bootstrap-role"
-                Value: "deploy"
 
     IAMRole3:
         Type: "AWS::IAM::Role"
@@ -945,13 +850,6 @@ Resources:
             Tier: "Standard"
 
 
-    IAMPolicy:
-        Type: "AWS::IAM::Policy"
-        Properties:
-            PolicyDocument: !Sub "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"cloudformation:CreateChangeSet\",\"cloudformation:DeleteChangeSet\",\"cloudformation:DescribeChangeSet\",\"cloudformation:DescribeStacks\",\"cloudformation:ExecuteChangeSet\",\"cloudformation:CreateStack\",\"cloudformation:UpdateStack\",\"cloudformation:RollbackStack\",\"cloudformation:ContinueUpdateRollback\"],\"Resource\":\"*\",\"Effect\":\"Allow\",\"Sid\":\"CloudFormationPermissions\"},{\"Condition\":{\"StringNotEquals\":{\"s3:ResourceAccount\":\"${AWS::AccountId}\"}},\"Action\":[\"s3:GetObject*\",\"s3:GetBucket*\",\"s3:List*\",\"s3:Abort*\",\"s3:DeleteObject*\",\"s3:PutObject*\"],\"Resource\":\"*\",\"Effect\":\"Allow\",\"Sid\":\"PipelineCrossAccountArtifactsBucket\"},{\"Condition\":{\"StringEquals\":{\"kms:ViaService\":\"s3.${AWS::Region}.amazonaws.com\"}},\"Action\":[\"kms:Decrypt\",\"kms:DescribeKey\",\"kms:Encrypt\",\"kms:ReEncrypt*\",\"kms:GenerateDataKey*\"],\"Resource\":\"*\",\"Effect\":\"Allow\",\"Sid\":\"PipelineCrossAccountArtifactsKey\"},{\"Action\":\"iam:PassRole\",\"Resource\":\"arn:aws:iam::${AWS::AccountId}:role/${IAMRole}\",\"Effect\":\"Allow\"},{\"Action\":[\"cloudformation:DescribeStackEvents\",\"cloudformation:GetTemplate\",\"cloudformation:DeleteStack\",\"cloudformation:UpdateTerminationProtection\",\"sts:GetCallerIdentity\",\"cloudformation:GetTemplateSummary\"],\"Resource\":\"*\",\"Effect\":\"Allow\",\"Sid\":\"CliPermissions\"},{\"Action\":[\"s3:GetObject*\",\"s3:GetBucket*\",\"s3:List*\"],\"Resource\":[\"arn:aws:s3:::${S3Bucket}\",\"arn:aws:s3:::${S3Bucket}/*\"],\"Effect\":\"Allow\",\"Sid\":\"CliStagingBucket\"},{\"Action\":[\"ssm:GetParameter\",\"ssm:GetParameters\"],\"Resource\":[\"arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter${SSMParameter}\"],\"Effect\":\"Allow\",\"Sid\":\"ReadVersion\"}]}"
-            Roles: 
-              - !Ref IAMRole2
-            PolicyName: "default"
 
     IAMPolicy2:
         Type: "AWS::IAM::Policy"
@@ -1011,41 +909,6 @@ Resources:
             AccessString: "on ~* +@all"
             NoPasswordRequired: true
 
-    AutoScalingAutoScalingGroup:
-        Type: "AWS::AutoScaling::AutoScalingGroup"
-        Properties:
-            AutoScalingGroupName: !Sub "docker-agent-ami-t4g.small-20${SSMParameter.Value}0127184935601900000001"
-            MixedInstancesPolicy: 
-                LaunchTemplate: 
-                    LaunchTemplateSpecification: 
-                        LaunchTemplateId: !Ref EC2LaunchTemplate
-                        LaunchTemplateName: !Sub "agent-docker-t4g.small-launch-template-20${SSMParameter.Value}0127182650467300000007"
-                        Version: !Sub "$La${CURReportDefinition}"
-                InstancesDistribution: 
-                    OnDemandAllocationStrategy: "prioritized"
-                    OnDemandBaseCapacity: 0
-                    OnDemandPercentageAboveBaseCapacity: 100
-                    SpotAllocationStrategy: "lowest-price"
-                    SpotInstancePools: 2
-            MinSize: 1
-            MaxSize: 2
-            DesiredCapacity: 1
-            Cooldown: 300
-            AvailabilityZones: 
-              - !GetAtt EC2Instance.AvailabilityZone
-            HealthCheckType: "EC2"
-            HealthCheckGracePeriod: 300
-            VPCZoneIdentifier: 
-              - !Ref EC2Subnet5
-            TerminationPolicies: 
-              - "Default"
-            ServiceLinkedRoleARN: "arn:aws:iam::${AWS::AccountId}:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling"
-            Tags: 
-              - 
-                Key: "Name"
-                Value: "docker-agent-ami-t4g.small"
-                PropagateAtLaunch: true
-            NewInstancesProtectedFromScaleIn: false
 
     EC2VPCDHCPOptionsAssociation:
         Type: "AWS::EC2::VPCDHCPOptionsAssociation"
@@ -1078,40 +941,6 @@ Resources:
 
 
 
-    EC2Instance:
-        Type: "AWS::EC2::Instance"
-        Properties:
-            ImageId: !Sub "ami-015e5cd4${SSMParameter.Value}3df9de1"
-            InstanceType: "t4g.small"
-            AvailabilityZone: !GetAtt EC2Subnet2.AvailabilityZone
-            Tenancy: !Ref IAMPolicy
-            SubnetId: !Ref EC2Subnet5
-            EbsOptimized: false
-            SecurityGroupIds: 
-              - !Ref EC2SecurityGroup
-            SourceDestCheck: true
-            BlockDeviceMappings: 
-              - 
-                DeviceName: "/dev/sda1"
-                Ebs: 
-                    Encrypted: true
-                    VolumeSize: 30
-                    SnapshotId: "snap-031bdaf01e402fb44"
-                    VolumeType: "gp3"
-                    DeleteOnTermination: true
-            UserData: !Sub "IyEvYmluL2Jhc2gKZXhwb3J0IEhPTUU9L3Jvb3QKYXB0IHVwZGF0ZQphcHQtZ2V0IGluc3RhbGwgLXkgZWMyLWluc3RhbmNlLWNvbm5lY3QgZ2l0IAojIEluc3RhbGwgZG9ja2VyCmFwdC1nZXQgaW5zdGFsbCAteSBjbG91ZC11dGlscyBhcHQtdHJhbnNwb3J0LWh0dHBzIGNhLWNlcnRpZmljYXRlcyBjdXJsIHNvZnR3YXJlLXByb3BlcnRpZXMtY29tbW9uCmN1cmwgLWZzU0wgaHR0cHM6Ly9kb3dubG9hZC5kb2NrZXIuY29tL2xpbnV4L3VidW50dS9ncGcgfCBzdWRvIGFwdC1rZXkgYWRkIC0KYWRkLWFwdC1yZXBvc2l0b3J5IFwKICJkZWIgW2FyY2g9YW1kNjRdIGh0dHBzOi8vZG93bmxvYWQuZG9ja2VyLmNvbS9saW51eC91YnVudHUgXAogJChsc2JfcmVsZWFzZSAtY3MpIFwKIHN0YWJsZSIKYXB0LWdldCB1cGRhdGUKYXB0LWdldCBpbnN0YWxsIC15IGRvY2tlci1jZQp1c2VybW9kIC1hRyBkb2NrZXIgdWJ1bnR1CiMgSW5zdGFsbCBkb2NrZXItY29tcG9zZSBGSVhNRSByZW1vdmUgdGhpcyBhcyBub3QgbmVlZGVkPwpjdXJsIC1MIGh0dHBzOi8vZ2l0aHViLmNvbS9kb2NrZXIvY29tcG9zZS9yZWxlYXNlcy9kb3dubG9hZC8xLjIxLjAvZG9ja2VyLWNvbXBvc2UtJCh1bmFtZSAtcyktJCh1bmFtZSAtbSkgLW8gL3Vzci9sb2NhbC9iaW4vZG9ja2VyLWNvbXBvc2UKY2htb2QgK3ggL3Vzci9sb2NhbC9iaW4vZG9ja2VyLWNvbXBvc2UKc${SSMParameter.Value}hcCBpbnN0YWxsIGFtYXpvbi1zc20tYWdlbnQgLS1jbGFzc2ljIHx8IGVjaG8gb29wczEKc${SSMParameter.Value}hcCBzdGFydCBhbWF6b24tc3NtLWFnZW50IHx8IGVjaG8gb29wczIKYXB0LWdldCBpbnN0YWxsIC15IC0tbm8taW5zdGFsbC1yZWNvbW1lbmRzIGNhLWNlcnRpZmljYXRlcz0yMDIzMDMxMSBjdXJsPTcuODguMS0xMCtkZWIxMnU3IHwgIGVjaG8gb29wcwpjdXJsIC1PICJodHRwczovL3MzLmFtYXpvbmF3cy5jb20vYW1hem9uY2xvdWR3YXRjaC1hZ2VudC91YnVudHUvJChkcGtnIC0tcHJpbnQtYXJjaGl0ZWN0dXJlKS9sYXRlc3QvYW1hem9uLWNsb3Vkd2F0Y2gtYWdlbnQuZGViIgpkcGtnIC1pIC1FIGFtYXpvbi1jbG91ZHdhdGNoLWFnZW50LmRlYgojIEluc3RhbGwgcHJlcmVxdWlzaXRlIHBhY2thZ2VzCmFwdC1nZXQgaW5zdGFsbCAteSB3Z2V0IHVuemlwIHN5c3RlbWQKIyBJbiBjYXNlIG9mIG1pc3NpbmcgZGVwZW5kZW5jaWVzCiMgYXB0LWdldCBpbnN0YWxsIC1mIC15CiMgQ29uZmlndXJlIGFuZCBzdGFydCB0aGUgQ2xvdWRXYXRjaCBhZ2VudAovb3B0L2F3cy9hbWF6b24tY2xvdWR3YXRjaC1hZ2VudC9iaW4vYW1hem9uLWNsb3Vkd2F0Y2gtYWdlbnQtY3RsIC1hIGZldGNoLWNvbmZpZyAtbSBlYzIgLXMgLWMgInNzbTovY2xvdWR3YXRjaC1hZ2VudC9jb${SSMParameter.Value}maWcvZGV0YWlscyIKIyBFbmFibGUgYW5kIHN0YXJ0IHRoZSBzZXJ2aWNlIHVzaW5nIHN5c3RlbWN0bApzeXN0ZW1jdGwgZW5hYmxlIGFtYXpvbi1jbG91ZHdhdGNoLWFnZW50CnN5c3RlbWN0bCBzdGFydCBhbWF6b24tY2xvdWR3YXRjaC1hZ2VudAojIENsZWFuIHVwIGRvd${SSMParameter.Value}sb2FkZWQgZmlsZXMKcm0gLWYgYW1hem9uLWNsb3Vkd2F0Y2gtYWdlbnQuZGViCiMgVmVyaWZ5IGluc3RhbGxhdGlvbgpzeXN0ZW1jdGwgc3RhdHVzIGFtYXpvbi1jbG91ZHdhdGNoLWFnZW50CmlmIFsgISAtZCAiL29wdC9hZ2VudC8iIF07IHRoZW4KICBnaXQgY2xvbmUgaHR0cHM6Ly9naXRodWIuY29tL21ldGEtaW50cm9zcGVjdG9yL2Nsb3VkLWRlcGxveW1lbnQtZWxpemEvICIvb3B0L2FnZW50LyIKZmkKY2QgIi9vcHQvYWdlbnQvIiB8fCBleGl0IDEKZ2l0IHN0YXNoCmdpdCBmZXRjaCAtLWFsbCAjIGdldCB0aGUgbGF0ZXN0IHZlcnNpb24KZ2l0IGNoZWNrb3V0IC0tdHJhY2sgLS1mb3JjZSAib3JpZ2luL2ZlYXR1cmUvc3lzdGVtZC1wYXJhbWV0ZXJzIgpiYXNoIC14IC9vcHQvYWdlbnQvcnVuZG9ja2VyLnNoCg=="
-            IamInstanceProfile: "ssm-eliza_dev-agent-profile"
-            Tags: 
-              - 
-                Key: "Name"
-                Value: "docker-agent-ami-t4g.small"
-            HibernationOptions: 
-                Configured: false
-            CpuOptions: 
-                CoreCount: 2
-                ThreadsPerCore: 1
-            EnclaveOptions: 
-                Enabled: false
 
     EC2InternetGateway:
         Type: "AWS::EC2::InternetGateway"
@@ -1223,36 +1052,6 @@ Resources:
             RouteTableId: !Ref EC2RouteTable5
             SubnetId: !Ref EC2Subnet
 
-    EC2SecurityGroup:
-        Type: "AWS::EC2::SecurityGroup"
-        Properties:
-            GroupDescription: "An internal security group"
-            GroupName: !Sub "${CodeName}-dev-internal-20${SSMParameter.Value}0127182648829500000005"
-            Tags: 
-              - 
-                Key: "project"
-                Value: "${CodeName}-dev"
-              - 
-                Key: "Name"
-                Value: "${CodeName}-dev-internal"
-            VpcId: !GetAtt EC2Subnet.VpcId
-            SecurityGroupIngress: 
-              - 
-                SourceSecurityGroupId: !Ref EC2SecurityGroup2
-                SourceSecurityGroupOwnerId: "${AWS::AccountId}"
-                Description: "Ingress Rule"
-                FromPort: 80
-                IpProtocol: "tcp"
-                ToPort: 80
-            SecurityGroupEgress: 
-              - 
-                CidrIp: "0.0.0.0/0"
-                Description: "All protocols"
-                IpProtocol: "-1"
-              - 
-                CidrIpv6: "::/0"
-                Description: "All protocols"
-                IpProtocol: "-1"
 
     EC2SecurityGroup2:
         Type: "AWS::EC2::SecurityGroup"
@@ -1360,20 +1159,6 @@ Resources:
                 Key: "Name"
                 Value: "Private Subnet Two"
 
-    EC2Subnet5:
-        Type: "AWS::EC2::Subnet"
-        Properties:
-            AvailabilityZone: "${AWS::Region}a"
-            CidrBlock: "10.0.4.0/24"
-            VpcId: !GetAtt EC2Subnet6.VpcId
-            MapPublicIpOnLaunch: false
-            Tags: 
-              - 
-                Key: "project"
-                Value: "${CodeName}-dev"
-              - 
-                Key: "Name"
-                Value: "${CodeName}-dev-public-${AWS::Region}a"
 
     EC2Subnet6:
         Type: "AWS::EC2::Subnet"
@@ -1419,7 +1204,7 @@ Resources:
     S3Bucket17:
         Type: "AWS::S3::Bucket"
         Properties:
-            BucketName: !Sub "${CodeName}-session-access-logs-20${SSMParameter.Value}0109201131637600000002"
+            BucketName: !Sub "${CodeName}-session-access-logs"
             Tags: 
               - 
                 Key: "project"
