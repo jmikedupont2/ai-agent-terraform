@@ -6,33 +6,8 @@ Parameters:
   NameTag:
     Type: "String"
     Default: "tine-dev"
-  UserData:
-    Type: "String"
-    Default: |
-      #!/bin/bash
-      export HOME=/root
-      apt update
-      apt-get install -y ec2-instance-connect git 
-      apt-get install -y cloud-utils apt-transport-https ca-certificates curl software-properties-common
-      curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-      add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu  $(lsb_release -cs)  stable"
-      apt-get update
-      apt-get install -y docker-ce
-      usermod -aG docker ubuntu
-      curl -L https://github.com/docker/compose/releases/download/1.21.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
-      chmod +x /usr/local/bin/docker-compose
-      snap install amazon-ssm-agent --classic || echo oops1
-      snap start amazon-ssm-agent || echo oops2
-      apt-get install -y --no-install-recommends ca-certificates=20230311 curl=7.88.1-10+deb12u7 |  echo oops
-      apt-get install -y wget unzip systemd
-      if [ ! -d "/opt/agent/" ]; then
-      git clone https://github.com/meta-introspector/cloud-deployment-eliza/ "/opt/agent/"
-      fi
-      cd "/opt/agent/" || exit 1
-      git stash
-      git fetch --all
-      git checkout --track --force "origin/feature/arm64_fastembed"
-      bash -x /opt/agent/rundocker.sh
+#  UserData:
+#    Type: "String"
 
   AmiId:
     Type: "String"
@@ -90,7 +65,7 @@ Resources:
             CidrBlock: "10.0.0.0/16"
             EnableDnsSupport: true
             EnableDnsHostnames: true
-            InstanceTenancy: !Ref IAMPolicy
+
             Tags:
               -
                 Key: "Name"
@@ -102,7 +77,7 @@ Resources:
     EC2SubnetPublicA:
         Type: "AWS::EC2::Subnet"
         Properties:
-            AvailabilityZone: "${AWS::Region}a"
+            AvailabilityZone: !Sub "${AWS::Region}a"
             CidrBlock: "10.0.4.0/24"
             VpcId:
               Ref: "EC2VPC"
@@ -113,7 +88,7 @@ Resources:
                 Value: !Ref "NameTag"
               -
                 Key: "Name"
-                Value: !Sub "dev-public-a"
+                Value: "dev-public-a"
     EC2SecurityGroup:
         Type: "AWS::EC2::SecurityGroup"
         Properties:
@@ -151,7 +126,32 @@ Resources:
         Properties:
             LaunchTemplateName: !Sub "agent-docker-t4g.small-launch-template"
             LaunchTemplateData:
-                UserData: !Ref UserData
+                UserData: !Base64 |
+                  #!/bin/bash
+                  export HOME=/root
+                  apt update
+                  apt-get install -y ec2-instance-connect git 
+                  apt-get install -y cloud-utils apt-transport-https ca-certificates curl software-properties-common
+                  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+                  add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu  $(lsb_release -cs)  stable"
+                  apt-get update
+                  apt-get install -y docker-ce
+                  usermod -aG docker ubuntu
+                  curl -L https://github.com/docker/compose/releases/download/1.21.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
+                  chmod +x /usr/local/bin/docker-compose
+                  snap install amazon-ssm-agent --classic || echo oops1
+                  snap start amazon-ssm-agent || echo oops2
+                  apt-get install -y --no-install-recommends ca-certificates=20230311 curl=7.88.1-10+deb12u7 |  echo oops
+                  apt-get install -y wget unzip systemd
+                  if [ ! -d "/opt/agent/" ]; then
+                  git clone https://github.com/meta-introspector/cloud-deployment-eliza/ "/opt/agent/"
+                  fi
+                  cd "/opt/agent/" || exit 1
+                  git stash
+                  git fetch --all
+                  git checkout --track --force "origin/feature/arm64_fastembed"
+                  bash -x /opt/agent/rundocker.sh
+                  
                 BlockDeviceMappings:
                   -
                     DeviceName: "/dev/sda1"
