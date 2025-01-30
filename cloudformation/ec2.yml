@@ -6,16 +6,13 @@ Parameters:
   LaunchTemplateVersion:
     Type: "String"
     Default: "1"
-
   NameTag:
     Type: "String"
     Default: "tine-dev"
 #  UserData:
 #    Type: "String"
-
   AmiId:
     Type: "String"
-    
   LtVersion:
     Type: 'String'
     Description: 'launch template version'
@@ -30,45 +27,40 @@ Parameters:
     Default: "tine_agent_*"
 
 Resources:
-    IAMRole:
-        Type: "AWS::IAM::Role"
-        Properties:
-            Path: "/"
-            RoleName: "deployagentrole"
-            AssumeRolePolicyDocument: "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"cloudformation.amazonaws.com\"},\"Action\":\"sts:AssumeRole\"}]}"
-            MaxSessionDuration: 3600
-            ManagedPolicyArns:
-              - "arn:aws:iam::aws:policy/AdministratorAccess"
-            Description: ""
-
-    IAMRole2:
-        Type: "AWS::IAM::Role"
-        Properties:
-            Path: "/"
-            RoleName: "deployagentrole2"
-            AssumeRolePolicyDocument: !Sub "{\"Version\":\"2008-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:iam::${AWS::AccountId}:root\"},\"Action\":\"sts:TagSession\"},{\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:iam::${AWS::AccountId}:root\"},\"Action\":\"sts:AssumeRole\"}]}"
-            MaxSessionDuration: 3600
-            Description: ""
-            Tags:
-              -
-                Key: "aws-cdk:bootstrap-role"
-                Value: "deploy"
-
-    IAMPolicy:
-        Type: "AWS::IAM::Policy"
-        Properties:
-            PolicyDocument: !Sub "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"cloudformation:CreateChangeSet\",\"cloudformation:DeleteChangeSet\",\"cloudformation:DescribeChangeSet\",\"cloudformation:DescribeStacks\",\"cloudformation:ExecuteChangeSet\",\"cloudformation:CreateStack\",\"cloudformation:UpdateStack\",\"cloudformation:RollbackStack\",\"cloudformation:ContinueUpdateRollback\"],\"Resource\":\"*\",\"Effect\":\"Allow\",\"Sid\":\"CloudFormationPermissions\"},{\"Condition\":{\"StringNotEquals\":{\"s3:ResourceAccount\":\"${AWS::AccountId}\"}},\"Action\":[\"s3:GetObject*\",\"s3:GetBucket*\",\"s3:List*\",\"s3:Abort*\",\"s3:DeleteObject*\",\"s3:PutObject*\"],\"Resource\":\"*\",\"Effect\":\"Allow\",\"Sid\":\"PipelineCrossAccountArtifactsBucket\"},{\"Condition\":{\"StringEquals\":{\"kms:ViaService\":\"s3.${AWS::Region}.amazonaws.com\"}},\"Action\":[\"kms:Decrypt\",\"kms:DescribeKey\",\"kms:Encrypt\",\"kms:ReEncrypt*\",\"kms:GenerateDataKey*\"],\"Resource\":\"*\",\"Effect\":\"Allow\",\"Sid\":\"PipelineCrossAccountArtifactsKey\"},{\"Action\":\"iam:PassRole\",\"Resource\":\"arn:aws:iam::${AWS::AccountId}:role/${IAMRole}\",\"Effect\":\"Allow\"},{\"Action\":[\"cloudformation:DescribeStackEvents\",\"cloudformation:GetTemplate\",\"cloudformation:DeleteStack\",\"cloudformation:UpdateTerminationProtection\",\"sts:GetCallerIdentity\",\"cloudformation:GetTemplateSummary\"],\"Resource\":\"*\",\"Effect\":\"Allow\",\"Sid\":\"CliPermissions\"},{\"Action\":[\"s3:GetObject*\",\"s3:GetBucket*\",\"s3:List*\"],\"Resource\":[\"arn:aws:s3:::${S3BucketPattern}\",\"arn:aws:s3:::${S3BucketPattern}/*\"],\"Effect\":\"Allow\",\"Sid\":\"CliStagingBucket\"},{\"Action\":[\"ssm:GetParameter\",\"ssm:GetParameters\"],\"Resource\":[\"arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter${SSMParameterPattern}\"],\"Effect\":\"Allow\",\"Sid\":\"ReadVersion\"}]}"
-            Roles:
-              - !Ref IAMRole2
-            PolicyName: "default"
-
+    IAMManagedPolicy2:
+      Type: "AWS::IAM::ManagedPolicy"
+      Properties:
+        ManagedPolicyName: "tine-dev-ssm"
+        Path: "/"
+        PolicyDocument: "{\"Statement\":[{\"Action\":\"ssm:DescribeParameters\",\"Effect\":\"Allow\",\"Resource\":\"*\"},{\"Action\":[\"ecr:ListTagsForResource\",\"ecr:ListImages\",\"ecr:GetRepositoryPolicy\",\"ecr:GetLifecyclePolicyPreview\",\"ecr:GetLifecyclePolicy\",\"ecr:GetDownloadUrlForLayer\",\"ecr:GetAuthorizationToken\",\"ecr:DescribeRepositories\",\"ecr:DescribeImages\",\"ecr:DescribeImageScanFindings\",\"ecr:CreateRepository\",\"ecr:BatchGetImage\",\"ecr:BatchCheckLayerAvailability\"],\"Effect\":\"Allow\",\"Resource\":\"*\"},{\"Action\":[\"logs:PutLogEventsBatch\",\"logs:PutLogEvents\",\"logs:DescribeLogStreams\",\"logs:DescribeLogGroups\",\"logs:CreateLogStream\",\"logs:CreateLogGroup\",\"ec2:DescribeTags\",\"cloudwatch:PutMetricData\"],\"Effect\":\"Allow\",\"Resource\":\"*\"},{\"Action\":\"s3:GetEncryptionConfiguration\",\"Effect\":\"Allow\",\"Resource\":\"arn:aws:s3:::*session-logs*\"},{\"Action\":[\"kms:ReEncrypt*\",\"kms:GenerateDataKey*\",\"kms:Encrypt*\",\"kms:Describe*\",\"kms:Decrypt*\"],\"Effect\":\"Allow\",\"Resource\":\"*\"}],\"Version\":\"2012-10-17\"}"
+    IAMRoleAgent:
+      Type: "AWS::IAM::Role"
+      Properties:
+        Path: "/"
+        RoleName: "ssm-tine-deploy-agent-role"
+        AssumeRolePolicyDocument: "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Sid\":\"\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"},\"Action\":\"sts:AssumeRole\"}]}"
+        MaxSessionDuration: 3600
+        ManagedPolicyArns:
+          - !Ref IAMManagedPolicy2
+          - "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+          - "arn:aws:iam::aws:policy/AmazonSSMManagedEC2InstanceDefaultPolicy"
+        Tags:
+          -
+            Key: "project"
+            Value:  "tine-agent-dev"
+    IAMInstanceProfile:
+      Type: AWS::IAM::InstanceProfile
+      Properties:
+        Path: "/"
+        InstanceProfileName: "agent-instance-profile"
+        Roles:
+          - !Ref IAMRoleAgent
     EC2VPC:
         Type: "AWS::EC2::VPC"
         Properties:
             CidrBlock: "10.0.0.0/16"
             EnableDnsSupport: true
             EnableDnsHostnames: true
-
             Tags:
               -
                 Key: "Name"
@@ -76,7 +68,6 @@ Resources:
               -
                 Key: "project"
                 Value: !Ref "NameTag"
-
     EC2SubnetPublicA:
         Type: "AWS::EC2::Subnet"
         Properties:
@@ -97,33 +88,32 @@ Resources:
         Properties:
             GroupDescription: "An internal security group"
             GroupName: "agent-internal"
-            Tags: 
-              - 
+            Tags:
+              -
                 Key: "project"
                 Value: !Ref "NameTag"
-              - 
+              -
                 Key: "Name"
                 Value: "sg-agent-internal"
             VpcId:
               Ref: "EC2VPC"
-            # SecurityGroupIngress: 
-            #   - 
+            # SecurityGroupIngress:
+            #   -
             #     SourceSecurityGroupId: !Ref EC2SecurityGroup2
             #     SourceSecurityGroupOwnerId: "${AWS::AccountId}"
             #     Description: "Ingress Rule"
             #     FromPort: 80
             #     IpProtocol: "tcp"
             #     ToPort: 80
-            SecurityGroupEgress: 
-              - 
+            SecurityGroupEgress:
+              -
                 CidrIp: "0.0.0.0/0"
                 Description: "All protocols"
                 IpProtocol: "-1"
-              - 
+              -
                 CidrIpv6: "::/0"
                 Description: "All protocols"
                 IpProtocol: "-1"
-
     EC2LaunchTemplate:
         Type: "AWS::EC2::LaunchTemplate"
         Properties:
@@ -133,7 +123,7 @@ Resources:
                   #!/bin/bash
                   export HOME=/root
                   apt update
-                  apt-get install -y ec2-instance-connect git 
+                  apt-get install -y ec2-instance-connect git
                   apt-get install -y cloud-utils apt-transport-https ca-certificates curl software-properties-common
                   curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
                   add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu  $(lsb_release -cs)  stable"
@@ -152,9 +142,8 @@ Resources:
                   cd "/opt/agent/" || exit 1
                   git stash
                   git fetch --all
-                  git checkout --track --force "origin/feature/arm64_fastembed"
+                  git checkout --track --force "origin/feature/systemd-parameters"
                   bash -x /opt/agent/rundocker.sh
-                  
                 BlockDeviceMappings:
                   -
                     DeviceName: "/dev/sda1"
@@ -163,7 +152,7 @@ Resources:
                         VolumeSize: 30
                         VolumeType: "gp3"
                 IamInstanceProfile:
-                    Name: "ssm-agent-profile"
+                    Name: !Ref IAMInstanceProfile
                 NetworkInterfaces:
                   -
                     AssociatePublicIpAddress: true
