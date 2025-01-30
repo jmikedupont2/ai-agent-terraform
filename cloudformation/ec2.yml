@@ -3,6 +3,10 @@ Metadata:
     Generator: "former2"
 Description: "minimal ec2 asg and lt"
 Parameters:
+  LaunchTemplateVersion:
+    Type: "String"
+    Default: "1"
+
   NameTag:
     Type: "String"
     Default: "tine-dev"
@@ -11,7 +15,6 @@ Parameters:
 
   AmiId:
     Type: "String"
-    Default  : "ami-01966479f6da4af57" # us-west-1
     
   LtVersion:
     Type: 'String'
@@ -124,7 +127,7 @@ Resources:
     EC2LaunchTemplate:
         Type: "AWS::EC2::LaunchTemplate"
         Properties:
-            LaunchTemplateName: !Sub "agent-docker-t4g.small-launch-template"
+            LaunchTemplateName: "agent-docker-t4g.small-launch-template"
             LaunchTemplateData:
                 UserData: !Base64 |
                   #!/bin/bash
@@ -173,34 +176,27 @@ Resources:
                 InstanceType: "t4g.small"
     AutoScalingAutoScalingGroup:
         Type: "AWS::AutoScaling::AutoScalingGroup"
+        DependsOn:
+          - EC2LaunchTemplate
         Properties:
-            AutoScalingGroupName: !Sub "docker-agent-ami-t4g.small"
-            MixedInstancesPolicy:
-                LaunchTemplate:
-                    LaunchTemplateSpecification:
-                        LaunchTemplateId: !Ref EC2LaunchTemplate
-                        LaunchTemplateName: !Sub "agent-docker-t4g.small-launch-template"
-                        Version: !Ref LtVersion
-                InstancesDistribution:
-                    OnDemandAllocationStrategy: "prioritized"
-                    OnDemandBaseCapacity: 0
-                    OnDemandPercentageAboveBaseCapacity: 100
-                    SpotAllocationStrategy: "lowest-price"
-                    SpotInstancePools: 2
+            AutoScalingGroupName: "docker-agent-ami-t4g.small"
+            LaunchTemplate:
+              LaunchTemplateName:  "agent-docker-t4g.small-launch-template"
+              Version: !Ref LaunchTemplateVersion
             MinSize: 1
             MaxSize: 2
             DesiredCapacity: 1
             Cooldown: 300
             AvailabilityZones:
-              - !GetAZs ""
-
+              - "us-west-1a"
+#              - "us-west-1b"
             HealthCheckType: "EC2"
             HealthCheckGracePeriod: 300
             VPCZoneIdentifier:
               - !Ref EC2SubnetPublicA
             TerminationPolicies:
               - "Default"
-            ServiceLinkedRoleARN: "arn:aws:iam::${AWS::AccountId}:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling"
+            ServiceLinkedRoleARN: !Sub "arn:aws:iam::${AWS::AccountId}:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling"
             Tags:
               -
                 Key: "Name"
