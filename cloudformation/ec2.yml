@@ -5,7 +5,7 @@ Description: "minimal ec2 asg and lt"
 Parameters:
   LaunchTemplateVersion:
     Type: "String"
-    Default: "1"
+    Default: "2" # FIXME have to update this every time
   NameTag:
     Type: "String"
     Default: "tine-dev"
