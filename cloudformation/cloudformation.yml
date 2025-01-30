@@ -1,0 +1,1525 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "former2"
+Description: ""
+
+Parameters:
+  CodeName:
+    Type: 'String'
+    Description: 'agent codename'
+  UniqueName:
+    Type: 'String'
+    Description: 'agent codename'
+
+  UserName:
+    Type: 'String'
+    Description: 'Username'
+  KeyArn:
+    Type: 'String'
+    Description: 'Username'
+  KeyArn2:
+    Type: 'String'
+    Description: 'Username'
+    
+
+  GroqKey:
+    Type: 'String'
+    Description: 'Username'
+
+  TwitterEmail:
+    Type: 'String'
+    Description: 'Twitter Email'
+  TwitterPassword:
+    Type: 'String'
+    Description: 'Twitter password'
+  TwitterUser:
+    Type: 'String'
+    Description: 'Twitter user'
+  TokenizerImage:
+    Type: 'String'
+    Description: 'docker image for tokenizers'
+    Default : "h4ckermike/arm64-tokenizers:feature-arm64"
+
+  AgentImage:
+    Description: 'docker image for agent'
+    Type: 'String'
+    Default: "h4ckermike/elizaos-eliza:feature-arm64_fastembed"
+
+Resources:
+    LogsLogGroup:
+        Type: "AWS::Logs::LogGroup"
+        Properties:
+            LogGroupName: "/aws/apigateway/welcome"
+
+    LogsLogGroup2:
+        Type: "AWS::Logs::LogGroup"
+        Properties:
+            LogGroupName: !Sub "/aws/lambda/${LambdaFunction}"
+            RetentionInDays: 14
+
+    LogsLogGroup8:
+        Type: "AWS::Logs::LogGroup"
+        Properties:
+            LogGroupName: "/ec2/init"
+            RetentionInDays: 30
+
+    LogsLogGroup9:
+        Type: "AWS::Logs::LogGroup"
+        Properties:
+            LogGroupName: "/ec2/secure"
+            RetentionInDays: 30
+
+    LogsLogGroup10:
+        Type: "AWS::Logs::LogGroup"
+        Properties:
+            LogGroupName: "/ec2/system"
+            RetentionInDays: 30
+
+    LogsLogGroup11:
+        Type: "AWS::Logs::LogGroup"
+        Properties:
+            LogGroupName: "/ecs/first-run-task-definition"
+
+    LogsLogGroup12:
+        Type: "AWS::Logs::LogGroup"
+        Properties:
+            LogGroupName: "/eliza/systemd"
+            RetentionInDays: 30
+
+    EC2Route:
+        Type: "AWS::EC2::Route"
+        Properties:
+            DestinationCidrBlock: "0.0.0.0/0"
+            GatewayId: !Ref EC2InternetGateway
+            RouteTableId: !Ref EC2RouteTable5
+
+
+
+
+    BudgetsBudget:
+        Type: "AWS::Budgets::Budget"
+        Properties:
+            Budget: 
+                BudgetLimit: 
+                    Amount: "1.0"
+                    Unit: "USD"
+                TimePeriod: 
+                    Start: {}
+                    End: {}
+                TimeUnit: "MONTHLY"
+                CostFilters: {}
+                BudgetName: "My Zero-Spend Budget"
+                CostTypes: 
+                    IncludeTax: true
+                    IncludeSubscription: true
+                    UseBlended: false
+                    IncludeRefund: false
+                    IncludeCredit: false
+                    IncludeUpfront: true
+                    IncludeRecurring: true
+                    IncludeOtherSubscription: true
+                    IncludeSupport: true
+                    IncludeDiscount: true
+                    UseAmortized: false
+                BudgetType: "COST"
+
+    SSMDocument:
+        Type: "AWS::SSM::Document"
+        Properties:
+            Name: "SSM-SessionManagerRunShell"
+            Content: "{\"schemaVersion\":\"1.0\",\"description\":\"Document to hold regional settings for Session Manager\",\"sessionType\":\"Standard_Stream\",\"inputs\":{\"s3BucketName\":\"\",\"s3KeyPrefix\":\"\",\"s3EncryptionEnabled\":true,\"cloudWatchLogGroupName\":\"\",\"cloudWatchEncryptionEnabled\":true,\"cloudWatchStreamingEnabled\":true,\"idleSessionTimeout\":\"20\",\"maxSessionDuration\":\"\",\"kmsKeyId\":\"\",\"runAsEnabled\":false,\"runAsDefaultUser\":\"\",\"shellProfile\":{\"windows\":\"\",\"linux\":\"\"}}}"
+            DocumentType: "Session"
+
+    SSMDocument2:
+        Type: "AWS::SSM::Document"
+        Properties:
+            Name: "TroubleshootCloudWatchAgent"
+            Content: |
+                {
+                  "schemaVersion" : "2.2",
+                  "description" : "Troubleshoot CloudWatch Agent",
+                  "parameters" : { },
+                  "mainSteps" : [ {
+                    "action" : "aws:runShellScript",
+                    "name" : "CheckCloudWatchAgent",
+                    "inputs" : {
+                      "runCommand" : [ "systemctl status amazon-cloudwatch-agent", "cat /opt/aws/amazon-cloudwatch-agent/logs/amazon-cloudwatch-agent.log", "ps aux | grep amazon-cloudwatch-agent", "amazon-cloudwatch-agent-ctl -a status" ]
+                    }
+                  } ]
+                }
+            DocumentType: "Command"
+
+
+
+
+    AutoScalingScalingPolicy:
+        Type: "AWS::AutoScaling::ScalingPolicy"
+        Properties:
+            AutoScalingGroupName: !Sub "docker-agent-ami-t4g.small-20${SSMParameter.Value}0127184935601900000001"
+            PolicyType: "TargetTrackingScaling"
+            EstimatedInstanceWarmup: 1200
+            TargetTrackingConfiguration: 
+                PredefinedMetricSpecification: 
+                    PredefinedMetricType: "ASGAverageCPUUtilization"
+                TargetValue: 50
+                DisableScaleIn: false
+
+    AutoScalingScalingPolicy2:
+        Type: "AWS::AutoScaling::ScalingPolicy"
+        Properties:
+            AutoScalingGroupName: !Sub "docker-agent-ami-t4g.small-20${SSMParameter.Value}0127184935601900000001"
+            PolicyType: "StepScaling"
+            AdjustmentType: "ExactCapacity"
+            StepAdjustments: 
+              - 
+                MetricIntervalLowerBound: 0
+                MetricIntervalUpperBound: 10
+                ScalingAdjustment: 1
+              - 
+                MetricIntervalLowerBound: 10
+                ScalingAdjustment: 2
+            MetricAggregationType: "Average"
+            EstimatedInstanceWarmup: 120
+
+    AutoScalingScalingPolicy3:
+        Type: "AWS::AutoScaling::ScalingPolicy"
+        Properties:
+            AutoScalingGroupName: !Sub "docker-agent-ami-t4g.small-20${SSMParameter.Value}0127184935601900000001"
+            PolicyType: "PredictiveScaling"
+            PredictiveScalingConfiguration: 
+                MetricSpecifications: 
+                  - 
+                    TargetValue: 32
+                    PredefinedScalingMetricSpecification: 
+                        PredefinedMetricType: "ASGAverageCPUUtilization"
+                        ResourceLabel: !Sub "${CURReportDefinition}Label"
+                    PredefinedLoadMetricSpecification: 
+                        PredefinedMetricType: "ASGTotalCPUUtilization"
+                        ResourceLabel: !Sub "${CURReportDefinition}Label"
+                Mode: "ForecastAndScale"
+                SchedulingBufferTime: 10
+                MaxCapacityBreachBehavior: "IncreaseMaxCapacity"
+                MaxCapacityBuffer: 10
+
+
+
+    SSMAssociation:
+        Type: "AWS::SSM::Association"
+        Properties:
+            Name: "AWS-ConfigureAWSPackage"
+            DocumentVersion: "$DEFAULT"
+            Parameters: 
+                action: 
+                  - "Install"
+                name: 
+                  - "AmazonCloudWatchAgent"
+            Targets: 
+              - 
+                Key: "tag:Monitoring"
+                Values: 
+                  - "enabled"
+
+    SSMAssociation2:
+        Type: "AWS::SSM::Association"
+        Properties:
+            Name: "AWS-RunShellScript"
+            DocumentVersion: "$DEFAULT"
+            Parameters: 
+                commands: 
+                  - !Sub |
+                    amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -s -c ssm:${SSMParameter2}
+                          systemctl restart amazon-cloudwatch-agent
+            Targets: 
+              - 
+                Key: "tag:Monitoring"
+                Values: 
+                  - "enabled"
+
+    EC2LaunchTemplate:
+        Type: "AWS::EC2::LaunchTemplate"
+        Properties:
+            LaunchTemplateName: !Sub "agent-docker-t4g.small-launch-template-20${SSMParameter.Value}0127182650467300000007"
+            LaunchTemplateData: 
+                UserData: !Sub "IyEvYmluL2Jhc2gKZXhwb3J0IEhPTUU9L3Jvb3QKYXB0IHVwZGF0ZQphcHQtZ2V0IGluc3RhbGwgLXkgZWMyLWluc3RhbmNlLWNvbm5lY3QgZ2l0IAojIEluc3RhbGwgZG9ja2VyCmFwdC1nZXQgaW5zdGFsbCAteSBjbG91ZC11dGlscyBhcHQtdHJhbnNwb3J0LWh0dHBzIGNhLWNlcnRpZmljYXRlcyBjdXJsIHNvZnR3YXJlLXByb3BlcnRpZXMtY29tbW9uCmN1cmwgLWZzU0wgaHR0cHM6Ly9kb3dubG9hZC5kb2NrZXIuY29tL2xpbnV4L3VidW50dS9ncGcgfCBzdWRvIGFwdC1rZXkgYWRkIC0KYWRkLWFwdC1yZXBvc2l0b3J5IFwKICJkZWIgW2FyY2g9YW1kNjRdIGh0dHBzOi8vZG93bmxvYWQuZG9ja2VyLmNvbS9saW51eC91YnVudHUgXAogJChsc2JfcmVsZWFzZSAtY3MpIFwKIHN0YWJsZSIKYXB0LWdldCB1cGRhdGUKYXB0LWdldCBpbnN0YWxsIC15IGRvY2tlci1jZQp1c2VybW9kIC1hRyBkb2NrZXIgdWJ1bnR1CiMgSW5zdGFsbCBkb2NrZXItY29tcG9zZSBGSVhNRSByZW1vdmUgdGhpcyBhcyBub3QgbmVlZGVkPwpjdXJsIC1MIGh0dHBzOi8vZ2l0aHViLmNvbS9kb2NrZXIvY29tcG9zZS9yZWxlYXNlcy9kb3dubG9hZC8xLjIxLjAvZG9ja2VyLWNvbXBvc2UtJCh1bmFtZSAtcyktJCh1bmFtZSAtbSkgLW8gL3Vzci9sb2NhbC9iaW4vZG9ja2VyLWNvbXBvc2UKY2htb2QgK3ggL3Vzci9sb2NhbC9iaW4vZG9ja2VyLWNvbXBvc2UKc${SSMParameter.Value}hcCBpbnN0YWxsIGFtYXpvbi1zc20tYWdlbnQgLS1jbGFzc2ljIHx8IGVjaG8gb29wczEKc${SSMParameter.Value}hcCBzdGFydCBhbWF6b24tc3NtLWFnZW50IHx8IGVjaG8gb29wczIKYXB0LWdldCBpbnN0YWxsIC15IC0tbm8taW5zdGFsbC1yZWNvbW1lbmRzIGNhLWNlcnRpZmljYXRlcz0yMDIzMDMxMSBjdXJsPTcuODguMS0xMCtkZWIxMnU3IHwgIGVjaG8gb29wcwpjdXJsIC1PICJodHRwczovL3MzLmFtYXpvbmF3cy5jb20vYW1hem9uY2xvdWR3YXRjaC1hZ2VudC91YnVudHUvJChkcGtnIC0tcHJpbnQtYXJjaGl0ZWN0dXJlKS9sYXRlc3QvYW1hem9uLWNsb3Vkd2F0Y2gtYWdlbnQuZGViIgpkcGtnIC1pIC1FIGFtYXpvbi1jbG91ZHdhdGNoLWFnZW50LmRlYgojIEluc3RhbGwgcHJlcmVxdWlzaXRlIHBhY2thZ2VzCmFwdC1nZXQgaW5zdGFsbCAteSB3Z2V0IHVuemlwIHN5c3RlbWQKIyBJbiBjYXNlIG9mIG1pc3NpbmcgZGVwZW5kZW5jaWVzCiMgYXB0LWdldCBpbnN0YWxsIC1mIC15CiMgQ29uZmlndXJlIGFuZCBzdGFydCB0aGUgQ2xvdWRXYXRjaCBhZ2VudAovb3B0L2F3cy9hbWF6b24tY2xvdWR3YXRjaC1hZ2VudC9iaW4vYW1hem9uLWNsb3Vkd2F0Y2gtYWdlbnQtY3RsIC1hIGZldGNoLWNvbmZpZyAtbSBlYzIgLXMgLWMgInNzbTovY2xvdWR3YXRjaC1hZ2VudC9jb${SSMParameter.Value}maWcvZGV0YWlscyIKIyBFbmFibGUgYW5kIHN0YXJ0IHRoZSBzZXJ2aWNlIHVzaW5nIHN5c3RlbWN0bApzeXN0ZW1jdGwgZW5hYmxlIGFtYXpvbi1jbG91ZHdhdGNoLWFnZW50CnN5c3RlbWN0bCBzdGFydCBhbWF6b24tY2xvdWR3YXRjaC1hZ2VudAojIENsZWFuIHVwIGRvd${SSMParameter.Value}sb2FkZWQgZmlsZXMKcm0gLWYgYW1hem9uLWNsb3Vkd2F0Y2gtYWdlbnQuZGViCiMgVmVyaWZ5IGluc3RhbGxhdGlvbgpzeXN0ZW1jdGwgc3RhdHVzIGFtYXpvbi1jbG91ZHdhdGNoLWFnZW50CmlmIFsgISAtZCAiL29wdC9hZ2VudC8iIF07IHRoZW4KICBnaXQgY2xvbmUgaHR0cHM6Ly9naXRodWIuY29tL21ldGEtaW50cm9zcGVjdG9yL2Nsb3VkLWRlcGxveW1lbnQtZWxpemEvICIvb3B0L2FnZW50LyIKZmkKY2QgIi9vcHQvYWdlbnQvIiB8fCBleGl0IDEKZ2l0IHN0YXNoCmdpdCBmZXRjaCAtLWFsbCAjIGdldCB0aGUgbGF0ZXN0IHZlcnNpb24KZ2l0IGNoZWNrb3V0IC0tdHJhY2sgLS1mb3JjZSAib3JpZ2luL2ZlYXR1cmUvc3lzdGVtZC1wYXJhbWV0ZXJzIgpiYXNoIC14IC9vcHQvYWdlbnQvcnVuZG9ja2VyLnNoCg=="
+                BlockDeviceMappings: 
+                  - 
+                    DeviceName: "/dev/sda1"
+                    Ebs: 
+                        Encrypted: true
+                        VolumeSize: 30
+                        VolumeType: "gp3"
+                IamInstanceProfile: 
+                    Name: "ssm-eliza_dev-agent-profile"
+                NetworkInterfaces: 
+                  - 
+                    AssociatePublicIpAddress: true
+                    DeleteOnTermination: true
+                    DeviceIndex: 0
+                    Groups: 
+                      - !Ref EC2SecurityGroup
+                    NetworkCardIndex: 0
+                ImageId: !Sub "ami-015e5cd4${SSMParameter.Value}3df9de1"
+                InstanceType: "t4g.small"
+
+
+
+    IAMInstanceProfile:
+        Type: "AWS::IAM::InstanceProfile"
+        Properties:
+            Path: "/"
+            InstanceProfileName: "ec2-monitoring-profile"
+            Roles: 
+              - !Ref IAMRole6
+
+    IAMInstanceProfile2:
+        Type: "AWS::IAM::InstanceProfile"
+        Properties:
+            Path: "/"
+            InstanceProfileName: !Sub "ec2-monitoring-profile-${AWS::Region}"
+            Roles: 
+              - !Sub "${IAMRole6}-${AWS::Region}"
+
+    IAMInstanceProfile3:
+        Type: "AWS::IAM::InstanceProfile"
+        Properties:
+            Path: "/ec2/"
+            InstanceProfileName: !Sub "ssm-docker-agent-ami-t4g.small-20${SSMParameter.Value}0114014834848600000002"
+            Roles: 
+              - !Sub "ec2/${IAMRole8}"
+
+    IAMInstanceProfile4:
+        Type: "AWS::IAM::InstanceProfile"
+        Properties:
+            Path: "/ec2/"
+            InstanceProfileName: !Sub "ssm-docker-agent-ami-t4g.small-20${SSMParameter.Value}0127133204301000000003"
+            Roles: 
+              - !Sub "ec2/${IAMRole9}"
+
+
+    IAMInstanceProfile7:
+        Type: "AWS::IAM::InstanceProfile"
+        Properties:
+            Path: "/"
+            InstanceProfileName: !Ref IAMRole22
+            Roles: 
+              - !Ref IAMRole22
+
+    IAMInstanceProfile8:
+        Type: "AWS::IAM::InstanceProfile"
+        Properties:
+            Path: "/"
+            InstanceProfileName: "ssm-agent-profile"
+            Roles: 
+              - !Ref IAMRole23
+
+    IAMInstanceProfile9:
+        Type: "AWS::IAM::InstanceProfile"
+        Properties:
+            Path: "/"
+            InstanceProfileName: "ssm-eliza_dev-agent-profile"
+            Roles: 
+              - !Ref IAMRole24
+
+
+    IAMInstanceProfile11:
+        Type: "AWS::IAM::InstanceProfile"
+        Properties:
+            Path: "/"
+            InstanceProfileName: !Sub "ssm_profile-20${SSMParameter.Value}01092011320${SSMParameter.Value}600000006"
+            Roles: 
+              - !Ref IAMRole28
+
+
+# use your own account here 
+    # IAMOIDCProvider:
+    #     Type: "AWS::IAM::OIDCProvider"
+    #     Properties:
+    #         Url: !Sub "token.actions.${IAMRole13}usercontent.com"
+    #         ClientIdList: 
+    #           - "sts.amazonaws.com"
+    #           - !Sub "https://${IAMRole13}.com/meta-introspector"
+    #           - !Sub "https://${IAMRole13}.com/jmikedupont2"
+    #         ThumbprintList: 
+    #           - "d89e3bd43d5d909b47a18977aa9d5ce36cee184c"
+
+    IAMManagedPolicy:
+        Type: "AWS::IAM::ManagedPolicy"
+        Properties:
+            ManagedPolicyName: "GitHubSSMPolicy"
+            Path: "/"
+            PolicyDocument: "{\"Statement\":[{\"Action\":[\"ssm:SendCommand\",\"ssm:ListCommands\",\"ssm:GetCommandInvocation\"],\"Effect\":\"Allow\",\"Resource\":\"*\"},{\"Action\":[\"ec2:DescribeInstances\"],\"Effect\":\"Allow\",\"Resource\":\"*\"}],\"Version\":\"2012-10-17\"}"
+
+    IAMManagedPolicy2:
+        Type: "AWS::IAM::ManagedPolicy"
+        Properties:
+            ManagedPolicyName: "eliza_dev-ssm"
+            Path: "/"
+            PolicyDocument: "{\"Statement\":[{\"Action\":\"ssm:DescribeParameters\",\"Effect\":\"Allow\",\"Resource\":\"*\"},{\"Action\":[\"ecr:ListTagsForResource\",\"ecr:ListImages\",\"ecr:GetRepositoryPolicy\",\"ecr:GetLifecyclePolicyPreview\",\"ecr:GetLifecyclePolicy\",\"ecr:GetDownloadUrlForLayer\",\"ecr:GetAuthorizationToken\",\"ecr:DescribeRepositories\",\"ecr:DescribeImages\",\"ecr:DescribeImageScanFindings\",\"ecr:CreateRepository\",\"ecr:BatchGetImage\",\"ecr:BatchCheckLayerAvailability\"],\"Effect\":\"Allow\",\"Resource\":\"*\"},{\"Action\":[\"logs:PutLogEventsBatch\",\"logs:PutLogEvents\",\"logs:DescribeLogStreams\",\"logs:DescribeLogGroups\",\"logs:CreateLogStream\",\"logs:CreateLogGroup\",\"ec2:DescribeTags\",\"cloudwatch:PutMetricData\"],\"Effect\":\"Allow\",\"Resource\":\"*\"},{\"Action\":\"s3:GetEncryptionConfiguration\",\"Effect\":\"Allow\",\"Resource\":\"arn:aws:s3:::*session-logs*\"},{\"Action\":[\"kms:ReEncrypt*\",\"kms:GenerateDataKey*\",\"kms:Encrypt*\",\"kms:Describe*\",\"kms:Decrypt*\"],\"Effect\":\"Allow\",\"Resource\":\"*\"}],\"Version\":\"2012-10-17\"}"
+
+    IAMManagedPolicy3:
+        Type: "AWS::IAM::ManagedPolicy"
+        Properties:
+            ManagedPolicyName: !Ref IAMRole15
+            Path: "/"
+            PolicyDocument: "{\"Statement\":[{\"Action\":[\"sqs:*\",\"sns:*\",\"s3:*\",\"rds:*\",\"logs:PutRetentionPolicy\",\"iam:PassRole\",\"elasticloadbalancing:*\",\"elasticbeanstalk:*\",\"ecs:*\",\"ec2:*\",\"cloudwatch:*\",\"cloudformation:*\",\"autoscaling:*\"],\"Effect\":\"Allow\",\"Resource\":\"*\"}],\"Version\":\"2012-10-17\"}"
+
+    IAMManagedPolicy4:
+        Type: "AWS::IAM::ManagedPolicy"
+        Properties:
+            ManagedPolicyName: !Sub "${IAMRole15}-codebuild"
+            Path: "/"
+            PolicyDocument: !Sub "{\"Statement\":[{\"Action\":\"codebuild:*\",\"Effect\":\"Allow\",\"Resource\":\"arn:aws:codebuild:${AWS::Region}:${AWS::AccountId}:project/${IAMRole15}-build\"}],\"Version\":\"2012-10-17\"}"
+
+    IAMManagedPolicy5:
+        Type: "AWS::IAM::ManagedPolicy"
+        Properties:
+            ManagedPolicyName: !Sub "${IAMRole15}-s3"
+            Path: "/"
+            PolicyDocument: !Sub "{\"Statement\":[{\"Action\":[\"s3:PutObject\",\"s3:GetObjectVersion\",\"s3:GetObject\",\"s3:GetBucketVersioning\"],\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:s3:::${IAMRole15}/*\",\"arn:aws:s3:::${IAMRole15}\",\"arn:aws:s3:::elasticbeanstalk*\"]}],\"Version\":\"2012-10-17\"}"
+
+    IAMManagedPolicy6:
+        Type: "AWS::IAM::ManagedPolicy"
+        Properties:
+            ManagedPolicyName: "AWSLambdaBasicExecutionRole-6b02bd9d-58e2-43e8-ad47-02ec50ea8760"
+            Path: "/service-role/"
+            PolicyDocument: |
+                {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Action": "logs:CreateLogGroup",
+                            "Resource": "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:*"
+                        },
+                        {
+                            "Effect": "Allow",
+                            "Action": [
+                                "logs:CreateLogStream",
+                                "logs:PutLogEvents"
+                            ],
+                            "Resource": [
+                                "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/live_count:*"
+                            ]
+                        }
+                    ]
+                }
+
+    IAMManagedPolicy7:
+        Type: "AWS::IAM::ManagedPolicy"
+        Properties:
+            ManagedPolicyName: "AWSLambdaS3ExecutionRole-3c2f91fe-ca50-4ec8-ad18-210052cbcbc7"
+            Path: "/service-role/"
+            PolicyDocument: |
+                {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Action": [
+                                "s3:GetObject"
+                            ],
+                            "Resource": "arn:aws:s3:::*"
+                        }
+                    ]
+                }
+
+
+    # IAMManagedPolicy9:
+    #     Type: "AWS::IAM::ManagedPolicy"
+    #     Properties:
+    #         ManagedPolicyName: "CodeBuildBasePolicy-ters-${AWS::Region}"
+    #         Path: "/service-role/"
+    #         PolicyDocument: |
+    #             {
+    #                 "Version": "2012-10-17",
+    #                 "Statement": [
+    #                     {
+    #                         "Effect": "Allow",
+    #                         "Action": [
+    #                             "logs:CreateLogGroup",
+    #                             "logs:CreateLogStream",
+    #                             "logs:PutLogEvents"
+    #                         ],
+    #                         "Resource": [
+    #                             "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/codebuild/ters",
+    #                             "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/codebuild/ters:*"
+    #                         ]
+    #                     },
+    #                     {
+    #                         "Effect": "Allow",
+    #                         "Action": [
+    #                             "s3:PutObject",
+    #                             "s3:GetObject",
+    #                             "s3:GetObjectVersion",
+    #                             "s3:GetBucketAcl",
+    #                             "s3:GetBucketLocation"
+    #                         ],
+    #                         "Resource": [
+    #                             "arn:aws:s3:::codepipeline-${AWS::Region}-*"
+    #                         ]
+    #                     },
+    #                     {
+    #                         "Effect": "Allow",
+    #                         "Action": [
+    #                             "codebuild:CreateReportGroup",
+    #                             "codebuild:CreateReport",
+    #                             "codebuild:UpdateReport",
+    #                             "codebuild:BatchPutTestCases",
+    #                             "codebuild:BatchPutCodeCoverages"
+    #                         ],
+    #                         "Resource": [
+    #                             "arn:aws:codebuild:${AWS::Region}:${AWS::AccountId}:report-group/ters-*"
+    #                         ]
+    #                     },
+    #                     {
+    #                         "Effect": "Allow",
+    #                         "Action": [
+    #                             "ssmmessages:CreateControlChannel",
+    #                             "ssmmessages:CreateDataChannel",
+    #                             "ssmmessages:OpenControlChannel",
+    #                             "ssmmessages:OpenDataChannel"
+    #                         ],
+    #                         "Resource": "*"
+    #                     }
+    #                 ]
+    #             }
+
+    # IAMManagedPolicy10:
+    #     Type: "AWS::IAM::ManagedPolicy"
+    #     Properties:
+    #         ManagedPolicyName: "CodeBuildCodeConnectionsSourceCredentialsPolicy-ters-${AWS::Region}"
+    #         Path: "/service-role/"
+    #         PolicyDocument: |
+    #             {
+    #                 "Version": "2012-10-17",
+    #                 "Statement": [
+    #                     {
+    #                         "Effect": "Allow",
+    #                         "Action": [
+    #                             "codestar-connections:GetConnectionToken",
+    #                             "codestar-connections:GetConnection",
+    #                             "codeconnections:GetConnectionToken",
+    #                             "codeconnections:GetConnection",
+    #                             "codeconnections:UseConnection"
+    #                         ],
+    #                         "Resource": [
+    #                             "arn:aws:codestar-connections:${AWS::Region}:${AWS::AccountId}:connection/3f4c6e77-52d9-4d46-a496-b95d31e2674f",
+    #                             "arn:aws:codeconnections:${AWS::Region}:${AWS::AccountId}:connection/3f4c6e77-52d9-4d46-a496-b95d31e2674f"
+    #                         ]
+    #                     }
+    #                 ]
+    #             }
+
+
+    IAMManagedPolicy12:
+        Type: "AWS::IAM::ManagedPolicy"
+        Properties:
+            ManagedPolicyName: !Ref IAMRole14
+            Path: "/service-role/"
+            PolicyDocument: "{\"Statement\":[{\"Action\":[\"ssm:GetParameters\",\"secretsmanager:GetSecretValue\",\"logs:PutLogEvents\",\"logs:CreateLogStream\",\"logs:CreateLogGroup\",\"iam:PassRole\",\"ecs:RunTask\",\"ecr:UploadLayerPart\",\"ecr:PutImage\",\"ecr:InitiateLayerUpload\",\"ecr:GetAuthorizationToken\",\"ecr:CompleteLayerUpload\",\"ecr:BatchCheckLayerAvailability\",\"codecommit:GitPull\"],\"Effect\":\"Allow\",\"Resource\":\"*\"}],\"Version\":\"2012-10-17\"}"
+
+    IAMManagedPolicy13:
+        Type: "AWS::IAM::ManagedPolicy"
+        Properties:
+            ManagedPolicyName: !Sub "${IAMRole15}-build"
+            Path: "/service-role/"
+            PolicyDocument: "{\"Statement\":[{\"Action\":[\"ssm:GetParameters\",\"secretsmanager:GetSecretValue\",\"logs:PutLogEvents\",\"logs:CreateLogStream\",\"logs:CreateLogGroup\",\"iam:PassRole\",\"ecs:RunTask\",\"ecr:UploadLayerPart\",\"ecr:PutImage\",\"ecr:InitiateLayerUpload\",\"ecr:GetAuthorizationToken\",\"ecr:CompleteLayerUpload\",\"ecr:BatchCheckLayerAvailability\",\"codecommit:GitPull\"],\"Effect\":\"Allow\",\"Resource\":\"*\"}],\"Version\":\"2012-10-17\"}"
+
+    IAMManagedPolicy14:
+        Type: "AWS::IAM::ManagedPolicy"
+        Properties:
+            ManagedPolicyName: !Sub "${IAMRole15}-build-cache-bucket"
+            Path: "/service-role/"
+            PolicyDocument: !Sub "{\"Statement\":[{\"Action\":\"s3:*\",\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:s3:::${IAMRole15}-build-jccmoviptukv/*\",\"arn:aws:s3:::${IAMRole15}-build-jccmoviptukv\"]}],\"Version\":\"2012-10-17\"}"
+
+
+
+    IAMManagedPolicy17:
+        Type: "AWS::IAM::ManagedPolicy"
+        Properties:
+            ManagedPolicyName: "ssm_s3_cwl_access-${AWS::Region}"
+            Path: "/"
+            PolicyDocument: !Sub "{\"Statement\":[{\"Action\":[\"s3:PutObjectVersionAcl\",\"s3:PutObjectAcl\",\"s3:PutObject\"],\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:s3:::${CodeName}-session-logs-20${SSMParameter.Value}*/*\",\"arn:aws:s3:::${CodeName}-session-logs-20${SSMParameter.Value}0109201131290200000001\"],\"Sid\":\"S3BucketAccessForSessionManager\"},{\"Action\":\"s3:GetEncryptionConfiguration\",\"Effect\":\"Allow\",\"Resource\":\"arn:aws:s3:::${CodeName}-session-logs-20${SSMParameter.Value}0109201131290200000001\",\"Sid\":\"S3EncryptionForSessionManager\"},{\"Action\":[\"logs:PutLogEvents\",\"logs:DescribeLogStreams\",\"logs:DescribeLogGroups\",\"logs:CreateLogStream\"],\"Effect\":\"Allow\",\"Resource\":\"*\",\"Sid\":\"CloudWatchLogsAccessForSessionManager\"},{\"Action\":[\"kms:GenerateDataKey\",\"kms:Encrypt\",\"kms:DescribeKey\",\"kms:Decrypt\"],\"Effect\":\"Allow\",\"Resource\":\"${AWS::KeyArn2}\",\"Sid\":\"KMSEncryptionForSessionManager\"}],\"Version\":\"2012-10-17\"}"
+
+
+    IAMManagedPolicy19:
+        Type: "AWS::IAM::ManagedPolicy"
+        Properties:
+            ManagedPolicyName: !Sub "terraform_pike20${SSMParameter.Value}0110023415486600000001"
+            Path: "/"
+            PolicyDocument: "{\"Statement\":[{\"Action\":[\"acm:AddTagsToCertificate\",\"acm:DeleteCertificate\",\"acm:DescribeCertificate\",\"acm:ListTagsForCertificate\",\"acm:RemoveTagsFromCertificate\",\"acm:RequestCertificate\"],\"Effect\":\"Allow\",\"Resource\":[\"*\"],\"Sid\":\"VisualEditor0\"},{\"Action\":[\"apigateway:SetWebACL\"],\"Effect\":\"Allow\",\"Resource\":[\"*\"],\"Sid\":\"VisualEditor100\"},{\"Action\":[\"apprunner:AssociateWebAcl\",\"apprunner:DescribeWebAclForService\",\"apprunner:DisassociateWebAcl\",\"apprunner:ListAssociatedServicesForWebAcl\"],\"Effect\":\"Allow\",\"Resource\":[\"*\"],\"Sid\":\"VisualEditor200\"},{\"Action\":[\"appsync:SetWebACL\"],\"Effect\":\"Allow\",\"Resource\":[\"*\"],\"Sid\":\"VisualEditor003\"},{\"Action\":[\"autoscaling:AttachTrafficSources\",\"autoscaling:CreateAutoScalingGroup\",\"autoscaling:CreateOrUpdateTags\",\"autoscaling:DeleteAutoScalingGroup\",\"autoscaling:DeleteLifecycleHook\",\"autoscaling:DeletePolicy\",\"autoscaling:DeleteScheduledAction\",\"autoscaling:DeleteTags\",\"autoscaling:Describe*\",\"autoscaling:DescribeAdjustmentTypes\",\"autoscaling:DescribeAutoScalingGroups\",\"autoscaling:DescribePolicies\",\"autoscaling:DescribeScalingActivities\",\"autoscaling:DescribeScheduledActions\",\"autoscaling:DescribeTerminationPolicyTypes\",\"autoscaling:DescribeTrafficSources\",\"autoscaling:DetachTrafficSources\",\"autoscaling:DisableMetricsCollection\",\"autoscaling:EnableMetricsCollection\",\"autoscaling:ExecutePolicy\",\"autoscaling:PutLifecycleHook\",\"autoscaling:PutScalingPolicy\",\"autoscaling:PutScheduledUpdateGroupAction\",\"autoscaling:UpdateAutoScalingGroup\"],\"Effect\":\"Allow\",\"Resource\":[\"*\"],\"Sid\":\"VisualEditor004\"},{\"Action\":[\"cloudwatch:GetMetricData\"],\"Effect\":\"Allow\",\"Resource\":[\"*\"],\"Sid\":\"VisualEditor005\"},{\"Action\":[\"ecr:CompleteLayerUpload\",\"ecr:UploadLayerPart\",\"ecr:InitiateLayerUpload\",\"ecr:BatchCheckLayerAvailability\",\"ecr:PutImage\",\"ecr:BatchGetImage\",\"ecr:CreateRepository\"],\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:ecr:${AWS::Region}:${AWS::AccountId}:repository/*\"]},{\"Action\":\"ecr:GetAuthorizationToken\",\"Effect\":\"Allow\",\"Resource\":\"*\"}],\"Version\":\"2012-10-17\"}"
+
+
+    IAMManagedPolicy21:
+        Type: "AWS::IAM::ManagedPolicy"
+        Properties:
+            ManagedPolicyName: !Sub "terraform_pike20${SSMParameter.Value}0110023415488300000003"
+            Path: "/"
+            PolicyDocument: "{\"Statement\":[{\"Action\":[\"iam:AddRoleToInstanceProfile\",\"iam:AttachRolePolicy\",\"iam:CreateInstanceProfile\",\"iam:CreatePolicy\",\"iam:CreateRole\",\"iam:CreateServiceLinkedRole\",\"iam:DeleteInstanceProfile\",\"iam:DeletePolicy\",\"iam:DeleteRole\",\"iam:DeleteRolePermissionsBoundary\",\"iam:DetachRolePolicy\",\"iam:GetInstanceProfile\",\"iam:GetPolicy\",\"iam:GetPolicyVersion\",\"iam:GetRole\",\"iam:ListAttachedRolePolicies\",\"iam:ListInstanceProfilesForRole\",\"iam:ListPolicyVersions\",\"iam:ListRolePolicies\",\"iam:PassRole\",\"iam:PutRolePermissionsBoundary\",\"iam:RemoveRoleFromInstanceProfile\",\"iam:TagInstanceProfile\",\"iam:TagPolicy\",\"iam:TagRole\",\"iam:UntagInstanceProfile\",\"iam:UntagPolicy\",\"iam:UntagRole\",\"iam:UpdateRoleDescription\"],\"Effect\":\"Allow\",\"Resource\":[\"*\"],\"Sid\":\"VisualEditor0010\"},{\"Action\":[\"lambda:AddPermission\",\"lambda:GetPolicy\",\"lambda:RemovePermission\"],\"Effect\":\"Allow\",\"Resource\":[\"*\"],\"Sid\":\"VisualEditor0011\"},{\"Action\":[\"logs:AssociateKmsKey\",\"logs:CreateLogDelivery\",\"logs:CreateLogGroup\",\"logs:DeleteLogGroup\",\"logs:DeleteRetentionPolicy\",\"logs:DescribeLogGroups\",\"logs:DisassociateKmsKey\",\"logs:ListTagsLogGroup\",\"logs:PutRetentionPolicy\",\"logs:TagLogGroup\",\"logs:UntagLogGroup\"],\"Effect\":\"Allow\",\"Resource\":[\"*\"],\"Sid\":\"VisualEditor0012\"},{\"Action\":[\"managed-fleets:DeleteAutoScalingGroup\",\"managed-fleets:DeregisterAutoScalingGroup\",\"managed-fleets:Get*\",\"managed-fleets:RegisterAutoScalingGroup\",\"managed-fleets:UpdateAutoScalingGroup\"],\"Effect\":\"Allow\",\"Resource\":[\"*\"],\"Sid\":\"VisualEditor0013\"},{\"Action\":[\"rds:AddTagsToResource\",\"rds:CreateDBSubnetGroup\",\"rds:DeleteDBSubnetGroup\",\"rds:DescribeDBSubnetGroups\",\"rds:ListTagsForResource\",\"rds:ModifyDBSubnetGroup\",\"rds:RemoveTagsFromResource\"],\"Effect\":\"Allow\",\"Resource\":[\"*\"],\"Sid\":\"VisualEditor0014\"},{\"Action\":[\"redshift:CreateClusterSubnetGroup\",\"redshift:CreateTags\",\"redshift:DeleteClusterSubnetGroup\",\"redshift:DeleteTags\",\"redshift:DescribeClusterSubnetGroups\",\"redshift:ModifyClusterSubnetGroup\"],\"Effect\":\"Allow\",\"Resource\":[\"*\"],\"Sid\":\"VisualEditor0015\"},{\"Action\":[\"route53:ChangeResourceRecordSets\",\"route53:GetChange\",\"route53:GetHostedZone\",\"route53:ListResourceRecordSets\"],\"Effect\":\"Allow\",\"Resource\":[\"*\"],\"Sid\":\"VisualEditor0016\"},{\"Action\":[\"ssm:Get*\"],\"Effect\":\"Allow\",\"Resource\":[\"*\"],\"Sid\":\"VisualEditor0017\"},{\"Action\":[\"wafv2:AssociateWebACL\",\"wafv2:DisassociateWebACL\",\"wafv2:GetWebACLForResource\"],\"Effect\":\"Allow\",\"Resource\":[\"*\"],\"Sid\":\"VisualEditor0018\"},{\"Action\":[\"ec2:CreateKeyPair\",\"ec2:CreateLaunchTemplate\",\"ec2:CreateLaunchTemplateVersion\",\"ec2:DeleteKeyPair\",\"ec2:DeleteLaunchTemplate\",\"ec2:DescribeInstanceTypes\",\"ec2:DescribeKeyPairs\",\"ec2:DescribeLaunchTemplateVersions\",\"ec2:DescribeLaunchTemplates\",\"ec2:ImportKeyPair\"],\"Effect\":\"Allow\",\"Resource\":[\"*\"],\"Sid\":\"VisualEditor0000\"},{\"Action\":[\"iam:AddRoleToInstanceProfile\",\"iam:AttachRolePolicy\",\"iam:CreateInstanceProfile\",\"iam:CreatePolicy\",\"iam:CreateRole\",\"iam:DeleteInstanceProfile\",\"iam:DeletePolicy\",\"iam:DeleteRole\",\"iam:DetachRolePolicy\",\"iam:GetInstanceProfile\",\"iam:GetPolicy\",\"iam:GetPolicyVersion\",\"iam:GetRole\",\"iam:ListAttachedRolePolicies\",\"iam:ListInstanceProfilesForRole\",\"iam:ListPolicies\",\"iam:ListPolicyVersions\",\"iam:ListRolePolicies\",\"iam:PassRole\",\"iam:RemoveRoleFromInstanceProfile\",\"iam:TagInstanceProfile\",\"iam:TagRole\",\"iam:UntagInstanceProfile\",\"iam:UntagRole\"],\"Effect\":\"Allow\",\"Resource\":[\"*\"],\"Sid\":\"VisualEditor001\"},{\"Action\":[\"ssm:DeleteParameter\",\"ssm:PutParameter\"],\"Effect\":\"Allow\",\"Resource\":[\"*\"],\"Sid\":\"VisualEditor002\"}],\"Version\":\"2012-10-17\"}"
+
+    IAMServiceLinkedRole:
+        Type: "AWS::IAM::ServiceLinkedRole"
+        Properties:
+            AWSServiceName: "access-analyzer.amazonaws.com"
+
+    IAMServiceLinkedRole2:
+        Type: "AWS::IAM::ServiceLinkedRole"
+        Properties:
+            AWSServiceName: "autoscaling.amazonaws.com"
+            Description: "Default Service-Linked Role enables access to AWS Services and Resources used or managed by Auto Scaling"
+
+    IAMServiceLinkedRole3:
+        Type: "AWS::IAM::ServiceLinkedRole"
+        Properties:
+            AWSServiceName: "compute-optimizer.amazonaws.com"
+            Description: "Allows ComputeOptimizer to call AWS services and collect workload details on your behalf."
+
+    IAMServiceLinkedRole4:
+        Type: "AWS::IAM::ServiceLinkedRole"
+        Properties:
+            AWSServiceName: "cost-optimization-hub.bcm.amazonaws.com"
+            Description: "Allows Cost Optimization Hub to retrieve organization information and collect optimization-related data and metadata."
+
+    IAMServiceLinkedRole5:
+        Type: "AWS::IAM::ServiceLinkedRole"
+        Properties:
+            AWSServiceName: "ecs.amazonaws.com"
+            Description: "Role to enable Amazon ECS to manage your cluster."
+
+    IAMServiceLinkedRole6:
+        Type: "AWS::IAM::ServiceLinkedRole"
+        Properties:
+            AWSServiceName: "eks-nodegroup.amazonaws.com"
+            Description: "This policy allows Amazon EKS to create and manage Nodegroups"
+
+    IAMServiceLinkedRole7:
+        Type: "AWS::IAM::ServiceLinkedRole"
+        Properties:
+            AWSServiceName: "eks.amazonaws.com"
+            Description: "Allows Amazon EKS to call AWS services on your behalf."
+
+    IAMServiceLinkedRole8:
+        Type: "AWS::IAM::ServiceLinkedRole"
+        Properties:
+            AWSServiceName: "elasticloadbalancing.amazonaws.com"
+            Description: "Allows ELB to call AWS services on your behalf."
+
+
+    IAMServiceLinkedRole10:
+        Type: "AWS::IAM::ServiceLinkedRole"
+        Properties:
+            AWSServiceName: "globalaccelerator.amazonaws.com"
+            Description: "Allows Global Accelerator to call AWS services on customer's behalf"
+
+    IAMServiceLinkedRole11:
+        Type: "AWS::IAM::ServiceLinkedRole"
+        Properties:
+            AWSServiceName: "ops.apigateway.amazonaws.com"
+            Description: "The Service Linked Role is used by Amazon API Gateway."
+
+    IAMServiceLinkedRole12:
+        Type: "AWS::IAM::ServiceLinkedRole"
+        Properties:
+            AWSServiceName: "spot.amazonaws.com"
+            Description: "Default EC2 Spot Service Linked Role"
+
+    IAMServiceLinkedRole13:
+        Type: "AWS::IAM::ServiceLinkedRole"
+        Properties:
+            AWSServiceName: "ssm.amazonaws.com"
+            Description: "Provides access to AWS Resources managed or used by Amazon SSM."
+
+    IAMRole:
+        Type: "AWS::IAM::Role"
+        Properties:
+            Path: "/"
+            RoleName: "cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}"
+            AssumeRolePolicyDocument: "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"cloudformation.amazonaws.com\"},\"Action\":\"sts:AssumeRole\"}]}"
+            MaxSessionDuration: 3600
+            ManagedPolicyArns: 
+              - "arn:aws:iam::aws:policy/AdministratorAccess"
+            Description: ""
+
+    IAMRole2:
+        Type: "AWS::IAM::Role"
+        Properties:
+            Path: "/"
+            RoleName: "cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}"
+            AssumeRolePolicyDocument: "{\"Version\":\"2008-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:iam::${AWS::AccountId}:root\"},\"Action\":\"sts:TagSession\"},{\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:iam::${AWS::AccountId}:root\"},\"Action\":\"sts:AssumeRole\"}]}"
+            MaxSessionDuration: 3600
+            Description: ""
+            Tags: 
+              - 
+                Key: "aws-cdk:bootstrap-role"
+                Value: "deploy"
+
+    IAMRole3:
+        Type: "AWS::IAM::Role"
+        Properties:
+            Path: "/"
+            RoleName: "cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-${AWS::Region}"
+            AssumeRolePolicyDocument: "{\"Version\":\"2008-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:iam::${AWS::AccountId}:root\"},\"Action\":\"sts:TagSession\"},{\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:iam::${AWS::AccountId}:root\"},\"Action\":\"sts:AssumeRole\"}]}"
+            MaxSessionDuration: 3600
+            Description: ""
+            Tags: 
+              - 
+                Key: "aws-cdk:bootstrap-role"
+                Value: "file-publishing"
+
+    IAMRole4:
+        Type: "AWS::IAM::Role"
+        Properties:
+            Path: "/"
+            RoleName: "cdk-hnb659fds-image-publishing-role-${AWS::AccountId}-${AWS::Region}"
+            AssumeRolePolicyDocument: "{\"Version\":\"2008-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:iam::${AWS::AccountId}:root\"},\"Action\":\"sts:TagSession\"},{\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:iam::${AWS::AccountId}:root\"},\"Action\":\"sts:AssumeRole\"}]}"
+            MaxSessionDuration: 3600
+            Description: ""
+            Tags: 
+              - 
+                Key: "aws-cdk:bootstrap-role"
+                Value: "image-publishing"
+
+    IAMRole5:
+        Type: "AWS::IAM::Role"
+        Properties:
+            Path: "/"
+            RoleName: "cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}"
+            AssumeRolePolicyDocument: "{\"Version\":\"2008-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:iam::${AWS::AccountId}:root\"},\"Action\":\"sts:TagSession\"},{\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:iam::${AWS::AccountId}:root\"},\"Action\":\"sts:AssumeRole\"}]}"
+            MaxSessionDuration: 3600
+            ManagedPolicyArns: 
+              - "arn:aws:iam::aws:policy/ReadOnlyAccess"
+            Description: ""
+            Tags: 
+              - 
+                Key: "aws-cdk:bootstrap-role"
+                Value: "lookup"
+
+    IAMRole6:
+        Type: "AWS::IAM::Role"
+        Properties:
+            Path: "/"
+            RoleName: "ec2-monitoring-role"
+            AssumeRolePolicyDocument: "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"},\"Action\":\"sts:AssumeRole\"}]}"
+            MaxSessionDuration: 3600
+            ManagedPolicyArns: 
+              - "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
+              - "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+
+    IAMRole7:
+        Type: "AWS::IAM::Role"
+        Properties:
+            Path: "/"
+            RoleName: !Sub "${IAMRole6}-${AWS::Region}"
+            AssumeRolePolicyDocument: "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"},\"Action\":\"sts:AssumeRole\"}]}"
+            MaxSessionDuration: 3600
+            ManagedPolicyArns: 
+              - "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
+              - "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+
+
+    IAMRole11:
+        Type: "AWS::IAM::Role"
+        Properties:
+            Path: "/"
+            RoleName: "ecsTaskExecutionRole"
+            AssumeRolePolicyDocument: "{\"Version\":\"2008-10-17\",\"Statement\":[{\"Sid\":\"\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ecs-tasks.amazonaws.com\"},\"Action\":\"sts:AssumeRole\"}]}"
+            MaxSessionDuration: 3600
+            ManagedPolicyArns: 
+              - "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+
+    IAMRole12:
+        Type: "AWS::IAM::Role"
+        Properties:
+            Path: "/"
+            RoleName: !Ref IAMPolicy6
+            AssumeRolePolicyDocument: "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Sid\":\"\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"},\"Action\":\"sts:AssumeRole\"}]}"
+            MaxSessionDuration: 3600
+            ManagedPolicyArns: 
+              - "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+
+# git access to account 
+    # IAMRole13:
+    #     Type: "AWS::IAM::Role"
+    #     Properties:
+    #         Path: "/"
+    #         RoleName: "github"
+    #         AssumeRolePolicyDocument: "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"Federated\":\"arn:aws:iam::${AWS::AccountId}:oidc-provider/token.actions.githubusercontent.com\"},\"Action\":\"sts:AssumeRoleWithWebIdentity\",\"Condition\":{\"StringEquals\":{\"token.actions.githubusercontent.com:aud\":\"sts.amazonaws.com\"},\"StringLike\":{\"token.actions.githubusercontent.com:sub\":[\"repo:jmikedupont2/ai-agent-terraform:*\",\"repo:jmikedupont2/terraform-aws-oidc-github:*\",\"repo:meta-introspector/cloud-deployment-eliza:*\",\"repo:meta-introspector/eliza-fastify:*\",\"repo:meta-introspector/eliza-starter:*\",\"repo:meta-introspector/fastembed-js:*\",\"repo:meta-introspector/arm64-tokenizers:*\"]}}}]}"
+    #         MaxSessionDuration: 3600
+    #         ManagedPolicyArns: 
+    #           - !Ref IAMManagedPolicy20
+    #           - !Ref IAMManagedPolicy21
+    #           - !Ref IAMManagedPolicy
+    #           - !Ref IAMManagedPolicy19
+    #           - "arn:aws:iam::aws:policy/ReadOnlyAccess"
+    #         Description: "Role assumed by the GitHub OIDC provider."
+
+    IAMRole14:
+        Type: "AWS::IAM::Role"
+        Properties:
+            Path: "/"
+            RoleName: "main-staging-arm64-tokenizers"
+            AssumeRolePolicyDocument: "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"codebuild.amazonaws.com\"},\"Action\":\"sts:AssumeRole\",\"Condition\":{\"StringEquals\":{\"aws:SourceArn\":\"arn:aws:codebuild:${AWS::Region}:${AWS::AccountId}:project/main-staging-arm64-tokenizers\"}}}]}"
+            MaxSessionDuration: 3600
+            ManagedPolicyArns: 
+              - "arn:aws:iam::${AWS::AccountId}:policy/service-role/main-staging-arm64-tokenizers"
+            Tags: 
+              - 
+                Key: "Stage"
+                Value: "staging"
+              - 
+                Key: "Name"
+                Value: "main-staging-arm64-tokenizers"
+              - 
+                Key: "Namespace"
+                Value: "main"
+
+
+    IAMRole16:
+        Type: "AWS::IAM::Role"
+        Properties:
+            Path: "/"
+            RoleName: !Sub "${IAMRole15}-build"
+            AssumeRolePolicyDocument: "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"codebuild.amazonaws.com\"},\"Action\":\"sts:AssumeRole\"}]}"
+            MaxSessionDuration: 3600
+            ManagedPolicyArns: 
+              - !Sub "${IAMManagedPolicy13}-cache-bucket"
+              - !Ref IAMManagedPolicy13
+              - !Sub "${IAMManagedPolicy3}-s3"
+            Tags: 
+              - 
+                Key: "Stage"
+                Value: "staging"
+              - 
+                Key: "Name"
+                Value: !Sub "${IAMRole15}-build"
+              - 
+                Key: "Attributes"
+                Value: "build"
+              - 
+                Key: "Namespace"
+                Value: "npm"
+
+
+    IAMRoleAgent:
+        Type: "AWS::IAM::Role"
+        Properties:
+            Path: "/"
+            RoleName: "ssm-eliza_dev-agent-role"
+            AssumeRolePolicyDocument: "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Sid\":\"\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"},\"Action\":\"sts:AssumeRole\"}]}"
+            MaxSessionDuration: 3600
+            ManagedPolicyArns: 
+              - !Ref IAMManagedPolicy2
+              - "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+              - "arn:aws:iam::aws:policy/AmazonSSMManagedEC2InstanceDefaultPolicy"
+            Tags: 
+              - 
+                Key: "project"
+                Value: "${CodeName}-dev"
+
+    IAMRole25:
+        Type: "AWS::IAM::Role"
+        Properties:
+            Path: "/"
+            RoleName: "ssm-maintenance-window-role"
+            AssumeRolePolicyDocument: "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ssm.amazonaws.com\"},\"Action\":\"sts:AssumeRole\"}]}"
+            MaxSessionDuration: 3600
+            ManagedPolicyArns: 
+              - "arn:aws:iam::aws:policy/service-role/AmazonSSMMaintenanceWindowRole"
+
+    IAMRole26:
+        Type: "AWS::IAM::Role"
+        Properties:
+            Path: "/"
+            RoleName: !Sub "${IAMRole25}-${AWS::Region}"
+            AssumeRolePolicyDocument: "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ssm.amazonaws.com\"},\"Action\":\"sts:AssumeRole\"}]}"
+            MaxSessionDuration: 3600
+            ManagedPolicyArns: 
+              - "arn:aws:iam::aws:policy/service-role/AmazonSSMMaintenanceWindowRole"
+
+
+    IAMRole28:
+        Type: "AWS::IAM::Role"
+        Properties:
+            Path: "/"
+            RoleName: !Sub "ssm_role-20${SSMParameter.Value}0109201131650400000003"
+            AssumeRolePolicyDocument: "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Sid\":\"\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"},\"Action\":\"sts:AssumeRole\"}]}"
+            MaxSessionDuration: 3600
+            ManagedPolicyArns: 
+              - !Ref IAMManagedPolicy17
+              - "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+            Tags: 
+              - 
+                Key: "project"
+                Value: "${CodeName}"
+
+
+
+    IAMUser:
+        Type: "AWS::IAM::User"
+        Properties:
+            Path: "/"
+            UserName: !Ref UserName
+
+            ManagedPolicyArns: 
+              - "arn:aws:iam::aws:policy/AWSCertificateManagerFullAccess"
+              - "arn:aws:iam::aws:policy/AdministratorAccess"
+              - "arn:aws:iam::aws:policy/job-function/Billing"
+              - "arn:aws:iam::aws:policy/AWSBillingConductorFullAccess"
+              - "arn:aws:iam::aws:policy/AWSBillingConductorReadOnlyAccess"
+              - "arn:aws:iam::aws:policy/CostOptimizationHubAdminAccess"
+              - "arn:aws:iam::aws:policy/AWSBillingReadOnlyAccess"
+
+    SSMParameter2:
+        Type: "AWS::SSM::Parameter"
+        Properties:
+            Name: "/cloudwatch-agent/config"
+            Type: "SecureString"
+            Value: !Sub "AQICAHg91bto+2aCaW1sPRcgIdqeklTy9ptuwzklSyNW+bRSbwG1i3Qd8Cn6xc/+N+VZ4spyAAAF+jCCBfYGCSqGSIb3DQEHBqCCBecwggXjAgEAMIIF3AYJKoZIhvcNAQcBMB4GCWCGSAFlAwQBLjARBAx/rEFZ51bDBZBN0+MCARCAggWtNsXpGUXSBwXMGqXn3Q0HdmEyRxMS+r7gEJtapbRGw5Itxz3zTvjmd+ykhfF+Eb8HjV4Ba15i/yszehklC2NXoYjjwwu9bx+1AMXXp667Ga/HSgEO9yu30C8JEllXCqeM0QFHz1wd8lSGihRSb9LIKUaJSrR3z/THOu4kPBUxrxxy+uikc/gVZlHEkKMRDC42E3erYpfVhUVxueY5R8vZ0KGCEhGck${SSMParameter.Value}h4tRs3FnRPxtJ4U34aUTSlVVEWxp+83RWxAbl11y5fH1gCrhYr6N+vsjhs9l9wTrGyThGzCqtpRNVBV1iBVErIBlkl7ODgy53yYSm7rqaXbGtMZyxDq0WaUWoVVsWJeaEPa84jreeqARZhKwX6YLwXnPu5uy6JZ2GFRkigPakYajNffwDCgZalSCDJmXF6rWrXi2LZ3OcXpfIsCrENyMijdIytdH2Y8ESm7Y5w9Ony7W8DClRYNt2o+oicp2eP3z41QNtfmjmS2Hmyv7zUDnLvsKfNCVE4GJ/K417QQUpRi55DLEP2lF1cC2xn28Af0lmCxfXK4id2CPY9CsRsMj19B6/I9mIt9SFvi0fOlZmQ5moG2dF5QY243viJmNPQGn1qFZrCYVOq1lUIQJY4E3ryha/Lz8lS+lbzSVtPxh42HiS9wXax/zmpzn/KayNG5KSouyNx9GTDomTM9kVA2LcUIgwpgzF+N0ASGYggHT/djfPEWIUNW/gXx/dymU6k3KP3HqUUUXCxJMxfj8jZyR0I9ZjQu5th1+Ovr/6rxoRFrCEVEQGx0OIT60zmz/wVifaugJoEVZHxZ8oiJ6a1L0rluQpju0YsS7urZERK9p/y6AXSjmZg8a3YFE0jMm5NDRe8av+SBnp/xvO2S0exLW3dUJ4OGqcNdeOWjNc8E7AB8zTTKrnajCYqLt7dGWb7+1TbfQ5M8jkDWttqGKvakRzhBGim9Kgv2UdrL7kaOhzBhz8DAUhgVegnlIw+TsKISj4WkR3Xao4UnctFMBYk8a1wWqPAOrOBvPu//4sTy8FEuApbwhD/nb8HNYyMXIlfPJ+TSNGvz5wIMTU4SgBRg2QHr0Evx+xTaUYUXZjbo+zPR6LXYVAmiPYyvm/SFVnbKVCUoletQ+hYG5s87Zj8uuBUEoEuYTrZw8xZqp9DcuBzXmYoGZJwju+BDDFPCSo06o+q6TlURtngSjMdsrG7OF8kg8hsRE8p+48yj4IQTGswNNwWTb0hsUWOoWhTEj9itvYaO8SjmvGEjuSzxyXYg/TAKj1LXRssGyDeBXIvVia4zURtMrFol67axScBRneW52tqYBJmBZC+3OyYm79tHW36qrPvii813eVm3YCzd8FGodLwBPx8dVx+MxlmLVv2hjI1BP7IE16R75Nt7QZIVh+6UPDPkJMrnIEzsAxCFJP4lKFAqpC5DnWCwg7j7oS2Cv7uyx3zEgcPZ9KTGcW1H94RFQ+Kmux79SslY/tb6H9GHDMFem9RLArqlmqiMPsU/OYAWioW9hYVX9kCHE2h4WC94KAiw9WHFFbKup5bdH0gtoBy5u4audHHhQ6zViQR5lVo3teGeUd7zN2SK1gaM30JJJ5imW3dSHpVLoXmQmQ1T14pZIVL7mnOfdNIM+kFe+Kqf0vOerL5YrbSkD/dS6d85GILpr5GJN173SVLTdpHXsQ8pJgxarPuPv3HI/OSJppR6JrK84Jsgl5ZG28hqcWOzYmsdIQ22cJGKTRrqI6AAm0rwn0/pwaSZ7HmEZ4JWRv3Q03fNtfTQdTmJXdnBFwYzymSonEhRtsudnxam+hT9jKQM0uIZ+AnBQ7w+ag/5MrsAm76tjTO1IcRYrRyGa1VR6Ny/ii1vxdo7uRqhr2+c24/a0MsunI6SyXKEiwd${SSMParameter.Value}KgUaY6NJvO4/WZwmDq9rJgX4+EVR568hb4EDxqXbrUQMBWKXaAw=="
+            DataType: "text"
+            Description: "CloudWatch agent configuration"
+            Tier: "Standard"
+
+    SSMParameter3:
+        Type: "AWS::SSM::Parameter"
+        Properties:
+            Name: !Sub "${SSMParameter2}/details"
+            Type: "SecureString"
+            Value: "AQICAHg91bto+2aCaW1sPRcgIdqeklTy9ptuwzklSyNW+bRSbwGiIaQtyS8l5ATTKgzvqrKtAAAFWTCCBVUGCSqGSIb3DQEHBqCCBUYwggVCAgEAMIIFOwYJKoZIhvcNAQcBMB4GCWCGSAFlAwQBLjARBAwXkCV3+J3MMTF7CloCARCAggUMgscYoPdC/3dK2rBTWXimPZRlwjwaWh/CumqaxTi46XzzlQ8imHFF2lmBz8OAJzZ/YdPhMKa+GO2lL3FKIKq/7k8DYtQSBu4QSjEHJA2BK6X+VcNydQkXRSTuApdSB+BvOye4EKMn2w6J7EL50+E2u14jIWKGXQ+qwa7ittTm4+l50oUiXPFEY7y9J8TC18bX7UeSfLFOcn4g72enUkHkwWd1Oc27mxcMzZcY7dqT6DPUik119lui7uJZP9gHDhIbAWUJbAS1oax6m5LthLMzgreEcvolh4jkDgo64ASwifxKT2aZnnhddEfEky/gB0saLyYcH1R+iejSySlTK/oIzC2hmWxYX01ULobPmoJChAzcv10CdjlA65hxnkD1Orqruiu7GbfjFCvoSnheU9sSc0b5fXICVTQ3jsq1bi2H+89j/bU07xqoEuoTYH8+l6IY8+H//uMOdDKO4m6DBsNgCh3uDSsbHnOpFd3NYyuTLWHSHU24NxTFifqX2eku9sPkTi7DFEqzZVt/hHX4LpGZRDd2KrbGnTGcoPzEY/iVxXfMboUhrQqHtqwKHoaQvNZZdgA4EBzEanuxZ3FYOJGFU3RhvAGlUgjusG1j44xW+KV8eZA7uqB0yT/RvZSNwt1m+2MPmXih1qdXGi57ZnVZXohH+drdBAISZlB684OtrNNzMWZuk+Kllp3rC0ozBrPvBJJF6ex4eVjWvyNufTE4/1LxfF9TPwql091KkGwYER3YZiV1qWwCnObtGHhmP72hCeEwVqXsBmfnfvIQMoyiwDLxY3Eg6DT93wWeOpt4wfyT0vxtxXQqEfP0jxsNRntM5FVwsYFchvlQCDdC9q82S+BTly4hZXYWqrz+XhEmT1CT3lN39zJ8I9m9rki5/m0SeiwnoAvnVGFEJoEBNOEmQK3f1mDH58jnp0HIMYaasFDMaa1yfu8jGogK4oU5v4v5qEgInXZTHvi9kFXHXTHdq2j9whsBKgivSfAlzoEKGfjaXDz6sI6Mm/y00zjJv4Uc84rY2VXM9U7R+R1tf9R4vPKmM8cTeOgN5farWg91lUKR8sOBIqvvjmW+EGkWxI7ETZRlOmJhUexXysdQ1/z/lYxiVhFId8ZpSijymZb5Xm/D6HOsBOfCFogsTFwtSvb2B1z/Qbbau6DgawAMN3ErPGy4q8wNN7/p35/Ddjti70R+NCrghgFCY/X9T6FSoyRUGy8yJlHTBYbj/n+sHip+kSQoOIqKjbUNZH7CfIDKCHEH+Zv6f0ptPu3n5tbsJmVATy7sSVQOnQCqn9zK+eD9N7lf3bTp72b0GuNy4Ff4agFr2vpvj4BTh+c7KBCKngXmUgeNqcpLgTYMJL0lsepY4CWNm379wZzc+CTeVYfNXXVBeVmVw+isjS+vbhNJuDq/N8+dLiA/Ap1FJG6AFbyJqjgYvS2il6QbxjbC+KWx+xE73ubtJ87md9XFgog4BN3F7uWsX6FeBf8Cu/PQlV07gBSjl++rTOp5BnVvleCJR2AwgUaM5xB6n9ayTnMDlQ5LwKfFBhj1rFkIs1637JtQAAJUGOdQ8OGD5m4lh/NVn+aUer4QM+IKzhYCDKVCsHMniRGy6isHcmbvSCQAgniAq+pcsMalU/+RZAM0Ley6nTJQZ/2hOObBf0FZ/W9fk3cUoENH0Og6ogcI/1V8EnDMaJ656uMMMZVOwRmWBGtDmLL9+LUWGke132UX3GM="
+            DataType: "text"
+            Description: "CloudWatch agent configuration with details"
+            Tier: "Standard"
+
+
+    SSMParameterAgentImage:
+        Type: "AWS::SSM::Parameter"
+        Properties:
+            Name: "${CodeName}_agent_agent_image"
+            Type: "String"
+            Value: !Ref AgentImage 
+            DataType: "text"
+            Tier: "Standard"
+
+    SSMParameter6:
+        Type: "AWS::SSM::Parameter"
+        Properties:
+            Name: "${CodeName}_agent_groq_key"
+            Type: "String"
+            Value: !Ref GroqKey
+            DataType: "text"
+            Tier: "Standard"
+
+    SSMParameterTokenizerImage:
+        Type: "AWS::SSM::Parameter"
+        Properties:
+            Name: "${CodeName}_agent_tokenizer_image"
+            Type: "String"
+            Value: !Ref TokenizerImage
+            DataType: "text"
+            Tier: "Standard"
+
+    SSMParameterTwitterEmail:
+        Type: "AWS::SSM::Parameter"
+        Properties:
+            Name: "${CodeName}_agent_twitter_email"
+            Type: "String"
+            Value: !Ref TwitterEmail
+            DataType: "text"
+            Tier: "Standard"
+
+    SSMParameterTwitterPassword:
+        Type: "AWS::SSM::Parameter"
+        Properties:
+            Name: "${CodeName}_agent_twitter_password"
+            Type: "String"
+            Value: !Ref TwitterPassword
+            DataType: "text"
+            Tier: "Standard"
+
+    SSMParameter10:
+        Type: "AWS::SSM::Parameter"
+        Properties:
+            Name: "${CodeName}_agent_twitter_username"
+            Type: "String"
+            Value: !Ref TwitterUser
+            DataType: "text"
+            Tier: "Standard"
+
+
+    IAMPolicy:
+        Type: "AWS::IAM::Policy"
+        Properties:
+            PolicyDocument: !Sub "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"cloudformation:CreateChangeSet\",\"cloudformation:DeleteChangeSet\",\"cloudformation:DescribeChangeSet\",\"cloudformation:DescribeStacks\",\"cloudformation:ExecuteChangeSet\",\"cloudformation:CreateStack\",\"cloudformation:UpdateStack\",\"cloudformation:RollbackStack\",\"cloudformation:ContinueUpdateRollback\"],\"Resource\":\"*\",\"Effect\":\"Allow\",\"Sid\":\"CloudFormationPermissions\"},{\"Condition\":{\"StringNotEquals\":{\"s3:ResourceAccount\":\"${AWS::AccountId}\"}},\"Action\":[\"s3:GetObject*\",\"s3:GetBucket*\",\"s3:List*\",\"s3:Abort*\",\"s3:DeleteObject*\",\"s3:PutObject*\"],\"Resource\":\"*\",\"Effect\":\"Allow\",\"Sid\":\"PipelineCrossAccountArtifactsBucket\"},{\"Condition\":{\"StringEquals\":{\"kms:ViaService\":\"s3.${AWS::Region}.amazonaws.com\"}},\"Action\":[\"kms:Decrypt\",\"kms:DescribeKey\",\"kms:Encrypt\",\"kms:ReEncrypt*\",\"kms:GenerateDataKey*\"],\"Resource\":\"*\",\"Effect\":\"Allow\",\"Sid\":\"PipelineCrossAccountArtifactsKey\"},{\"Action\":\"iam:PassRole\",\"Resource\":\"arn:aws:iam::${AWS::AccountId}:role/${IAMRole}\",\"Effect\":\"Allow\"},{\"Action\":[\"cloudformation:DescribeStackEvents\",\"cloudformation:GetTemplate\",\"cloudformation:DeleteStack\",\"cloudformation:UpdateTerminationProtection\",\"sts:GetCallerIdentity\",\"cloudformation:GetTemplateSummary\"],\"Resource\":\"*\",\"Effect\":\"Allow\",\"Sid\":\"CliPermissions\"},{\"Action\":[\"s3:GetObject*\",\"s3:GetBucket*\",\"s3:List*\"],\"Resource\":[\"arn:aws:s3:::${S3Bucket}\",\"arn:aws:s3:::${S3Bucket}/*\"],\"Effect\":\"Allow\",\"Sid\":\"CliStagingBucket\"},{\"Action\":[\"ssm:GetParameter\",\"ssm:GetParameters\"],\"Resource\":[\"arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter${SSMParameter}\"],\"Effect\":\"Allow\",\"Sid\":\"ReadVersion\"}]}"
+            Roles: 
+              - !Ref IAMRole2
+            PolicyName: "default"
+
+    IAMPolicy2:
+        Type: "AWS::IAM::Policy"
+        Properties:
+            PolicyDocument: !Sub "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Condition\":{\"StringEquals\":{\"aws:ResourceAccount\":[\"${AWS::AccountId}\"]}},\"Action\":[\"s3:GetObject*\",\"s3:GetBucket*\",\"s3:GetEncryptionConfiguration\",\"s3:List*\",\"s3:DeleteObject*\",\"s3:PutObject*\",\"s3:Abort*\"],\"Resource\":[\"arn:aws:s3:::${S3Bucket}\",\"arn:aws:s3:::${S3Bucket}/*\"],\"Effect\":\"Allow\"},{\"Action\":[\"kms:Decrypt\",\"kms:DescribeKey\",\"kms:Encrypt\",\"kms:ReEncrypt*\",\"kms:GenerateDataKey*\"],\"Resource\":\"arn:aws:kms:${AWS::Region}:${AWS::AccountId}:key/AWS_MANAGED_KEY\",\"Effect\":\"Allow\"}]}"
+            Roles: 
+              - !Ref IAMRole3
+            PolicyName: !Sub "cdk-hnb659fds-file-publishing-role-${IAMPolicy}-policy-${AWS::AccountId}-${AWS::Region}"
+
+    IAMPolicy3:
+        Type: "AWS::IAM::Policy"
+        Properties:
+            PolicyDocument: "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"ecr:PutImage\",\"ecr:InitiateLayerUpload\",\"ecr:UploadLayerPart\",\"ecr:CompleteLayerUpload\",\"ecr:BatchCheckLayerAvailability\",\"ecr:DescribeRepositories\",\"ecr:DescribeImages\",\"ecr:BatchGetImage\",\"ecr:GetDownloadUrlForLayer\"],\"Resource\":\"arn:aws:ecr:${AWS::Region}:${AWS::AccountId}:repository/cdk-hnb659fds-container-assets-${AWS::AccountId}-${AWS::Region}\",\"Effect\":\"Allow\"},{\"Action\":[\"ecr:GetAuthorizationToken\"],\"Resource\":\"*\",\"Effect\":\"Allow\"}]}"
+            Roles: 
+              - !Ref IAMRole4
+            PolicyName: !Sub "cdk-hnb659fds-image-publishing-role-${IAMPolicy}-policy-${AWS::AccountId}-${AWS::Region}"
+
+    IAMPolicy4:
+        Type: "AWS::IAM::Policy"
+        Properties:
+            PolicyDocument: "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"kms:Decrypt\"],\"Resource\":\"*\",\"Effect\":\"Deny\",\"Sid\":\"DontReadSecrets\"}]}"
+            Roles: 
+              - !Ref IAMRole5
+            PolicyName: "LookupRolePolicy"
+
+
+
+    IAMPolicy5:
+        Type: "AWS::IAM::Policy"
+        Properties:
+            PolicyDocument: |
+                {
+                	"Version": "2012-10-17",
+                	"Statement": [
+                		{
+                			"Sid": "VisualEditor0",
+                			"Effect": "Allow",
+                			"Action": [
+                				"ecr:*",
+                				"codebuild:*",
+                				"kms:Decrypt"
+                			],
+                			"Resource": "*"
+                		}
+                	]
+                }
+            Roles: 
+              - !Ref IAMRole18
+            PolicyName: "allecr"
+
+    ElastiCacheUser:
+        Type: "AWS::ElastiCache::User"
+        Properties:
+            UserId: !Ref IAMPolicy
+            UserName: !Ref IAMPolicy
+            Engine: "redis"
+            AccessString: "on ~* +@all"
+            NoPasswordRequired: true
+
+    AutoScalingAutoScalingGroup:
+        Type: "AWS::AutoScaling::AutoScalingGroup"
+        Properties:
+            AutoScalingGroupName: !Sub "docker-agent-ami-t4g.small-20${SSMParameter.Value}0127184935601900000001"
+            MixedInstancesPolicy: 
+                LaunchTemplate: 
+                    LaunchTemplateSpecification: 
+                        LaunchTemplateId: !Ref EC2LaunchTemplate
+                        LaunchTemplateName: !Sub "agent-docker-t4g.small-launch-template-20${SSMParameter.Value}0127182650467300000007"
+                        Version: !Sub "$La${CURReportDefinition}"
+                InstancesDistribution: 
+                    OnDemandAllocationStrategy: "prioritized"
+                    OnDemandBaseCapacity: 0
+                    OnDemandPercentageAboveBaseCapacity: 100
+                    SpotAllocationStrategy: "lowest-price"
+                    SpotInstancePools: 2
+            MinSize: 1
+            MaxSize: 2
+            DesiredCapacity: 1
+            Cooldown: 300
+            AvailabilityZones: 
+              - !GetAtt EC2Instance.AvailabilityZone
+            HealthCheckType: "EC2"
+            HealthCheckGracePeriod: 300
+            VPCZoneIdentifier: 
+              - !Ref EC2Subnet5
+            TerminationPolicies: 
+              - "Default"
+            ServiceLinkedRoleARN: "arn:aws:iam::${AWS::AccountId}:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling"
+            Tags: 
+              - 
+                Key: "Name"
+                Value: "docker-agent-ami-t4g.small"
+                PropagateAtLaunch: true
+            NewInstancesProtectedFromScaleIn: false
+
+    EC2VPCDHCPOptionsAssociation:
+        Type: "AWS::EC2::VPCDHCPOptionsAssociation"
+        Properties:
+            DhcpOptionsId: "dopt-90b141ea"
+            VpcId: !GetAtt EC2Subnet.VpcId
+
+    EC2NetworkInterface:
+        Type: "AWS::EC2::NetworkInterface"
+        Properties:
+            Description: ""
+            PrivateIpAddress: !GetAtt EC2Instance.PrivateIp
+            PrivateIpAddresses: 
+              - 
+                PrivateIpAddress: !GetAtt EC2Instance.PrivateIp
+                Primary: true
+            SubnetId: !Ref EC2Subnet5
+            SourceDestCheck: true
+            GroupSet: 
+              - !Ref EC2SecurityGroup
+
+    EC2NetworkInterfaceAttachment:
+        Type: "AWS::EC2::NetworkInterfaceAttachment"
+        Properties:
+            NetworkInterfaceId: "eni-024dcda5d7b9527f0"
+            DeviceIndex: 0
+            InstanceId: !Ref EC2Instance
+            DeleteOnTermination: true
+
+
+
+
+    EC2Instance:
+        Type: "AWS::EC2::Instance"
+        Properties:
+            ImageId: !Sub "ami-015e5cd4${SSMParameter.Value}3df9de1"
+            InstanceType: "t4g.small"
+            AvailabilityZone: !GetAtt EC2Subnet2.AvailabilityZone
+            Tenancy: !Ref IAMPolicy
+            SubnetId: !Ref EC2Subnet5
+            EbsOptimized: false
+            SecurityGroupIds: 
+              - !Ref EC2SecurityGroup
+            SourceDestCheck: true
+            BlockDeviceMappings: 
+              - 
+                DeviceName: "/dev/sda1"
+                Ebs: 
+                    Encrypted: true
+                    VolumeSize: 30
+                    SnapshotId: "snap-031bdaf01e402fb44"
+                    VolumeType: "gp3"
+                    DeleteOnTermination: true
+            UserData: !Sub "IyEvYmluL2Jhc2gKZXhwb3J0IEhPTUU9L3Jvb3QKYXB0IHVwZGF0ZQphcHQtZ2V0IGluc3RhbGwgLXkgZWMyLWluc3RhbmNlLWNvbm5lY3QgZ2l0IAojIEluc3RhbGwgZG9ja2VyCmFwdC1nZXQgaW5zdGFsbCAteSBjbG91ZC11dGlscyBhcHQtdHJhbnNwb3J0LWh0dHBzIGNhLWNlcnRpZmljYXRlcyBjdXJsIHNvZnR3YXJlLXByb3BlcnRpZXMtY29tbW9uCmN1cmwgLWZzU0wgaHR0cHM6Ly9kb3dubG9hZC5kb2NrZXIuY29tL2xpbnV4L3VidW50dS9ncGcgfCBzdWRvIGFwdC1rZXkgYWRkIC0KYWRkLWFwdC1yZXBvc2l0b3J5IFwKICJkZWIgW2FyY2g9YW1kNjRdIGh0dHBzOi8vZG93bmxvYWQuZG9ja2VyLmNvbS9saW51eC91YnVudHUgXAogJChsc2JfcmVsZWFzZSAtY3MpIFwKIHN0YWJsZSIKYXB0LWdldCB1cGRhdGUKYXB0LWdldCBpbnN0YWxsIC15IGRvY2tlci1jZQp1c2VybW9kIC1hRyBkb2NrZXIgdWJ1bnR1CiMgSW5zdGFsbCBkb2NrZXItY29tcG9zZSBGSVhNRSByZW1vdmUgdGhpcyBhcyBub3QgbmVlZGVkPwpjdXJsIC1MIGh0dHBzOi8vZ2l0aHViLmNvbS9kb2NrZXIvY29tcG9zZS9yZWxlYXNlcy9kb3dubG9hZC8xLjIxLjAvZG9ja2VyLWNvbXBvc2UtJCh1bmFtZSAtcyktJCh1bmFtZSAtbSkgLW8gL3Vzci9sb2NhbC9iaW4vZG9ja2VyLWNvbXBvc2UKY2htb2QgK3ggL3Vzci9sb2NhbC9iaW4vZG9ja2VyLWNvbXBvc2UKc${SSMParameter.Value}hcCBpbnN0YWxsIGFtYXpvbi1zc20tYWdlbnQgLS1jbGFzc2ljIHx8IGVjaG8gb29wczEKc${SSMParameter.Value}hcCBzdGFydCBhbWF6b24tc3NtLWFnZW50IHx8IGVjaG8gb29wczIKYXB0LWdldCBpbnN0YWxsIC15IC0tbm8taW5zdGFsbC1yZWNvbW1lbmRzIGNhLWNlcnRpZmljYXRlcz0yMDIzMDMxMSBjdXJsPTcuODguMS0xMCtkZWIxMnU3IHwgIGVjaG8gb29wcwpjdXJsIC1PICJodHRwczovL3MzLmFtYXpvbmF3cy5jb20vYW1hem9uY2xvdWR3YXRjaC1hZ2VudC91YnVudHUvJChkcGtnIC0tcHJpbnQtYXJjaGl0ZWN0dXJlKS9sYXRlc3QvYW1hem9uLWNsb3Vkd2F0Y2gtYWdlbnQuZGViIgpkcGtnIC1pIC1FIGFtYXpvbi1jbG91ZHdhdGNoLWFnZW50LmRlYgojIEluc3RhbGwgcHJlcmVxdWlzaXRlIHBhY2thZ2VzCmFwdC1nZXQgaW5zdGFsbCAteSB3Z2V0IHVuemlwIHN5c3RlbWQKIyBJbiBjYXNlIG9mIG1pc3NpbmcgZGVwZW5kZW5jaWVzCiMgYXB0LWdldCBpbnN0YWxsIC1mIC15CiMgQ29uZmlndXJlIGFuZCBzdGFydCB0aGUgQ2xvdWRXYXRjaCBhZ2VudAovb3B0L2F3cy9hbWF6b24tY2xvdWR3YXRjaC1hZ2VudC9iaW4vYW1hem9uLWNsb3Vkd2F0Y2gtYWdlbnQtY3RsIC1hIGZldGNoLWNvbmZpZyAtbSBlYzIgLXMgLWMgInNzbTovY2xvdWR3YXRjaC1hZ2VudC9jb${SSMParameter.Value}maWcvZGV0YWlscyIKIyBFbmFibGUgYW5kIHN0YXJ0IHRoZSBzZXJ2aWNlIHVzaW5nIHN5c3RlbWN0bApzeXN0ZW1jdGwgZW5hYmxlIGFtYXpvbi1jbG91ZHdhdGNoLWFnZW50CnN5c3RlbWN0bCBzdGFydCBhbWF6b24tY2xvdWR3YXRjaC1hZ2VudAojIENsZWFuIHVwIGRvd${SSMParameter.Value}sb2FkZWQgZmlsZXMKcm0gLWYgYW1hem9uLWNsb3Vkd2F0Y2gtYWdlbnQuZGViCiMgVmVyaWZ5IGluc3RhbGxhdGlvbgpzeXN0ZW1jdGwgc3RhdHVzIGFtYXpvbi1jbG91ZHdhdGNoLWFnZW50CmlmIFsgISAtZCAiL29wdC9hZ2VudC8iIF07IHRoZW4KICBnaXQgY2xvbmUgaHR0cHM6Ly9naXRodWIuY29tL21ldGEtaW50cm9zcGVjdG9yL2Nsb3VkLWRlcGxveW1lbnQtZWxpemEvICIvb3B0L2FnZW50LyIKZmkKY2QgIi9vcHQvYWdlbnQvIiB8fCBleGl0IDEKZ2l0IHN0YXNoCmdpdCBmZXRjaCAtLWFsbCAjIGdldCB0aGUgbGF0ZXN0IHZlcnNpb24KZ2l0IGNoZWNrb3V0IC0tdHJhY2sgLS1mb3JjZSAib3JpZ2luL2ZlYXR1cmUvc3lzdGVtZC1wYXJhbWV0ZXJzIgpiYXNoIC14IC9vcHQvYWdlbnQvcnVuZG9ja2VyLnNoCg=="
+            IamInstanceProfile: "ssm-eliza_dev-agent-profile"
+            Tags: 
+              - 
+                Key: "Name"
+                Value: "docker-agent-ami-t4g.small"
+            HibernationOptions: 
+                Configured: false
+            CpuOptions: 
+                CoreCount: 2
+                ThreadsPerCore: 1
+            EnclaveOptions: 
+                Enabled: false
+
+    EC2InternetGateway:
+        Type: "AWS::EC2::InternetGateway"
+        Properties:
+            Tags: 
+              - 
+                Key: "project"
+                Value: "${CodeName}-dev"
+              - 
+                Key: "Name"
+                Value: "${CodeName}-dev"
+
+
+
+
+    EC2RouteTable:
+        Type: "AWS::EC2::RouteTable"
+        Properties:
+            VpcId: !GetAtt EC2Subnet.VpcId
+            Tags: 
+              - 
+                Key: "project"
+                Value: "${CodeName}-dev"
+              - 
+                Key: "Name"
+                Value: !Sub "${CodeName}-dev-private-${EC2Subnet.AvailabilityZone}"
+
+    EC2RouteTable2:
+        Type: "AWS::EC2::RouteTable"
+        Properties:
+            VpcId: !GetAtt EC2Subnet.VpcId
+            Tags: 
+              - 
+                Key: "project"
+                Value: "${CodeName}-dev"
+              - 
+                Key: "Name"
+                Value: !Sub "${CodeName}-dev-private-${EC2Subnet4.AvailabilityZone}"
+
+    EC2RouteTable3:
+        Type: "AWS::EC2::RouteTable"
+        Properties:
+            VpcId: !GetAtt EC2Subnet.VpcId
+            Tags: 
+              - 
+                Key: "Name"
+                Value: !Sub "${CodeName}-dev-private-${EC2Instance.AvailabilityZone}"
+              - 
+                Key: "project"
+                Value: "${CodeName}-dev"
+
+    EC2RouteTable4:
+        Type: "AWS::EC2::RouteTable"
+        Properties:
+            VpcId: !GetAtt EC2Subnet.VpcId
+            Tags: 
+              - 
+                Key: "Name"
+                Value: !Sub "${CodeName}-dev-${IAMPolicy}"
+              - 
+                Key: "project"
+                Value: "${CodeName}-dev"
+
+    EC2RouteTable5:
+        Type: "AWS::EC2::RouteTable"
+        Properties:
+            VpcId: !GetAtt EC2Subnet.VpcId
+            Tags: 
+              - 
+                Key: "project"
+                Value: "${CodeName}-dev"
+              - 
+                Key: "Name"
+                Value: "${CodeName}-dev-public"
+
+    EC2SubnetRouteTableAssociation:
+        Type: "AWS::EC2::SubnetRouteTableAssociation"
+        Properties:
+            RouteTableId: !Ref EC2RouteTable2
+            SubnetId: !Ref EC2Subnet4
+
+    EC2SubnetRouteTableAssociation2:
+        Type: "AWS::EC2::SubnetRouteTableAssociation"
+        Properties:
+            RouteTableId: !Ref EC2RouteTable5
+            SubnetId: !Ref EC2Subnet5
+
+    EC2SubnetRouteTableAssociation3:
+        Type: "AWS::EC2::SubnetRouteTableAssociation"
+        Properties:
+            RouteTableId: !Ref EC2RouteTable3
+            SubnetId: !Ref EC2Subnet2
+
+    EC2SubnetRouteTableAssociation4:
+        Type: "AWS::EC2::SubnetRouteTableAssociation"
+        Properties:
+            RouteTableId: !Ref EC2RouteTable
+            SubnetId: !Ref EC2Subnet3
+
+    EC2SubnetRouteTableAssociation5:
+        Type: "AWS::EC2::SubnetRouteTableAssociation"
+        Properties:
+            RouteTableId: !Ref EC2RouteTable5
+            SubnetId: !Ref EC2Subnet6
+
+    EC2SubnetRouteTableAssociation6:
+        Type: "AWS::EC2::SubnetRouteTableAssociation"
+        Properties:
+            RouteTableId: !Ref EC2RouteTable5
+            SubnetId: !Ref EC2Subnet
+
+    EC2SecurityGroup:
+        Type: "AWS::EC2::SecurityGroup"
+        Properties:
+            GroupDescription: "An internal security group"
+            GroupName: !Sub "${CodeName}-dev-internal-20${SSMParameter.Value}0127182648829500000005"
+            Tags: 
+              - 
+                Key: "project"
+                Value: "${CodeName}-dev"
+              - 
+                Key: "Name"
+                Value: "${CodeName}-dev-internal"
+            VpcId: !GetAtt EC2Subnet.VpcId
+            SecurityGroupIngress: 
+              - 
+                SourceSecurityGroupId: !Ref EC2SecurityGroup2
+                SourceSecurityGroupOwnerId: "${AWS::AccountId}"
+                Description: "Ingress Rule"
+                FromPort: 80
+                IpProtocol: "tcp"
+                ToPort: 80
+            SecurityGroupEgress: 
+              - 
+                CidrIp: "0.0.0.0/0"
+                Description: "All protocols"
+                IpProtocol: "-1"
+              - 
+                CidrIpv6: "::/0"
+                Description: "All protocols"
+                IpProtocol: "-1"
+
+    EC2SecurityGroup2:
+        Type: "AWS::EC2::SecurityGroup"
+        Properties:
+            GroupDescription: "external group"
+            GroupName: !Sub "${CodeName}-dev-external-20${SSMParameter.Value}0127182648883300000006"
+            Tags: 
+              - 
+                Key: "project"
+                Value: "${CodeName}-dev"
+              - 
+                Key: "Name"
+                Value: "${CodeName}-dev-external"
+            VpcId: !GetAtt EC2Subnet.VpcId
+            SecurityGroupIngress: 
+              - 
+                CidrIp: "0.0.0.0/0"
+                Description: "HTTP"
+                FromPort: 80
+                IpProtocol: "tcp"
+                ToPort: 80
+              - 
+                CidrIp: "0.0.0.0/0"
+                Description: "HTTPS"
+                FromPort: 443
+                IpProtocol: "tcp"
+                ToPort: 443
+            SecurityGroupEgress: 
+              - 
+                CidrIp: "0.0.0.0/0"
+                Description: "All protocols"
+                IpProtocol: "-1"
+              - 
+                CidrIpv6: "::/0"
+                Description: "All protocols"
+                IpProtocol: "-1"
+
+
+
+    IAMPolicy7:
+        Type: "AWS::IAM::Policy"
+        Properties:
+            PolicyDocument: !Sub "{\"Statement\": [{\"Effect\": \"Allow\", \"Action\": [\"iam:GetRole\", \"iam:PassRole\"], \"Resource\": \"arn:aws:iam::${AWS::AccountId}:role/${IAMRole22}\"}, {\"Effect\": \"Allow\", \"Action\": \"iam:GetInstanceProfile\", \"Resource\": \"arn:aws:iam::${AWS::AccountId}:instance-profile/${IAMRole22}\"}]}"
+            Roles: 
+              - !Ref IAMRole22
+            PolicyName: "SkyPilotPassRolePolicy"
+
+    EC2Subnet:
+        Type: "AWS::EC2::Subnet"
+        Properties:
+            AvailabilityZone: !GetAtt EC2Subnet3.AvailabilityZone
+            CidrBlock: "10.0.6.0/24"
+            VpcId: !GetAtt EC2Subnet2.VpcId
+            MapPublicIpOnLaunch: false
+            Tags: 
+              - 
+                Key: "project"
+                Value: "${CodeName}-dev"
+              - 
+                Key: "Name"
+                Value: !Sub "${CodeName}-dev-public-${EC2Subnet3.AvailabilityZone}"
+
+    EC2Subnet2:
+        Type: "AWS::EC2::Subnet"
+        Properties:
+            AvailabilityZone: !GetAtt EC2Subnet5.AvailabilityZone
+            CidrBlock: "10.0.0.0/24"
+            VpcId: !GetAtt EC2Subnet3.VpcId
+            MapPublicIpOnLaunch: false
+            Tags: 
+              - 
+                Key: "project"
+                Value: "${CodeName}-dev"
+              - 
+                Key: "Name"
+                Value: "Private Subnet One"
+
+    EC2Subnet3:
+        Type: "AWS::EC2::Subnet"
+        Properties:
+            AvailabilityZone: "${AWS::Region}c"
+            CidrBlock: "10.0.2.0/24"
+            VpcId: !GetAtt EC2Subnet4.VpcId
+            MapPublicIpOnLaunch: false
+            Tags: 
+              - 
+                Key: "project"
+                Value: "${CodeName}-dev"
+              - 
+                Key: "Name"
+                Value: "${CodeName}-dev-private-${AWS::Region}c"
+
+    EC2Subnet4:
+        Type: "AWS::EC2::Subnet"
+        Properties:
+            AvailabilityZone: !GetAtt EC2Subnet6.AvailabilityZone
+            CidrBlock: "10.0.1.0/24"
+            VpcId: !GetAtt EC2Subnet5.VpcId
+            MapPublicIpOnLaunch: false
+            Tags: 
+              - 
+                Key: "project"
+                Value: "${CodeName}-dev"
+              - 
+                Key: "Name"
+                Value: "Private Subnet Two"
+
+    EC2Subnet5:
+        Type: "AWS::EC2::Subnet"
+        Properties:
+            AvailabilityZone: "${AWS::Region}a"
+            CidrBlock: "10.0.4.0/24"
+            VpcId: !GetAtt EC2Subnet6.VpcId
+            MapPublicIpOnLaunch: false
+            Tags: 
+              - 
+                Key: "project"
+                Value: "${CodeName}-dev"
+              - 
+                Key: "Name"
+                Value: "${CodeName}-dev-public-${AWS::Region}a"
+
+    EC2Subnet6:
+        Type: "AWS::EC2::Subnet"
+        Properties:
+            AvailabilityZone: "${AWS::Region}b"
+            CidrBlock: "10.0.5.0/24"
+            VpcId: !Ref EC2VPC
+            MapPublicIpOnLaunch: false
+            Tags: 
+              - 
+                Key: "project"
+                Value: "${CodeName}-dev"
+              - 
+                Key: "Name"
+                Value: "${CodeName}-dev-public-${AWS::Region}b"
+
+
+
+    IAMPolicy8:
+        Type: "AWS::IAM::Policy"
+        Properties:
+            PolicyDocument: "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":\"*\",\"Resource\":\"*\",\"Effect\":\"Allow\"}]}"
+            Roles: 
+              - !Ref IAMRole34
+            PolicyName: "AWSActions"
+
+    IAMPolicy9:
+        Type: "AWS::IAM::Policy"
+        Properties:
+            PolicyDocument: !Sub "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"logs:CreateLogGroup\",\"logs:CreateLogStream\",\"logs:PutLogEvents\"],\"Resource\":\"*\",\"Effect\":\"Allow\"},{\"Action\":\"secretsmanager:GetSecretValue\",\"Resource\":\"arn:aws:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:terraform/*\",\"Effect\":\"Allow\"},{\"Action\":[\"s3:GetObject\",\"s3:PutObject\",\"s3:DeleteObject\"],\"Resource\":\"arn:aws:s3:::${S3Bucket2}/*\",\"Effect\":\"Allow\"}]}"
+            Roles: 
+              - !Ref IAMRole34
+            PolicyName: "CoreFunctionality"
+
+    IAMPolicy10:
+        Type: "AWS::IAM::Policy"
+        Properties:
+            PolicyDocument: "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"lambda:InvokeFunction\",\"s3:DeleteObject\",\"s3:GetObject\",\"s3:ListBucket\"],\"Resource\":\"*\",\"Effect\":\"Allow\"}]}"
+            Roles: 
+              - !Ref IAMRole35
+            PolicyName: "ResourceTypePolicy"
+
+    S3Bucket17:
+        Type: "AWS::S3::Bucket"
+        Properties:
+            BucketName: !Sub "${CodeName}-session-access-logs-20${SSMParameter.Value}0109201131637600000002"
+            Tags: 
+              - 
+                Key: "project"
+                Value: "${CodeName}"
+            BucketEncryption: 
+                ServerSideEncryptionConfiguration: 
+                  - 
+                    ServerSideEncryptionByDefault: 
+                        SSEAlgorithm: "aws:kms"
+                        KMSMasterKeyID: !Ref KeyArn2
+                    BucketKeyEnabled: false
+            LifecycleConfiguration: 
+                Rules: 
+                  - 
+                    Id: "delete_after_X_days"
+                    Status: "Enabled"
+                    ExpirationInDays: 30
+            VersioningConfiguration: 
+                Status: "Enabled"
+            OwnershipControls: 
+                Rules: 
+                  - 
+                    ObjectOwnership: "BucketOwnerEnforced"
+            PublicAccessBlockConfiguration: 
+                BlockPublicAcls: true
+                BlockPublicPolicy: true
+                IgnorePublicAcls: true
+                RestrictPublicBuckets: true
+
+    S3Bucket18:
+        Type: "AWS::S3::Bucket"
+        Properties:
+            BucketName: !Sub "${CodeName}-session-logs-20${SSMParameter.Value}0109201131290200000001"
+            Tags: 
+              - 
+                Key: "project"
+                Value: "${CodeName}"
+            BucketEncryption: 
+                ServerSideEncryptionConfiguration: 
+                  - 
+                    ServerSideEncryptionByDefault: 
+                        SSEAlgorithm: "aws:kms"
+                        KMSMasterKeyID: !Ref KeyArn2
+                    BucketKeyEnabled: false
+            LifecycleConfiguration: 
+                Rules: 
+                  - 
+                    Id: "archive_after_X_days"
+                    Status: "Enabled"
+                    ExpirationInDays: 365
+                    Transitions: 
+                      - 
+                        TransitionInDays: 30
+                        StorageClass: "GLACIER"
+            LoggingConfiguration: 
+                DestinationBucketName: !Sub "${CodeName}-session-logs-20${SSMParameter.Value}0109201131290200000001"
+                LogFilePrefix: "log/"
+            VersioningConfiguration: 
+                Status: "Enabled"
+            OwnershipControls: 
+                Rules: 
+                  - 
+                    ObjectOwnership: "BucketOwnerEnforced"
+            PublicAccessBlockConfiguration: 
+                BlockPublicAcls: true
+                BlockPublicPolicy: true
+                IgnorePublicAcls: true
+                RestrictPublicBuckets: true
+
+
+    EC2Volume:
+        Type: "AWS::EC2::Volume"
+        Properties:
+            AvailabilityZone: !GetAtt EC2Instance.AvailabilityZone
+            Encrypted: true
+            Size: 30
+            VolumeType: "gp3"
+            KmsKeyId:  !Ref KeyArn
+            MultiAttachEnabled: false
+
+    EC2VolumeAttachment:
+        Type: "AWS::EC2::VolumeAttachment"
+        Properties:
+            VolumeId: !Ref EC2Volume
+            InstanceId: !Ref EC2Instance
+            Device: "/dev/sda1"
+
+    EC2VPC:
+        Type: "AWS::EC2::VPC"
+        Properties:
+            CidrBlock: "10.0.0.0/16"
+            EnableDnsSupport: true
+            EnableDnsHostnames: true
+            InstanceTenancy: !Ref IAMPolicy
+            Tags: 
+              - 
+                Key: "Name"
+                Value: "${CodeName}-dev"
+              - 
+                Key: "project"
+                Value: "${CodeName}-dev"
+
+
