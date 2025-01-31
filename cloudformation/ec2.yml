@@ -194,7 +194,7 @@ Resources:
                   cd "/opt/agent/" || exit 1
                   git stash
                   git fetch --all
-                  git checkout --track --force "origin/feature/systemd-parameters"
+                  git checkout --track --force "origin/feature/tine-devops"
                   bash -x /opt/agent/rundocker.sh
                 BlockDeviceMappings:
                   -
