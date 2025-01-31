@@ -43,7 +43,7 @@ module "ssm_setup" {
   ssm_region         = var.aws_region
   source         = "../../environments/eliza-agent-api" 
    domain         = var.dns_name
-   branch = "feature/arm64_fastembed"
+   branch = "feature/systemd-parameters"
    project = var.codename
     instance_types = ["t4g.small"] # not big enough for building
 
