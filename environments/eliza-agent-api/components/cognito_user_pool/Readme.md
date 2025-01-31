@@ -9,7 +9,7 @@ export TF_VAR_google_oauth_client_id=DDDDD
 export TF_VAR_google_oauth_client_secret=XXXX
 ```
 
-# This is a complete example
+# This file has caused nothing but trouble.
 
 ```
 module "aws_cognito_user_pool_complete_example" {
