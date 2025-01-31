@@ -1,0 +1,48 @@
+    AutoScalingScalingPolicy:
+        Type: "AWS::AutoScaling::ScalingPolicy"
+        Properties:
+            AutoScalingGroupName: !Sub "docker-agent-ami-t4g.small-20${SSMParameter.Value}0127184935601900000001"
+            PolicyType: "TargetTrackingScaling"
+            EstimatedInstanceWarmup: 1200
+            TargetTrackingConfiguration: 
+                PredefinedMetricSpecification: 
+                    PredefinedMetricType: "ASGAverageCPUUtilization"
+                TargetValue: 50
+                DisableScaleIn: false
+
+    AutoScalingScalingPolicy2:
+        Type: "AWS::AutoScaling::ScalingPolicy"
+        Properties:
+            AutoScalingGroupName: !Sub "docker-agent-ami-t4g.small-20${SSMParameter.Value}0127184935601900000001"
+            PolicyType: "StepScaling"
+            AdjustmentType: "ExactCapacity"
+            StepAdjustments: 
+              - 
+                MetricIntervalLowerBound: 0
+                MetricIntervalUpperBound: 10
+                ScalingAdjustment: 1
+              - 
+                MetricIntervalLowerBound: 10
+                ScalingAdjustment: 2
+            MetricAggregationType: "Average"
+            EstimatedInstanceWarmup: 120
+
+    AutoScalingScalingPolicy3:
+        Type: "AWS::AutoScaling::ScalingPolicy"
+        Properties:
+            AutoScalingGroupName: !Sub "docker-agent-ami-t4g.small-20${SSMParameter.Value}0127184935601900000001"
+            PolicyType: "PredictiveScaling"
+            PredictiveScalingConfiguration: 
+                MetricSpecifications: 
+                  - 
+                    TargetValue: 32
+                    PredefinedScalingMetricSpecification: 
+                        PredefinedMetricType: "ASGAverageCPUUtilization"
+                        ResourceLabel: !Sub "${CURReportDefinition}Label"
+                    PredefinedLoadMetricSpecification: 
+                        PredefinedMetricType: "ASGTotalCPUUtilization"
+                        ResourceLabel: !Sub "${CURReportDefinition}Label"
+                Mode: "ForecastAndScale"
+                SchedulingBufferTime: 10
+                MaxCapacityBreachBehavior: "IncreaseMaxCapacity"
+                MaxCapacityBuffer: 10
