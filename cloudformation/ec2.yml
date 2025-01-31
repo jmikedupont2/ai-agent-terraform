@@ -27,14 +27,14 @@ Parameters:
     Default: "tine_agent_*"
 
 Resources:
-    
+
     IAMManagedPolicy2:
       Type: "AWS::IAM::ManagedPolicy"
       Properties:
         ManagedPolicyName: "tine-dev-ssm"
         Path: "/"
         PolicyDocument: "{\"Statement\":[{\"Action\":\"ssm:DescribeParameters\",\"Effect\":\"Allow\",\"Resource\":\"*\"},{\"Action\":[\"ecr:ListTagsForResource\",\"ecr:ListImages\",\"ecr:GetRepositoryPolicy\",\"ecr:GetLifecyclePolicyPreview\",\"ecr:GetLifecyclePolicy\",\"ecr:GetDownloadUrlForLayer\",\"ecr:GetAuthorizationToken\",\"ecr:DescribeRepositories\",\"ecr:DescribeImages\",\"ecr:DescribeImageScanFindings\",\"ecr:CreateRepository\",\"ecr:BatchGetImage\",\"ecr:BatchCheckLayerAvailability\"],\"Effect\":\"Allow\",\"Resource\":\"*\"},{\"Action\":[\"logs:PutLogEventsBatch\",\"logs:PutLogEvents\",\"logs:DescribeLogStreams\",\"logs:DescribeLogGroups\",\"logs:CreateLogStream\",\"logs:CreateLogGroup\",\"ec2:DescribeTags\",\"cloudwatch:PutMetricData\"],\"Effect\":\"Allow\",\"Resource\":\"*\"},{\"Action\":\"s3:GetEncryptionConfiguration\",\"Effect\":\"Allow\",\"Resource\":\"arn:aws:s3:::*session-logs*\"},{\"Action\":[\"kms:ReEncrypt*\",\"kms:GenerateDataKey*\",\"kms:Encrypt*\",\"kms:Describe*\",\"kms:Decrypt*\"],\"Effect\":\"Allow\",\"Resource\":\"*\"}],\"Version\":\"2012-10-17\"}"
-        
+
     IAMRoleAgent:
       Type: "AWS::IAM::Role"
       Properties:
@@ -91,20 +91,32 @@ Resources:
     ### setup vpc with routes
     RouteTable:
       Type: "AWS::EC2::RouteTable"
+      DependsOn:
+        - InternetGateway
+
       Properties:
-        VpcId: !Ref "EC2VPC"
+        VpcId:
+          Ref: "EC2VPC"
+
 
     InternetGateway:
       Type: "AWS::EC2::InternetGateway"
 
     VPCGatewayAttachment:
+      DependsOn:
+        - InternetGateway
+
       Type: "AWS::EC2::VPCGatewayAttachment"
       Properties:
-        VpcId: !Ref "EC2VPC"
+        VpcId:
+          Ref: "EC2VPC"
         InternetGatewayId: !Ref "InternetGateway"
 
     InternetRoute:
       Type: "AWS::EC2::Route"
+      DependsOn:
+        - InternetGateway
+        - RouteTable
       Properties:
         DestinationCidrBlock: "0.0.0.0/0"
         GatewayId: !Ref InternetGateway
