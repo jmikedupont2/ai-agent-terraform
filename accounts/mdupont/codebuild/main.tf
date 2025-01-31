@@ -11,10 +11,11 @@
 
 module "build" {
   source = "cloudposse/cicd/aws"
+  # 2025/01/14/terraform-aws-cicd
   # Cloud Posse recommends pinning every module to a specific version
   version = "0.20.0"
   namespace   = "main"
-  repo_owner = "meta-introspector"
+  repo_owner  = "meta-introspector"
   stage       = "staging"
   name        = "arm64-tokenizers"
   enabled             = true
