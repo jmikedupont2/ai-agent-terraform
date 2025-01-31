@@ -93,6 +93,7 @@ git checkout feature/aitokenteam
 terraform init
 
 aws ecr create-repository --repository-name agent/eliza
+aws ecr create-repository --repository-name nodemodules/sql-lite-vec
 
 aws ssm put-parameter     --name "agent_openai_key"  --value "${OPENAI_API_KEY}" --type String
 
