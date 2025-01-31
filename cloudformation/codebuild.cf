@@ -1,0 +1,73 @@
+  IAMManagedPolicy00policyserviceroleCodeBuildBasePolicytersuseast200DfQDE:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::IAM::ManagedPolicy"
+    DeletionPolicy: "Retain"
+    Properties:
+      ManagedPolicyName: "CodeBuildBasePolicy-ters-us-east-2"
+      Path: "/service-role/"
+      Description: "Policy used in trust relationship with CodeBuild"
+      Groups: []
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Resource:
+          - "arn:aws:logs:us-east-2:767503528736:log-group:/aws/codebuild/ters"
+          - "arn:aws:logs:us-east-2:767503528736:log-group:/aws/codebuild/ters:*"
+          Action:
+          - "logs:CreateLogGroup"
+          - "logs:CreateLogStream"
+          - "logs:PutLogEvents"
+          Effect: "Allow"
+        - Resource:
+          - "arn:aws:s3:::codepipeline-us-east-2-*"
+          Action:
+          - "s3:PutObject"
+          - "s3:GetObject"
+          - "s3:GetObjectVersion"
+          - "s3:GetBucketAcl"
+          - "s3:GetBucketLocation"
+          Effect: "Allow"
+        - Resource:
+          - "arn:aws:codebuild:us-east-2:767503528736:report-group/ters-*"
+          Action:
+          - "codebuild:CreateReportGroup"
+          - "codebuild:CreateReport"
+          - "codebuild:UpdateReport"
+          - "codebuild:BatchPutTestCases"
+          - "codebuild:BatchPutCodeCoverages"
+          Effect: "Allow"
+        - Resource: "*"
+          Action:
+          - "ssmmessages:CreateControlChannel"
+          - "ssmmessages:CreateDataChannel"
+          - "ssmmessages:OpenControlChannel"
+          - "ssmmessages:OpenDataChannel"
+          Effect: "Allow"
+      Roles:
+      - Ref: "IAMRole00codebuildtersservicerole00tINCM"
+      Users: []
+  IAMManagedPolicy00policyserviceroleCodeBuildCodeConnectionsSourceCredentialsPolicytersuseast200SxoMF:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::IAM::ManagedPolicy"
+    DeletionPolicy: "Retain"
+    Properties:
+      ManagedPolicyName: "CodeBuildCodeConnectionsSourceCredentialsPolicy-ters-us-east-2"
+      Path: "/service-role/"
+      Description: "Policy used in trust relationship with CodeBuild"
+      Groups: []
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Resource:
+          - "arn:aws:codestar-connections:us-east-2:767503528736:connection/3f4c6e77-52d9-4d46-a496-b95d31e2674f"
+          - "arn:aws:codeconnections:us-east-2:767503528736:connection/3f4c6e77-52d9-4d46-a496-b95d31e2674f"
+          Action:
+          - "codestar-connections:GetConnectionToken"
+          - "codestar-connections:GetConnection"
+          - "codeconnections:GetConnectionToken"
+          - "codeconnections:GetConnection"
+          - "codeconnections:UseConnection"
+          Effect: "Allow"
+      Roles:
+      - Ref: "IAMRole00codebuildtersservicerole00tINCM"
+      Users: []

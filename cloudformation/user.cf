@@ -1,0 +1,16 @@
+  IAMUser00mdupont00S2d38:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::IAM::User"
+    DeletionPolicy: "Retain"
+    Properties:
+      Path: "/"
+      ManagedPolicyArns:
+      - "arn:aws:iam::aws:policy/job-function/Billing"
+      - "arn:aws:iam::aws:policy/AWSBillingConductorReadOnlyAccess"
+      - "arn:aws:iam::aws:policy/AWSBillingReadOnlyAccess"
+      - "arn:aws:iam::aws:policy/AWSCertificateManagerFullAccess"
+      - "arn:aws:iam::aws:policy/AdministratorAccess"
+      - "arn:aws:iam::aws:policy/AWSBillingConductorFullAccess"
+      UserName: "mdupont"
+      LoginProfile:
+        PasswordResetRequired: false

@@ -1,0 +1,13 @@
+  IAMOIDCProvider00oidcprovidertokenactionsgithubusercontentcom00YFaoO:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::IAM::OIDCProvider"
+    DeletionPolicy: "Retain"
+    Properties:
+      ClientIdList:
+      - "sts.amazonaws.com"
+      - "https://github.com/meta-introspector"
+      - "https://github.com/jmikedupont2"
+      ThumbprintList:
+      - "d89e3bd43d5d909b47a18977aa9d5ce36cee184c"
+      Url: "https://token.actions.githubusercontent.com"
+      Tags: []

@@ -1,0 +1,72 @@
+  EC2Instance00i00c0c1b8d54eeb80b00C4SuW:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::Instance"
+    DeletionPolicy: "Retain"
+    Properties:
+      Tenancy: "default"
+      SecurityGroups:
+      - "tine-internal-20250112144600184400000003"
+      PrivateIpAddress: "10.0.4.156"
+      BlockDeviceMappings:
+      - Ebs:
+          SnapshotId: "snap-0e559681afbed732d"
+          VolumeType: "gp3"
+          KmsKeyId:
+            Fn::GetAtt:
+            - "KMSKey007d87df3982264141b1f21479f0e6687200GxWsH"
+            - "Arn"
+          Encrypted: true
+          Iops: 3000
+          VolumeSize: 30
+          DeleteOnTermination: true
+        DeviceName: "/dev/sda1"
+      IamInstanceProfile:
+        Ref: "IAMInstanceProfile00ssmagentprofile00veSz9"
+      SubnetId:
+        Ref: "EC2Subnet00subnet0819e6b6f7ea0e72c00Q1DJl"
+      EbsOptimized: false
+      Volumes:
+      - VolumeId: "vol-0b34bd73171cab6b6"
+        Device: "/dev/sda1"
+      NetworkInterfaces:
+      - PrivateIpAddresses:
+        - PrivateIpAddress: "10.0.4.156"
+          Primary: true
+        SecondaryPrivateIpAddressCount: 0
+        DeviceIndex: "0"
+        GroupSet:
+        - Ref: "EC2SecurityGroup00sg0044cf7473740011f001O9Yb"
+        Ipv6Addresses: []
+        SubnetId:
+          Ref: "EC2Subnet00subnet0819e6b6f7ea0e72c00Q1DJl"
+        AssociatePublicIpAddress: true
+        NetworkInterfaceId:
+          Ref: "EC2NetworkInterface00eni0e6080d324bda3d0200BFGN7"
+        DeleteOnTermination: true
+      ImageId: "ami-0e44962f5c9a2baab"
+      InstanceType: "t4g.small"
+      Monitoring: false
+      Tags:
+      - Value: "docker-agent-ami-t4g.small"
+        Key: "Name"
+      InstanceInitiatedShutdownBehavior: "stop"
+      CpuOptions:
+        ThreadsPerCore: 1
+        CoreCount: 2
+      AvailabilityZone: "us-east-2a"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsARecord: false
+        HostnameType: "ip-name"
+        EnableResourceNameDnsAAAARecord: false
+      SecurityGroupIds:
+      - "sg-0044cf7473740011f"
+      DisableApiTermination: false
+      KeyName: "mdupont-deployer-key"
+      SourceDestCheck: true
+      PlacementGroupName: ""
+      VpcId: "vpc-0598df0b71c53d431"
+      State:
+        Code: "16"
+        Name: "running"
+      CreditSpecification:
+        CPUCredits: "unlimited"

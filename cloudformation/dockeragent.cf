@@ -1,0 +1,191 @@
+  IAMInstanceProfile00skypilotv100pJoBm:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::IAM::InstanceProfile"
+    DeletionPolicy: "Retain"
+    Properties:
+      Path: "/"
+      Roles:
+      - Ref: "IAMRole00skypilotv100TobK7"
+      InstanceProfileName:
+        Ref: "IAMRole00skypilotv100TobK7"
+
+IAMInstanceProfile00ssmdockeragentamit4gsmall2025011401483484860000000200GnVEh:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::IAM::InstanceProfile"
+    DeletionPolicy: "Retain"
+    Properties:
+      Path: "/ec2/"
+      Roles:
+      - Ref: "IAMRole00ssmdockeragentamit4gsmall2025011401483463230000000100s15F6"
+      InstanceProfileName: "ssm-docker-agent-ami-t4g.small-20250114014834848600000002"
+  IAMRole00skypilotv100TobK7:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::IAM::Role"
+    DeletionPolicy: "Retain"
+    Properties:
+      Path: "/"
+      ManagedPolicyArns:
+      - "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+      - "arn:aws:iam::aws:policy/AmazonEC2FullAccess"
+      MaxSessionDuration: 3600
+      RoleName: "skypilot-v1"
+      Policies:
+      - PolicyDocument:
+          Statement:
+          - Resource: "arn:aws:iam::767503528736:role/skypilot-v1"
+            Action:
+            - "iam:GetRole"
+            - "iam:PassRole"
+            Effect: "Allow"
+          - Resource: "arn:aws:iam::767503528736:instance-profile/skypilot-v1"
+            Action: "iam:GetInstanceProfile"
+            Effect: "Allow"
+        PolicyName: "SkyPilotPassRolePolicy"
+      AssumeRolePolicyDocument:
+        Version: "2008-10-17"
+        Statement:
+        - Action: "sts:AssumeRole"
+          Effect: "Allow"
+          Principal:
+            Service: "ec2.amazonaws.com"
+  AutoScalingScalingPolicy00scalingPolicy626cfdd66c1e42f7b1a5cffeb545e531autoScalingGroupNamedockeragentamit4gsmall20250114014840605000000006policyNamepredictivescaling00Nvtvk:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::AutoScaling::ScalingPolicy"
+    DeletionPolicy: "Retain"
+    Properties:
+      PolicyType: "PredictiveScaling"
+      PredictiveScalingConfiguration:
+        MetricSpecifications:
+        - PredefinedScalingMetricSpecification:
+            ResourceLabel: "testLabel"
+            PredefinedMetricType: "ASGAverageCPUUtilization"
+          PredefinedLoadMetricSpecification:
+            ResourceLabel: "testLabel"
+            PredefinedMetricType: "ASGTotalCPUUtilization"
+          TargetValue: 32
+        MaxCapacityBreachBehavior: "IncreaseMaxCapacity"
+        MaxCapacityBuffer: 10
+        SchedulingBufferTime: 10
+        Mode: "ForecastAndScale"
+      AutoScalingGroupName: "docker-agent-ami-t4g.small-20250114014840605000000006"
+  AutoScalingScalingPolicy00scalingPolicy031c85d71ba4485abeb7bd3bff55f508autoScalingGroupNamedockeragentamit4gsmall20250114014840605000000006policyNamescaleout00R7f35:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::AutoScaling::ScalingPolicy"
+    DeletionPolicy: "Retain"
+    Properties:
+      MetricAggregationType: "Average"
+      PolicyType: "StepScaling"
+      StepAdjustments:
+      - ScalingAdjustment: 1
+        MetricIntervalUpperBound: 10
+        MetricIntervalLowerBound: 0
+      - ScalingAdjustment: 2
+        MetricIntervalLowerBound: 10
+      EstimatedInstanceWarmup: 120
+      AutoScalingGroupName: "docker-agent-ami-t4g.small-20250114014840605000000006"
+      AdjustmentType: "ExactCapacity"
+  AutoScalingAutoScalingGroup00dockeragentamit4gsmall2025011401484060500000000600lh4P8:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::AutoScaling::AutoScalingGroup"
+    DeletionPolicy: "Retain"
+    Properties:
+      LoadBalancerNames: []
+      ServiceLinkedRoleARN: "arn:aws:iam::767503528736:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling"
+      TargetGroupARNs: []
+      Cooldown: "300"
+      AvailabilityZones:
+      - "us-east-2a"
+      AvailabilityZoneDistribution:
+        CapacityDistributionStrategy: "balanced-best-effort"
+      DesiredCapacity: "1"
+      HealthCheckGracePeriod: 300
+      MetricsCollection: []
+      MaxSize: "2"
+      NewInstancesProtectedFromScaleIn: false
+      MinSize: "1"
+      TerminationPolicies:
+      - "Default"
+      AutoScalingGroupName: "docker-agent-ami-t4g.small-20250114014840605000000006"
+      MixedInstancesPolicy:
+        LaunchTemplate:
+          LaunchTemplateSpecification:
+            Version: "$Latest"
+            LaunchTemplateName: "agent-docker-t4g.small-launch-template-20250114014834971300000004"
+            LaunchTemplateId: "lt-0093426f750e96e9b"
+          Overrides: []
+        InstancesDistribution:
+          OnDemandAllocationStrategy: "prioritized"
+          SpotInstancePools: 2
+          OnDemandBaseCapacity: 0
+          SpotAllocationStrategy: "lowest-price"
+          OnDemandPercentageAboveBaseCapacity: 100
+      VPCZoneIdentifier:
+      - Ref: "EC2Subnet00subnet0819e6b6f7ea0e72c00Q1DJl"
+      DesiredCapacityType: "units"
+      CapacityReservationSpecification:
+        CapacityReservationPreference: "default"
+      Tags:
+      - Value: "docker-agent-ami-t4g.small"
+        Key: "Name"
+        PropagateAtLaunch: true
+      HealthCheckType: "EC2"
+  CloudWatchAlarm00TargetTrackingdockeragentamit4gsmall20250114014840605000000006AlarmHigh5cefb202ed5f46dab86b5e780eebe57700JdEpg:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::CloudWatch::Alarm"
+    DeletionPolicy: "Retain"
+    Properties:
+      ComparisonOperator: "GreaterThanThreshold"
+      Dimensions:
+      - Value: "docker-agent-ami-t4g.small-20250114014840605000000006"
+        Name: "AutoScalingGroupName"
+      Period: 60
+      EvaluationPeriods: 3
+      Namespace: "AWS/EC2"
+      OKActions: []
+      AlarmActions:
+      - Ref: "AutoScalingScalingPolicy00scalingPolicy3958ff026144447b808f1e5357217402autoScalingGroupNamedockeragentamit4gsmall20250114014840605000000006policyNameavgcpupolicygreaterthan5000CIQgi"
+      MetricName: "CPUUtilization"
+      ActionsEnabled: true
+      AlarmDescription: "DO NOT EDIT OR DELETE. For TargetTrackingScaling policy arn:aws:autoscaling:us-east-2:767503528736:scalingPolicy:3958ff02-6144-447b-808f-1e5357217402:autoScalingGroupName/docker-agent-ami-t4g.small-20250114014840605000000006:policyName/avg-cpu-policy-gre"
+      AlarmName: "TargetTracking-docker-agent-ami-t4g.small-20250114014840605000000006-AlarmHigh-5cefb202-ed5f-46da-b86b-5e780eebe577"
+      Statistic: "Average"
+      InsufficientDataActions: []
+      Tags: []
+      Threshold: 50
+  AutoScalingScalingPolicy00scalingPolicy3958ff026144447b808f1e5357217402autoScalingGroupNamedockeragentamit4gsmall20250114014840605000000006policyNameavgcpupolicygreaterthan5000CIQgi:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::AutoScaling::ScalingPolicy"
+    DeletionPolicy: "Retain"
+    Properties:
+      PolicyType: "TargetTrackingScaling"
+      TargetTrackingConfiguration:
+        PredefinedMetricSpecification:
+          PredefinedMetricType: "ASGAverageCPUUtilization"
+        TargetValue: 50
+        DisableScaleIn: false
+      EstimatedInstanceWarmup: 1200
+      AutoScalingGroupName: "docker-agent-ami-t4g.small-20250114014840605000000006"
+  CloudWatchAlarm00TargetTrackingdockeragentamit4gsmall20250114014840605000000006AlarmLowc453ec376939417aba8274f0b6bc882d00qsl58:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::CloudWatch::Alarm"
+    DeletionPolicy: "Retain"
+    Properties:
+      ComparisonOperator: "LessThanThreshold"
+      Dimensions:
+      - Value: "docker-agent-ami-t4g.small-20250114014840605000000006"
+        Name: "AutoScalingGroupName"
+      Period: 60
+      EvaluationPeriods: 15
+      Namespace: "AWS/EC2"
+      OKActions: []
+      AlarmActions:
+      - Ref: "AutoScalingScalingPolicy00scalingPolicy3958ff026144447b808f1e5357217402autoScalingGroupNamedockeragentamit4gsmall20250114014840605000000006policyNameavgcpupolicygreaterthan5000CIQgi"
+      MetricName: "CPUUtilization"
+      ActionsEnabled: true
+      AlarmDescription: "DO NOT EDIT OR DELETE. For TargetTrackingScaling policy arn:aws:autoscaling:us-east-2:767503528736:scalingPolicy:3958ff02-6144-447b-808f-1e5357217402:autoScalingGroupName/docker-agent-ami-t4g.small-20250114014840605000000006:policyName/avg-cpu-policy-gre"
+      AlarmName: "TargetTracking-docker-agent-ami-t4g.small-20250114014840605000000006-AlarmLow-c453ec37-6939-417a-ba82-74f0b6bc882d"
+      Statistic: "Average"
+      InsufficientDataActions: []
+      Tags: []
+      Threshold: 35
+      
