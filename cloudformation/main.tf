@@ -30,6 +30,6 @@ resource "aws_cloudformation_stack" "eliza_stack" {
     TwitterPassword= var.twitter_password
     TwitterUserName = var.twitter_user_name 
     TwitterEmail = var.twitter_mail
-    LtVersion = var.lt_version 
+    LaunchTemplateVersion = var.lt_version
    }  
 }
