@@ -5,7 +5,8 @@ Description: "minimal ec2 asg and lt"
 Parameters:
   LaunchTemplateVersion:
     Type: "String"
-
+    Default: "1"
+    
   NameTag:
     Type: "String"
     Default: "tine-dev"
@@ -13,6 +14,8 @@ Parameters:
 #    Type: "String"
   AmiId:
     Type: "String"
+    Default: "ami-050f68a6fa8be1b27"
+    
   SSMParameterPattern:
     Type: 'String'
     Description: 'pattern for ssm parameter'
@@ -24,10 +27,15 @@ Parameters:
   GroqKey:
     Type: 'String'
     Description: 'secret groq key'
+  AgentImage:
+    Type: 'String'
+    Description: 'agent image id'
+    Default: 'h4ckermike/elizaos-eliza:feature-arm64_fastembed'
+
   TokenizerImage:
     Type: 'String'
-    Description: 'public tokenzir key'
-    Default: 'h4ckermike/elizaos-eliza:feature-arm64_fastembed'
+    Description: 'public tokenizer image name'
+    Default: 'h4ckermike/arm64-tokenizers:feature-arm64'
   TwitterEmail:
     Type: 'String'
     Description: 'twitter email'
@@ -39,10 +47,6 @@ Parameters:
   TwitterUserName:
     Type: 'String'
     Description: 'twitter username'
-  AgentImage:
-    Type: 'String'
-    Description: 'pattern for ssm parameter'
-    Default: 'h4ckermike/elizaos-eliza:feature-arm64_fastembed'
 
 Resources:
   MyDHCPOptions:
