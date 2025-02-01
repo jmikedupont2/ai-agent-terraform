@@ -16,7 +16,7 @@ Parameters:
   LtVersion:
     Type: 'String'
     Description: 'launch template version'
-    Default: "1"
+#    Default: "1"
   SSMParameterPattern:
     Type: 'String'
     Description: 'pattern for ssm parameter'
@@ -59,7 +59,7 @@ Resources:
   TineAgentAgentImageParameter:
     Type: 'AWS::SSM::Parameter'
     Properties:
-      Name: 'tine_agent_agent_image'
+      Name: 'tine_agent_2_agent_image'
       Type: 'String'
       Value: !Ref AgentImage
       Tier: 'Standard'
@@ -67,7 +67,7 @@ Resources:
   TineAgentGroqKey:
     Type: 'AWS::SSM::Parameter'
     Properties:
-      Name: 'tine_agent_groq_key'
+      Name: 'tine_agent_2_groq_key'
       Type: 'String'
       Value: !Ref GroqKey
       Tier: 'Standard'
@@ -75,7 +75,7 @@ Resources:
   TineAgentTokenizerImage:
     Type: 'AWS::SSM::Parameter'
     Properties:
-      Name: 'tine_agent_tokenizer_image'
+      Name: 'tine_agent_2_tokenizer_image'
       Type: 'String'
       Value: !Ref TokenizerImage
       Tier: 'Standard'
@@ -83,7 +83,7 @@ Resources:
   TineAgentTwitterEmail:
     Type: 'AWS::SSM::Parameter'
     Properties:
-      Name: 'tine_agent_twitter_email'
+      Name: 'tine_agent_2_twitter_email'
       Type: 'String'
       Value: !Ref TwitterEmail
       Tier: 'Standard'
@@ -91,7 +91,7 @@ Resources:
   TineAgentTwitterPassword:
     Type: 'AWS::SSM::Parameter'
     Properties:
-      Name: 'tine_agent_twitter_password'
+      Name: 'tine_agent_2_twitter_password'
       Type: 'String'
       Value: !Ref TwitterPassword
       Tier: 'Standard'
@@ -100,7 +100,7 @@ Resources:
   TineAgentTwitterUserName:
     Type: 'AWS::SSM::Parameter'
     Properties:
-      Name: 'tine_agent_twitter_username'
+      Name: 'tine_agent_2_twitter_username'
       Type: 'String'
       Value: !Ref TwitterUserName
       Tier: 'Standard'
@@ -122,8 +122,13 @@ Resources:
   #       PasswordResetRequired: false
 
   KMSKey:
+    UpdateReplacePolicy: Retain
     Type: AWS::KMS::Key
+    DeletionPolicy: Retain
     Properties:
+      Origin: AWS_KMS
+      MultiRegion: false
+      Description: Default key that protects my EBS volumes when no other key is defined
       KeyPolicy:
         Version: '2012-10-17'
         Id: key-default-1
@@ -388,19 +393,19 @@ Resources:
       LaunchTemplate:
         LaunchTemplateName:  "agent-docker-t4g.small-launch-template"
         Version: !Ref LaunchTemplateVersion
-        MinSize: 1
-        MaxSize: 2
-        DesiredCapacity: 1
-        Cooldown: 300
-        AvailabilityZones:
-          - "us-west-1a"
-          #              - "us-west-1b"
-        HealthCheckType: "EC2"
-        HealthCheckGracePeriod: 300
-        VPCZoneIdentifier:
-          - !Ref EC2SubnetPublicA
-        TerminationPolicies:
-          - "Default"
-        ServiceLinkedRoleARN: !Sub "arn:aws:iam::${AWS::AccountId}:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling"
-        PropagateAtLaunch: true
-        NewInstancesProtectedFromScaleIn: false
+      MinSize: 1
+      MaxSize: 2
+      DesiredCapacity: 1
+      Cooldown: 300
+      AvailabilityZones:
+        - "us-west-1a"
+        #              - "us-west-1b"
+      HealthCheckType: "EC2"
+      HealthCheckGracePeriod: 300
+      VPCZoneIdentifier:
+        - !Ref EC2SubnetPublicA
+      TerminationPolicies:
+        - "Default"
+      ServiceLinkedRoleARN: !Sub "arn:aws:iam::${AWS::AccountId}:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling"
+      #PropagateAtLaunch: true
+      NewInstancesProtectedFromScaleIn: false

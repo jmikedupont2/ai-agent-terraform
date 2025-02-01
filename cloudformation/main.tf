@@ -8,6 +8,9 @@ variable groq_key {}
 variable twitter_password {}
 variable twitter_user_name {}
 variable twitter_mail {}
+variable lt_version {
+  default = "1"
+}
 locals {   ami_name = "ubuntu-minimal/images/hvm-ssd-gp3/ubuntu-noble-24.04-arm64-minimal-*" }
 data "aws_ami" "ami" { # slow
     most_recent      = true
@@ -27,6 +30,6 @@ resource "aws_cloudformation_stack" "eliza_stack" {
     TwitterPassword= var.twitter_password
     TwitterUserName = var.twitter_user_name 
     TwitterEmail = var.twitter_mail
- 
+    LtVersion = var.lt_version 
    }  
 }
