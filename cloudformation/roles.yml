@@ -1,0 +1,63 @@
+
+    #IAMManagedPolicy2:
+    #  Type: AWS::IAM::ManagedPolicy
+    #  Properties:
+    #    ManagedPolicyName: tine-dev-ssm2
+
+    # IAMManagedPolicy3:
+    #   Type: AWS::IAM::ManagedPolicy
+    #   Properties:
+    #     ManagedPolicyName: tine-dev-ssm
+    #     Path: /
+    #     PolicyDocument:
+    #       Version: '2012-10-17'
+    #       Statement:
+    #         - Effect: Allow
+    #           Action: ssm:DescribeParameters
+    #           Resource: '*'              
+    #         - Effect: Allow
+    #           Action:
+    #           - ecr:ListTagsForResource
+    #           - ecr:ListImages
+    #           - ecr:GetRepositoryPolicy
+    #           - ecr:GetLifecyclePolicyPreview
+    #           - ecr:GetLifecyclePolicy
+    #           - ecr:GetDownloadUrlForLayer
+    #           - ecr:GetAuthorizationToken
+    #           - ecr:DescribeRepositories
+    #           - ecr:DescribeImages
+    #           - ecr:DescribeImageScanFindings
+    #           - ecr:CreateRepository
+    #           - ecr:BatchGetImage
+    #           - ecr:BatchCheckLayerAvailability
+    #           Resource: '*'
+        
+    #         - Effect: Allow
+    #           Action:
+    #           - logs:PutLogEventsBatch
+    #           - logs:PutLogEvents
+    #           - logs:DescribeLogStreams
+    #           - logs:DescribeLogGroups
+    #           - logs:CreateLogStream
+    #           - logs:CreateLogGroup
+    #           - ec2:DescribeTags
+    #           - cloudwatch:PutMetricData
+    #           Resource: '*'        
+    #         - Effect: Allow
+    #           Action: s3:GetEncryptionConfiguration
+    #           Resource: 'arn:aws:s3:::*session-logs*'
+    #         - Effect: Allow
+    #           Action:
+    #           - kms:ReEncrypt*
+    #           - kms:GenerateDataKey*
+    #           - kms:Encrypt*
+    #           - kms:Describe*
+    #           - kms:Decrypt*
+    #           Resource: '*'
+  
+    # IAMManagedPolicy2:
+    #   Type: "AWS::IAM::ManagedPolicy"
+    #   Properties:
+    #     ManagedPolicyName: "tine-dev-ssm"
+    #     Path: "/"
+    #     PolicyDocument: "{\"Statement\":[{\"Action\":\"ssm:DescribeParameters\",\"Effect\":\"Allow\",\"Resource\":\"*\"},{\"Action\":[\"ecr:ListTagsForResource\",\"ecr:ListImages\",\"ecr:GetRepositoryPolicy\",\"ecr:GetLifecyclePolicyPreview\",\"ecr:GetLifecyclePolicy\",\"ecr:GetDownloadUrlForLayer\",\"ecr:GetAuthorizationToken\",\"ecr:DescribeRepositories\",\"ecr:DescribeImages\",\"ecr:DescribeImageScanFindings\",\"ecr:CreateRepository\",\"ecr:BatchGetImage\",\"ecr:BatchCheckLayerAvailability\"],\"Effect\":\"Allow\",\"Resource\":\"*\"},{\"Action\":[\"logs:PutLogEventsBatch\",\"logs:PutLogEvents\",\"logs:DescribeLogStreams\",\"logs:DescribeLogGroups\",\"logs:CreateLogStream\",\"logs:CreateLogGroup\",\"ec2:DescribeTags\",\"cloudwatch:PutMetricData\"],\"Effect\":\"Allow\",\"Resource\":\"*\"},{\"Action\":\"s3:GetEncryptionConfiguration\",\"Effect\":\"Allow\",\"Resource\":\"arn:aws:s3:::*session-logs*\"},{\"Action\":[\"kms:ReEncrypt*\",\"kms:GenerateDataKey*\",\"kms:Encrypt*\",\"kms:Describe*\",\"kms:Decrypt*\"],\"Effect\":\"Allow\",\"Resource\":\"*\"}],\"Version\":\"2012-10-17\"}"
