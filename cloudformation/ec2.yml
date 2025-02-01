@@ -35,11 +35,11 @@ Parameters:
   TwitterEmail:
     Type: 'String'
     Description: 'twitter email'
-    
+
   TwitterPassword:
     Type: 'String'
     Description: 'twitter password'
-    
+
   TwitterUserName:
     Type: 'String'
     Description: 'twitter username'
@@ -53,7 +53,7 @@ Resources:
     Type: AWS::EC2::DHCPOptions
     DeletionPolicy: Delete
     Properties:
-      DomainNameServers: 
+      DomainNameServers:
         - AmazonProvidedDNS
 
   TineAgentAgentImageParameter:
@@ -106,61 +106,138 @@ Resources:
       Tier: 'Standard'
       Description: 'Parameter for TwitterUserName'
 
-  IAMUserAdmin:
-    UpdateReplacePolicy: Retain
-    Type: AWS::IAM::User
-    DeletionPolicy: Retain
-    Properties:
-      Path: /
-      ManagedPolicyArns:
-        - arn:aws:iam::aws:policy/AdministratorAccess
-      UserName: admin_user
-      LoginProfile:
-        PasswordResetRequired: false
+  # this creates an admin user but let us not get involved in that part, too dangerous.
+  # users need to create own admin users or privledged users with perms to deploy this
+  # we will work on fined tuned policies as we go
+  # IAMUserAdmin:
+  #   UpdateReplacePolicy: Retain
+  #   Type: AWS::IAM::User
+  #   DeletionPolicy: Retain
+  #   Properties:
+  #     Path: /
+  #     ManagedPolicyArns:
+  #       - arn:aws:iam::aws:policy/AdministratorAccess
+  #     UserName: admin_user
+  #     LoginProfile:
+  #       PasswordResetRequired: false
 
   KMSKey:
-    UpdateReplacePolicy: Retain
     Type: AWS::KMS::Key
-    DeletionPolicy: Retain
     Properties:
-      Origin: AWS_KMS
-      MultiRegion: false
-      Description: Default key that protects my EBS volumes when no other key is defined
       KeyPolicy:
         Version: '2012-10-17'
+        Id: key-default-1
         Statement:
-          - Condition:
-              StringEquals:
-                kms:ViaService: 
-                  - !Sub sqs.${AWS::Region}.amazonaws.com      
-                kms:CallerAccount: !Ref 'AWS::AccountId'
+          - Sid: REMOVE and enter principle in below section - Added for demo to prevent key lock out
+            Effect: Allow
+            Principal:
+              AWS: !Sub "arn:aws:iam::${AWS::AccountId}:root"
+            Action:
+              - kms:*
             Resource: '*'
-            Action:
-              - kms:Encrypt
-              - kms:Decrypt
-              - kms:ReEncrypt*
-              - kms:GenerateDataKey*
-              - kms:CreateGrant
-              - kms:DescribeKey
-            Effect: Allow
-            Principal:
-              AWS: '*'
-              Sid: Allow access through EBS for all principals in the account that are authorized to use EBS
-          - Resource: '*'
-            Action:
-            - kms:Describe*
-            - kms:Get*
-            - kms:List*
-            - kms:RevokeGrant
-            Effect: Allow
-            Principal:
-              AWS: arn:aws:iam::767503528736:root
-              Sid: Allow direct access to key metadata to the account
-              Id: auto-ebs-2
-            KeySpec: SYMMETRIC_DEFAULT
-            Enabled: true
-            EnableKeyRotation: true
-            KeyUsage: ENCRYPT_DECRYPT
+
+          # - Effect: Allow
+          #   Action:
+          #     - kms:Decrypt
+          #     - kms:DescribeKey
+          #     - "kms:GenerateDataKey*"
+          #     - kms:Encrypt
+          #   NotResource: !Sub "arn:aws:kms:*:${AWS::AccountId}:key/*"
+          #   Condition:
+          #     StringLike:
+          #       "kms:ViaService":
+          #         - !Sub "sqs.${AWS::Region}.amazonaws.com"
+
+
+  # KMSKey:
+  #   UpdateReplacePolicy: Retain
+  #   Type: AWS::KMS::Key
+  #   DeletionPolicy: Retain
+  #   Properties:
+  #     Origin: AWS_KMS
+  #     MultiRegion: false
+  #     Description: Default key that protects my EBS volumes when no other key is defined
+  #     KeyPolicy:
+  #       Version: '2012-10-17'
+  #       Statement:
+  #         - Condition:
+  #             StringEquals:
+  #               kms:ViaService:
+  #                 - !Sub sqs.${AWS::Region}.amazonaws.com
+  #               kms:CallerAccount: !Ref 'AWS::AccountId'
+  #           Resource: '*'
+  #           Action:
+  #             - kms:Encrypt
+  #             - kms:Decrypt
+  #             - kms:ReEncrypt*
+  #             - kms:GenerateDataKey*
+  #             - kms:CreateGrant
+  #             - kms:DescribeKey
+  #           Effect: Allow
+  #           Principal:
+  #             AWS: '*'
+  #             Sid: Allow access through EBS for all principals in the account that are authorized to use EBS
+
+
+  #           KeySpec: SYMMETRIC_DEFAULT
+  #           Enabled: true
+  #           EnableKeyRotation: true
+  #           KeyUsage: ENCRYPT_DECRYPT
+ # KeyPolicy:
+ #    Id: key-consolepolicy-3
+ #    Version: "2012-10-17"
+ #    Statement:
+ #      - Sid: Enable IAM User Permissions
+ #        Effect: Allow
+ #        Principal:
+ #          AWS: !Sub "arn:aws:iam::${AWS::AccountId}:root"
+ #        Action: kms:*
+ #        Resource: '*'
+ #      - Sid: Allow access for Key Administrators
+ #        Effect: Allow
+ #        Principal:
+ #          AWS:
+ #            - !Sub "arn:aws:iam::${AWS::AccountId}:role/admin"
+ #            - !Sub "arn:aws:iam::${AWS::AccountId}:user/cloud_user"
+ #        Action:
+ #          - kms:Create*
+ #          - kms:Describe*
+ #          - kms:Enable*
+ #          - kms:List*
+ #          - kms:Put*
+ #          - kms:Update*
+ #          - kms:Revoke*
+ #          - kms:Disable*
+ #          - kms:Get*
+ #          - kms:Delete*
+ #          - kms:TagResource
+ #          - kms:UntagResource
+ #          - kms:ScheduleKeyDeletion
+ #          - kms:CancelKeyDeletion
+ #        Resource: '*'
+ #      - Sid: Allow use of the key
+ #        Effect: Allow
+ #        Principal:
+ #          AWS: !Sub "arn:aws:iam::${AWS::AccountId}:role/aws-service-role/rds.amazonaws.com/AWSServiceRoleForRDS"
+ #        Action:
+ #          - kms:Encrypt
+ #          - kms:Decrypt
+ #          - kms:ReEncrypt*
+ #          - kms:GenerateDataKey*
+ #          - kms:DescribeKey
+ #        Resource: '*'
+ #      - Sid: Allow attachment of persistent resources
+ #        Effect: Allow
+ #        Principal:
+ #          AWS: !Sub "arn:aws:iam::${AWS::AccountId}:role/aws-service-role/rds.amazonaws.com/AWSServiceRoleForRDS"
+ #        Action:
+ #          - kms:CreateGrant
+ #          - kms:ListGrants
+ #          - kms:RevokeGrant
+ #        Resource: '*'
+ #        Condition:
+ #          Bool:
+ #            kms:GrantIsForAWSResource: "true"
 
   IAMRoleAgent:
     Type: "AWS::IAM::Role"
