@@ -5,9 +5,9 @@ variable "dns_name" {
 
 variable "codename" {
   type    = string
-  default  = "hanuman"
+  default = "hanuman"
 }
-   
+
 variable "project_name" {
   type    = string
   default = "np-introspector"

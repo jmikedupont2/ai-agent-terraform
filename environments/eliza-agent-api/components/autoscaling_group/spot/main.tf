@@ -32,12 +32,12 @@ module "autoscaling" {
   version = "8.0.0"
   name    = var.name
 
-#  traffic_source_attachments = {
-#    ex-alb = {
-#      traffic_source_identifier = var.target_group_arn
-#      traffic_source_type       = "elbv2" # default
-#    }
-#  }
+  #  traffic_source_attachments = {
+  #    ex-alb = {
+  #      traffic_source_identifier = var.target_group_arn
+  #      traffic_source_type       = "elbv2" # default
+  #    }
+  #  }
 
   health_check_type     = "EC2"
   desired_capacity      = 1

@@ -17,3 +17,16 @@ terraform apply -auto-approve -var-file .tfvars
 * eu central 1 [![Launch EU central Stack](https://cdn.rawgit.com/buildkite/cloudformation-launch-stack-button-svg/master/launch-stack.svg)](https://eu-central-1.console.aws.amazon.com/cloudformation/home?region=eu-central-1#/stacks/quickcreate?templateURL=https%3A%2F%2Fs3.amazonaws.com%2Fzos-solfunmeme-tine-cf-template%2Fzos-solfunmeme-tine-the-introspector-is-not-eliza-stack-template-one-click-installer.yaml&stackName=zos-solfunmeme-tine-the-introspector-is-not-eliza-stack-template-one-click-installer&param_S3BucketPattern=tine_agent_*&param_GroqKey=&param_TokenizerImage=h4ckermike%2Felizaos-eliza%3Afeature-arm64_fastembed&param_TwitterPassword=&param_NameTag=tine-dev&param_SSMParameterPattern=tine_agent_*&param_TwitterUserName=&param_LaunchTemplateVersion=&param_TwitterEmail=&param_AgentImage=h4ckermike%2Felizaos-eliza%3Afeature-arm64_fastembed&param_AmiId=ami-002c77210a36906b6)
 
 * ap south 1 [![Launch AP Southeast 1 Stack](https://cdn.rawgit.com/buildkite/cloudformation-launch-stack-button-svg/master/launch-stack.svg)](https://ap-southeast-1.console.aws.amazon.com/cloudformation/home?region=ap-southeast-1#/stacks/quickcreate?templateURL=https%3A%2F%2Fs3.amazonaws.com%2Fzos-solfunmeme-tine-cf-template%2Fzos-solfunmeme-tine-the-introspector-is-not-eliza-stack-template-one-click-installer.yaml&stackName=zos-solfunmeme-tine-the-introspector-is-not-eliza-stack-template-one-click-installer&param_S3BucketPattern=tine_agent_*&param_GroqKey=&param_TokenizerImage=h4ckermike%2Felizaos-eliza%3Afeature-arm64_fastembed&param_TwitterPassword=&param_NameTag=tine-dev&param_SSMParameterPattern=tine_agent_*&param_TwitterUserName=&param_LaunchTemplateVersion=&param_TwitterEmail=&param_AgentImage=h4ckermike%2Felizaos-eliza%3Afeature-arm64_fastembed&param_AmiId=ami-0a20a97f971b7d4c4)
+
+
+# setup another variable `.tfvars2 ` file
+
+`cat .tfvars2 `
+
+```
+lt_version=2
+```
+
+```
+terraform apply -auto-approve -var-file ~/.secrets/.tfvars  -var-file .tfvars2 
+```

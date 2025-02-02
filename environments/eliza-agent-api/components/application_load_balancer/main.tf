@@ -66,28 +66,28 @@ module "tg_dev" {
 module "tg_mcs" {
   source      = "./target_group/"
   name_prefix = "mcs"
-  check_path = "/v1/medical-coder/patients" # this does not have a docs api yet
-  vpc_id      = var.vpc_id # module.vpc.vpc_id
+  check_path  = "/v1/medical-coder/patients" # this does not have a docs api yet
+  vpc_id      = var.vpc_id                   # module.vpc.vpc_id
 }
 
 module "tg_mcs_dev" {
   source      = "./target_group/"
   name_prefix = "mcsdev"
-  check_path = "/v1/medical-coder/patients" # this does not have a docs api yet
-  vpc_id      = var.vpc_id # module.vpc.vpc_id
+  check_path  = "/v1/medical-coder/patients" # this does not have a docs api yet
+  vpc_id      = var.vpc_id                   # module.vpc.vpc_id
 }
 
 module "https" {
   source = "./https/"
   #  vpc_id  = var.vpc_id # module.vpc.vpc_id
-  zone_id               = module.route53.primary_zone_id
-  domain_name           = var.domain_name
-  alb_arn               = module.alb.arn
-  prod_target_group_arn = module.tg_prod.alb_target_group_arn
-  test_target_group_arn = module.tg_test.alb_target_group_arn
-  dev_target_group_arn  = module.tg_dev.alb_target_group_arn
-  mcs_target_group_arn  = module.tg_mcs.alb_target_group_arn
-  mcs_dev_target_group_arn  = module.tg_mcs_dev.alb_target_group_arn
+  zone_id                  = module.route53.primary_zone_id
+  domain_name              = var.domain_name
+  alb_arn                  = module.alb.arn
+  prod_target_group_arn    = module.tg_prod.alb_target_group_arn
+  test_target_group_arn    = module.tg_test.alb_target_group_arn
+  dev_target_group_arn     = module.tg_dev.alb_target_group_arn
+  mcs_target_group_arn     = module.tg_mcs.alb_target_group_arn
+  mcs_dev_target_group_arn = module.tg_mcs_dev.alb_target_group_arn
 }
 
 

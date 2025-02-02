@@ -364,8 +364,7 @@ Resources:
         ImageId: !Sub "${AmiId}"
         InstanceType: "t4g.small"
         UserData:
-          Fn::Base64: !Sub
-            - |
+          Fn::Base64: !Sub |
               #!/bin/bash -xe
               export AGENT_NAME="${AgentCodeName}"
               export GIT_REPO="${GitRepo}" # FIXME
@@ -391,9 +390,6 @@ Resources:
               git fetch --all
               git checkout --track --force "origin/${GitBranch}"
               bash -x /opt/agent/rundocker.sh
-            - AgentCodeName: "${AgentCodeName}"
-              GitRepo: "${GitRepo}"
-              GitBranch: "${GitBranch}"
 
         BlockDeviceMappings:
           -

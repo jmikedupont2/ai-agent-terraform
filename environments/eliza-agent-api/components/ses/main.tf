@@ -2,7 +2,7 @@
 variable "verify_domain" {}
 variable "group_name" {}
 variable "verify_dkim" {}
-variable "domain" {} 
+variable "domain" {}
 
 #resource "aws_route53_zone" "private_dns_zone" {
 #  name = var.domain

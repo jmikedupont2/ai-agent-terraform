@@ -1,16 +1,16 @@
 variable "google_oauth_client_secret" {}
-variable "google_oauth_client_id" {} 
-variable aws_region {} # us-east-1
-variable aws_account {}
-variable myemail {}
-variable mydomain {}
-variable mydomain_suffix {}
+variable "google_oauth_client_id" {}
+variable "aws_region" {} # us-east-1
+variable "aws_account" {}
+variable "myemail" {}
+variable "mydomain" {}
+variable "mydomain_suffix" {}
 locals {
-  mydomain=var.mydomain
-  mydomain_suffix = var.mydomain_suffix
+  mydomain         = var.mydomain
+  mydomain_suffix  = var.mydomain_suffix
   mydomain_dot_com = "${local.mydomain}.${local.mydomain_suffix}"
-  myemail=var.myemail
-  myaccount=var.aws_account
+  myemail          = var.myemail
+  myaccount        = var.aws_account
 }
 
 module "aws_cognito_user_pool_complete_example" {
@@ -48,14 +48,14 @@ module "aws_cognito_user_pool_complete_example" {
   }
 
   lambda_config = {
-    create_auth_challenge          = "arn:aws:lambda:${var.aws_region}:${var.aws_account}:function:create_auth_challenge"
-    custom_message                 = "arn:aws:lambda:${var.aws_region}:${var.aws_account}:function:custom_message"
-    define_auth_challenge          = "arn:aws:lambda:${var.aws_region}:${var.aws_account}:function:define_auth_challenge"
-    post_authentication            = "arn:aws:lambda:${var.aws_region}:${var.aws_account}:function:post_authentication"
-    post_confirmation              = "arn:aws:lambda:${var.aws_region}:${var.aws_account}:function:post_confirmation"
-    pre_authentication             = "arn:aws:lambda:${var.aws_region}:${var.aws_account}:function:pre_authentication"
-    pre_sign_up                    = "arn:aws:lambda:${var.aws_region}:${var.aws_account}:function:pre_sign_up"
-#    pre_token_generation           = "arn:aws:lambda:${var.aws_region}:${var.aws_account}:function:pre_token_generation"
+    create_auth_challenge = "arn:aws:lambda:${var.aws_region}:${var.aws_account}:function:create_auth_challenge"
+    custom_message        = "arn:aws:lambda:${var.aws_region}:${var.aws_account}:function:custom_message"
+    define_auth_challenge = "arn:aws:lambda:${var.aws_region}:${var.aws_account}:function:define_auth_challenge"
+    post_authentication   = "arn:aws:lambda:${var.aws_region}:${var.aws_account}:function:post_authentication"
+    post_confirmation     = "arn:aws:lambda:${var.aws_region}:${var.aws_account}:function:post_confirmation"
+    pre_authentication    = "arn:aws:lambda:${var.aws_region}:${var.aws_account}:function:pre_authentication"
+    pre_sign_up           = "arn:aws:lambda:${var.aws_region}:${var.aws_account}:function:pre_sign_up"
+    #    pre_token_generation           = "arn:aws:lambda:${var.aws_region}:${var.aws_account}:function:pre_token_generation"
     user_migration                 = "arn:aws:lambda:${var.aws_region}:${var.aws_account}:function:user_migration"
     verify_auth_challenge_response = "arn:aws:lambda:${var.aws_region}:${var.aws_account}:function:verify_auth_challenge_response"
     #kms_key_id                     = aws_kms_key.lambda-custom-sender.arn
@@ -169,7 +169,7 @@ module "aws_cognito_user_pool_complete_example" {
   clients = [
     {
       allowed_oauth_flows_user_pool_client = false
-      allowed_oauth_scopes                 = [
+      allowed_oauth_scopes = [
         "aws.cognito.signin.user.admin",
         "email",
         "https://introspector.meme/sample-scope-1",
@@ -179,22 +179,22 @@ module "aws_cognito_user_pool_complete_example" {
         "profile",
 
       ]
-      callback_urls                        = ["https://${local.mydomain_dot_com}/callback"]
-      default_redirect_uri                 = "https://${local.mydomain_dot_com}/callback"
-      explicit_auth_flows                  = []
-      generate_secret                      = true
-      logout_urls                          = []
-      name                                 = "test1"
-      read_attributes                      = ["email"]
-      supported_identity_providers         = [
-	 "COGNITO",
-         "Google",
+      callback_urls        = ["https://${local.mydomain_dot_com}/callback"]
+      default_redirect_uri = "https://${local.mydomain_dot_com}/callback"
+      explicit_auth_flows  = []
+      generate_secret      = true
+      logout_urls          = []
+      name                 = "test1"
+      read_attributes      = ["email"]
+      supported_identity_providers = [
+        "COGNITO",
+        "Google",
 
       ]
-      write_attributes                     = []
-      access_token_validity                = 1
-      id_token_validity                    = 1
-      refresh_token_validity               = 60
+      write_attributes       = []
+      access_token_validity  = 1
+      id_token_validity      = 1
+      refresh_token_validity = 60
       token_validity_units = {
         access_token  = "hours"
         id_token      = "hours"
@@ -204,12 +204,12 @@ module "aws_cognito_user_pool_complete_example" {
       ui_customization_image_file = filebase64("logo.png")
     },
     {
-      allowed_oauth_flows                  = [
-         "code",
-         "implicit"
+      allowed_oauth_flows = [
+        "code",
+        "implicit"
       ]
       allowed_oauth_flows_user_pool_client = false # FIXME why?
-      allowed_oauth_scopes                 = [
+      allowed_oauth_scopes = [
         "aws.cognito.signin.user.admin",
         "email",
         "https://introspector.meme/sample-scope-1",
@@ -219,25 +219,25 @@ module "aws_cognito_user_pool_complete_example" {
         "profile",
 
       ]
-      callback_urls                        = ["https://${local.mydomain_dot_com}/callback"]
-      default_redirect_uri                 = "https://${local.mydomain_dot_com}/callback"
-      explicit_auth_flows                  = []
-      generate_secret                      = false
-      logout_urls                          = []
-      name                                 = "test2"
-      read_attributes                      = []
-      supported_identity_providers         = [
+      callback_urls        = ["https://${local.mydomain_dot_com}/callback"]
+      default_redirect_uri = "https://${local.mydomain_dot_com}/callback"
+      explicit_auth_flows  = []
+      generate_secret      = false
+      logout_urls          = []
+      name                 = "test2"
+      read_attributes      = []
+      supported_identity_providers = [
         "COGNITO",
         "Google",
 
       ]
-      write_attributes                     = []
-      refresh_token_validity               = 30
+      write_attributes       = []
+      refresh_token_validity = 30
     },
     {
       allowed_oauth_flows                  = ["code", "implicit"]
       allowed_oauth_flows_user_pool_client = true
-      allowed_oauth_scopes                 = [
+      allowed_oauth_scopes = [
         "aws.cognito.signin.user.admin",
         "email",
         "https://introspector.meme/sample-scope-1",
@@ -247,16 +247,16 @@ module "aws_cognito_user_pool_complete_example" {
         "profile",
 
       ]
-      callback_urls                        = ["https://${local.mydomain_dot_com}/callback"]
-      default_redirect_uri                 = "https://${local.mydomain_dot_com}/callback"
-      explicit_auth_flows                  = ["CUSTOM_AUTH_FLOW_ONLY", "ADMIN_NO_SRP_AUTH"]
-      generate_secret                      = false
-      logout_urls                          = ["https://${local.mydomain_dot_com}/logout"]
-      name                                 = "test3"
-      read_attributes                      = ["email", "phone_number"]
-      supported_identity_providers         = []
-      write_attributes                     = ["email", "gender", "locale", ]
-      refresh_token_validity               = 30
+      callback_urls                = ["https://${local.mydomain_dot_com}/callback"]
+      default_redirect_uri         = "https://${local.mydomain_dot_com}/callback"
+      explicit_auth_flows          = ["CUSTOM_AUTH_FLOW_ONLY", "ADMIN_NO_SRP_AUTH"]
+      generate_secret              = false
+      logout_urls                  = ["https://${local.mydomain_dot_com}/logout"]
+      name                         = "test3"
+      read_attributes              = ["email", "phone_number"]
+      supported_identity_providers = []
+      write_attributes             = ["email", "gender", "locale", ]
+      refresh_token_validity       = 30
     }
   ]
 
@@ -305,10 +305,10 @@ module "aws_cognito_user_pool_complete_example" {
       provider_type = "Google"
 
       provider_details = {
-        authorize_scopes              = "email"
-	#export TF_VAR_google_oauth_client_id=XXXX
-        client_id                     = var.google_oauth_client_id    # This should be retrieved from AWS Secret Manager, otherwise Terraform will force an in-place replacement becuase is treated as a sensitive value
-	# export TF_VAR_google_oauth_client_secret=YYY
+        authorize_scopes = "email"
+        #export TF_VAR_google_oauth_client_id=XXXX
+        client_id = var.google_oauth_client_id # This should be retrieved from AWS Secret Manager, otherwise Terraform will force an in-place replacement becuase is treated as a sensitive value
+        # export TF_VAR_google_oauth_client_secret=YYY
         client_secret                 = var.google_oauth_client_secret #"your client_secret" # # This should be retrieved from AWS Secret Manager, otherwise Terraform will force an in-place replacement becuase is treated as a sensitive value
         attributes_url_add_attributes = "true"
         authorize_url                 = "https://accounts.google.com/o/oauth2/v2/auth"
@@ -334,12 +334,12 @@ module "aws_cognito_user_pool_complete_example" {
 }
 
 
- # KMS key for lambda custom sender config"
- resource "aws_kms_key" "lambda-custom-sender" {
-   count = 0
-   description = "KMS key for lambda custom sender config"
- }
+# KMS key for lambda custom sender config"
+resource "aws_kms_key" "lambda-custom-sender" {
+  count       = 0
+  description = "KMS key for lambda custom sender config"
+}
 
-output cognito{
+output "cognito" {
   value = module.aws_cognito_user_pool_complete_example
 }

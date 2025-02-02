@@ -1,6 +1,6 @@
-variable repo{}
-variable aws_availability_zones {}
-variable instance_types {}
+variable "repo" {}
+variable "aws_availability_zones" {}
+variable "instance_types" {}
 variable "spot_max_price" {}
 variable "branch" {}
 variable "project" {}
@@ -13,21 +13,21 @@ variable "name" {}
 variable "key_name" {}
 
 locals {
-  name     = var.project
-  domain   = var.domain
+  name   = var.project
+  domain = var.domain
   tags = {
     project = var.project
   }
-  dev_tags = {  }
+  dev_tags = {}
 }
 
 locals {
-  ami_id     = var.ami_id
+  ami_id = var.ami_id
 }
 
 module "vpc" {
-  source = "./components/vpc"
-   name = var.project 
+  source                 = "./components/vpc"
+  name                   = var.project
   aws_availability_zones = var.aws_availability_zones
 
 }
@@ -60,22 +60,22 @@ output "security_group_id" {
 }
 
 module "eliza" {
-  source                     = "./eliza" # fixme rename to eliza
-#  ami_name = var.ami_name
-  branch =    var.branch
-  git_repo = var.repo
+  source = "./eliza" # fixme rename to eliza
+  #  ami_name = var.ami_name
+  branch                     = var.branch
+  git_repo                   = var.repo
   ssm_profile_arn            = module.roles.ssm_profile_arn
   ec2_subnet_id              = module.vpc.ec2_public_subnet_id_1
   iam_instance_profile_name  = module.roles.ssm_profile_name
   key_name                   = var.key_name
-  instance_types = var.instance_types
+  instance_types             = var.instance_types
   aws_account_id             = var.aws_account_id
   region                     = var.region
   internal_security_group_id = module.security.internal_security_group_id
   tags                       = local.tags
   ami_id                     = local.ami_id
   vpc_id                     = local.vpc_id
-  name = "docker-agent-ami"
+  name                       = "docker-agent-ami"
 }
 
 output "vpc" {

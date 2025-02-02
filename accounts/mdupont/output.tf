@@ -20,17 +20,17 @@ output "aws_caller_identity_account_id" {
 
 output "aws_s3_bucket_logging_name" {
   # value                      = data.aws_s3_bucket.terraform_logging.bucket
-  value                      = null
+  value = null
 }
 
 output "aws_s3_bucket_state_name" {
   #value                      = data.aws_s3_bucket.terraform_state.bucket
-  value                      = null
+  value = null
 }
 
 output "aws_cloudtrail_service_account_id" {
   #value                      = data.aws_cloudtrail_service_account.main.id
-  value                      = null
+  value = null
 }
 
 

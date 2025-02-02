@@ -1,14 +1,14 @@
 #from  https://github.com/terraform-aws-modules/terraform-aws-vpc
 
 data "aws_availability_zones" "available" {}
-variable name {}
-variable aws_availability_zones {}
+variable "name" {}
+variable "aws_availability_zones" {}
 locals {
-  name = var.name
+  name     = var.name
   vpc_cidr = "10.0.0.0/16"
-  
+
   #azs      = slice(data.aws_availability_zones.available.names, 0, 3)
-  azs      = var.aws_availability_zones
+  azs = var.aws_availability_zones
 
   tags = {
     project = local.name
@@ -74,5 +74,5 @@ output "vpc" {
 }
 
 output "azs" {
-  value      = data.aws_availability_zones.available.names
+  value = data.aws_availability_zones.available.names
 }

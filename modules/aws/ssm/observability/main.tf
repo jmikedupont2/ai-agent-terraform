@@ -483,8 +483,8 @@ resource "aws_ssm_association" "update_cloudwatch_config" {
 
 resource "aws_cloudwatch_log_group" "log_groups" {
   for_each = toset([
-#    "/swarms/ngnix_access",
-#    "/swarms/nginx_error",
+    #    "/swarms/ngnix_access",
+    #    "/swarms/nginx_error",
   "/eliza/systemd", "/ec2/init"])
   name              = each.key
   retention_in_days = 30
