@@ -117,11 +117,11 @@ module "region_apsoutheast1" {
 
 output "regions" {
   value = [
-    module.region_useast2.full_template_url,
-    module.region_useast1.full_template_url,
-    module.region_uswest1.full_template_url,
-    module.region_eucentral1.full_template_url,
-    module.region_apsoutheast1.full_template_url
+    module.region_useast2.full_html_url,
+    module.region_useast1.full_html_url,
+    module.region_uswest1.full_html_url,
+    module.region_eucentral1.full_html_url,
+    module.region_apsoutheast1.full_html_url
   ]
 }
 
@@ -143,6 +143,7 @@ output "regions" {
 
 ## 
 resource "aws_cloudformation_stack" "eliza_stack" {
+  count = 0 # turn off now now
   name          = "tine-agent"
   capabilities  = ["CAPABILITY_NAMED_IAM"]
   template_body = file("ec2.yml")
@@ -157,3 +158,15 @@ resource "aws_cloudformation_stack" "eliza_stack" {
     AgentCodeName         = "tine_agent_3"
   }
 }
+
+resource "local_file" "items_to_html" {
+  content  = join("\n", [
+    module.region_useast2.full_html_url,
+    module.region_useast1.full_html_url,
+    module.region_uswest1.full_html_url,
+    module.region_eucentral1.full_html_url,
+    module.region_apsoutheast1.full_html_url
+  ])
+  filename = "installer.md"
+}
+
