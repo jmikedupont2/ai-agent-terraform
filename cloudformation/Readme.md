@@ -1,7 +1,10 @@
 
+test and apply on the command line
+```
 aws cloudformation validate-template --template-body file://ec2.yml
 
 terraform apply -auto-approve -var-file .tfvars 
+```
 
 # Regions
 

@@ -31,29 +31,21 @@ provider "aws" {
   region = "ap-southeast-1"
 }
 
-variable groq_key {}
-variable twitter_password {}
-variable twitter_user_name {}
-variable twitter_mail {}
+variable groq_key {
+sensitive=true
+}
+variable twitter_password {
+  sensitive=true
+}
+variable twitter_user_name {
+  sensitive=true
+}
+variable twitter_mail {
+  sensitive=true
+}
 variable lt_version {
   default = "1"
 }
-
-# resource "aws_cloudformation_stack" "eliza_stack" {
-#   name = "tine-agent"
-#   capabilities = [ "CAPABILITY_NAMED_IAM" ]
-
-# #  template_body = file("cloudformation.yml")
-#   template_body = file("ec2.yml")
-#   parameters = {
-#     AmiId = data.aws_ami.ami.id
-#     GroqKey = var.groq_key
-#     TwitterPassword= var.twitter_password
-#     TwitterUserName = var.twitter_user_name 
-#     TwitterEmail = var.twitter_mail
-#     LaunchTemplateVersion = var.lt_version
-#    }  
-# }
 
 resource "aws_s3_bucket" "template_bucket" {
   bucket = "zos-solfunmeme-tine-cf-template"  # Replace with your desired bucket name
@@ -86,7 +78,7 @@ resource "aws_s3_bucket_policy" "allow_public_read" {
 
 resource "aws_s3_object" "cloudformation_template" {
   bucket = aws_s3_bucket.template_bucket.id
-  key    = "zos-solfunmeme-tine-the-introspector-is-not-eliza-stack-template-one-click-installer.yaml"  # Replace with your desired file name
+  key    = "zos-solfunmeme-tine-the-introspector-is-not-eliza-stack-template-one-click-installer-dev.yaml"  # Replace with your desired file name
   source = "ec2.yml"  # Replace with the path to your template file
 }
 
@@ -147,3 +139,21 @@ output "regions" {
 #     create_before_destroy = true
 #   }
 # }
+
+
+## 
+resource "aws_cloudformation_stack" "eliza_stack" {
+   name = "tine-agent"
+   capabilities = [ "CAPABILITY_NAMED_IAM" ]
+   template_body = file("ec2.yml")
+   parameters = {
+     AmiId = module.region_uswest1.ami_id
+     GroqKey = var.groq_key
+     TwitterPassword= var.twitter_password
+     TwitterUserName = var.twitter_user_name 
+     TwitterEmail = var.twitter_mail
+     LaunchTemplateVersion = var.lt_version
+     NameTag = "tine-dev2"
+     AgentCodeName = "tine_agent_3"
+    }  
+ }

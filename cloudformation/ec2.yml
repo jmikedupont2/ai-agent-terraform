@@ -11,12 +11,17 @@ Parameters:
     Type: "String"
     Default: "tine-dev"
 
-#  UserData:
-#    Type: "String"
   AmiId:
     Type: "String"
-    Default: "ami-050f68a6fa8be1b27"
+
+  GitRepo:
+    Type: "String"
+    Default :  "https://github.com/meta-introspector/cloud-deployment-eliza/"
     
+  GitBranch:
+    Type: "String"
+    Default: "feature/tine-devops-variables"
+
   SSMParameterPattern:
     Type: 'String'
     Description: 'pattern for ssm parameter, leave default'
@@ -49,6 +54,11 @@ Parameters:
     Type: 'String'
     Description: 'twitter username'
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
 Resources:
   MyDHCPOptions:
     Type: AWS::EC2::DHCPOptions
@@ -72,7 +82,7 @@ Resources:
       Type: 'String'
       Value: !Ref GroqKey
       Tier: 'Standard'
-      Description: 'Secert Parameter for Groq Key'
+      Description: 'Secret Parameter for Groq Key'
   TineAgentTokenizerImage:
     Type: 'AWS::SSM::Parameter'
     Properties:
@@ -353,31 +363,38 @@ Resources:
             NetworkCardIndex: 0
         ImageId: !Sub "${AmiId}"
         InstanceType: "t4g.small"
-        UserData: !Base64 |
-          #!/bin/bash
-          export HOME=/root
-          apt update
-          apt-get install -y ec2-instance-connect git
-          apt-get install -y cloud-utils apt-transport-https ca-certificates curl software-properties-common
-          curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-          add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu  $(lsb_release -cs)  stable"
-          apt-get update
-          apt-get install -y docker-ce
-          usermod -aG docker ubuntu
-          curl -L https://github.com/docker/compose/releases/download/1.21.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
-          chmod +x /usr/local/bin/docker-compose
-          snap install amazon-ssm-agent --classic || echo oops1
-          snap start amazon-ssm-agent || echo oops2
-          apt-get install -y --no-install-recommends ca-certificates=20230311 curl=7.88.1-10+deb12u7 |  echo oops
-          apt-get install -y wget unzip systemd
-          if [ ! -d "/opt/agent/" ]; then
-          git clone https://github.com/meta-introspector/cloud-deployment-eliza/ "/opt/agent/"
-          fi
-          cd "/opt/agent/" || exit 1
-          git stash
-          git fetch --all
-          git checkout --track --force "origin/feature/tine-devops"
-          bash -x /opt/agent/rundocker.sh
+        UserData:
+          Fn::Base64: !Sub
+            - |
+              #!/bin/bash -xe
+              export AGENT_NAME="${AgentCodeName}"
+              export GIT_REPO="${GitRepo}" # FIXME
+              export GIT_BRANCH="${GitBranch}" # FIXME
+              export HOME=/root
+              apt update
+              apt-get install -y ec2-instance-connect git
+              apt-get install -y cloud-utils apt-transport-https ca-certificates curl software-properties-common
+              curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+              add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu  $(lsb_release -cs)  stable"
+              apt-get update
+              apt-get install -y docker-ce
+              usermod -aG docker ubuntu
+              snap install amazon-ssm-agent --classic || echo oops1
+              snap start amazon-ssm-agent || echo oops2
+              apt-get install -y --no-install-recommends ca-certificates=20230311 curl=7.88.1-10+deb12u7 |  echo oops
+              apt-get install -y wget unzip systemd
+              if [ ! -d "/opt/agent/" ]; then
+              git clone "${GitRepo}" "/opt/agent/"
+              fi
+              cd "/opt/agent/" || exit 1
+              git stash
+              git fetch --all
+              git checkout --track --force "origin/${GitBranch}"
+              bash -x /opt/agent/rundocker.sh
+            - AgentCodeName: "${AgentCodeName}"
+              GitRepo: "${GitRepo}"
+              GitBranch: "${GitBranch}"
+
         BlockDeviceMappings:
           -
             DeviceName: "/dev/sda1"
