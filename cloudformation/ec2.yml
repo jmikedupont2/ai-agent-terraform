@@ -10,6 +10,7 @@ Parameters:
   NameTag:
     Type: "String"
     Default: "tine-dev"
+
 #  UserData:
 #    Type: "String"
   AmiId:
@@ -18,11 +19,11 @@ Parameters:
     
   SSMParameterPattern:
     Type: 'String'
-    Description: 'pattern for ssm parameter'
+    Description: 'pattern for ssm parameter, leave default'
     Default: "tine_agent_*"
   S3BucketPattern:
     Type: 'String'
-    Description: 'pattern for ssm parameter'
+    Description: 'pattern for ssm parameter, leave default'
     Default: "tine_agent_*"
   GroqKey:
     Type: 'String'
@@ -398,7 +399,7 @@ Resources:
       DesiredCapacity: 1
       Cooldown: 300
       AvailabilityZones:
-        - "us-west-1a"
+        - !Sub "${AWS::Region}a"
         #              - "us-west-1b"
       HealthCheckType: "EC2"
       HealthCheckGracePeriod: 300
