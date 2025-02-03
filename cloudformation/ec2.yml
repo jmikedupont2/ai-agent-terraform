@@ -6,7 +6,7 @@ Parameters:
   LaunchTemplateVersion:
     Type: "String"
     Default: "1"
-    
+
   NameTag:
     Type: "String"
     Default: "tine-dev"
@@ -17,7 +17,7 @@ Parameters:
   GitRepo:
     Type: "String"
     Default :  "https://github.com/meta-introspector/cloud-deployment-eliza/"
-    
+
   GitBranch:
     Type: "String"
     Default: "feature/tine-devops-variables"
@@ -257,8 +257,6 @@ Resources:
 
   IAMRoleAgent:
     Type: "AWS::IAM::Role"
-    #DependsOn:
-    #- IAMManagedPolicy2
     Properties:
       Path: "/"
       RoleName: "ssm-tine-deploy-agent-role"
@@ -271,13 +269,15 @@ Resources:
       - "arn:aws:iam::aws:policy/AmazonSSMManagedEC2InstanceDefaultPolicy"
 
   IAMInstanceProfile:
+    DependsOn:
+      - IAMRoleAgent
     Type: AWS::IAM::InstanceProfile
     Properties:
       Path: "/"
       InstanceProfileName: "agent-instance-profile"
       Roles:
-        #          - EC2RoleForSSM
         - !Ref IAMRoleAgent
+
   EC2VPC:
     Type: "AWS::EC2::VPC"
     Properties:
