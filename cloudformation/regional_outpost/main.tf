@@ -8,6 +8,9 @@ terraform {
 }
 
 variable "region" {}
+variable "patch" {
+  default = "v3"
+}
 
 resource "aws_s3_bucket" "template_bucket" {
   bucket        = "zos-solfunmeme-tine-cf-template-${var.region}" # Replace with your desired bucket name
@@ -40,7 +43,7 @@ resource "aws_s3_bucket_policy" "allow_public_read" {
 
 resource "aws_s3_object" "cloudformation_template" {
   bucket = aws_s3_bucket.template_bucket.id
-  key    = "zos-solfunmeme-tine-the-introspector-is-not-eliza-stack-template-one-click-installer-dev-patch1.yaml" # Replace with your desired file name
+  key    = "zos-solfunmeme-tine-the-introspector-is-not-eliza-stack-template-one-click-installer-dev-${var.patch}.yaml" # Replace with your desired file name
   source = "ec2.yml"                                                                                       # Replace with the path to your template file
 }
 
