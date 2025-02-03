@@ -60,7 +60,7 @@ locals {
 }
 
 locals {
-  cf_template_url = "https://${var.region}.console.aws.amazon.com/cloudformation/home?region=${var.region}#/stacks/quickcreate?templateURL=${local.template_url}&stackName=zos-solfunmeme-tine-the-introspector-is-not-eliza-stack-template-one-click-installer&param_S3BucketPattern=tine_agent_*&param_GroqKey=&param_TokenizerImage=h4ckermike%2Felizaos-eliza%3Afeature-arm64_fastembed&param_TwitterPassword=&param_NameTag=tine-dev&param_AgentCodeName=tine_agent_4&param_SSMParameterPattern=tine_agent_*&param_TwitterUserName=&param_LaunchTemplateVersion=1&param_TwitterEmail=&param_AgentImage=h4ckermike%2Felizaos-eliza%3Afeature-arm64_fastembed&param_AmiId=${data.aws_ami.ami.id}"
+  cf_template_url = "https://${var.region}.console.aws.amazon.com/cloudformation/home?region=${var.region}#/stacks/quickcreate?templateURL=${local.template_url}&stackName=zos-solfunmeme-tine-the-introspector-is-not-eliza-stack-template-one-click-installer&param_S3BucketPattern=tine_agent_*&param_GroqKey=&param_TokenizerImage=h4ckermike%2Farm64-tokenizers%3Afeature-arm64&param_TwitterPassword=&param_NameTag=tine-dev&param_AgentCodeName=tine_agent_4&param_SSMParameterPattern=tine_agent_*&param_TwitterUserName=&param_LaunchTemplateVersion=1&param_TwitterEmail=&param_AgentImage=h4ckermike%2Felizaos-eliza%3Afeature-arm64_fastembed&param_AmiId=${data.aws_ami.ami.id}"
   image_url = "![Launch ${var.region} Stack](https://cdn.rawgit.com/buildkite/cloudformation-launch-stack-button-svg/master/launch-stack.svg)"
 }
 
