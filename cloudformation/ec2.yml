@@ -259,7 +259,7 @@ Resources:
     Type: "AWS::IAM::Role"
     Properties:
       Path: "/"
-      RoleName: "ssm-tine-deploy-agent-role"
+      RoleName: !Sub '${AgentCodeName}_ssm-tine-deploy-agent-role'
       AssumeRolePolicyDocument: "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Sid\":\"\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"},\"Action\":\"sts:AssumeRole\"}]}"
       MaxSessionDuration: 3600
       ManagedPolicyArns:
@@ -274,7 +274,7 @@ Resources:
     Type: AWS::IAM::InstanceProfile
     Properties:
       Path: "/"
-      InstanceProfileName: "agent-instance-profile"
+      InstanceProfileName: !Sub "${AgentCodeName}_agent-instance-profile"
       Roles:
         - !Ref IAMRoleAgent
 

@@ -40,13 +40,10 @@ resource "aws_s3_bucket_policy" "allow_public_read" {
 
 resource "aws_s3_object" "cloudformation_template" {
   bucket = aws_s3_bucket.template_bucket.id
-  key    = "zos-solfunmeme-tine-the-introspector-is-not-eliza-stack-template-one-click-installer-dev.yaml" # Replace with your desired file name
+  key    = "zos-solfunmeme-tine-the-introspector-is-not-eliza-stack-template-one-click-installer-dev-patch1.yaml" # Replace with your desired file name
   source = "ec2.yml"                                                                                       # Replace with the path to your template file
 }
 
-#output "template_url" {
-#  value = "https://${aws_s3_bucket.template_bucket.bucket_regional_domain_name}/${aws_s3_object.cloudformation_template.key}"
-#}
 
 data "aws_ami" "ami" { # slow
   most_recent = true
