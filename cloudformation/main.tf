@@ -167,18 +167,6 @@ provider "aws" {
   region = "us-west-2"
 }
 
-  
-#variable "groq_key" {  sensitive = true}
-#variable "twitter_password" {  sensitive = true}
-#variable "twitter_user_name" {  sensitive = true}
-#variable "twitter_mail" {  sensitive = true}
-#variable "lt_version" {  default = "1"}
-
-
-
-#module "region_afsouth1" { source    = "./regional_outpost" providers = { aws = aws.afsouth1 } region    = "af-south-1"}
-
-#module "region_apeast1" { source    = "./regional_outpost" providers = { aws = aws.apeast1 } region    = "ap-east-1"}
 
 module "region_apnortheast1" {
   source    = "./regional_outpost"
@@ -192,11 +180,10 @@ module "region_apnortheast2" {
   region    = "ap-northeast-2"
 }
 
-
 module "region_apnortheast3" {
   source    = "./regional_outpost"
   providers = { aws = aws.apnortheast3 }
-      region    = "ap-northeast-3"
+  region    = "ap-northeast-3"
 }
 
 module "region_apsouth1" {
@@ -255,7 +242,7 @@ module "region_eucentral1" {
 module "region_eunorth1" {
   source    = "./regional_outpost"
   providers = { aws = aws.eunorth1 }
-      region    = "eu-north-1"
+  region    = "eu-north-1"
 }
 
 #module "region_eusouth1" {  source    = "./regional_outpost"  providers = { aws = aws.eusouth1 }  region    = "eu-south-1"}
@@ -321,7 +308,7 @@ module "region_uswest2" {
   region    = "us-west-2"
 }
 
-  
+
 # output "regions" {
 #   value = [
 #     module.region_useast2.full_html_url,
@@ -386,13 +373,13 @@ locals {
     module.region_useast2,
     module.region_uswest1,
     module.region_uswest2,
-    
+
   ]
 }
 
 resource "local_file" "items_to_html" {
-  content  = join("\n", [
-    for alias in local.all_regions : 
+  content = join("\n", [
+    for alias in local.all_regions :
     alias.full_html_url
   ])
   filename = "installer.md"

@@ -1,4 +1,4 @@
-variable regions {}
+variable "regions" {}
 
 # dynamic "provider" "aws" {
 #   for_each = local.providers
@@ -9,14 +9,14 @@ variable regions {}
 # }
 
 #output "debug" {
-  #for region in var.regions : 
+#for region in var.regions : 
 #  value = var.regions.names
- 
+
 #}
 
 locals {
   region_providers = {
-    for region in var.regions : 
+    for region in var.regions :
     replace(region, "-", "") => {
       alias  = replace(region, "-", "")
       region = region
@@ -26,14 +26,14 @@ locals {
 
 output "provider_configs" {
   value = {
-    for alias, config in local.region_providers : 
+    for alias, config in local.region_providers :
     alias => "provider \"aws\" {\n  alias  = \"${config.alias}\"\n  region = \"${config.region}\"\n}"
   }
 }
- 
+
 locals {
   module_configs = {
-    for alias, config in local.region_providers : 
+    for alias, config in local.region_providers :
     alias => "module \"region_${alias}\" {\n  source    = \"./regional_outpost\"\n  providers = { aws = aws.${alias} }\n  region    = \"${config.region}\"\n}"
   }
 }
