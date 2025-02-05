@@ -1,5 +1,5 @@
 locals {
-  patch = "v4" # create new cf template for this version to document the steps
+  patch = "v5" # create new cf template for this version to document the steps
 }
 # default
 provider "aws" {
