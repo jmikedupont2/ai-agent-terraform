@@ -7,6 +7,11 @@ Parameters:
     Type: "String"
     Default: "1"
 
+  AvailabilityZone:
+    Type: "String"
+    Description: 'is appended to region name to create az'
+    Default: "a"
+
   NameTag:
     Type: "String"
     Default: "tine-dev"
@@ -292,7 +297,7 @@ Resources:
   EC2SubnetPublicA:
     Type: "AWS::EC2::Subnet"
     Properties:
-        AvailabilityZone: !Sub "${AWS::Region}a"
+        AvailabilityZone: !Sub "${AWS::Region}${AvailabilityZone}"
         CidrBlock: "10.0.4.0/24"
         VpcId:
           Ref: "EC2VPC"
@@ -402,10 +407,17 @@ Resources:
               Encrypted: true
               VolumeSize: 30
               VolumeType: "gp3"
+
+  AWSServiceRoleForAutoScaling:
+    Type: AWS::IAM::ServiceLinkedRole
+    Properties:
+      AWSServiceName: autoscaling.amazonaws.com
+      
   AutoScalingAutoScalingGroup:
     Type: "AWS::AutoScaling::AutoScalingGroup"
     DependsOn:
       - EC2LaunchTemplate
+      - AWSServiceRoleForAutoScaling
     Properties:
       AutoScalingGroupName: "docker-agent-ami-t4g.small"
       LaunchTemplate:
@@ -416,7 +428,7 @@ Resources:
       DesiredCapacity: 1
       Cooldown: 300
       AvailabilityZones:
-        - !Sub "${AWS::Region}a"
+        - !Sub "${AWS::Region}${AvailabilityZone}"
         #              - "us-west-1b"
       HealthCheckType: "EC2"
       HealthCheckGracePeriod: 300
