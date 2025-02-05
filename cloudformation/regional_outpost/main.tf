@@ -8,7 +8,7 @@ terraform {
 }
 
 variable "region" {}
-variable "patch" { } # was v3
+variable "patch" {} # was v3
 
 resource "aws_s3_bucket" "template_bucket" {
   bucket        = "zos-solfunmeme-tine-cf-template-${var.region}" # Replace with your desired bucket name
