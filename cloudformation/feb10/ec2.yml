@@ -1,0 +1,440 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "former2"
+Description: "minimal ec2 asg and lt"
+Parameters:
+  LaunchTemplateVersion:
+    Type: "String"
+    Default: "1"
+
+  AvailabilityZone:
+    Type: "String"
+    Description: 'is appended to region name to create az'
+    Default: "a"
+
+  NameTag:
+    Type: "String"
+    Default: "tine-dev"
+
+  AmiId:
+    Type: "String"
+
+  GitRepo:
+    Type: "String"
+    Default :  "https://github.com/meta-introspector/cloud-deployment-eliza/"
+
+  GitBranch:
+    Type: "String"
+    Default: "feature/eliza/feb-10"
+
+  SSMParameterPattern:
+    Type: 'String'
+    Description: 'pattern for ssm parameter, leave default'
+    Default: "tine_agent_*"
+  S3BucketPattern:
+    Type: 'String'
+    Description: 'pattern for ssm parameter, leave default'
+    Default: "tine_agent_*"
+  GroqKey:
+    Type: 'String'
+    Description: 'secret groq key'
+  AgentImage:
+    Type: 'String'
+    Description: 'agent image id'
+    Default: 'h4ckermike/elizaos-eliza:feb10'
+    # docker pull 767503528736.dkr.ecr.us-east-2.amazonaws.com/agent/eliza:feb10
+    # docker tag 767503528736.dkr.ecr.us-east-2.amazonaws.com/agent/eliza:feb10 h4ckermike/elizaos-eliza:feb10
+    # docker push h4ckermike/elizaos-eliza:feb10
+
+  TokenizerImage:
+    Type: 'String'
+    Description: 'public tokenizer image name'
+    Default: 'h4ckermike/arm64-tokenizers:feature-arm64'
+  TwitterEmail:
+    Type: 'String'
+    Description: 'twitter email'
+
+  TwitterPassword:
+    Type: 'String'
+    Description: 'twitter password'
+
+  TwitterUserName:
+    Type: 'String'
+    Description: 'twitter username'
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+Resources:
+  MyDHCPOptions:
+    Type: AWS::EC2::DHCPOptions
+    DeletionPolicy: Delete
+    Properties:
+      DomainNameServers:
+        - AmazonProvidedDNS
+
+  TineAgentAgentImageParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_agent_image'
+      Type: 'String'
+      Value: !Ref AgentImage
+      Tier: 'Standard'
+      Description: 'Parameter for Tine Agent image'
+  TineAgentGroqKey:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_groq_key'
+      Type: 'String'
+      Value: !Ref GroqKey
+      Tier: 'Standard'
+      Description: 'Secret Parameter for Groq Key'
+  TineAgentTokenizerImage:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_tokenizer_image'
+      Type: 'String'
+      Value: !Ref TokenizerImage
+      Tier: 'Standard'
+      Description: 'Parameter for Tokenizer Image'
+  TineAgentTwitterEmail:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_twitter_email'
+      Type: 'String'
+      Value: !Ref TwitterEmail
+      Tier: 'Standard'
+      Description: 'Parameter for TwitterEmail'
+  TineAgentTwitterPassword:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_twitter_password'
+      Type: 'String'
+      Value: !Ref TwitterPassword
+      Tier: 'Standard'
+      Description: 'Parameter for TwitterPassword'
+
+  TineAgentTwitterUserName:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_twitter_username'
+      Type: 'String'
+      Value: !Ref TwitterUserName
+      Tier: 'Standard'
+      Description: 'Parameter for TwitterUserName'
+
+  # this creates an admin user but let us not get involved in that part, too dangerous.
+  # users need to create own admin users or privledged users with perms to deploy this
+  # we will work on fined tuned policies as we go
+  # IAMUserAdmin:
+  #   UpdateReplacePolicy: Retain
+  #   Type: AWS::IAM::User
+  #   DeletionPolicy: Retain
+  #   Properties:
+  #     Path: /
+  #     ManagedPolicyArns:
+  #       - arn:aws:iam::aws:policy/AdministratorAccess
+  #     UserName: admin_user
+  #     LoginProfile:
+  #       PasswordResetRequired: false
+
+  KMSKey:
+    UpdateReplacePolicy: Retain
+    Type: AWS::KMS::Key
+    DeletionPolicy: Retain
+    Properties:
+      Origin: AWS_KMS
+      MultiRegion: false
+      Description: Default key that protects my EBS volumes when no other key is defined
+      KeyPolicy:
+        Version: '2012-10-17'
+        Id: key-default-1
+        Statement:
+          - Sid: REMOVE and enter principle in below section - Added for demo to prevent key lock out
+            Effect: Allow
+            Principal:
+              AWS: !Sub "arn:aws:iam::${AWS::AccountId}:root"
+            Action:
+              - kms:*
+            Resource: '*'
+
+          # - Effect: Allow
+          #   Action:
+          #     - kms:Decrypt
+          #     - kms:DescribeKey
+          #     - "kms:GenerateDataKey*"
+          #     - kms:Encrypt
+          #   NotResource: !Sub "arn:aws:kms:*:${AWS::AccountId}:key/*"
+          #   Condition:
+          #     StringLike:
+          #       "kms:ViaService":
+          #         - !Sub "sqs.${AWS::Region}.amazonaws.com"
+
+
+  # KMSKey:
+  #   UpdateReplacePolicy: Retain
+  #   Type: AWS::KMS::Key
+  #   DeletionPolicy: Retain
+  #   Properties:
+  #     Origin: AWS_KMS
+  #     MultiRegion: false
+  #     Description: Default key that protects my EBS volumes when no other key is defined
+  #     KeyPolicy:
+  #       Version: '2012-10-17'
+  #       Statement:
+  #         - Condition:
+  #             StringEquals:
+  #               kms:ViaService:
+  #                 - !Sub sqs.${AWS::Region}.amazonaws.com
+  #               kms:CallerAccount: !Ref 'AWS::AccountId'
+  #           Resource: '*'
+  #           Action:
+  #             - kms:Encrypt
+  #             - kms:Decrypt
+  #             - kms:ReEncrypt*
+  #             - kms:GenerateDataKey*
+  #             - kms:CreateGrant
+  #             - kms:DescribeKey
+  #           Effect: Allow
+  #           Principal:
+  #             AWS: '*'
+  #             Sid: Allow access through EBS for all principals in the account that are authorized to use EBS
+
+
+  #           KeySpec: SYMMETRIC_DEFAULT
+  #           Enabled: true
+  #           EnableKeyRotation: true
+  #           KeyUsage: ENCRYPT_DECRYPT
+ # KeyPolicy:
+ #    Id: key-consolepolicy-3
+ #    Version: "2012-10-17"
+ #    Statement:
+ #      - Sid: Enable IAM User Permissions
+ #        Effect: Allow
+ #        Principal:
+ #          AWS: !Sub "arn:aws:iam::${AWS::AccountId}:root"
+ #        Action: kms:*
+ #        Resource: '*'
+ #      - Sid: Allow access for Key Administrators
+ #        Effect: Allow
+ #        Principal:
+ #          AWS:
+ #            - !Sub "arn:aws:iam::${AWS::AccountId}:role/admin"
+ #            - !Sub "arn:aws:iam::${AWS::AccountId}:user/cloud_user"
+ #        Action:
+ #          - kms:Create*
+ #          - kms:Describe*
+ #          - kms:Enable*
+ #          - kms:List*
+ #          - kms:Put*
+ #          - kms:Update*
+ #          - kms:Revoke*
+ #          - kms:Disable*
+ #          - kms:Get*
+ #          - kms:Delete*
+ #          - kms:TagResource
+ #          - kms:UntagResource
+ #          - kms:ScheduleKeyDeletion
+ #          - kms:CancelKeyDeletion
+ #        Resource: '*'
+ #      - Sid: Allow use of the key
+ #        Effect: Allow
+ #        Principal:
+ #          AWS: !Sub "arn:aws:iam::${AWS::AccountId}:role/aws-service-role/rds.amazonaws.com/AWSServiceRoleForRDS"
+ #        Action:
+ #          - kms:Encrypt
+ #          - kms:Decrypt
+ #          - kms:ReEncrypt*
+ #          - kms:GenerateDataKey*
+ #          - kms:DescribeKey
+ #        Resource: '*'
+ #      - Sid: Allow attachment of persistent resources
+ #        Effect: Allow
+ #        Principal:
+ #          AWS: !Sub "arn:aws:iam::${AWS::AccountId}:role/aws-service-role/rds.amazonaws.com/AWSServiceRoleForRDS"
+ #        Action:
+ #          - kms:CreateGrant
+ #          - kms:ListGrants
+ #          - kms:RevokeGrant
+ #        Resource: '*'
+ #        Condition:
+ #          Bool:
+ #            kms:GrantIsForAWSResource: "true"
+
+  IAMRoleAgent:
+    Type: "AWS::IAM::Role"
+    Properties:
+      Path: "/"
+      RoleName: !Sub '${AgentCodeName}_ssm-tine-deploy-agent-role'
+      AssumeRolePolicyDocument: "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Sid\":\"\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"},\"Action\":\"sts:AssumeRole\"}]}"
+      MaxSessionDuration: 3600
+      ManagedPolicyArns:
+      #- IAMManagedPolicy2
+      - "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+      - "arn:aws:iam::aws:policy/AmazonSSMPatchAssociation"
+      - "arn:aws:iam::aws:policy/AmazonSSMManagedEC2InstanceDefaultPolicy"
+
+  IAMInstanceProfile:
+    DependsOn:
+      - IAMRoleAgent
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Path: "/"
+      InstanceProfileName: !Sub "${AgentCodeName}_agent-instance-profile"
+      Roles:
+        - !Ref IAMRoleAgent
+
+  EC2VPC:
+    Type: "AWS::EC2::VPC"
+    Properties:
+        CidrBlock: "10.0.0.0/16"
+        EnableDnsSupport: true
+        EnableDnsHostnames: true
+
+  EC2SubnetPublicA:
+    Type: "AWS::EC2::Subnet"
+    Properties:
+        AvailabilityZone: !Sub "${AWS::Region}${AvailabilityZone}"
+        CidrBlock: "10.0.4.0/24"
+        VpcId:
+          Ref: "EC2VPC"
+        MapPublicIpOnLaunch: false
+
+  ### setup vpc with routes
+  RouteTable:
+    Type: "AWS::EC2::RouteTable"
+    DependsOn:
+      - InternetGateway
+    Properties:
+      VpcId:
+        Ref: "EC2VPC"
+  InternetGateway:
+    Type: "AWS::EC2::InternetGateway"
+  VPCGatewayAttachment:
+    DependsOn:
+      - InternetGateway
+    Type: "AWS::EC2::VPCGatewayAttachment"
+    Properties:
+      VpcId:
+        Ref: "EC2VPC"
+      InternetGatewayId: !Ref "InternetGateway"
+  InternetRoute:
+    Type: "AWS::EC2::Route"
+    DependsOn:
+      - InternetGateway
+      - RouteTable
+    Properties:
+      DestinationCidrBlock: "0.0.0.0/0"
+      GatewayId: !Ref InternetGateway
+      RouteTableId: !Ref RouteTable
+
+  SubnetARouteTableAssociation:
+    Type: "AWS::EC2::SubnetRouteTableAssociation"
+    Properties:
+      RouteTableId: !Ref RouteTable
+      SubnetId: !Ref EC2SubnetPublicA
+
+  EC2SecurityGroup:
+    Type: "AWS::EC2::SecurityGroup"
+    Properties:
+      GroupDescription: "An internal security group"
+      GroupName: "agent-internal"
+      SecurityGroupEgress:
+        -
+          CidrIp: "0.0.0.0/0"
+          Description: "All protocols"
+          IpProtocol: "-1"
+        -
+          CidrIpv6: "::/0"
+          Description: "All protocols"
+          IpProtocol: "-1"
+      VpcId:
+        Ref: "EC2VPC"
+
+  EC2LaunchTemplate:
+    Type: "AWS::EC2::LaunchTemplate"
+    Properties:
+
+      LaunchTemplateName: "agent-docker-t4g.small-launch-template"
+      LaunchTemplateData:
+        IamInstanceProfile:
+          Name: !Ref IAMInstanceProfile
+        NetworkInterfaces:
+          -
+            AssociatePublicIpAddress: true
+            DeleteOnTermination: true
+            DeviceIndex: 0
+            Groups:
+              - !Ref EC2SecurityGroup
+            NetworkCardIndex: 0
+        ImageId: !Sub "${AmiId}"
+        InstanceType: "t4g.small"
+        UserData:
+          Fn::Base64: !Sub |
+              #!/bin/bash -xe
+              export AGENT_NAME="${AgentCodeName}"
+              export GIT_REPO="${GitRepo}" # FIXME
+              export GIT_BRANCH="${GitBranch}" # FIXME
+              export HOME=/root
+              apt update
+              apt-get install -y ec2-instance-connect git
+              apt-get install -y cloud-utils apt-transport-https ca-certificates curl software-properties-common
+              curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+              add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu  $(lsb_release -cs)  stable"
+              apt-get update
+              apt-get install -y docker-ce
+              usermod -aG docker ubuntu
+              snap install amazon-ssm-agent --classic || echo oops1
+              snap start amazon-ssm-agent || echo oops2
+              apt-get install -y --no-install-recommends ca-certificates=20230311 curl=7.88.1-10+deb12u7 |  echo oops
+              apt-get install -y wget unzip systemd
+              if [ ! -d "/opt/agent/" ]; then
+              git clone "${GitRepo}" "/opt/agent/"
+              fi
+              cd "/opt/agent/" || exit 1
+              git stash
+              git fetch --all
+              git checkout --track --force "origin/${GitBranch}"
+              bash -x /opt/agent/rundocker.sh
+
+        BlockDeviceMappings:
+          -
+            DeviceName: "/dev/sda1"
+            Ebs:
+              Encrypted: true
+              VolumeSize: 30
+              VolumeType: "gp3"
+
+  AWSServiceRoleForAutoScaling:
+    Type: AWS::IAM::ServiceLinkedRole
+    Properties:
+      AWSServiceName: autoscaling.amazonaws.com
+      
+  AutoScalingAutoScalingGroup:
+    Type: "AWS::AutoScaling::AutoScalingGroup"
+    DependsOn:
+      - EC2LaunchTemplate
+      - AWSServiceRoleForAutoScaling
+    Properties:
+      AutoScalingGroupName: "docker-agent-ami-t4g.small"
+      LaunchTemplate:
+        LaunchTemplateName:  "agent-docker-t4g.small-launch-template"
+        Version: !Ref LaunchTemplateVersion
+      MinSize: 1
+      MaxSize: 2
+      DesiredCapacity: 1
+      Cooldown: 300
+      AvailabilityZones:
+        - !Sub "${AWS::Region}${AvailabilityZone}"
+        #              - "us-west-1b"
+      HealthCheckType: "EC2"
+      HealthCheckGracePeriod: 300
+      VPCZoneIdentifier:
+        - !Ref EC2SubnetPublicA
+      TerminationPolicies:
+        - "Default"
+      ServiceLinkedRoleARN: !Sub "arn:aws:iam::${AWS::AccountId}:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling"
+      #PropagateAtLaunch: true
+      NewInstancesProtectedFromScaleIn: false
