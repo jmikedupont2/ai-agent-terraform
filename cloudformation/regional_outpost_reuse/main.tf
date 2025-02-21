@@ -51,6 +51,7 @@ resource "aws_s3_object" "cloudformation_template" {
   bucket = data.aws_s3_bucket.template_bucket.id
   key    = "zos-solfunmeme-tine-the-introspector-is-not-eliza-stack-template-one-click-installer-dev-${var.patch}.yaml" # Replace with your desired file name
   source = "ec2.yml"                                                                                                    # Replace with the path to your template file
+  etag   = filemd5("ec2.yml")                                                                                           # Update when the file changes
 }
 
 

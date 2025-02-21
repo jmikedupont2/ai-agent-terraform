@@ -57,7 +57,7 @@ Parameters:
 
   TwitterPassword:
     Type: 'String'
-    Description: 'twitter password (please dont use chars like ()!\'"${} in the password due to known bugs'
+    Description: 'twitter password (please dont use chars like single quote ()!"${} in the password due to known bugs'
 
   TwitterUserName:
     Type: 'String'
