@@ -1,7 +1,7 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Metadata:
     Generator: "former2"
-Description: "minimal ec2 asg and lt"
+Description: "minimal ec2 asg and lt for eliza"
 Parameters:
 
   GitRepo:
@@ -18,7 +18,7 @@ Parameters:
   GitBranch:
     Type: "String"
     Description: "git branch for the agent you can modify this to your own branch"
-    Default: "/feature/signoz"
+    Default: "feature/signoz"
 
   GroqKey:
     NoEcho: true
@@ -72,7 +72,7 @@ Parameters:
   AgentImage:
     Type: 'String'
     Description: 'agent docker image to load'
-    Default: 'h4ckermike/elizaos-eliza:feb10'
+    Default: 'h4ckermike/elizaos-eliza:signoz'
 
   TokenizerImage:
     Type: 'String'
@@ -317,6 +317,5 @@ Resources:
         - !Ref EC2SubnetPublicA
       TerminationPolicies:
         - "Default"
-      #ServiceLinkedRoleARN: !Sub "arn:aws:iam::${AWS::AccountId}:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling${AgentCodeName}"
       ServiceLinkedRoleARN: !Sub "arn:aws:iam::${AWS::AccountId}:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling_${AgentCodeName}"
       NewInstancesProtectedFromScaleIn: false
