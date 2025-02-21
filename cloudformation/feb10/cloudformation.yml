@@ -9,11 +9,11 @@ Parameters:
     Description: "git repo for the agent you can modify this to your own repo"
     Default :  "https://github.com/meta-introspector/cloud-deployment-eliza/"
 
-  AgentFile:
+  AgentCharacterFile:
     Type: "String"
-    Description: "File name in agent"
-    Default: "/feature/signoz"
-
+    Description: "File name of agent to load, FIXME not used yet"
+    # referenced ~/cloud-deployment-eliza/systemd/agent-docker.service
+    Default: "/app/agent/characters/tine-test.character.json"
 
   GitBranch:
     Type: "String"
@@ -23,22 +23,22 @@ Parameters:
   GroqKey:
     NoEcho: true
     Type: 'String'
-    Description: 'secret groq key'
+    Description: 'secret groq key (hidden)'
     
   TwitterEmail:
     NoEcho: true
     Type: 'String'
-    Description: 'twitter email'
+    Description: 'twitter email (hidden)'
 
   TwitterPassword:
     NoEcho: true
     Type: 'String'
-    Description: 'twitter password (please dont use chars like single quote ()!"${} in the password due to known bugs'
+    Description: 'twitter password (please dont use chars like single quote ()!"${} in the password due to known bugs (hidden)'
 
   TwitterUserName:
     NoEcho: true
     Type: 'String'
-    Description: 'twitter username'
+    Description: 'twitter username (hidden)'
 
   AgentCodeName:
     Type: 'String'
