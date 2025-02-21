@@ -1,5 +1,7 @@
 locals {
-  patch = "feb21" # create new cf template for this version to document the steps
+  patch           = "feb21" # create new cf template for this version to document the steps
+  agent_image     = "h4ckermike/elizaos-eliza:signoz"
+  tokenizer_image = "h4ckermike/arm64-tokenizers:feature-arm64"
 }
 # default
 
@@ -169,123 +171,157 @@ provider "aws" {
 # now deploy
 
 module "region_apnortheast1" {
-  source    = "../regional_outpost_reuse"
-  providers = { aws = aws.apnortheast1 }
-  region    = "ap-northeast-1"
-  patch     = local.patch
+  source          = "../regional_outpost_reuse"
+  providers       = { aws = aws.apnortheast1 }
+  region          = "ap-northeast-1"
+  agent_image     = local.agent_image
+  tokenizer_image = local.tokenizer_image
+  patch           = local.patch
 }
 
 module "region_apnortheast2" {
-  source    = "../regional_outpost_reuse"
-  providers = { aws = aws.apnortheast2 }
-  region    = "ap-northeast-2"
-  patch     = local.patch
+  source          = "../regional_outpost_reuse"
+  providers       = { aws = aws.apnortheast2 }
+  region          = "ap-northeast-2"
+  agent_image     = local.agent_image
+  tokenizer_image = local.tokenizer_image
+  patch           = local.patch
 }
 
 module "region_apnortheast3" {
-  source    = "../regional_outpost_reuse"
-  providers = { aws = aws.apnortheast3 }
-  region    = "ap-northeast-3"
-  patch     = local.patch
+  source          = "../regional_outpost_reuse"
+  providers       = { aws = aws.apnortheast3 }
+  region          = "ap-northeast-3"
+  agent_image     = local.agent_image
+  tokenizer_image = local.tokenizer_image
+  patch           = local.patch
 }
 
 module "region_apsouth1" {
-  source    = "../regional_outpost_reuse"
-  providers = { aws = aws.apsouth1 }
-  region    = "ap-south-1"
-  patch     = local.patch
+  source          = "../regional_outpost_reuse"
+  providers       = { aws = aws.apsouth1 }
+  region          = "ap-south-1"
+  agent_image     = local.agent_image
+  tokenizer_image = local.tokenizer_image
+  patch           = local.patch
 }
 
 module "region_apsoutheast1" {
-  source    = "../regional_outpost_reuse"
-  providers = { aws = aws.apsoutheast1 }
-  region    = "ap-southeast-1"
-  patch     = local.patch
+  source          = "../regional_outpost_reuse"
+  providers       = { aws = aws.apsoutheast1 }
+  region          = "ap-southeast-1"
+  agent_image     = local.agent_image
+  tokenizer_image = local.tokenizer_image
+  patch           = local.patch
 }
 
 module "region_apsoutheast2" {
-  source    = "../regional_outpost_reuse"
-  providers = { aws = aws.apsoutheast2 }
-  region    = "ap-southeast-2"
-  patch     = local.patch
+  source          = "../regional_outpost_reuse"
+  providers       = { aws = aws.apsoutheast2 }
+  region          = "ap-southeast-2"
+  agent_image     = local.agent_image
+  tokenizer_image = local.tokenizer_image
+  patch           = local.patch
 }
 
 module "region_cacentral1" {
-  source    = "../regional_outpost_reuse"
-  providers = { aws = aws.cacentral1 }
-  region    = "ca-central-1"
-  patch     = local.patch
+  source          = "../regional_outpost_reuse"
+  providers       = { aws = aws.cacentral1 }
+  region          = "ca-central-1"
+  agent_image     = local.agent_image
+  tokenizer_image = local.tokenizer_image
+  patch           = local.patch
 }
 
 module "region_eucentral1" {
-  source    = "../regional_outpost_reuse"
-  providers = { aws = aws.eucentral1 }
-  region    = "eu-central-1"
-  patch     = local.patch
+  source          = "../regional_outpost_reuse"
+  providers       = { aws = aws.eucentral1 }
+  region          = "eu-central-1"
+  agent_image     = local.agent_image
+  tokenizer_image = local.tokenizer_image
+  patch           = local.patch
 }
 
 module "region_eunorth1" {
-  source    = "../regional_outpost_reuse"
-  providers = { aws = aws.eunorth1 }
-  region    = "eu-north-1"
-  patch     = local.patch
+  source          = "../regional_outpost_reuse"
+  providers       = { aws = aws.eunorth1 }
+  region          = "eu-north-1"
+  agent_image     = local.agent_image
+  tokenizer_image = local.tokenizer_image
+  patch           = local.patch
 }
 
 module "region_euwest1" {
-  source    = "../regional_outpost_reuse"
-  providers = { aws = aws.euwest1 }
-  region    = "eu-west-1"
-  patch     = local.patch
+  source          = "../regional_outpost_reuse"
+  providers       = { aws = aws.euwest1 }
+  region          = "eu-west-1"
+  agent_image     = local.agent_image
+  tokenizer_image = local.tokenizer_image
+  patch           = local.patch
 }
 
 
 module "region_euwest2" {
-  source    = "../regional_outpost_reuse"
-  providers = { aws = aws.euwest2 }
-  region    = "eu-west-2"
-  patch     = local.patch
+  source          = "../regional_outpost_reuse"
+  providers       = { aws = aws.euwest2 }
+  region          = "eu-west-2"
+  agent_image     = local.agent_image
+  tokenizer_image = local.tokenizer_image
+  patch           = local.patch
 }
 
 module "region_euwest3" {
-  source    = "../regional_outpost_reuse"
-  providers = { aws = aws.euwest3 }
-  region    = "eu-west-3"
-  patch     = local.patch
+  source          = "../regional_outpost_reuse"
+  providers       = { aws = aws.euwest3 }
+  region          = "eu-west-3"
+  agent_image     = local.agent_image
+  tokenizer_image = local.tokenizer_image
+  patch           = local.patch
 }
 
 module "region_saeast1" {
-  source    = "../regional_outpost_reuse"
-  providers = { aws = aws.saeast1 }
-  region    = "sa-east-1"
-  patch     = local.patch
+  source          = "../regional_outpost_reuse"
+  providers       = { aws = aws.saeast1 }
+  region          = "sa-east-1"
+  agent_image     = local.agent_image
+  tokenizer_image = local.tokenizer_image
+  patch           = local.patch
 }
 
 module "region_useast1" {
-  source    = "../regional_outpost_reuse"
-  providers = { aws = aws.useast1 }
-  region    = "us-east-1"
-  patch     = local.patch
+  source          = "../regional_outpost_reuse"
+  providers       = { aws = aws.useast1 }
+  region          = "us-east-1"
+  agent_image     = local.agent_image
+  tokenizer_image = local.tokenizer_image
+  patch           = local.patch
 }
 
 module "region_useast2" {
-  source    = "../regional_outpost_reuse"
-  providers = { aws = aws.useast2 }
-  region    = "us-east-2"
-  patch     = local.patch
+  source          = "../regional_outpost_reuse"
+  providers       = { aws = aws.useast2 }
+  region          = "us-east-2"
+  agent_image     = local.agent_image
+  tokenizer_image = local.tokenizer_image
+  patch           = local.patch
 }
 
 module "region_uswest1" {
-  source    = "../regional_outpost_reuse"
-  providers = { aws = aws.uswest1 }
-  region    = "us-west-1"
-  patch     = local.patch
+  source          = "../regional_outpost_reuse"
+  providers       = { aws = aws.uswest1 }
+  region          = "us-west-1"
+  agent_image     = local.agent_image
+  tokenizer_image = local.tokenizer_image
+  patch           = local.patch
 }
 
 module "region_uswest2" {
-  source    = "../regional_outpost_reuse"
-  providers = { aws = aws.uswest2 }
-  region    = "us-west-2"
-  patch     = local.patch
+  source          = "../regional_outpost_reuse"
+  providers       = { aws = aws.uswest2 }
+  region          = "us-west-2"
+  patch           = local.patch
+  agent_image     = local.agent_image
+  tokenizer_image = local.tokenizer_image
 }
 
 #module "region_apsouth2" { source    = "../regional_outpost_reuse" providers = { aws = aws.apsouth2 } region    = "ap-south-2"}
@@ -327,11 +363,11 @@ locals {
 }
 
 resource "local_file" "items_to_html" {
+
   content = join("\n", [
     for alias in local.all_regions :
     alias.full_html_url
   ])
   filename = "installer.md"
 }
-
 

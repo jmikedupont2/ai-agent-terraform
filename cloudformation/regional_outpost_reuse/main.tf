@@ -17,7 +17,7 @@ variable "patch" {} # was v3
 # }
 
 data "aws_s3_bucket" "template_bucket" {
-  bucket        = "zos-solfunmeme-tine-cf-template-${var.region}" # Replace with your desired bucket name
+  bucket = "zos-solfunmeme-tine-cf-template-${var.region}" # Replace with your desired bucket name
 
 }
 
@@ -50,8 +50,8 @@ data "aws_s3_bucket" "template_bucket" {
 resource "aws_s3_object" "cloudformation_template" {
   bucket = data.aws_s3_bucket.template_bucket.id
   key    = "zos-solfunmeme-tine-the-introspector-is-not-eliza-stack-template-one-click-installer-dev-${var.patch}.yaml" # Replace with your desired file name
-  source = "cloudformation.yml"                                                                                                    # Replace with the path to your template file
-  etag   = filemd5("cloudformation.yml")                                                                                           # Update when the file changes
+  source = "cloudformation.yml"                                                                                         # Replace with the path to your template file
+  etag   = filemd5("cloudformation.yml")                                                                                # Update when the file changes
 }
 
 

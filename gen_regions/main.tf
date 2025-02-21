@@ -46,13 +46,13 @@ locals {
   ]
 }
 
-output all_regions {
+output "all_regions" {
   value = data.aws_regions.all
 }
 
-module genprovider {
+module "genprovider" {
   #for_each = data.aws_regions.all
-  source = "../cloudformation/genprovider"
+  source  = "../cloudformation/genprovider"
   regions = data.aws_regions.all.names
 }
 
