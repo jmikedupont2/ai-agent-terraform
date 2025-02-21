@@ -317,7 +317,6 @@ Resources:
         - !Ref EC2SubnetPublicA
       TerminationPolicies:
         - "Default"
-#      ServiceLinkedRoleARN: !Sub "arn:aws:iam::${AWS::AccountId}:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling"
-      ServiceLinkedRoleARN:  !GetAtt AWSServiceRoleForAutoScaling.Arn
-      #PropagateAtLaunch: true
+      #ServiceLinkedRoleARN: !Sub "arn:aws:iam::${AWS::AccountId}:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling${AgentCodeName}"
+      ServiceLinkedRoleARN: !Sub "arn:aws:iam::${AWS::AccountId}:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling_${AgentCodeName}"
       NewInstancesProtectedFromScaleIn: false
