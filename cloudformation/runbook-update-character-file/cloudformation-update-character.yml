@@ -19,7 +19,7 @@ Resources:
             description: "name of char file with no slashes or .json at the end"
             type: "String"
             default: "test"
-            AllowedPattern: "^[0-9a-zA-Z]+$"
+            allowedPattern: "^[0-9a-zA-Z]+$"
           AutomationAssumeRole:
             default: ""
             description: "(Optional) Rolename."
