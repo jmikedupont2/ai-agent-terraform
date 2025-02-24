@@ -1,6 +1,6 @@
 Description: "agentUpdate"
 Resources:
-  DockerDiagnoseAutomation:
+  UpdateCharacterAutomation:
     Type: AWS::SSM::Document
     Properties:
       DocumentType: Automation
