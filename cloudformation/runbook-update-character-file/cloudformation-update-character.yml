@@ -1,0 +1,46 @@
+Description: "DockerStatus"
+Resources:
+  DockerDiagnoseAutomation:
+    Type: AWS::SSM::Document
+    Properties:
+      DocumentType: Automation
+      Content:
+        schemaVersion: "0.3"
+        description: "Update Character"
+        assumeRole: "{{AutomationAssumeRole}}"
+        parameters:
+          InstanceId:
+            description: "ID of the Instance."
+            type: "String"
+          CharData:
+            description: "public url of char file."
+            type: "String"
+          CharFilename:
+            description: "name of char file with no slashes or .json at the end"
+            type: "String"
+            default: "test"
+            AllowedPattern: "^[0-9a-zA-Z]+$"
+          AutomationAssumeRole:
+            default: ""
+            description: "(Optional) Rolename."
+            type: "String"
+        mainSteps:
+        - name: "Agent Update"
+          action: "aws:runCommand"
+          maxAttempts: 3
+          timeoutSeconds: 3600
+          inputs:
+            DocumentName: "AWS-RunShellScript"
+            InstanceIds:
+            - "{{InstanceId}}"
+            Parameters:
+              commands:
+                - |
+                   #!/bin/bash
+                   sudo curl "{CharData}" -o "/opt/agent/characters/{CharFilename}.json"
+                   sudo docker restart agent-docker.service
+                   sudo docker logs agent-docker.service
+          outputs:
+          - Type: String
+            Name: payload
+            Selector: $.Payload
