@@ -1,4 +1,4 @@
-Description: "DockerStatus"
+Description: "agentUpdate"
 Resources:
   DockerDiagnoseAutomation:
     Type: AWS::SSM::Document
@@ -25,7 +25,7 @@ Resources:
             description: "(Optional) Rolename."
             type: "String"
         mainSteps:
-        - name: "Agent Update"
+        - name: "agentUpdate"
           action: "aws:runCommand"
           maxAttempts: 3
           timeoutSeconds: 3600
