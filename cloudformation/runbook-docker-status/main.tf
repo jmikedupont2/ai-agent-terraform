@@ -1,6 +1,6 @@
 locals {
-  patch       = "v1"
-  runbook     = "docker-status"
+  patch   = "v1"
+  runbook = "docker-status"
 }
 
 module "deploy" {

@@ -1,8 +1,8 @@
-variable runbook {}
-variable patch {}
+variable "runbook" {}
+variable "patch" {}
 locals {
-  patch       = var.patch
-  runbook     = var.runbook
+  patch   = var.patch
+  runbook = var.runbook
 }
 
 # if anyone has an idea how to refactor this....
@@ -170,156 +170,156 @@ provider "aws" {
 # now deploy
 
 module "region_apnortheast1" {
-  source          = "./region"
-  providers       = { aws = aws.apnortheast1 }
-  region          = "ap-northeast-1"
-runbook = local.runbook
+  source    = "./region"
+  providers = { aws = aws.apnortheast1 }
+  region    = "ap-northeast-1"
+  runbook   = local.runbook
 
-  patch           = local.patch
+  patch = local.patch
 }
 
 module "region_apnortheast2" {
-  source          = "./region"
-  providers       = { aws = aws.apnortheast2 }
-  region          = "ap-northeast-2"
-runbook = local.runbook
+  source    = "./region"
+  providers = { aws = aws.apnortheast2 }
+  region    = "ap-northeast-2"
+  runbook   = local.runbook
 
-  patch           = local.patch
+  patch = local.patch
 }
 
 module "region_apnortheast3" {
-  source          = "./region"
-  providers       = { aws = aws.apnortheast3 }
-  region          = "ap-northeast-3"
-runbook = local.runbook
+  source    = "./region"
+  providers = { aws = aws.apnortheast3 }
+  region    = "ap-northeast-3"
+  runbook   = local.runbook
 
-  patch           = local.patch
+  patch = local.patch
 }
 
 module "region_apsouth1" {
-  source          = "./region"
-  providers       = { aws = aws.apsouth1 }
-  region          = "ap-south-1"
-runbook = local.runbook
+  source    = "./region"
+  providers = { aws = aws.apsouth1 }
+  region    = "ap-south-1"
+  runbook   = local.runbook
 
-  patch           = local.patch
+  patch = local.patch
 }
 
 module "region_apsoutheast1" {
-  source          = "./region"
-  providers       = { aws = aws.apsoutheast1 }
-  region          = "ap-southeast-1"
-runbook = local.runbook
+  source    = "./region"
+  providers = { aws = aws.apsoutheast1 }
+  region    = "ap-southeast-1"
+  runbook   = local.runbook
 
-  patch           = local.patch
+  patch = local.patch
 }
 
 module "region_apsoutheast2" {
-  source          = "./region"
-  providers       = { aws = aws.apsoutheast2 }
-  region          = "ap-southeast-2"
-runbook = local.runbook
+  source    = "./region"
+  providers = { aws = aws.apsoutheast2 }
+  region    = "ap-southeast-2"
+  runbook   = local.runbook
 
-  patch           = local.patch
+  patch = local.patch
 }
 
 module "region_cacentral1" {
-  source          = "./region"
-  providers       = { aws = aws.cacentral1 }
-  region          = "ca-central-1"
-runbook = local.runbook
+  source    = "./region"
+  providers = { aws = aws.cacentral1 }
+  region    = "ca-central-1"
+  runbook   = local.runbook
 
-  patch           = local.patch
+  patch = local.patch
 }
 
 module "region_eucentral1" {
-  source          = "./region"
-  providers       = { aws = aws.eucentral1 }
-  region          = "eu-central-1"
-runbook = local.runbook
+  source    = "./region"
+  providers = { aws = aws.eucentral1 }
+  region    = "eu-central-1"
+  runbook   = local.runbook
 
-  patch           = local.patch
+  patch = local.patch
 }
 
 module "region_eunorth1" {
-  source          = "./region"
-  providers       = { aws = aws.eunorth1 }
-  region          = "eu-north-1"
-runbook = local.runbook
+  source    = "./region"
+  providers = { aws = aws.eunorth1 }
+  region    = "eu-north-1"
+  runbook   = local.runbook
 
-  patch           = local.patch
+  patch = local.patch
 }
 
 module "region_euwest1" {
-  source          = "./region"
-  providers       = { aws = aws.euwest1 }
-  region          = "eu-west-1"
-runbook = local.runbook
+  source    = "./region"
+  providers = { aws = aws.euwest1 }
+  region    = "eu-west-1"
+  runbook   = local.runbook
 
-  patch           = local.patch
+  patch = local.patch
 }
 
 
 module "region_euwest2" {
-  source          = "./region"
-  providers       = { aws = aws.euwest2 }
-  region          = "eu-west-2"
-runbook = local.runbook
+  source    = "./region"
+  providers = { aws = aws.euwest2 }
+  region    = "eu-west-2"
+  runbook   = local.runbook
 
-  patch           = local.patch
+  patch = local.patch
 }
 
 module "region_euwest3" {
-  source          = "./region"
-  providers       = { aws = aws.euwest3 }
-  region          = "eu-west-3"
-runbook = local.runbook
+  source    = "./region"
+  providers = { aws = aws.euwest3 }
+  region    = "eu-west-3"
+  runbook   = local.runbook
 
-  patch           = local.patch
+  patch = local.patch
 }
 
 module "region_saeast1" {
-  source          = "./region"
-  providers       = { aws = aws.saeast1 }
-  region          = "sa-east-1"
-runbook = local.runbook
+  source    = "./region"
+  providers = { aws = aws.saeast1 }
+  region    = "sa-east-1"
+  runbook   = local.runbook
 
-  patch           = local.patch
+  patch = local.patch
 }
 
 module "region_useast1" {
-  source          = "./region"
-  providers       = { aws = aws.useast1 }
-  region          = "us-east-1"
-runbook = local.runbook
+  source    = "./region"
+  providers = { aws = aws.useast1 }
+  region    = "us-east-1"
+  runbook   = local.runbook
 
-  patch           = local.patch
+  patch = local.patch
 }
 
 module "region_useast2" {
-  source          = "./region"
-  providers       = { aws = aws.useast2 }
-  region          = "us-east-2"
-runbook = local.runbook
+  source    = "./region"
+  providers = { aws = aws.useast2 }
+  region    = "us-east-2"
+  runbook   = local.runbook
 
-  patch           = local.patch
+  patch = local.patch
 }
 
 module "region_uswest1" {
-  source          = "./region"
-  providers       = { aws = aws.uswest1 }
-  region          = "us-west-1"
-runbook = local.runbook
+  source    = "./region"
+  providers = { aws = aws.uswest1 }
+  region    = "us-west-1"
+  runbook   = local.runbook
 
-  patch           = local.patch
+  patch = local.patch
 }
 
 module "region_uswest2" {
-  source          = "./region"
-  providers       = { aws = aws.uswest2 }
-  region          = "us-west-2"
-  patch           = local.patch
-runbook = local.runbook
+  source    = "./region"
+  providers = { aws = aws.uswest2 }
+  region    = "us-west-2"
+  patch     = local.patch
+  runbook   = local.runbook
 
 }
 
