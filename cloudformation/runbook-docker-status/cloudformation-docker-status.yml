@@ -13,11 +13,11 @@ Resources:
         parameters:
           InstanceId:
             description: "ID of the Instance."
-            type: "String" 
+            type: "String"
           AutomationAssumeRole:
             default: ""
             description: "(Optional) The ARN of the role that allows Automation to perform the actions on your behalf."
-            type: "String" 
+            type: "String"
         mainSteps:
         - name: "DockerStatus"
           action: "aws:runCommand"
@@ -28,9 +28,13 @@ Resources:
             InstanceIds:
             - "{{InstanceId}}"
             Parameters:
-              commands: 
+              commands:
                 - |
                    #!/bin/bash
-                   sudo docker status
+                   sudo docker ps
+                   sudo docker inspect agent-docker.service
                    sudo docker logs agent-docker.service
-
+        outputs:
+          - Type: String
+            Name: payload
+            Selector: $.Payload
