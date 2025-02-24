@@ -37,7 +37,7 @@ Resources:
               commands:
                 - |
                    #!/bin/bash
-                   sudo curl "{CharData}" -o "/opt/agent/characters/{CharFilename}.json"
+                   sudo curl "{{CharData}}" -o "/opt/agent/characters/{{CharFilename}}.json"
                    sudo docker restart agent-docker.service
                    sudo docker logs agent-docker.service
           outputs:
