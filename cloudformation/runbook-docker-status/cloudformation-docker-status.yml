@@ -1,10 +1,8 @@
 # simple runbook template
 # https://github.com/aws-samples/aws-systems-manager-cloudformation-samples/blob/main/cloudformation-samples/AnsibleAssociation.yaml
-Description: "Docker status"
+Description: "DockerStatus"
 Resources:
-  SSMAssocLogs:
-    Type: AWS::S3::Bucket
-  nginxInstallAutomation:
+  DockerDiagnoseAutomation:
     Type: AWS::SSM::Document
     Properties:
       DocumentType: Automation
@@ -21,7 +19,7 @@ Resources:
             description: "(Optional) The ARN of the role that allows Automation to perform the actions on your behalf."
             type: "String" 
         mainSteps:
-        - name: "Docker status"
+        - name: "DockerStatus"
           action: "aws:runCommand"
           maxAttempts: 3
           timeoutSeconds: 3600
