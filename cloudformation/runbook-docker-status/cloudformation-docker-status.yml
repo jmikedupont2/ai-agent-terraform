@@ -1,5 +1,3 @@
-# simple runbook template
-# https://github.com/aws-samples/aws-systems-manager-cloudformation-samples/blob/main/cloudformation-samples/AnsibleAssociation.yaml
 Description: "DockerStatus"
 Resources:
   DockerDiagnoseAutomation:
@@ -16,7 +14,7 @@ Resources:
             type: "String"
           AutomationAssumeRole:
             default: ""
-            description: "(Optional) The ARN of the role that allows Automation to perform the actions on your behalf."
+            description: "(Optional) Rolename."
             type: "String"
         mainSteps:
         - name: "DockerStatus"
@@ -34,7 +32,7 @@ Resources:
                    sudo docker ps
                    sudo docker inspect agent-docker.service
                    sudo docker logs agent-docker.service
-        outputs:
+          outputs:
           - Type: String
             Name: payload
             Selector: $.Payload
