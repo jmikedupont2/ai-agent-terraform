@@ -20,7 +20,7 @@ Resources:
             description: "name of char file with no slashes or .json at the end"
             type: "String"
             default: "tine-test.character"
-            allowedPattern: "^[0-9a-z\.\-A-Z]+$"
+            allowedPattern: "^[0-9a-z\\.\\-A-Z]+$"
           AutomationAssumeRole:
             default: ""
             description: "(Optional) Rolename."
