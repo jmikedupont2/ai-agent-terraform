@@ -5,12 +5,19 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   thirdwebSecretKey:
     Type: 'String'
     Description: 'Parameter for THIRDWEB_SECRET_KEY'
     
 Conditions:
+
   HasThirdwebSecretKey: !Not [!Equals [!Ref thirdwebSecretKey, ""]]
+
 Resources:
 
   AgentParamThirdwebSecretKeyParameter:

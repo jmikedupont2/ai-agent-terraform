@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   mongodbConnectionString:
     Type: 'String'
     Description: 'Parameter for MONGODB_CONNECTION_STRING'
@@ -14,7 +19,11 @@ Parameters:
     Description: 'Parameter for MONGODB_DATABASE'
     
 Conditions:
-  HasMongodbConnectionString: !Not [!Equals [!Ref mongodbConnectionString, ""]]  HasMongodbDatabase: !Not [!Equals [!Ref mongodbDatabase, ""]]
+
+  HasMongodbConnectionString: !Not [!Equals [!Ref mongodbConnectionString, ""]]
+
+  HasMongodbDatabase: !Not [!Equals [!Ref mongodbDatabase, ""]]
+
 Resources:
 
   AgentParamMongodbConnectionStringParameter:

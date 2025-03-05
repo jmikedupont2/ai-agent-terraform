@@ -5,12 +5,19 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   giphyApiKey:
     Type: 'String'
     Description: 'Parameter for GIPHY_API_KEY'
     
 Conditions:
+
   HasGiphyApiKey: !Not [!Equals [!Ref giphyApiKey, ""]]
+
 Resources:
 
   AgentParamGiphyApiKeyParameter:

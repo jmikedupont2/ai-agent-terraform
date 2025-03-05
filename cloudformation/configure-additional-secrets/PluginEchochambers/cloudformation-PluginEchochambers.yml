@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   echochambersApiUrl:
     Type: 'String'
     Description: 'Parameter for ECHOCHAMBERS_API_URL'
@@ -38,7 +43,23 @@ Parameters:
     Description: 'Parameter for ECHOCHAMBERS_QUIET_PERIOD'
     
 Conditions:
-  HasEchochambersApiUrl: !Not [!Equals [!Ref echochambersApiUrl, ""]]  HasEchochambersApiKey: !Not [!Equals [!Ref echochambersApiKey, ""]]  HasEchochambersUsername: !Not [!Equals [!Ref echochambersUsername, ""]]  HasEchochambersRooms: !Not [!Equals [!Ref echochambersRooms, ""]]  HasEchochambersPollInterval: !Not [!Equals [!Ref echochambersPollInterval, ""]]  HasEchochambersMaxMessages: !Not [!Equals [!Ref echochambersMaxMessages, ""]]  HasEchochambersConversationStarterInterval: !Not [!Equals [!Ref echochambersConversationStarterInterval, ""]]  HasEchochambersQuietPeriod: !Not [!Equals [!Ref echochambersQuietPeriod, ""]]
+
+  HasEchochambersApiUrl: !Not [!Equals [!Ref echochambersApiUrl, ""]]
+
+  HasEchochambersApiKey: !Not [!Equals [!Ref echochambersApiKey, ""]]
+
+  HasEchochambersUsername: !Not [!Equals [!Ref echochambersUsername, ""]]
+
+  HasEchochambersRooms: !Not [!Equals [!Ref echochambersRooms, ""]]
+
+  HasEchochambersPollInterval: !Not [!Equals [!Ref echochambersPollInterval, ""]]
+
+  HasEchochambersMaxMessages: !Not [!Equals [!Ref echochambersMaxMessages, ""]]
+
+  HasEchochambersConversationStarterInterval: !Not [!Equals [!Ref echochambersConversationStarterInterval, ""]]
+
+  HasEchochambersQuietPeriod: !Not [!Equals [!Ref echochambersQuietPeriod, ""]]
+
 Resources:
 
   AgentParamEchochambersApiUrlParameter:

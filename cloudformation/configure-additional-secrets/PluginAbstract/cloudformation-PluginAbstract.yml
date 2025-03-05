@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   abstractAddress:
     Type: 'String'
     Description: 'Parameter for ABSTRACT_ADDRESS'
@@ -18,7 +23,13 @@ Parameters:
     Description: 'Parameter for ABSTRACT_RPC_URL'
     
 Conditions:
-  HasAbstractAddress: !Not [!Equals [!Ref abstractAddress, ""]]  HasAbstractPrivateKey: !Not [!Equals [!Ref abstractPrivateKey, ""]]  HasAbstractRpcUrl: !Not [!Equals [!Ref abstractRpcUrl, ""]]
+
+  HasAbstractAddress: !Not [!Equals [!Ref abstractAddress, ""]]
+
+  HasAbstractPrivateKey: !Not [!Equals [!Ref abstractPrivateKey, ""]]
+
+  HasAbstractRpcUrl: !Not [!Equals [!Ref abstractRpcUrl, ""]]
+
 Resources:
 
   AgentParamAbstractAddressParameter:

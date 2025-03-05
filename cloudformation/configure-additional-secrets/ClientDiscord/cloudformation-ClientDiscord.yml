@@ -4,6 +4,10 @@ Metadata:
     Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
 
   discordApplicationId:
     Type: 'String'
@@ -18,7 +22,13 @@ Parameters:
     Description: 'Parameter for DISCORD_VOICE_CHANNEL_ID'
     
 Conditions:
-  HasDiscordApplicationId: !Not [!Equals [!Ref discordApplicationId, ""]]  HasDiscordApiToken: !Not [!Equals [!Ref discordApiToken, ""]]  HasDiscordVoiceChannelId: !Not [!Equals [!Ref discordVoiceChannelId, ""]]
+
+  HasDiscordApplicationId: !Not [!Equals [!Ref discordApplicationId, ""]]
+
+  HasDiscordApiToken: !Not [!Equals [!Ref discordApiToken, ""]]
+
+  HasDiscordVoiceChannelId: !Not [!Equals [!Ref discordVoiceChannelId, ""]]
+
 Resources:
 
   AgentParamDiscordApplicationIdParameter:

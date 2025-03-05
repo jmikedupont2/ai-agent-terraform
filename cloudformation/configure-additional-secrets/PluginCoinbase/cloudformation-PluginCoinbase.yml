@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   coinbaseCommerceKey:
     Type: 'String'
     Description: 'Parameter for COINBASE_COMMERCE_KEY'
@@ -30,7 +35,19 @@ Parameters:
     Description: 'Parameter for COINBASE_NOTIFICATION_URI'
     
 Conditions:
-  HasCoinbaseCommerceKey: !Not [!Equals [!Ref coinbaseCommerceKey, ""]]  HasCoinbaseApiKey: !Not [!Equals [!Ref coinbaseApiKey, ""]]  HasCoinbasePrivateKey: !Not [!Equals [!Ref coinbasePrivateKey, ""]]  HasCoinbaseGeneratedWalletId: !Not [!Equals [!Ref coinbaseGeneratedWalletId, ""]]  HasCoinbaseGeneratedWalletHexSeed: !Not [!Equals [!Ref coinbaseGeneratedWalletHexSeed, ""]]  HasCoinbaseNotificationUri: !Not [!Equals [!Ref coinbaseNotificationUri, ""]]
+
+  HasCoinbaseCommerceKey: !Not [!Equals [!Ref coinbaseCommerceKey, ""]]
+
+  HasCoinbaseApiKey: !Not [!Equals [!Ref coinbaseApiKey, ""]]
+
+  HasCoinbasePrivateKey: !Not [!Equals [!Ref coinbasePrivateKey, ""]]
+
+  HasCoinbaseGeneratedWalletId: !Not [!Equals [!Ref coinbaseGeneratedWalletId, ""]]
+
+  HasCoinbaseGeneratedWalletHexSeed: !Not [!Equals [!Ref coinbaseGeneratedWalletHexSeed, ""]]
+
+  HasCoinbaseNotificationUri: !Not [!Equals [!Ref coinbaseNotificationUri, ""]]
+
 Resources:
 
   AgentParamCoinbaseCommerceKeyParameter:

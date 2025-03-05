@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   akashEnv:
     Type: 'String'
     Description: 'Parameter for AKASH_ENV'
@@ -110,7 +115,59 @@ Parameters:
     Description: 'Parameter for AKASH_MANIFEST_VALIDATION_LEVEL'
     
 Conditions:
-  HasAkashEnv: !Not [!Equals [!Ref akashEnv, ""]]  HasAkashNet: !Not [!Equals [!Ref akashNet, ""]]  HasRpcEndpoint: !Not [!Equals [!Ref rpcEndpoint, ""]]  HasAkashGasPrices: !Not [!Equals [!Ref akashGasPrices, ""]]  HasAkashGasAdjustment: !Not [!Equals [!Ref akashGasAdjustment, ""]]  HasAkashKeyringBackend: !Not [!Equals [!Ref akashKeyringBackend, ""]]  HasAkashFrom: !Not [!Equals [!Ref akashFrom, ""]]  HasAkashFees: !Not [!Equals [!Ref akashFees, ""]]  HasAkashDeposit: !Not [!Equals [!Ref akashDeposit, ""]]  HasAkashMnemonic: !Not [!Equals [!Ref akashMnemonic, ""]]  HasAkashWalletAddress: !Not [!Equals [!Ref akashWalletAddress, ""]]  HasAkashPricingApiUrl: !Not [!Equals [!Ref akashPricingApiUrl, ""]]  HasAkashDefaultCpu: !Not [!Equals [!Ref akashDefaultCpu, ""]]  HasAkashDefaultMemory: !Not [!Equals [!Ref akashDefaultMemory, ""]]  HasAkashDefaultStorage: !Not [!Equals [!Ref akashDefaultStorage, ""]]  HasAkashSdl: !Not [!Equals [!Ref akashSdl, ""]]  HasAkashCloseDep: !Not [!Equals [!Ref akashCloseDep, ""]]  HasAkashCloseDseq: !Not [!Equals [!Ref akashCloseDseq, ""]]  HasAkashProviderInfo: !Not [!Equals [!Ref akashProviderInfo, ""]]  HasAkashDepStatus: !Not [!Equals [!Ref akashDepStatus, ""]]  HasAkashDepDseq: !Not [!Equals [!Ref akashDepDseq, ""]]  HasAkashGasOperation: !Not [!Equals [!Ref akashGasOperation, ""]]  HasAkashGasDseq: !Not [!Equals [!Ref akashGasDseq, ""]]  HasAkashManifestMode: !Not [!Equals [!Ref akashManifestMode, ""]]  HasAkashManifestPath: !Not [!Equals [!Ref akashManifestPath, ""]]  HasAkashManifestValidationLevel: !Not [!Equals [!Ref akashManifestValidationLevel, ""]]
+
+  HasAkashEnv: !Not [!Equals [!Ref akashEnv, ""]]
+
+  HasAkashNet: !Not [!Equals [!Ref akashNet, ""]]
+
+  HasRpcEndpoint: !Not [!Equals [!Ref rpcEndpoint, ""]]
+
+  HasAkashGasPrices: !Not [!Equals [!Ref akashGasPrices, ""]]
+
+  HasAkashGasAdjustment: !Not [!Equals [!Ref akashGasAdjustment, ""]]
+
+  HasAkashKeyringBackend: !Not [!Equals [!Ref akashKeyringBackend, ""]]
+
+  HasAkashFrom: !Not [!Equals [!Ref akashFrom, ""]]
+
+  HasAkashFees: !Not [!Equals [!Ref akashFees, ""]]
+
+  HasAkashDeposit: !Not [!Equals [!Ref akashDeposit, ""]]
+
+  HasAkashMnemonic: !Not [!Equals [!Ref akashMnemonic, ""]]
+
+  HasAkashWalletAddress: !Not [!Equals [!Ref akashWalletAddress, ""]]
+
+  HasAkashPricingApiUrl: !Not [!Equals [!Ref akashPricingApiUrl, ""]]
+
+  HasAkashDefaultCpu: !Not [!Equals [!Ref akashDefaultCpu, ""]]
+
+  HasAkashDefaultMemory: !Not [!Equals [!Ref akashDefaultMemory, ""]]
+
+  HasAkashDefaultStorage: !Not [!Equals [!Ref akashDefaultStorage, ""]]
+
+  HasAkashSdl: !Not [!Equals [!Ref akashSdl, ""]]
+
+  HasAkashCloseDep: !Not [!Equals [!Ref akashCloseDep, ""]]
+
+  HasAkashCloseDseq: !Not [!Equals [!Ref akashCloseDseq, ""]]
+
+  HasAkashProviderInfo: !Not [!Equals [!Ref akashProviderInfo, ""]]
+
+  HasAkashDepStatus: !Not [!Equals [!Ref akashDepStatus, ""]]
+
+  HasAkashDepDseq: !Not [!Equals [!Ref akashDepDseq, ""]]
+
+  HasAkashGasOperation: !Not [!Equals [!Ref akashGasOperation, ""]]
+
+  HasAkashGasDseq: !Not [!Equals [!Ref akashGasDseq, ""]]
+
+  HasAkashManifestMode: !Not [!Equals [!Ref akashManifestMode, ""]]
+
+  HasAkashManifestPath: !Not [!Equals [!Ref akashManifestPath, ""]]
+
+  HasAkashManifestValidationLevel: !Not [!Equals [!Ref akashManifestValidationLevel, ""]]
+
 Resources:
 
   AgentParamAkashEnvParameter:

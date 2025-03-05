@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   zerogIndexerRpc:
     Type: 'String'
     Description: 'Parameter for ZEROG_INDEXER_RPC'
@@ -22,7 +27,15 @@ Parameters:
     Description: 'Parameter for ZEROG_FLOW_ADDRESS'
     
 Conditions:
-  HasZerogIndexerRpc: !Not [!Equals [!Ref zerogIndexerRpc, ""]]  HasZerogEvmRpc: !Not [!Equals [!Ref zerogEvmRpc, ""]]  HasZerogPrivateKey: !Not [!Equals [!Ref zerogPrivateKey, ""]]  HasZerogFlowAddress: !Not [!Equals [!Ref zerogFlowAddress, ""]]
+
+  HasZerogIndexerRpc: !Not [!Equals [!Ref zerogIndexerRpc, ""]]
+
+  HasZerogEvmRpc: !Not [!Equals [!Ref zerogEvmRpc, ""]]
+
+  HasZerogPrivateKey: !Not [!Equals [!Ref zerogPrivateKey, ""]]
+
+  HasZerogFlowAddress: !Not [!Equals [!Ref zerogFlowAddress, ""]]
+
 Resources:
 
   AgentParamZerogIndexerRpcParameter:

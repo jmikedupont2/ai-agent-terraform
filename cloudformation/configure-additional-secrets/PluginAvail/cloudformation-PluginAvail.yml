@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   availAddress:
     Type: 'String'
     Description: 'Parameter for AVAIL_ADDRESS'
@@ -22,7 +27,15 @@ Parameters:
     Description: 'Parameter for AVAIL_RPC_URL'
     
 Conditions:
-  HasAvailAddress: !Not [!Equals [!Ref availAddress, ""]]  HasAvailSeed: !Not [!Equals [!Ref availSeed, ""]]  HasAvailAppId: !Not [!Equals [!Ref availAppId, ""]]  HasAvailRpcUrl: !Not [!Equals [!Ref availRpcUrl, ""]]
+
+  HasAvailAddress: !Not [!Equals [!Ref availAddress, ""]]
+
+  HasAvailSeed: !Not [!Equals [!Ref availSeed, ""]]
+
+  HasAvailAppId: !Not [!Equals [!Ref availAppId, ""]]
+
+  HasAvailRpcUrl: !Not [!Equals [!Ref availRpcUrl, ""]]
+
 Resources:
 
   AgentParamAvailAddressParameter:

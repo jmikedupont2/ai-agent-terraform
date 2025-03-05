@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   fundingPrivateKey:
     Type: 'String'
     Description: 'Parameter for FUNDING_PRIVATE_KEY'
@@ -14,7 +19,11 @@ Parameters:
     Description: 'Parameter for EVM_RPC_URL'
     
 Conditions:
-  HasFundingPrivateKey: !Not [!Equals [!Ref fundingPrivateKey, ""]]  HasEvmRpcUrl: !Not [!Equals [!Ref evmRpcUrl, ""]]
+
+  HasFundingPrivateKey: !Not [!Equals [!Ref fundingPrivateKey, ""]]
+
+  HasEvmRpcUrl: !Not [!Equals [!Ref evmRpcUrl, ""]]
+
 Resources:
 
   AgentParamFundingPrivateKeyParameter:

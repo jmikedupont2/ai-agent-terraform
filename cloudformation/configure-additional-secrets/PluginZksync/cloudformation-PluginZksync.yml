@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   zksyncAddress:
     Type: 'String'
     Description: 'Parameter for ZKSYNC_ADDRESS'
@@ -14,7 +19,11 @@ Parameters:
     Description: 'Parameter for ZKSYNC_PRIVATE_KEY'
     
 Conditions:
-  HasZksyncAddress: !Not [!Equals [!Ref zksyncAddress, ""]]  HasZksyncPrivateKey: !Not [!Equals [!Ref zksyncPrivateKey, ""]]
+
+  HasZksyncAddress: !Not [!Equals [!Ref zksyncAddress, ""]]
+
+  HasZksyncPrivateKey: !Not [!Equals [!Ref zksyncPrivateKey, ""]]
+
 Resources:
 
   AgentParamZksyncAddressParameter:

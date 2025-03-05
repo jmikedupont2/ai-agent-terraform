@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   confluxCorePrivateKey:
     Type: 'String'
     Description: 'Parameter for CONFLUX_CORE_PRIVATE_KEY'
@@ -26,7 +31,17 @@ Parameters:
     Description: 'Parameter for CONFLUX_MEME_CONTRACT_ADDRESS'
     
 Conditions:
-  HasConfluxCorePrivateKey: !Not [!Equals [!Ref confluxCorePrivateKey, ""]]  HasConfluxCoreSpaceRpcUrl: !Not [!Equals [!Ref confluxCoreSpaceRpcUrl, ""]]  HasConfluxEspacePrivateKey: !Not [!Equals [!Ref confluxEspacePrivateKey, ""]]  HasConfluxEspaceRpcUrl: !Not [!Equals [!Ref confluxEspaceRpcUrl, ""]]  HasConfluxMemeContractAddress: !Not [!Equals [!Ref confluxMemeContractAddress, ""]]
+
+  HasConfluxCorePrivateKey: !Not [!Equals [!Ref confluxCorePrivateKey, ""]]
+
+  HasConfluxCoreSpaceRpcUrl: !Not [!Equals [!Ref confluxCoreSpaceRpcUrl, ""]]
+
+  HasConfluxEspacePrivateKey: !Not [!Equals [!Ref confluxEspacePrivateKey, ""]]
+
+  HasConfluxEspaceRpcUrl: !Not [!Equals [!Ref confluxEspaceRpcUrl, ""]]
+
+  HasConfluxMemeContractAddress: !Not [!Equals [!Ref confluxMemeContractAddress, ""]]
+
 Resources:
 
   AgentParamConfluxCorePrivateKeyParameter:

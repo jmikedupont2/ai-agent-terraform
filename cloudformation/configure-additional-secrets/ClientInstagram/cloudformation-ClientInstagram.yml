@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   instagramDryRun:
     Type: 'String'
     Description: 'Parameter for INSTAGRAM_DRY_RUN'
@@ -50,7 +55,29 @@ Parameters:
     Description: 'Parameter for INSTAGRAM_MAX_ACTIONS'
     
 Conditions:
-  HasInstagramDryRun: !Not [!Equals [!Ref instagramDryRun, ""]]  HasInstagramUsername: !Not [!Equals [!Ref instagramUsername, ""]]  HasInstagramPassword: !Not [!Equals [!Ref instagramPassword, ""]]  HasInstagramAppId: !Not [!Equals [!Ref instagramAppId, ""]]  HasInstagramAppSecret: !Not [!Equals [!Ref instagramAppSecret, ""]]  HasInstagramBusinessAccountId: !Not [!Equals [!Ref instagramBusinessAccountId, ""]]  HasInstagramPostIntervalMin: !Not [!Equals [!Ref instagramPostIntervalMin, ""]]  HasInstagramPostIntervalMax: !Not [!Equals [!Ref instagramPostIntervalMax, ""]]  HasInstagramEnableActionProcessing: !Not [!Equals [!Ref instagramEnableActionProcessing, ""]]  HasInstagramActionInterval: !Not [!Equals [!Ref instagramActionInterval, ""]]  HasInstagramMaxActions: !Not [!Equals [!Ref instagramMaxActions, ""]]
+
+  HasInstagramDryRun: !Not [!Equals [!Ref instagramDryRun, ""]]
+
+  HasInstagramUsername: !Not [!Equals [!Ref instagramUsername, ""]]
+
+  HasInstagramPassword: !Not [!Equals [!Ref instagramPassword, ""]]
+
+  HasInstagramAppId: !Not [!Equals [!Ref instagramAppId, ""]]
+
+  HasInstagramAppSecret: !Not [!Equals [!Ref instagramAppSecret, ""]]
+
+  HasInstagramBusinessAccountId: !Not [!Equals [!Ref instagramBusinessAccountId, ""]]
+
+  HasInstagramPostIntervalMin: !Not [!Equals [!Ref instagramPostIntervalMin, ""]]
+
+  HasInstagramPostIntervalMax: !Not [!Equals [!Ref instagramPostIntervalMax, ""]]
+
+  HasInstagramEnableActionProcessing: !Not [!Equals [!Ref instagramEnableActionProcessing, ""]]
+
+  HasInstagramActionInterval: !Not [!Equals [!Ref instagramActionInterval, ""]]
+
+  HasInstagramMaxActions: !Not [!Equals [!Ref instagramMaxActions, ""]]
+
 Resources:
 
   AgentParamInstagramDryRunParameter:

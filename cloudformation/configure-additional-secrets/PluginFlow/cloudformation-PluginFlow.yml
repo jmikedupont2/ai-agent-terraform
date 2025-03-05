@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   flowAddress:
     Type: 'String'
     Description: 'Parameter for FLOW_ADDRESS'
@@ -22,7 +27,15 @@ Parameters:
     Description: 'Parameter for FLOW_ENDPOINT_URL'
     
 Conditions:
-  HasFlowAddress: !Not [!Equals [!Ref flowAddress, ""]]  HasFlowPrivateKey: !Not [!Equals [!Ref flowPrivateKey, ""]]  HasFlowNetwork: !Not [!Equals [!Ref flowNetwork, ""]]  HasFlowEndpointUrl: !Not [!Equals [!Ref flowEndpointUrl, ""]]
+
+  HasFlowAddress: !Not [!Equals [!Ref flowAddress, ""]]
+
+  HasFlowPrivateKey: !Not [!Equals [!Ref flowPrivateKey, ""]]
+
+  HasFlowNetwork: !Not [!Equals [!Ref flowNetwork, ""]]
+
+  HasFlowEndpointUrl: !Not [!Equals [!Ref flowEndpointUrl, ""]]
+
 Resources:
 
   AgentParamFlowAddressParameter:

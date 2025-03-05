@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   starknetAddress:
     Type: 'String'
     Description: 'Parameter for STARKNET_ADDRESS'
@@ -18,7 +23,13 @@ Parameters:
     Description: 'Parameter for STARKNET_RPC_URL'
     
 Conditions:
-  HasStarknetAddress: !Not [!Equals [!Ref starknetAddress, ""]]  HasStarknetPrivateKey: !Not [!Equals [!Ref starknetPrivateKey, ""]]  HasStarknetRpcUrl: !Not [!Equals [!Ref starknetRpcUrl, ""]]
+
+  HasStarknetAddress: !Not [!Equals [!Ref starknetAddress, ""]]
+
+  HasStarknetPrivateKey: !Not [!Equals [!Ref starknetPrivateKey, ""]]
+
+  HasStarknetRpcUrl: !Not [!Equals [!Ref starknetRpcUrl, ""]]
+
 Resources:
 
   AgentParamStarknetAddressParameter:

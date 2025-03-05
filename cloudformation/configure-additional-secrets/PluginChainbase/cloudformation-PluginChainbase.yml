@@ -5,12 +5,19 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   chainbaseApiKey:
     Type: 'String'
     Description: 'Parameter for CHAINBASE_API_KEY'
     
 Conditions:
+
   HasChainbaseApiKey: !Not [!Equals [!Ref chainbaseApiKey, ""]]
+
 Resources:
 
   AgentParamChainbaseApiKeyParameter:

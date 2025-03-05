@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   pythNetworkEnv:
     Type: 'String'
     Description: 'Parameter for PYTH_NETWORK_ENV'
@@ -90,7 +95,49 @@ Parameters:
     Description: 'Parameter for PYTH_TEST_ID02'
     
 Conditions:
-  HasPythNetworkEnv: !Not [!Equals [!Ref pythNetworkEnv, ""]]  HasPythMainnetHermesUrl: !Not [!Equals [!Ref pythMainnetHermesUrl, ""]]  HasPythMainnetWssUrl: !Not [!Equals [!Ref pythMainnetWssUrl, ""]]  HasPythMainnetPythnetUrl: !Not [!Equals [!Ref pythMainnetPythnetUrl, ""]]  HasPythMainnetContractRegistry: !Not [!Equals [!Ref pythMainnetContractRegistry, ""]]  HasPythMainnetProgramKey: !Not [!Equals [!Ref pythMainnetProgramKey, ""]]  HasPythTestnetHermesUrl: !Not [!Equals [!Ref pythTestnetHermesUrl, ""]]  HasPythTestnetWssUrl: !Not [!Equals [!Ref pythTestnetWssUrl, ""]]  HasPythTestnetPythnetUrl: !Not [!Equals [!Ref pythTestnetPythnetUrl, ""]]  HasPythTestnetContractRegistry: !Not [!Equals [!Ref pythTestnetContractRegistry, ""]]  HasPythTestnetProgramKey: !Not [!Equals [!Ref pythTestnetProgramKey, ""]]  HasPythMaxRetries: !Not [!Equals [!Ref pythMaxRetries, ""]]  HasPythRetryDelay: !Not [!Equals [!Ref pythRetryDelay, ""]]  HasPythTimeout: !Not [!Equals [!Ref pythTimeout, ""]]  HasPythGranularLog: !Not [!Equals [!Ref pythGranularLog, ""]]  HasPythLogLevel: !Not [!Equals [!Ref pythLogLevel, ""]]  HasRuntimeCheckMode: !Not [!Equals [!Ref runtimeCheckMode, ""]]  HasPythEnablePriceStreaming: !Not [!Equals [!Ref pythEnablePriceStreaming, ""]]  HasPythMaxPriceStreams: !Not [!Equals [!Ref pythMaxPriceStreams, ""]]  HasPythTestId01: !Not [!Equals [!Ref pythTestId01, ""]]  HasPythTestId02: !Not [!Equals [!Ref pythTestId02, ""]]
+
+  HasPythNetworkEnv: !Not [!Equals [!Ref pythNetworkEnv, ""]]
+
+  HasPythMainnetHermesUrl: !Not [!Equals [!Ref pythMainnetHermesUrl, ""]]
+
+  HasPythMainnetWssUrl: !Not [!Equals [!Ref pythMainnetWssUrl, ""]]
+
+  HasPythMainnetPythnetUrl: !Not [!Equals [!Ref pythMainnetPythnetUrl, ""]]
+
+  HasPythMainnetContractRegistry: !Not [!Equals [!Ref pythMainnetContractRegistry, ""]]
+
+  HasPythMainnetProgramKey: !Not [!Equals [!Ref pythMainnetProgramKey, ""]]
+
+  HasPythTestnetHermesUrl: !Not [!Equals [!Ref pythTestnetHermesUrl, ""]]
+
+  HasPythTestnetWssUrl: !Not [!Equals [!Ref pythTestnetWssUrl, ""]]
+
+  HasPythTestnetPythnetUrl: !Not [!Equals [!Ref pythTestnetPythnetUrl, ""]]
+
+  HasPythTestnetContractRegistry: !Not [!Equals [!Ref pythTestnetContractRegistry, ""]]
+
+  HasPythTestnetProgramKey: !Not [!Equals [!Ref pythTestnetProgramKey, ""]]
+
+  HasPythMaxRetries: !Not [!Equals [!Ref pythMaxRetries, ""]]
+
+  HasPythRetryDelay: !Not [!Equals [!Ref pythRetryDelay, ""]]
+
+  HasPythTimeout: !Not [!Equals [!Ref pythTimeout, ""]]
+
+  HasPythGranularLog: !Not [!Equals [!Ref pythGranularLog, ""]]
+
+  HasPythLogLevel: !Not [!Equals [!Ref pythLogLevel, ""]]
+
+  HasRuntimeCheckMode: !Not [!Equals [!Ref runtimeCheckMode, ""]]
+
+  HasPythEnablePriceStreaming: !Not [!Equals [!Ref pythEnablePriceStreaming, ""]]
+
+  HasPythMaxPriceStreams: !Not [!Equals [!Ref pythMaxPriceStreams, ""]]
+
+  HasPythTestId01: !Not [!Equals [!Ref pythTestId01, ""]]
+
+  HasPythTestId02: !Not [!Equals [!Ref pythTestId02, ""]]
+
 Resources:
 
   AgentParamPythNetworkEnvParameter:

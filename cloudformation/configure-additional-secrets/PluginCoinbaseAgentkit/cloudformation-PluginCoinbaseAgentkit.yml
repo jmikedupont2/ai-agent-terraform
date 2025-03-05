@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   cdpApiKeyName:
     Type: 'String'
     Description: 'Parameter for CDP_API_KEY_NAME'
@@ -18,7 +23,13 @@ Parameters:
     Description: 'Parameter for CDP_AGENT_KIT_NETWORK'
     
 Conditions:
-  HasCdpApiKeyName: !Not [!Equals [!Ref cdpApiKeyName, ""]]  HasCdpApiKeyPrivateKey: !Not [!Equals [!Ref cdpApiKeyPrivateKey, ""]]  HasCdpAgentKitNetwork: !Not [!Equals [!Ref cdpAgentKitNetwork, ""]]
+
+  HasCdpApiKeyName: !Not [!Equals [!Ref cdpApiKeyName, ""]]
+
+  HasCdpApiKeyPrivateKey: !Not [!Equals [!Ref cdpApiKeyPrivateKey, ""]]
+
+  HasCdpAgentKitNetwork: !Not [!Equals [!Ref cdpAgentKitNetwork, ""]]
+
 Resources:
 
   AgentParamCdpApiKeyNameParameter:

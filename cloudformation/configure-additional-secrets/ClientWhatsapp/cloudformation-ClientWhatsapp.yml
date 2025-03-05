@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   whatsappAccessToken:
     Type: 'String'
     Description: 'Parameter for WHATSAPP_ACCESS_TOKEN'
@@ -26,7 +31,17 @@ Parameters:
     Description: 'Parameter for WHATSAPP_API_VERSION'
     
 Conditions:
-  HasWhatsappAccessToken: !Not [!Equals [!Ref whatsappAccessToken, ""]]  HasWhatsappPhoneNumberId: !Not [!Equals [!Ref whatsappPhoneNumberId, ""]]  HasWhatsappBusinessAccountId: !Not [!Equals [!Ref whatsappBusinessAccountId, ""]]  HasWhatsappWebhookVerifyToken: !Not [!Equals [!Ref whatsappWebhookVerifyToken, ""]]  HasWhatsappApiVersion: !Not [!Equals [!Ref whatsappApiVersion, ""]]
+
+  HasWhatsappAccessToken: !Not [!Equals [!Ref whatsappAccessToken, ""]]
+
+  HasWhatsappPhoneNumberId: !Not [!Equals [!Ref whatsappPhoneNumberId, ""]]
+
+  HasWhatsappBusinessAccountId: !Not [!Equals [!Ref whatsappBusinessAccountId, ""]]
+
+  HasWhatsappWebhookVerifyToken: !Not [!Equals [!Ref whatsappWebhookVerifyToken, ""]]
+
+  HasWhatsappApiVersion: !Not [!Equals [!Ref whatsappApiVersion, ""]]
+
 Resources:
 
   AgentParamWhatsappAccessTokenParameter:

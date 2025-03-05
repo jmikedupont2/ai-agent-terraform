@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   veniceApiKey:
     Type: 'String'
     Description: 'Parameter for VENICE_API_KEY'
@@ -26,7 +31,17 @@ Parameters:
     Description: 'Parameter for IMAGE_VENICE_MODEL'
     
 Conditions:
-  HasVeniceApiKey: !Not [!Equals [!Ref veniceApiKey, ""]]  HasSmallVeniceModel: !Not [!Equals [!Ref smallVeniceModel, ""]]  HasMediumVeniceModel: !Not [!Equals [!Ref mediumVeniceModel, ""]]  HasLargeVeniceModel: !Not [!Equals [!Ref largeVeniceModel, ""]]  HasImageVeniceModel: !Not [!Equals [!Ref imageVeniceModel, ""]]
+
+  HasVeniceApiKey: !Not [!Equals [!Ref veniceApiKey, ""]]
+
+  HasSmallVeniceModel: !Not [!Equals [!Ref smallVeniceModel, ""]]
+
+  HasMediumVeniceModel: !Not [!Equals [!Ref mediumVeniceModel, ""]]
+
+  HasLargeVeniceModel: !Not [!Equals [!Ref largeVeniceModel, ""]]
+
+  HasImageVeniceModel: !Not [!Equals [!Ref imageVeniceModel, ""]]
+
 Resources:
 
   AgentParamVeniceApiKeyParameter:

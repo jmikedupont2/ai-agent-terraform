@@ -5,12 +5,19 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   genlayerPrivateKey:
     Type: 'String'
     Description: 'Parameter for GENLAYER_PRIVATE_KEY'
     
 Conditions:
+
   HasGenlayerPrivateKey: !Not [!Equals [!Ref genlayerPrivateKey, ""]]
+
 Resources:
 
   AgentParamGenlayerPrivateKeyParameter:

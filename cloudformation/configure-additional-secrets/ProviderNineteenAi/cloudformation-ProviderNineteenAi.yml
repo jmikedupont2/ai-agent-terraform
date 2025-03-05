@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   nineteenAiApiKey:
     Type: 'String'
     Description: 'Parameter for NINETEEN_AI_API_KEY'
@@ -26,7 +31,17 @@ Parameters:
     Description: 'Parameter for IMAGE_NINETEEN_AI_MODE'
     
 Conditions:
-  HasNineteenAiApiKey: !Not [!Equals [!Ref nineteenAiApiKey, ""]]  HasSmallNineteenAiModel: !Not [!Equals [!Ref smallNineteenAiModel, ""]]  HasMediumNineteenAiModel: !Not [!Equals [!Ref mediumNineteenAiModel, ""]]  HasLargeNineteenAiModel: !Not [!Equals [!Ref largeNineteenAiModel, ""]]  HasImageNineteenAiMode: !Not [!Equals [!Ref imageNineteenAiMode, ""]]
+
+  HasNineteenAiApiKey: !Not [!Equals [!Ref nineteenAiApiKey, ""]]
+
+  HasSmallNineteenAiModel: !Not [!Equals [!Ref smallNineteenAiModel, ""]]
+
+  HasMediumNineteenAiModel: !Not [!Equals [!Ref mediumNineteenAiModel, ""]]
+
+  HasLargeNineteenAiModel: !Not [!Equals [!Ref largeNineteenAiModel, ""]]
+
+  HasImageNineteenAiMode: !Not [!Equals [!Ref imageNineteenAiMode, ""]]
+
 Resources:
 
   AgentParamNineteenAiApiKeyParameter:

@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   btcfunApiUrl:
     Type: 'String'
     Description: 'Parameter for BTCFUN_API_URL'
@@ -30,7 +35,19 @@ Parameters:
     Description: 'Parameter for BTC_FUNDRAISING_CAP'
     
 Conditions:
-  HasBtcfunApiUrl: !Not [!Equals [!Ref btcfunApiUrl, ""]]  HasBtcPrivateKeyWif: !Not [!Equals [!Ref btcPrivateKeyWif, ""]]  HasBtcAddress: !Not [!Equals [!Ref btcAddress, ""]]  HasBtcMintCap: !Not [!Equals [!Ref btcMintCap, ""]]  HasBtcMintDeadline: !Not [!Equals [!Ref btcMintDeadline, ""]]  HasBtcFundraisingCap: !Not [!Equals [!Ref btcFundraisingCap, ""]]
+
+  HasBtcfunApiUrl: !Not [!Equals [!Ref btcfunApiUrl, ""]]
+
+  HasBtcPrivateKeyWif: !Not [!Equals [!Ref btcPrivateKeyWif, ""]]
+
+  HasBtcAddress: !Not [!Equals [!Ref btcAddress, ""]]
+
+  HasBtcMintCap: !Not [!Equals [!Ref btcMintCap, ""]]
+
+  HasBtcMintDeadline: !Not [!Equals [!Ref btcMintDeadline, ""]]
+
+  HasBtcFundraisingCap: !Not [!Equals [!Ref btcFundraisingCap, ""]]
+
 Resources:
 
   AgentParamBtcfunApiUrlParameter:

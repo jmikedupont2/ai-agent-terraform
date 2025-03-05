@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   gaianetModel:
     Type: 'String'
     Description: 'Parameter for GAIANET_MODEL'
@@ -46,7 +51,27 @@ Parameters:
     Description: 'Parameter for USE_GAIANET_EMBEDDING'
     Default: 'false'
 Conditions:
-  HasGaianetModel: !Not [!Equals [!Ref gaianetModel, ""]]  HasGaianetServerUrl: !Not [!Equals [!Ref gaianetServerUrl, ""]]  HasSmallGaianetModel: !Not [!Equals [!Ref smallGaianetModel, ""]]  HasSmallGaianetServerUrl: !Not [!Equals [!Ref smallGaianetServerUrl, ""]]  HasMediumGaianetModel: !Not [!Equals [!Ref mediumGaianetModel, ""]]  HasMediumGaianetServerUrl: !Not [!Equals [!Ref mediumGaianetServerUrl, ""]]  HasLargeGaianetModel: !Not [!Equals [!Ref largeGaianetModel, ""]]  HasLargeGaianetServerUrl: !Not [!Equals [!Ref largeGaianetServerUrl, ""]]  HasGaianetEmbeddingModel: !Not [!Equals [!Ref gaianetEmbeddingModel, ""]]  HasUseGaianetEmbedding: !Not [!Equals [!Ref useGaianetEmbedding, ""]]
+
+  HasGaianetModel: !Not [!Equals [!Ref gaianetModel, ""]]
+
+  HasGaianetServerUrl: !Not [!Equals [!Ref gaianetServerUrl, ""]]
+
+  HasSmallGaianetModel: !Not [!Equals [!Ref smallGaianetModel, ""]]
+
+  HasSmallGaianetServerUrl: !Not [!Equals [!Ref smallGaianetServerUrl, ""]]
+
+  HasMediumGaianetModel: !Not [!Equals [!Ref mediumGaianetModel, ""]]
+
+  HasMediumGaianetServerUrl: !Not [!Equals [!Ref mediumGaianetServerUrl, ""]]
+
+  HasLargeGaianetModel: !Not [!Equals [!Ref largeGaianetModel, ""]]
+
+  HasLargeGaianetServerUrl: !Not [!Equals [!Ref largeGaianetServerUrl, ""]]
+
+  HasGaianetEmbeddingModel: !Not [!Equals [!Ref gaianetEmbeddingModel, ""]]
+
+  HasUseGaianetEmbedding: !Not [!Equals [!Ref useGaianetEmbedding, ""]]
+
 Resources:
 
   AgentParamGaianetModelParameter:

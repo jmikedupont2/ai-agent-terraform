@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   resendApiKey:
     Type: 'String'
     Description: 'Parameter for RESEND_API_KEY'
@@ -26,7 +31,17 @@ Parameters:
     Description: 'Parameter for EMAIL_EVALUATION_PROMPT'
     
 Conditions:
-  HasResendApiKey: !Not [!Equals [!Ref resendApiKey, ""]]  HasDefaultToEmail: !Not [!Equals [!Ref defaultToEmail, ""]]  HasDefaultFromEmail: !Not [!Equals [!Ref defaultFromEmail, ""]]  HasEmailAutomationEnabled: !Not [!Equals [!Ref emailAutomationEnabled, ""]]  HasEmailEvaluationPrompt: !Not [!Equals [!Ref emailEvaluationPrompt, ""]]
+
+  HasResendApiKey: !Not [!Equals [!Ref resendApiKey, ""]]
+
+  HasDefaultToEmail: !Not [!Equals [!Ref defaultToEmail, ""]]
+
+  HasDefaultFromEmail: !Not [!Equals [!Ref defaultFromEmail, ""]]
+
+  HasEmailAutomationEnabled: !Not [!Equals [!Ref emailAutomationEnabled, ""]]
+
+  HasEmailEvaluationPrompt: !Not [!Equals [!Ref emailEvaluationPrompt, ""]]
+
 Resources:
 
   AgentParamResendApiKeyParameter:

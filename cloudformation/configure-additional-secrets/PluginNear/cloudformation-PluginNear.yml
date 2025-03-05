@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   nearWalletSecretKey:
     Type: 'String'
     Description: 'Parameter for NEAR_WALLET_SECRET_KEY'
@@ -30,7 +35,19 @@ Parameters:
     Description: 'Parameter for NEAR_NETWORK'
     
 Conditions:
-  HasNearWalletSecretKey: !Not [!Equals [!Ref nearWalletSecretKey, ""]]  HasNearWalletPublicKey: !Not [!Equals [!Ref nearWalletPublicKey, ""]]  HasNearAddress: !Not [!Equals [!Ref nearAddress, ""]]  HasNearSlippage: !Not [!Equals [!Ref nearSlippage, ""]]  HasNearRpcUrl: !Not [!Equals [!Ref nearRpcUrl, ""]]  HasNearNetwork: !Not [!Equals [!Ref nearNetwork, ""]]
+
+  HasNearWalletSecretKey: !Not [!Equals [!Ref nearWalletSecretKey, ""]]
+
+  HasNearWalletPublicKey: !Not [!Equals [!Ref nearWalletPublicKey, ""]]
+
+  HasNearAddress: !Not [!Equals [!Ref nearAddress, ""]]
+
+  HasNearSlippage: !Not [!Equals [!Ref nearSlippage, ""]]
+
+  HasNearRpcUrl: !Not [!Equals [!Ref nearRpcUrl, ""]]
+
+  HasNearNetwork: !Not [!Equals [!Ref nearNetwork, ""]]
+
 Resources:
 
   AgentParamNearWalletSecretKeyParameter:

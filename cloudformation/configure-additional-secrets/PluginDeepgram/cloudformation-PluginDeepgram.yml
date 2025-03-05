@@ -5,12 +5,19 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   deepgramApiKey:
     Type: 'String'
     Description: 'Parameter for DEEPGRAM_API_KEY'
     
 Conditions:
+
   HasDeepgramApiKey: !Not [!Equals [!Ref deepgramApiKey, ""]]
+
 Resources:
 
   AgentParamDeepgramApiKeyParameter:

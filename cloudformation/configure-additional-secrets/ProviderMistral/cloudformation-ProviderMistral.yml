@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   mistralModel:
     Type: 'String'
     Description: 'Parameter for MISTRAL_MODEL'
@@ -22,7 +27,15 @@ Parameters:
     Description: 'Parameter for LARGE_MISTRAL_MODEL'
     
 Conditions:
-  HasMistralModel: !Not [!Equals [!Ref mistralModel, ""]]  HasSmallMistralModel: !Not [!Equals [!Ref smallMistralModel, ""]]  HasMediumMistralModel: !Not [!Equals [!Ref mediumMistralModel, ""]]  HasLargeMistralModel: !Not [!Equals [!Ref largeMistralModel, ""]]
+
+  HasMistralModel: !Not [!Equals [!Ref mistralModel, ""]]
+
+  HasSmallMistralModel: !Not [!Equals [!Ref smallMistralModel, ""]]
+
+  HasMediumMistralModel: !Not [!Equals [!Ref mediumMistralModel, ""]]
+
+  HasLargeMistralModel: !Not [!Equals [!Ref largeMistralModel, ""]]
+
 Resources:
 
   AgentParamMistralModelParameter:

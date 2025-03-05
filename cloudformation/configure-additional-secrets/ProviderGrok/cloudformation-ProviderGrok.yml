@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   grokApiKey:
     Type: 'String'
     Description: 'Parameter for GROK_API_KEY'
@@ -26,7 +31,17 @@ Parameters:
     Description: 'Parameter for EMBEDDING_GROK_MODEL'
     
 Conditions:
-  HasGrokApiKey: !Not [!Equals [!Ref grokApiKey, ""]]  HasSmallGrokModel: !Not [!Equals [!Ref smallGrokModel, ""]]  HasMediumGrokModel: !Not [!Equals [!Ref mediumGrokModel, ""]]  HasLargeGrokModel: !Not [!Equals [!Ref largeGrokModel, ""]]  HasEmbeddingGrokModel: !Not [!Equals [!Ref embeddingGrokModel, ""]]
+
+  HasGrokApiKey: !Not [!Equals [!Ref grokApiKey, ""]]
+
+  HasSmallGrokModel: !Not [!Equals [!Ref smallGrokModel, ""]]
+
+  HasMediumGrokModel: !Not [!Equals [!Ref mediumGrokModel, ""]]
+
+  HasLargeGrokModel: !Not [!Equals [!Ref largeGrokModel, ""]]
+
+  HasEmbeddingGrokModel: !Not [!Equals [!Ref embeddingGrokModel, ""]]
+
 Resources:
 
   AgentParamGrokApiKeyParameter:

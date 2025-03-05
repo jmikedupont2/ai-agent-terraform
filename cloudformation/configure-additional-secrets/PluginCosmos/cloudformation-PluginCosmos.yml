@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   cosmosRecoveryPhrase:
     Type: 'String'
     Description: 'Parameter for COSMOS_RECOVERY_PHRASE'
@@ -14,7 +19,11 @@ Parameters:
     Description: 'Parameter for COSMOS_AVAILABLE_CHAINS'
     
 Conditions:
-  HasCosmosRecoveryPhrase: !Not [!Equals [!Ref cosmosRecoveryPhrase, ""]]  HasCosmosAvailableChains: !Not [!Equals [!Ref cosmosAvailableChains, ""]]
+
+  HasCosmosRecoveryPhrase: !Not [!Equals [!Ref cosmosRecoveryPhrase, ""]]
+
+  HasCosmosAvailableChains: !Not [!Equals [!Ref cosmosAvailableChains, ""]]
+
 Resources:
 
   AgentParamCosmosRecoveryPhraseParameter:

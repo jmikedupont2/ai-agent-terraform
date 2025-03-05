@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   eternalaiUrl:
     Type: 'String'
     Description: 'Parameter for ETERNALAI_URL'
@@ -38,7 +43,23 @@ Parameters:
     Description: 'Parameter for ETERNALAI_LOG'
     Default: 'false'
 Conditions:
-  HasEternalaiUrl: !Not [!Equals [!Ref eternalaiUrl, ""]]  HasEternalaiModel: !Not [!Equals [!Ref eternalaiModel, ""]]  HasEternalaiChainId: !Not [!Equals [!Ref eternalaiChainId, ""]]  HasEternalaiRpcUrl: !Not [!Equals [!Ref eternalaiRpcUrl, ""]]  HasEternalaiAgentContractAddress: !Not [!Equals [!Ref eternalaiAgentContractAddress, ""]]  HasEternalaiAgentId: !Not [!Equals [!Ref eternalaiAgentId, ""]]  HasEternalaiApiKey: !Not [!Equals [!Ref eternalaiApiKey, ""]]  HasEternalaiLog: !Not [!Equals [!Ref eternalaiLog, ""]]
+
+  HasEternalaiUrl: !Not [!Equals [!Ref eternalaiUrl, ""]]
+
+  HasEternalaiModel: !Not [!Equals [!Ref eternalaiModel, ""]]
+
+  HasEternalaiChainId: !Not [!Equals [!Ref eternalaiChainId, ""]]
+
+  HasEternalaiRpcUrl: !Not [!Equals [!Ref eternalaiRpcUrl, ""]]
+
+  HasEternalaiAgentContractAddress: !Not [!Equals [!Ref eternalaiAgentContractAddress, ""]]
+
+  HasEternalaiAgentId: !Not [!Equals [!Ref eternalaiAgentId, ""]]
+
+  HasEternalaiApiKey: !Not [!Equals [!Ref eternalaiApiKey, ""]]
+
+  HasEternalaiLog: !Not [!Equals [!Ref eternalaiLog, ""]]
+
 Resources:
 
   AgentParamEternalaiUrlParameter:

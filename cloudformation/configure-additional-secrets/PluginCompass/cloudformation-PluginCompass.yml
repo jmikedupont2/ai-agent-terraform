@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   compassWalletPrivateKey:
     Type: 'String'
     Description: 'Parameter for COMPASS_WALLET_PRIVATE_KEY'
@@ -22,7 +27,15 @@ Parameters:
     Description: 'Parameter for COMPASS_BASE_RPC_URL'
     
 Conditions:
-  HasCompassWalletPrivateKey: !Not [!Equals [!Ref compassWalletPrivateKey, ""]]  HasCompassArbitrumRpcUrl: !Not [!Equals [!Ref compassArbitrumRpcUrl, ""]]  HasCompassEthereumRpcUrl: !Not [!Equals [!Ref compassEthereumRpcUrl, ""]]  HasCompassBaseRpcUrl: !Not [!Equals [!Ref compassBaseRpcUrl, ""]]
+
+  HasCompassWalletPrivateKey: !Not [!Equals [!Ref compassWalletPrivateKey, ""]]
+
+  HasCompassArbitrumRpcUrl: !Not [!Equals [!Ref compassArbitrumRpcUrl, ""]]
+
+  HasCompassEthereumRpcUrl: !Not [!Equals [!Ref compassEthereumRpcUrl, ""]]
+
+  HasCompassBaseRpcUrl: !Not [!Equals [!Ref compassBaseRpcUrl, ""]]
+
 Resources:
 
   AgentParamCompassWalletPrivateKeyParameter:

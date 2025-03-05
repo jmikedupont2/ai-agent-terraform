@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   anthropicApiKey:
     Type: 'String'
     Description: 'Parameter for ANTHROPIC_API_KEY'
@@ -22,7 +27,15 @@ Parameters:
     Description: 'Parameter for LARGE_ANTHROPIC_MODEL'
     
 Conditions:
-  HasAnthropicApiKey: !Not [!Equals [!Ref anthropicApiKey, ""]]  HasSmallAnthropicModel: !Not [!Equals [!Ref smallAnthropicModel, ""]]  HasMediumAnthropicModel: !Not [!Equals [!Ref mediumAnthropicModel, ""]]  HasLargeAnthropicModel: !Not [!Equals [!Ref largeAnthropicModel, ""]]
+
+  HasAnthropicApiKey: !Not [!Equals [!Ref anthropicApiKey, ""]]
+
+  HasSmallAnthropicModel: !Not [!Equals [!Ref smallAnthropicModel, ""]]
+
+  HasMediumAnthropicModel: !Not [!Equals [!Ref mediumAnthropicModel, ""]]
+
+  HasLargeAnthropicModel: !Not [!Equals [!Ref largeAnthropicModel, ""]]
+
 Resources:
 
   AgentParamAnthropicApiKeyParameter:

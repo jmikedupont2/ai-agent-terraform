@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   avalanchePrivateKey:
     Type: 'String'
     Description: 'Parameter for AVALANCHE_PRIVATE_KEY'
@@ -14,7 +19,11 @@ Parameters:
     Description: 'Parameter for AVALANCHE_PUBLIC_KEY'
     
 Conditions:
-  HasAvalanchePrivateKey: !Not [!Equals [!Ref avalanchePrivateKey, ""]]  HasAvalanchePublicKey: !Not [!Equals [!Ref avalanchePublicKey, ""]]
+
+  HasAvalanchePrivateKey: !Not [!Equals [!Ref avalanchePrivateKey, ""]]
+
+  HasAvalanchePublicKey: !Not [!Equals [!Ref avalanchePublicKey, ""]]
+
 Resources:
 
   AgentParamAvalanchePrivateKeyParameter:

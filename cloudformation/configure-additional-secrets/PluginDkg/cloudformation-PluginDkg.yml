@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   dkgEnvironment:
     Type: 'String'
     Description: 'Parameter for DKG_ENVIRONMENT'
@@ -30,7 +35,19 @@ Parameters:
     Description: 'Parameter for DKG_BLOCKCHAIN_NAME'
     
 Conditions:
-  HasDkgEnvironment: !Not [!Equals [!Ref dkgEnvironment, ""]]  HasDkgHostname: !Not [!Equals [!Ref dkgHostname, ""]]  HasDkgPort: !Not [!Equals [!Ref dkgPort, ""]]  HasDkgPublicKey: !Not [!Equals [!Ref dkgPublicKey, ""]]  HasDkgPrivateKey: !Not [!Equals [!Ref dkgPrivateKey, ""]]  HasDkgBlockchainName: !Not [!Equals [!Ref dkgBlockchainName, ""]]
+
+  HasDkgEnvironment: !Not [!Equals [!Ref dkgEnvironment, ""]]
+
+  HasDkgHostname: !Not [!Equals [!Ref dkgHostname, ""]]
+
+  HasDkgPort: !Not [!Equals [!Ref dkgPort, ""]]
+
+  HasDkgPublicKey: !Not [!Equals [!Ref dkgPublicKey, ""]]
+
+  HasDkgPrivateKey: !Not [!Equals [!Ref dkgPrivateKey, ""]]
+
+  HasDkgBlockchainName: !Not [!Equals [!Ref dkgBlockchainName, ""]]
+
 Resources:
 
   AgentParamDkgEnvironmentParameter:

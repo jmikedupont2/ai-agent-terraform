@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   cacheStore:
     Type: 'String'
     Description: 'Parameter for CACHE_STORE'
@@ -74,7 +79,41 @@ Parameters:
     Description: 'Parameter for verifiable_inference'
     
 Conditions:
-  HasCacheStore: !Not [!Equals [!Ref cacheStore, ""]]  HasCacheDir: !Not [!Equals [!Ref cacheDir, ""]]  HasRedisUrl: !Not [!Equals [!Ref redisUrl, ""]]  HasServerUrl: !Not [!Equals [!Ref serverUrl, ""]]  HasServerPort: !Not [!Equals [!Ref serverPort, ""]]  HasRemoteCharacterUrls: !Not [!Equals [!Ref remoteCharacterUrls, ""]]  HasUseCharacterStorage: !Not [!Equals [!Ref useCharacterStorage, ""]]  HasDefaultLogLevel: !Not [!Equals [!Ref defaultLogLevel, ""]]  HasLogJsonFormat: !Not [!Equals [!Ref logJsonFormat, ""]]  HasExpressMaxPayload: !Not [!Equals [!Ref expressMaxPayload, ""]]  HasTranscriptionProvider: !Not [!Equals [!Ref transcriptionProvider, ""]]  HasWalletPrivateKey: !Not [!Equals [!Ref walletPrivateKey, ""]]  HasWalletPublicKey: !Not [!Equals [!Ref walletPublicKey, ""]]  HasTokenizer: !Not [!Equals [!Ref tokenizer, ""]]  HasCloudflare: !Not [!Equals [!Ref cloudflare, ""]]  HasAws: !Not [!Equals [!Ref aws, ""]]  HasVerifiableInference: !Not [!Equals [!Ref verifiableInference, ""]]
+
+  HasCacheStore: !Not [!Equals [!Ref cacheStore, ""]]
+
+  HasCacheDir: !Not [!Equals [!Ref cacheDir, ""]]
+
+  HasRedisUrl: !Not [!Equals [!Ref redisUrl, ""]]
+
+  HasServerUrl: !Not [!Equals [!Ref serverUrl, ""]]
+
+  HasServerPort: !Not [!Equals [!Ref serverPort, ""]]
+
+  HasRemoteCharacterUrls: !Not [!Equals [!Ref remoteCharacterUrls, ""]]
+
+  HasUseCharacterStorage: !Not [!Equals [!Ref useCharacterStorage, ""]]
+
+  HasDefaultLogLevel: !Not [!Equals [!Ref defaultLogLevel, ""]]
+
+  HasLogJsonFormat: !Not [!Equals [!Ref logJsonFormat, ""]]
+
+  HasExpressMaxPayload: !Not [!Equals [!Ref expressMaxPayload, ""]]
+
+  HasTranscriptionProvider: !Not [!Equals [!Ref transcriptionProvider, ""]]
+
+  HasWalletPrivateKey: !Not [!Equals [!Ref walletPrivateKey, ""]]
+
+  HasWalletPublicKey: !Not [!Equals [!Ref walletPublicKey, ""]]
+
+  HasTokenizer: !Not [!Equals [!Ref tokenizer, ""]]
+
+  HasCloudflare: !Not [!Equals [!Ref cloudflare, ""]]
+
+  HasAws: !Not [!Equals [!Ref aws, ""]]
+
+  HasVerifiableInference: !Not [!Equals [!Ref verifiableInference, ""]]
+
 Resources:
 
   AgentParamCacheStoreParameter:

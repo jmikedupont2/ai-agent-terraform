@@ -5,12 +5,19 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   b2PrivateKey:
     Type: 'String'
     Description: 'Parameter for B2_PRIVATE_KEY'
     
 Conditions:
+
   HasB2PrivateKey: !Not [!Equals [!Ref b2PrivateKey, ""]]
+
 Resources:
 
   AgentParamB2PrivateKeyParameter:

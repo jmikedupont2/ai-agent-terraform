@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   ankrEnv:
     Type: 'String'
     Description: 'Parameter for ANKR_ENV'
@@ -42,7 +47,25 @@ Parameters:
     Description: 'Parameter for ANKR_SPASH'
     Default: 'false'
 Conditions:
-  HasAnkrEnv: !Not [!Equals [!Ref ankrEnv, ""]]  HasAnkrWallet: !Not [!Equals [!Ref ankrWallet, ""]]  HasAnkrMaxRetries: !Not [!Equals [!Ref ankrMaxRetries, ""]]  HasAnkrRetryDelay: !Not [!Equals [!Ref ankrRetryDelay, ""]]  HasAnkrTimeout: !Not [!Equals [!Ref ankrTimeout, ""]]  HasAnkrGranularLog: !Not [!Equals [!Ref ankrGranularLog, ""]]  HasAnkrLogLevel: !Not [!Equals [!Ref ankrLogLevel, ""]]  HasAnkrRuntimeCheckMode: !Not [!Equals [!Ref ankrRuntimeCheckMode, ""]]  HasAnkrSpash: !Not [!Equals [!Ref ankrSpash, ""]]
+
+  HasAnkrEnv: !Not [!Equals [!Ref ankrEnv, ""]]
+
+  HasAnkrWallet: !Not [!Equals [!Ref ankrWallet, ""]]
+
+  HasAnkrMaxRetries: !Not [!Equals [!Ref ankrMaxRetries, ""]]
+
+  HasAnkrRetryDelay: !Not [!Equals [!Ref ankrRetryDelay, ""]]
+
+  HasAnkrTimeout: !Not [!Equals [!Ref ankrTimeout, ""]]
+
+  HasAnkrGranularLog: !Not [!Equals [!Ref ankrGranularLog, ""]]
+
+  HasAnkrLogLevel: !Not [!Equals [!Ref ankrLogLevel, ""]]
+
+  HasAnkrRuntimeCheckMode: !Not [!Equals [!Ref ankrRuntimeCheckMode, ""]]
+
+  HasAnkrSpash: !Not [!Equals [!Ref ankrSpash, ""]]
+
 Resources:
 
   AgentParamAnkrEnvParameter:

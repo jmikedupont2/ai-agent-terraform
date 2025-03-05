@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   quaiPrivateKey:
     Type: 'String'
     Description: 'Parameter for QUAI_PRIVATE_KEY'
@@ -14,7 +19,11 @@ Parameters:
     Description: 'Parameter for QUAI_RPC_URL'
     
 Conditions:
-  HasQuaiPrivateKey: !Not [!Equals [!Ref quaiPrivateKey, ""]]  HasQuaiRpcUrl: !Not [!Equals [!Ref quaiRpcUrl, ""]]
+
+  HasQuaiPrivateKey: !Not [!Equals [!Ref quaiPrivateKey, ""]]
+
+  HasQuaiRpcUrl: !Not [!Equals [!Ref quaiRpcUrl, ""]]
+
 Resources:
 
   AgentParamQuaiPrivateKeyParameter:

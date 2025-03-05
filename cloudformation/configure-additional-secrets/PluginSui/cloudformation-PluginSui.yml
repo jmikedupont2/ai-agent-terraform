@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   suiPrivateKey:
     Type: 'String'
     Description: 'Parameter for SUI_PRIVATE_KEY'
@@ -14,7 +19,11 @@ Parameters:
     Description: 'Parameter for SUI_NETWORK'
     
 Conditions:
-  HasSuiPrivateKey: !Not [!Equals [!Ref suiPrivateKey, ""]]  HasSuiNetwork: !Not [!Equals [!Ref suiNetwork, ""]]
+
+  HasSuiPrivateKey: !Not [!Equals [!Ref suiPrivateKey, ""]]
+
+  HasSuiNetwork: !Not [!Equals [!Ref suiNetwork, ""]]
+
 Resources:
 
   AgentParamSuiPrivateKeyParameter:

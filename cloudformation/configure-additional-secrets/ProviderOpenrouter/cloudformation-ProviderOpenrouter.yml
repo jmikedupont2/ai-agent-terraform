@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   openrouterApiKey:
     Type: 'String'
     Description: 'Parameter for OPENROUTER_API_KEY'
@@ -26,7 +31,17 @@ Parameters:
     Description: 'Parameter for LARGE_OPENROUTER_MODEL'
     
 Conditions:
-  HasOpenrouterApiKey: !Not [!Equals [!Ref openrouterApiKey, ""]]  HasOpenrouterModel: !Not [!Equals [!Ref openrouterModel, ""]]  HasSmallOpenrouterModel: !Not [!Equals [!Ref smallOpenrouterModel, ""]]  HasMediumOpenrouterModel: !Not [!Equals [!Ref mediumOpenrouterModel, ""]]  HasLargeOpenrouterModel: !Not [!Equals [!Ref largeOpenrouterModel, ""]]
+
+  HasOpenrouterApiKey: !Not [!Equals [!Ref openrouterApiKey, ""]]
+
+  HasOpenrouterModel: !Not [!Equals [!Ref openrouterModel, ""]]
+
+  HasSmallOpenrouterModel: !Not [!Equals [!Ref smallOpenrouterModel, ""]]
+
+  HasMediumOpenrouterModel: !Not [!Equals [!Ref mediumOpenrouterModel, ""]]
+
+  HasLargeOpenrouterModel: !Not [!Equals [!Ref largeOpenrouterModel, ""]]
+
 Resources:
 
   AgentParamOpenrouterApiKeyParameter:

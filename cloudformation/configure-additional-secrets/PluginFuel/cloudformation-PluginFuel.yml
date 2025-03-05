@@ -5,12 +5,19 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   fuelWalletPrivateKey:
     Type: 'String'
     Description: 'Parameter for FUEL_WALLET_PRIVATE_KEY'
     
 Conditions:
+
   HasFuelWalletPrivateKey: !Not [!Equals [!Ref fuelWalletPrivateKey, ""]]
+
 Resources:
 
   AgentParamFuelWalletPrivateKeyParameter:

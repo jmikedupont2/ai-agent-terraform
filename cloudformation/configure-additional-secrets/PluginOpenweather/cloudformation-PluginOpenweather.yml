@@ -5,12 +5,19 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   openWeatherApiKey:
     Type: 'String'
     Description: 'Parameter for OPEN_WEATHER_API_KEY'
     
 Conditions:
+
   HasOpenWeatherApiKey: !Not [!Equals [!Ref openWeatherApiKey, ""]]
+
 Resources:
 
   AgentParamOpenWeatherApiKeyParameter:

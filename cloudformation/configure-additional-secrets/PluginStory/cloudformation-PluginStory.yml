@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   storyPrivateKey:
     Type: 'String'
     Description: 'Parameter for STORY_PRIVATE_KEY'
@@ -22,7 +27,15 @@ Parameters:
     Description: 'Parameter for PINATA_JWT'
     
 Conditions:
-  HasStoryPrivateKey: !Not [!Equals [!Ref storyPrivateKey, ""]]  HasStoryApiBaseUrl: !Not [!Equals [!Ref storyApiBaseUrl, ""]]  HasStoryApiKey: !Not [!Equals [!Ref storyApiKey, ""]]  HasPinataJwt: !Not [!Equals [!Ref pinataJwt, ""]]
+
+  HasStoryPrivateKey: !Not [!Equals [!Ref storyPrivateKey, ""]]
+
+  HasStoryApiBaseUrl: !Not [!Equals [!Ref storyApiBaseUrl, ""]]
+
+  HasStoryApiKey: !Not [!Equals [!Ref storyApiKey, ""]]
+
+  HasPinataJwt: !Not [!Equals [!Ref pinataJwt, ""]]
+
 Resources:
 
   AgentParamStoryPrivateKeyParameter:

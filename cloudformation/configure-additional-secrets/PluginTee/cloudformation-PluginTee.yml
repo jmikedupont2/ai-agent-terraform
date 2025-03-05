@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   teeMode:
     Type: 'String'
     Description: 'Parameter for TEE_MODE'
@@ -26,7 +31,17 @@ Parameters:
     Description: 'Parameter for ENABLE_TEE_LOG'
     Default: 'false'
 Conditions:
-  HasTeeMode: !Not [!Equals [!Ref teeMode, ""]]  HasWalletSecretSalt: !Not [!Equals [!Ref walletSecretSalt, ""]]  HasTeeLogDbPath: !Not [!Equals [!Ref teeLogDbPath, ""]]  HasVlog: !Not [!Equals [!Ref vlog, ""]]  HasEnableTeeLog: !Not [!Equals [!Ref enableTeeLog, ""]]
+
+  HasTeeMode: !Not [!Equals [!Ref teeMode, ""]]
+
+  HasWalletSecretSalt: !Not [!Equals [!Ref walletSecretSalt, ""]]
+
+  HasTeeLogDbPath: !Not [!Equals [!Ref teeLogDbPath, ""]]
+
+  HasVlog: !Not [!Equals [!Ref vlog, ""]]
+
+  HasEnableTeeLog: !Not [!Equals [!Ref enableTeeLog, ""]]
+
 Resources:
 
   AgentParamTeeModeParameter:

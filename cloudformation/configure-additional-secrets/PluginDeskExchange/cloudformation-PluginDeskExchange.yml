@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   deskExchangePrivateKey:
     Type: 'String'
     Description: 'Parameter for DESK_EXCHANGE_PRIVATE_KEY'
@@ -14,7 +19,11 @@ Parameters:
     Description: 'Parameter for DESK_EXCHANGE_NETWORK'
     
 Conditions:
-  HasDeskExchangePrivateKey: !Not [!Equals [!Ref deskExchangePrivateKey, ""]]  HasDeskExchangeNetwork: !Not [!Equals [!Ref deskExchangeNetwork, ""]]
+
+  HasDeskExchangePrivateKey: !Not [!Equals [!Ref deskExchangePrivateKey, ""]]
+
+  HasDeskExchangeNetwork: !Not [!Equals [!Ref deskExchangeNetwork, ""]]
+
 Resources:
 
   AgentParamDeskExchangePrivateKeyParameter:

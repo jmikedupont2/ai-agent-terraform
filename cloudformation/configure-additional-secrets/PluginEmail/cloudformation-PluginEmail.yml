@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   emailOutgoingService:
     Type: 'String'
     Description: 'Parameter for EMAIL_OUTGOING_SERVICE'
@@ -46,7 +51,27 @@ Parameters:
     Description: 'Parameter for EMAIL_INCOMING_PASS'
     
 Conditions:
-  HasEmailOutgoingService: !Not [!Equals [!Ref emailOutgoingService, ""]]  HasEmailOutgoingHost: !Not [!Equals [!Ref emailOutgoingHost, ""]]  HasEmailOutgoingPort: !Not [!Equals [!Ref emailOutgoingPort, ""]]  HasEmailOutgoingUser: !Not [!Equals [!Ref emailOutgoingUser, ""]]  HasEmailOutgoingPass: !Not [!Equals [!Ref emailOutgoingPass, ""]]  HasEmailIncomingService: !Not [!Equals [!Ref emailIncomingService, ""]]  HasEmailIncomingHost: !Not [!Equals [!Ref emailIncomingHost, ""]]  HasEmailIncomingPort: !Not [!Equals [!Ref emailIncomingPort, ""]]  HasEmailIncomingUser: !Not [!Equals [!Ref emailIncomingUser, ""]]  HasEmailIncomingPass: !Not [!Equals [!Ref emailIncomingPass, ""]]
+
+  HasEmailOutgoingService: !Not [!Equals [!Ref emailOutgoingService, ""]]
+
+  HasEmailOutgoingHost: !Not [!Equals [!Ref emailOutgoingHost, ""]]
+
+  HasEmailOutgoingPort: !Not [!Equals [!Ref emailOutgoingPort, ""]]
+
+  HasEmailOutgoingUser: !Not [!Equals [!Ref emailOutgoingUser, ""]]
+
+  HasEmailOutgoingPass: !Not [!Equals [!Ref emailOutgoingPass, ""]]
+
+  HasEmailIncomingService: !Not [!Equals [!Ref emailIncomingService, ""]]
+
+  HasEmailIncomingHost: !Not [!Equals [!Ref emailIncomingHost, ""]]
+
+  HasEmailIncomingPort: !Not [!Equals [!Ref emailIncomingPort, ""]]
+
+  HasEmailIncomingUser: !Not [!Equals [!Ref emailIncomingUser, ""]]
+
+  HasEmailIncomingPass: !Not [!Equals [!Ref emailIncomingPass, ""]]
+
 Resources:
 
   AgentParamEmailOutgoingServiceParameter:

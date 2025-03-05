@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   lmstudioServerUrl:
     Type: 'String'
     Description: 'Parameter for LMSTUDIO_SERVER_URL'
@@ -26,7 +31,17 @@ Parameters:
     Description: 'Parameter for LARGE_LMSTUDIO_MODEL'
     
 Conditions:
-  HasLmstudioServerUrl: !Not [!Equals [!Ref lmstudioServerUrl, ""]]  HasLmstudioModel: !Not [!Equals [!Ref lmstudioModel, ""]]  HasSmallLmstudioModel: !Not [!Equals [!Ref smallLmstudioModel, ""]]  HasMediumLmstudioModel: !Not [!Equals [!Ref mediumLmstudioModel, ""]]  HasLargeLmstudioModel: !Not [!Equals [!Ref largeLmstudioModel, ""]]
+
+  HasLmstudioServerUrl: !Not [!Equals [!Ref lmstudioServerUrl, ""]]
+
+  HasLmstudioModel: !Not [!Equals [!Ref lmstudioModel, ""]]
+
+  HasSmallLmstudioModel: !Not [!Equals [!Ref smallLmstudioModel, ""]]
+
+  HasMediumLmstudioModel: !Not [!Equals [!Ref mediumLmstudioModel, ""]]
+
+  HasLargeLmstudioModel: !Not [!Equals [!Ref largeLmstudioModel, ""]]
+
 Resources:
 
   AgentParamLmstudioServerUrlParameter:

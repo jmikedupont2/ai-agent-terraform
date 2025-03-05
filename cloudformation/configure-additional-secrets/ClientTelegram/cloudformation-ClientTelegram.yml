@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   telegramBotToken:
     Type: 'String'
     Description: 'Parameter for TELEGRAM_BOT_TOKEN'
@@ -30,7 +35,19 @@ Parameters:
     Description: 'Parameter for TELEGRAM_ACCOUNT_SYSTEM_VERSION'
     
 Conditions:
-  HasTelegramBotToken: !Not [!Equals [!Ref telegramBotToken, ""]]  HasTelegramAccountPhone: !Not [!Equals [!Ref telegramAccountPhone, ""]]  HasTelegramAccountAppId: !Not [!Equals [!Ref telegramAccountAppId, ""]]  HasTelegramAccountAppHash: !Not [!Equals [!Ref telegramAccountAppHash, ""]]  HasTelegramAccountDeviceModel: !Not [!Equals [!Ref telegramAccountDeviceModel, ""]]  HasTelegramAccountSystemVersion: !Not [!Equals [!Ref telegramAccountSystemVersion, ""]]
+
+  HasTelegramBotToken: !Not [!Equals [!Ref telegramBotToken, ""]]
+
+  HasTelegramAccountPhone: !Not [!Equals [!Ref telegramAccountPhone, ""]]
+
+  HasTelegramAccountAppId: !Not [!Equals [!Ref telegramAccountAppId, ""]]
+
+  HasTelegramAccountAppHash: !Not [!Equals [!Ref telegramAccountAppHash, ""]]
+
+  HasTelegramAccountDeviceModel: !Not [!Equals [!Ref telegramAccountDeviceModel, ""]]
+
+  HasTelegramAccountSystemVersion: !Not [!Equals [!Ref telegramAccountSystemVersion, ""]]
+
 Resources:
 
   AgentParamTelegramBotTokenParameter:

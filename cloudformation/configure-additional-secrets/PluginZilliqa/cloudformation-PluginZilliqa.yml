@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   zilliqaPrivateKey:
     Type: 'String'
     Description: 'Parameter for ZILLIQA_PRIVATE_KEY'
@@ -14,7 +19,11 @@ Parameters:
     Description: 'Parameter for ZILLIQA_PROVIDER_URL'
     
 Conditions:
-  HasZilliqaPrivateKey: !Not [!Equals [!Ref zilliqaPrivateKey, ""]]  HasZilliqaProviderUrl: !Not [!Equals [!Ref zilliqaProviderUrl, ""]]
+
+  HasZilliqaPrivateKey: !Not [!Equals [!Ref zilliqaPrivateKey, ""]]
+
+  HasZilliqaProviderUrl: !Not [!Equals [!Ref zilliqaProviderUrl, ""]]
+
 Resources:
 
   AgentParamZilliqaPrivateKeyParameter:

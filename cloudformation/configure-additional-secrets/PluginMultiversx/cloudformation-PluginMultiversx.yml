@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   mvxPrivateKey:
     Type: 'String'
     Description: 'Parameter for MVX_PRIVATE_KEY'
@@ -18,7 +23,13 @@ Parameters:
     Description: 'Parameter for ACCESS_TOKEN_MANAGEMENT_TO'
     
 Conditions:
-  HasMvxPrivateKey: !Not [!Equals [!Ref mvxPrivateKey, ""]]  HasMvxNetwork: !Not [!Equals [!Ref mvxNetwork, ""]]  HasAccessTokenManagementTo: !Not [!Equals [!Ref accessTokenManagementTo, ""]]
+
+  HasMvxPrivateKey: !Not [!Equals [!Ref mvxPrivateKey, ""]]
+
+  HasMvxNetwork: !Not [!Equals [!Ref mvxNetwork, ""]]
+
+  HasAccessTokenManagementTo: !Not [!Equals [!Ref accessTokenManagementTo, ""]]
+
 Resources:
 
   AgentParamMvxPrivateKeyParameter:

@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   zeroExApiKey:
     Type: 'String'
     Description: 'Parameter for ZERO_EX_API_KEY'
@@ -14,7 +19,11 @@ Parameters:
     Description: 'Parameter for ALCHEMY_HTTP_TRANSPORT_URL'
     
 Conditions:
-  HasZeroExApiKey: !Not [!Equals [!Ref zeroExApiKey, ""]]  HasAlchemyHttpTransportUrl: !Not [!Equals [!Ref alchemyHttpTransportUrl, ""]]
+
+  HasZeroExApiKey: !Not [!Equals [!Ref zeroExApiKey, ""]]
+
+  HasAlchemyHttpTransportUrl: !Not [!Equals [!Ref alchemyHttpTransportUrl, ""]]
+
 Resources:
 
   AgentParamZeroExApiKeyParameter:

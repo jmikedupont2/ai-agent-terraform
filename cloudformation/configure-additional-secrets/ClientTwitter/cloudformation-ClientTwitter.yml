@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   twitterDryRun:
     Type: 'String'
     Description: 'Parameter for TWITTER_DRY_RUN'
@@ -106,7 +111,57 @@ Parameters:
     Description: 'Parameter for TWITTER_APPROVAL_CHECK_INTERVAL'
     
 Conditions:
-  HasTwitterDryRun: !Not [!Equals [!Ref twitterDryRun, ""]]  HasTwitterUsername: !Not [!Equals [!Ref twitterUsername, ""]]  HasTwitterPassword: !Not [!Equals [!Ref twitterPassword, ""]]  HasTwitterEmail: !Not [!Equals [!Ref twitterEmail, ""]]  HasTwitter2faSecret: !Not [!Equals [!Ref twitter2faSecret, ""]]  HasTwitterCookiesAuthToken: !Not [!Equals [!Ref twitterCookiesAuthToken, ""]]  HasTwitterCookiesCt0: !Not [!Equals [!Ref twitterCookiesCt0, ""]]  HasTwitterCookiesGuestId: !Not [!Equals [!Ref twitterCookiesGuestId, ""]]  HasTwitterPollInterval: !Not [!Equals [!Ref twitterPollInterval, ""]]  HasTwitterSearchEnable: !Not [!Equals [!Ref twitterSearchEnable, ""]]  HasTwitterTargetUsers: !Not [!Equals [!Ref twitterTargetUsers, ""]]  HasTwitterRetryLimit: !Not [!Equals [!Ref twitterRetryLimit, ""]]  HasTwitterSpacesEnable: !Not [!Equals [!Ref twitterSpacesEnable, ""]]  HasEnableTwitterPostGeneration: !Not [!Equals [!Ref enableTwitterPostGeneration, ""]]  HasPostIntervalMin: !Not [!Equals [!Ref postIntervalMin, ""]]  HasPostIntervalMax: !Not [!Equals [!Ref postIntervalMax, ""]]  HasPostImmediately: !Not [!Equals [!Ref postImmediately, ""]]  HasActionInterval: !Not [!Equals [!Ref actionInterval, ""]]  HasEnableActionProcessing: !Not [!Equals [!Ref enableActionProcessing, ""]]  HasMaxActionsProcessing: !Not [!Equals [!Ref maxActionsProcessing, ""]]  HasActionTimelineType: !Not [!Equals [!Ref actionTimelineType, ""]]  HasTwitterApprovalDiscordChannelId: !Not [!Equals [!Ref twitterApprovalDiscordChannelId, ""]]  HasTwitterApprovalDiscordBotToken: !Not [!Equals [!Ref twitterApprovalDiscordBotToken, ""]]  HasTwitterApprovalEnabled: !Not [!Equals [!Ref twitterApprovalEnabled, ""]]  HasTwitterApprovalCheckInterval: !Not [!Equals [!Ref twitterApprovalCheckInterval, ""]]
+
+  HasTwitterDryRun: !Not [!Equals [!Ref twitterDryRun, ""]]
+
+  HasTwitterUsername: !Not [!Equals [!Ref twitterUsername, ""]]
+
+  HasTwitterPassword: !Not [!Equals [!Ref twitterPassword, ""]]
+
+  HasTwitterEmail: !Not [!Equals [!Ref twitterEmail, ""]]
+
+  HasTwitter2faSecret: !Not [!Equals [!Ref twitter2faSecret, ""]]
+
+  HasTwitterCookiesAuthToken: !Not [!Equals [!Ref twitterCookiesAuthToken, ""]]
+
+  HasTwitterCookiesCt0: !Not [!Equals [!Ref twitterCookiesCt0, ""]]
+
+  HasTwitterCookiesGuestId: !Not [!Equals [!Ref twitterCookiesGuestId, ""]]
+
+  HasTwitterPollInterval: !Not [!Equals [!Ref twitterPollInterval, ""]]
+
+  HasTwitterSearchEnable: !Not [!Equals [!Ref twitterSearchEnable, ""]]
+
+  HasTwitterTargetUsers: !Not [!Equals [!Ref twitterTargetUsers, ""]]
+
+  HasTwitterRetryLimit: !Not [!Equals [!Ref twitterRetryLimit, ""]]
+
+  HasTwitterSpacesEnable: !Not [!Equals [!Ref twitterSpacesEnable, ""]]
+
+  HasEnableTwitterPostGeneration: !Not [!Equals [!Ref enableTwitterPostGeneration, ""]]
+
+  HasPostIntervalMin: !Not [!Equals [!Ref postIntervalMin, ""]]
+
+  HasPostIntervalMax: !Not [!Equals [!Ref postIntervalMax, ""]]
+
+  HasPostImmediately: !Not [!Equals [!Ref postImmediately, ""]]
+
+  HasActionInterval: !Not [!Equals [!Ref actionInterval, ""]]
+
+  HasEnableActionProcessing: !Not [!Equals [!Ref enableActionProcessing, ""]]
+
+  HasMaxActionsProcessing: !Not [!Equals [!Ref maxActionsProcessing, ""]]
+
+  HasActionTimelineType: !Not [!Equals [!Ref actionTimelineType, ""]]
+
+  HasTwitterApprovalDiscordChannelId: !Not [!Equals [!Ref twitterApprovalDiscordChannelId, ""]]
+
+  HasTwitterApprovalDiscordBotToken: !Not [!Equals [!Ref twitterApprovalDiscordBotToken, ""]]
+
+  HasTwitterApprovalEnabled: !Not [!Equals [!Ref twitterApprovalEnabled, ""]]
+
+  HasTwitterApprovalCheckInterval: !Not [!Equals [!Ref twitterApprovalCheckInterval, ""]]
+
 Resources:
 
   AgentParamTwitterDryRunParameter:

@@ -5,12 +5,19 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   devinApiToken:
     Type: 'String'
     Description: 'Parameter for DEVIN_API_TOKEN'
     
 Conditions:
+
   HasDevinApiToken: !Not [!Equals [!Ref devinApiToken, ""]]
+
 Resources:
 
   AgentParamDevinApiTokenParameter:

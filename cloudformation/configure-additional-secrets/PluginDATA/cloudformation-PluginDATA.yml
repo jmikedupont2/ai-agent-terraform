@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   dataApiKey:
     Type: 'String'
     Description: 'Parameter for DATA_API_KEY'
@@ -14,7 +19,11 @@ Parameters:
     Description: 'Parameter for DATA_AUTH_TOKEN'
     
 Conditions:
-  HasDataApiKey: !Not [!Equals [!Ref dataApiKey, ""]]  HasDataAuthToken: !Not [!Equals [!Ref dataAuthToken, ""]]
+
+  HasDataApiKey: !Not [!Equals [!Ref dataApiKey, ""]]
+
+  HasDataAuthToken: !Not [!Equals [!Ref dataAuthToken, ""]]
+
 Resources:
 
   AgentParamDataApiKeyParameter:

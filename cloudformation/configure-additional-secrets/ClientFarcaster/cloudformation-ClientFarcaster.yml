@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   farcasterFid:
     Type: 'String'
     Description: 'Parameter for FARCASTER_FID'
@@ -26,7 +31,17 @@ Parameters:
     Description: 'Parameter for FARCASTER_POLL_INTERVAL'
     
 Conditions:
-  HasFarcasterFid: !Not [!Equals [!Ref farcasterFid, ""]]  HasFarcasterNeynarApiKey: !Not [!Equals [!Ref farcasterNeynarApiKey, ""]]  HasFarcasterNeynarSignerUuid: !Not [!Equals [!Ref farcasterNeynarSignerUuid, ""]]  HasFarcasterDryRun: !Not [!Equals [!Ref farcasterDryRun, ""]]  HasFarcasterPollInterval: !Not [!Equals [!Ref farcasterPollInterval, ""]]
+
+  HasFarcasterFid: !Not [!Equals [!Ref farcasterFid, ""]]
+
+  HasFarcasterNeynarApiKey: !Not [!Equals [!Ref farcasterNeynarApiKey, ""]]
+
+  HasFarcasterNeynarSignerUuid: !Not [!Equals [!Ref farcasterNeynarSignerUuid, ""]]
+
+  HasFarcasterDryRun: !Not [!Equals [!Ref farcasterDryRun, ""]]
+
+  HasFarcasterPollInterval: !Not [!Equals [!Ref farcasterPollInterval, ""]]
+
 Resources:
 
   AgentParamFarcasterFidParameter:

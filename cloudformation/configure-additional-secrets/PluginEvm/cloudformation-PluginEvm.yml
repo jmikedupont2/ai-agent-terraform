@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   evmPrivateKey:
     Type: 'String'
     Description: 'Parameter for EVM_PRIVATE_KEY'
@@ -14,7 +19,11 @@ Parameters:
     Description: 'Parameter for EVM_PROVIDER_URL'
     
 Conditions:
-  HasEvmPrivateKey: !Not [!Equals [!Ref evmPrivateKey, ""]]  HasEvmProviderUrl: !Not [!Equals [!Ref evmProviderUrl, ""]]
+
+  HasEvmPrivateKey: !Not [!Equals [!Ref evmPrivateKey, ""]]
+
+  HasEvmProviderUrl: !Not [!Equals [!Ref evmProviderUrl, ""]]
+
 Resources:
 
   AgentParamEvmPrivateKeyParameter:

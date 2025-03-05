@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   nvidiaNimEnv:
     Type: 'String'
     Description: 'Parameter for NVIDIA_NIM_ENV'
@@ -70,7 +75,39 @@ Parameters:
     Description: 'Parameter for NVIDIA_COSMOS_MAX_TOKENS'
     
 Conditions:
-  HasNvidiaNimEnv: !Not [!Equals [!Ref nvidiaNimEnv, ""]]  HasNvidiaNimSpash: !Not [!Equals [!Ref nvidiaNimSpash, ""]]  HasNvidiaNimApiKey: !Not [!Equals [!Ref nvidiaNimApiKey, ""]]  HasNvidiaNgcApiKey: !Not [!Equals [!Ref nvidiaNgcApiKey, ""]]  HasNvidiaNimMaxRetries: !Not [!Equals [!Ref nvidiaNimMaxRetries, ""]]  HasNvidiaNimRetryDelay: !Not [!Equals [!Ref nvidiaNimRetryDelay, ""]]  HasNvidiaNimTimeout: !Not [!Equals [!Ref nvidiaNimTimeout, ""]]  HasNvidiaGranularLog: !Not [!Equals [!Ref nvidiaGranularLog, ""]]  HasNvidiaLogLevel: !Not [!Equals [!Ref nvidiaLogLevel, ""]]  HasNvidiaOfftopicSystem: !Not [!Equals [!Ref nvidiaOfftopicSystem, ""]]  HasNvidiaOfftopicUser: !Not [!Equals [!Ref nvidiaOfftopicUser, ""]]  HasNvidiaNimBaseVisionUrl: !Not [!Equals [!Ref nvidiaNimBaseVisionUrl, ""]]  HasNvidiaCosmosModel: !Not [!Equals [!Ref nvidiaCosmosModel, ""]]  HasNvidiaCosmosInvokeUrl: !Not [!Equals [!Ref nvidiaCosmosInvokeUrl, ""]]  HasNvidiaCosmosAssetUrl: !Not [!Equals [!Ref nvidiaCosmosAssetUrl, ""]]  HasNvidiaCosmosMaxTokens: !Not [!Equals [!Ref nvidiaCosmosMaxTokens, ""]]
+
+  HasNvidiaNimEnv: !Not [!Equals [!Ref nvidiaNimEnv, ""]]
+
+  HasNvidiaNimSpash: !Not [!Equals [!Ref nvidiaNimSpash, ""]]
+
+  HasNvidiaNimApiKey: !Not [!Equals [!Ref nvidiaNimApiKey, ""]]
+
+  HasNvidiaNgcApiKey: !Not [!Equals [!Ref nvidiaNgcApiKey, ""]]
+
+  HasNvidiaNimMaxRetries: !Not [!Equals [!Ref nvidiaNimMaxRetries, ""]]
+
+  HasNvidiaNimRetryDelay: !Not [!Equals [!Ref nvidiaNimRetryDelay, ""]]
+
+  HasNvidiaNimTimeout: !Not [!Equals [!Ref nvidiaNimTimeout, ""]]
+
+  HasNvidiaGranularLog: !Not [!Equals [!Ref nvidiaGranularLog, ""]]
+
+  HasNvidiaLogLevel: !Not [!Equals [!Ref nvidiaLogLevel, ""]]
+
+  HasNvidiaOfftopicSystem: !Not [!Equals [!Ref nvidiaOfftopicSystem, ""]]
+
+  HasNvidiaOfftopicUser: !Not [!Equals [!Ref nvidiaOfftopicUser, ""]]
+
+  HasNvidiaNimBaseVisionUrl: !Not [!Equals [!Ref nvidiaNimBaseVisionUrl, ""]]
+
+  HasNvidiaCosmosModel: !Not [!Equals [!Ref nvidiaCosmosModel, ""]]
+
+  HasNvidiaCosmosInvokeUrl: !Not [!Equals [!Ref nvidiaCosmosInvokeUrl, ""]]
+
+  HasNvidiaCosmosAssetUrl: !Not [!Equals [!Ref nvidiaCosmosAssetUrl, ""]]
+
+  HasNvidiaCosmosMaxTokens: !Not [!Equals [!Ref nvidiaCosmosMaxTokens, ""]]
+
 Resources:
 
   AgentParamNvidiaNimEnvParameter:

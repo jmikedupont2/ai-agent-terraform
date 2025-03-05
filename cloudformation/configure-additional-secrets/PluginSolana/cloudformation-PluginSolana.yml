@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   solanaPrivateKey:
     Type: 'String'
     Description: 'Parameter for SOLANA_PRIVATE_KEY'
@@ -50,7 +55,29 @@ Parameters:
     Description: 'Parameter for HELIUS_API_KEY'
     
 Conditions:
-  HasSolanaPrivateKey: !Not [!Equals [!Ref solanaPrivateKey, ""]]  HasSolanaPublicKey: !Not [!Equals [!Ref solanaPublicKey, ""]]  HasSolanaCluster: !Not [!Equals [!Ref solanaCluster, ""]]  HasSolanaAdminPrivateKey: !Not [!Equals [!Ref solanaAdminPrivateKey, ""]]  HasSolanaAdminPublicKey: !Not [!Equals [!Ref solanaAdminPublicKey, ""]]  HasSolanaVerifyToken: !Not [!Equals [!Ref solanaVerifyToken, ""]]  HasSolAddress: !Not [!Equals [!Ref solAddress, ""]]  HasSlippage: !Not [!Equals [!Ref slippage, ""]]  HasBaseMint: !Not [!Equals [!Ref baseMint, ""]]  HasSolanaRpcUrl: !Not [!Equals [!Ref solanaRpcUrl, ""]]  HasHeliusApiKey: !Not [!Equals [!Ref heliusApiKey, ""]]
+
+  HasSolanaPrivateKey: !Not [!Equals [!Ref solanaPrivateKey, ""]]
+
+  HasSolanaPublicKey: !Not [!Equals [!Ref solanaPublicKey, ""]]
+
+  HasSolanaCluster: !Not [!Equals [!Ref solanaCluster, ""]]
+
+  HasSolanaAdminPrivateKey: !Not [!Equals [!Ref solanaAdminPrivateKey, ""]]
+
+  HasSolanaAdminPublicKey: !Not [!Equals [!Ref solanaAdminPublicKey, ""]]
+
+  HasSolanaVerifyToken: !Not [!Equals [!Ref solanaVerifyToken, ""]]
+
+  HasSolAddress: !Not [!Equals [!Ref solAddress, ""]]
+
+  HasSlippage: !Not [!Equals [!Ref slippage, ""]]
+
+  HasBaseMint: !Not [!Equals [!Ref baseMint, ""]]
+
+  HasSolanaRpcUrl: !Not [!Equals [!Ref solanaRpcUrl, ""]]
+
+  HasHeliusApiKey: !Not [!Equals [!Ref heliusApiKey, ""]]
+
 Resources:
 
   AgentParamSolanaPrivateKeyParameter:

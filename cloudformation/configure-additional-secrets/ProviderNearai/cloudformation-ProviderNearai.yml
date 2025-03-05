@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   nearaiApiUrl:
     Type: 'String'
     Description: 'Parameter for NEARAI_API_URL'
@@ -34,7 +39,21 @@ Parameters:
     Description: 'Parameter for IMAGE_NEARAI_MODEL'
     
 Conditions:
-  HasNearaiApiUrl: !Not [!Equals [!Ref nearaiApiUrl, ""]]  HasNearaiApiKey: !Not [!Equals [!Ref nearaiApiKey, ""]]  HasNearaiModel: !Not [!Equals [!Ref nearaiModel, ""]]  HasSmallNearaiModel: !Not [!Equals [!Ref smallNearaiModel, ""]]  HasMediumNearaiModel: !Not [!Equals [!Ref mediumNearaiModel, ""]]  HasLargeNearaiModel: !Not [!Equals [!Ref largeNearaiModel, ""]]  HasImageNearaiModel: !Not [!Equals [!Ref imageNearaiModel, ""]]
+
+  HasNearaiApiUrl: !Not [!Equals [!Ref nearaiApiUrl, ""]]
+
+  HasNearaiApiKey: !Not [!Equals [!Ref nearaiApiKey, ""]]
+
+  HasNearaiModel: !Not [!Equals [!Ref nearaiModel, ""]]
+
+  HasSmallNearaiModel: !Not [!Equals [!Ref smallNearaiModel, ""]]
+
+  HasMediumNearaiModel: !Not [!Equals [!Ref mediumNearaiModel, ""]]
+
+  HasLargeNearaiModel: !Not [!Equals [!Ref largeNearaiModel, ""]]
+
+  HasImageNearaiModel: !Not [!Equals [!Ref imageNearaiModel, ""]]
+
 Resources:
 
   AgentParamNearaiApiUrlParameter:

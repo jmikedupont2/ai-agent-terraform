@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   redpillApiKey:
     Type: 'String'
     Description: 'Parameter for REDPILL_API_KEY'
@@ -26,7 +31,17 @@ Parameters:
     Description: 'Parameter for LARGE_REDPILL_MODEL'
     
 Conditions:
-  HasRedpillApiKey: !Not [!Equals [!Ref redpillApiKey, ""]]  HasRedpillModel: !Not [!Equals [!Ref redpillModel, ""]]  HasSmallRedpillModel: !Not [!Equals [!Ref smallRedpillModel, ""]]  HasMediumRedpillModel: !Not [!Equals [!Ref mediumRedpillModel, ""]]  HasLargeRedpillModel: !Not [!Equals [!Ref largeRedpillModel, ""]]
+
+  HasRedpillApiKey: !Not [!Equals [!Ref redpillApiKey, ""]]
+
+  HasRedpillModel: !Not [!Equals [!Ref redpillModel, ""]]
+
+  HasSmallRedpillModel: !Not [!Equals [!Ref smallRedpillModel, ""]]
+
+  HasMediumRedpillModel: !Not [!Equals [!Ref mediumRedpillModel, ""]]
+
+  HasLargeRedpillModel: !Not [!Equals [!Ref largeRedpillModel, ""]]
+
 Resources:
 
   AgentParamRedpillApiKeyParameter:

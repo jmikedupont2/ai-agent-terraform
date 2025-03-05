@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   hyperliquidPrivateKey:
     Type: 'String'
     Description: 'Parameter for HYPERLIQUID_PRIVATE_KEY'
@@ -14,7 +19,11 @@ Parameters:
     Description: 'Parameter for HYPERLIQUID_TESTNET'
     Default: 'false'
 Conditions:
-  HasHyperliquidPrivateKey: !Not [!Equals [!Ref hyperliquidPrivateKey, ""]]  HasHyperliquidTestnet: !Not [!Equals [!Ref hyperliquidTestnet, ""]]
+
+  HasHyperliquidPrivateKey: !Not [!Equals [!Ref hyperliquidPrivateKey, ""]]
+
+  HasHyperliquidTestnet: !Not [!Equals [!Ref hyperliquidTestnet, ""]]
+
 Resources:
 
   AgentParamHyperliquidPrivateKeyParameter:

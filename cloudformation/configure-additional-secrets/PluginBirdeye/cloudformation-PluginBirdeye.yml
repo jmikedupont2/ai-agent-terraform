@@ -5,12 +5,19 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   birdeyeApiKey:
     Type: 'String'
     Description: 'Parameter for BIRDEYE_API_KEY'
     
 Conditions:
+
   HasBirdeyeApiKey: !Not [!Equals [!Ref birdeyeApiKey, ""]]
+
 Resources:
 
   AgentParamBirdeyeApiKeyParameter:

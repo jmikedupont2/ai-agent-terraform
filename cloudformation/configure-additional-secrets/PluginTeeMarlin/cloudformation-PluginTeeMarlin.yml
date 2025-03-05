@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   teeMarlin:
     Type: 'String'
     Description: 'Parameter for TEE_MARLIN'
@@ -14,7 +19,11 @@ Parameters:
     Description: 'Parameter for TEE_MARLIN_ATTESTATION_ENDPOINT'
     
 Conditions:
-  HasTeeMarlin: !Not [!Equals [!Ref teeMarlin, ""]]  HasTeeMarlinAttestationEndpoint: !Not [!Equals [!Ref teeMarlinAttestationEndpoint, ""]]
+
+  HasTeeMarlin: !Not [!Equals [!Ref teeMarlin, ""]]
+
+  HasTeeMarlinAttestationEndpoint: !Not [!Equals [!Ref teeMarlinAttestationEndpoint, ""]]
+
 Resources:
 
   AgentParamTeeMarlinParameter:

@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   seiPrivateKey:
     Type: 'String'
     Description: 'Parameter for SEI_PRIVATE_KEY'
@@ -18,7 +23,13 @@ Parameters:
     Description: 'Parameter for SEI_RPC_URL'
     
 Conditions:
-  HasSeiPrivateKey: !Not [!Equals [!Ref seiPrivateKey, ""]]  HasSeiNetwork: !Not [!Equals [!Ref seiNetwork, ""]]  HasSeiRpcUrl: !Not [!Equals [!Ref seiRpcUrl, ""]]
+
+  HasSeiPrivateKey: !Not [!Equals [!Ref seiPrivateKey, ""]]
+
+  HasSeiNetwork: !Not [!Equals [!Ref seiNetwork, ""]]
+
+  HasSeiRpcUrl: !Not [!Equals [!Ref seiRpcUrl, ""]]
+
 Resources:
 
   AgentParamSeiPrivateKeyParameter:

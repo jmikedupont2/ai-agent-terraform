@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   supabaseUrl:
     Type: 'String'
     Description: 'Parameter for SUPABASE_URL'
@@ -14,7 +19,11 @@ Parameters:
     Description: 'Parameter for SUPABASE_ANON_KEY'
     
 Conditions:
-  HasSupabaseUrl: !Not [!Equals [!Ref supabaseUrl, ""]]  HasSupabaseAnonKey: !Not [!Equals [!Ref supabaseAnonKey, ""]]
+
+  HasSupabaseUrl: !Not [!Equals [!Ref supabaseUrl, ""]]
+
+  HasSupabaseAnonKey: !Not [!Equals [!Ref supabaseAnonKey, ""]]
+
 Resources:
 
   AgentParamSupabaseUrlParameter:

@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   bitmind:
     Type: 'String'
     Description: 'Parameter for BITMIND'
@@ -14,7 +19,11 @@ Parameters:
     Description: 'Parameter for BITMIND_API_TOKEN'
     
 Conditions:
-  HasBitmind: !Not [!Equals [!Ref bitmind, ""]]  HasBitmindApiToken: !Not [!Equals [!Ref bitmindApiToken, ""]]
+
+  HasBitmind: !Not [!Equals [!Ref bitmind, ""]]
+
+  HasBitmindApiToken: !Not [!Equals [!Ref bitmindApiToken, ""]]
+
 Resources:
 
   AgentParamBitmindParameter:

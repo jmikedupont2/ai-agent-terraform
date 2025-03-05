@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   squidSdkUrl:
     Type: 'String'
     Description: 'Parameter for SQUID_SDK_URL'
@@ -26,7 +31,17 @@ Parameters:
     Description: 'Parameter for SQUID_API_THROTTLE_INTERVAL'
     
 Conditions:
-  HasSquidSdkUrl: !Not [!Equals [!Ref squidSdkUrl, ""]]  HasSquidIntegratorId: !Not [!Equals [!Ref squidIntegratorId, ""]]  HasSquidEvmAddress: !Not [!Equals [!Ref squidEvmAddress, ""]]  HasSquidEvmPrivateKey: !Not [!Equals [!Ref squidEvmPrivateKey, ""]]  HasSquidApiThrottleInterval: !Not [!Equals [!Ref squidApiThrottleInterval, ""]]
+
+  HasSquidSdkUrl: !Not [!Equals [!Ref squidSdkUrl, ""]]
+
+  HasSquidIntegratorId: !Not [!Equals [!Ref squidIntegratorId, ""]]
+
+  HasSquidEvmAddress: !Not [!Equals [!Ref squidEvmAddress, ""]]
+
+  HasSquidEvmPrivateKey: !Not [!Equals [!Ref squidEvmPrivateKey, ""]]
+
+  HasSquidApiThrottleInterval: !Not [!Equals [!Ref squidApiThrottleInterval, ""]]
+
 Resources:
 
   AgentParamSquidSdkUrlParameter:

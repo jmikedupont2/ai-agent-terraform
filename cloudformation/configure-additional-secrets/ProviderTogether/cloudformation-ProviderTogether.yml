@@ -5,12 +5,19 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   togetherApiKey:
     Type: 'String'
     Description: 'Parameter for TOGETHER_API_KEY'
     
 Conditions:
+
   HasTogetherApiKey: !Not [!Equals [!Ref togetherApiKey, ""]]
+
 Resources:
 
   AgentParamTogetherApiKeyParameter:

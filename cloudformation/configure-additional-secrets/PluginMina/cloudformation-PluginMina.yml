@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   minaPrivateKey:
     Type: 'String'
     Description: 'Parameter for MINA_PRIVATE_KEY'
@@ -14,7 +19,11 @@ Parameters:
     Description: 'Parameter for MINA_NETWORK'
     
 Conditions:
-  HasMinaPrivateKey: !Not [!Equals [!Ref minaPrivateKey, ""]]  HasMinaNetwork: !Not [!Equals [!Ref minaNetwork, ""]]
+
+  HasMinaPrivateKey: !Not [!Equals [!Ref minaPrivateKey, ""]]
+
+  HasMinaNetwork: !Not [!Equals [!Ref minaNetwork, ""]]
+
 Resources:
 
   AgentParamMinaPrivateKeyParameter:

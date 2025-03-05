@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   alexaSkillId:
     Type: 'String'
     Description: 'Parameter for ALEXA_SKILL_ID'
@@ -18,7 +23,13 @@ Parameters:
     Description: 'Parameter for ALEXA_CLIENT_SECRET'
     
 Conditions:
-  HasAlexaSkillId: !Not [!Equals [!Ref alexaSkillId, ""]]  HasAlexaClientId: !Not [!Equals [!Ref alexaClientId, ""]]  HasAlexaClientSecret: !Not [!Equals [!Ref alexaClientSecret, ""]]
+
+  HasAlexaSkillId: !Not [!Equals [!Ref alexaSkillId, ""]]
+
+  HasAlexaClientId: !Not [!Equals [!Ref alexaClientId, ""]]
+
+  HasAlexaClientSecret: !Not [!Equals [!Ref alexaClientSecret, ""]]
+
 Resources:
 
   AgentParamAlexaSkillIdParameter:

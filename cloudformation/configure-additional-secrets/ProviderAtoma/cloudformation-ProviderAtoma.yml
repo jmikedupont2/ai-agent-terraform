@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   atomasdkBearerAuth:
     Type: 'String'
     Description: 'Parameter for ATOMASDK_BEARER_AUTH'
@@ -26,7 +31,17 @@ Parameters:
     Description: 'Parameter for LARGE_ATOMA_MODEL'
     
 Conditions:
-  HasAtomasdkBearerAuth: !Not [!Equals [!Ref atomasdkBearerAuth, ""]]  HasAtomaApiUrl: !Not [!Equals [!Ref atomaApiUrl, ""]]  HasSmallAtomaModel: !Not [!Equals [!Ref smallAtomaModel, ""]]  HasMediumAtomaModel: !Not [!Equals [!Ref mediumAtomaModel, ""]]  HasLargeAtomaModel: !Not [!Equals [!Ref largeAtomaModel, ""]]
+
+  HasAtomasdkBearerAuth: !Not [!Equals [!Ref atomasdkBearerAuth, ""]]
+
+  HasAtomaApiUrl: !Not [!Equals [!Ref atomaApiUrl, ""]]
+
+  HasSmallAtomaModel: !Not [!Equals [!Ref smallAtomaModel, ""]]
+
+  HasMediumAtomaModel: !Not [!Equals [!Ref mediumAtomaModel, ""]]
+
+  HasLargeAtomaModel: !Not [!Equals [!Ref largeAtomaModel, ""]]
+
 Resources:
 
   AgentParamAtomasdkBearerAuthParameter:

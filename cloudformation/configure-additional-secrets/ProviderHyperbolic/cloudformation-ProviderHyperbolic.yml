@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   hyperbolicApiKey:
     Type: 'String'
     Description: 'Parameter for HYPERBOLIC_API_KEY'
@@ -46,7 +51,27 @@ Parameters:
     Description: 'Parameter for HYPERBOLIC_LOG_LEVEL'
     
 Conditions:
-  HasHyperbolicApiKey: !Not [!Equals [!Ref hyperbolicApiKey, ""]]  HasHyperbolicModel: !Not [!Equals [!Ref hyperbolicModel, ""]]  HasImageHyperbolicModel: !Not [!Equals [!Ref imageHyperbolicModel, ""]]  HasSmallHyperbolicModel: !Not [!Equals [!Ref smallHyperbolicModel, ""]]  HasMediumHyperbolicModel: !Not [!Equals [!Ref mediumHyperbolicModel, ""]]  HasLargeHyperbolicModel: !Not [!Equals [!Ref largeHyperbolicModel, ""]]  HasHyperbolicEnv: !Not [!Equals [!Ref hyperbolicEnv, ""]]  HasHyperbolicGranularLog: !Not [!Equals [!Ref hyperbolicGranularLog, ""]]  HasHyperbolicSpash: !Not [!Equals [!Ref hyperbolicSpash, ""]]  HasHyperbolicLogLevel: !Not [!Equals [!Ref hyperbolicLogLevel, ""]]
+
+  HasHyperbolicApiKey: !Not [!Equals [!Ref hyperbolicApiKey, ""]]
+
+  HasHyperbolicModel: !Not [!Equals [!Ref hyperbolicModel, ""]]
+
+  HasImageHyperbolicModel: !Not [!Equals [!Ref imageHyperbolicModel, ""]]
+
+  HasSmallHyperbolicModel: !Not [!Equals [!Ref smallHyperbolicModel, ""]]
+
+  HasMediumHyperbolicModel: !Not [!Equals [!Ref mediumHyperbolicModel, ""]]
+
+  HasLargeHyperbolicModel: !Not [!Equals [!Ref largeHyperbolicModel, ""]]
+
+  HasHyperbolicEnv: !Not [!Equals [!Ref hyperbolicEnv, ""]]
+
+  HasHyperbolicGranularLog: !Not [!Equals [!Ref hyperbolicGranularLog, ""]]
+
+  HasHyperbolicSpash: !Not [!Equals [!Ref hyperbolicSpash, ""]]
+
+  HasHyperbolicLogLevel: !Not [!Equals [!Ref hyperbolicLogLevel, ""]]
+
 Resources:
 
   AgentParamHyperbolicApiKeyParameter:

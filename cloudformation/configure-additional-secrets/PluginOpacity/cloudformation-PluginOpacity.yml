@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   opacityTeamId:
     Type: 'String'
     Description: 'Parameter for OPACITY_TEAM_ID'
@@ -18,7 +23,13 @@ Parameters:
     Description: 'Parameter for OPACITY_PROVER_URL'
     
 Conditions:
-  HasOpacityTeamId: !Not [!Equals [!Ref opacityTeamId, ""]]  HasOpacityCloudflareName: !Not [!Equals [!Ref opacityCloudflareName, ""]]  HasOpacityProverUrl: !Not [!Equals [!Ref opacityProverUrl, ""]]
+
+  HasOpacityTeamId: !Not [!Equals [!Ref opacityTeamId, ""]]
+
+  HasOpacityCloudflareName: !Not [!Equals [!Ref opacityCloudflareName, ""]]
+
+  HasOpacityProverUrl: !Not [!Equals [!Ref opacityProverUrl, ""]]
+
 Resources:
 
   AgentParamOpacityTeamIdParameter:

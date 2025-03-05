@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   simsaiApiKey:
     Type: 'String'
     Description: 'Parameter for SIMSAI_API_KEY'
@@ -22,7 +27,15 @@ Parameters:
     Description: 'Parameter for SIMSAI_DRY_RUN'
     Default: 'false'
 Conditions:
-  HasSimsaiApiKey: !Not [!Equals [!Ref simsaiApiKey, ""]]  HasSimsaiAgentId: !Not [!Equals [!Ref simsaiAgentId, ""]]  HasSimsaiUsername: !Not [!Equals [!Ref simsaiUsername, ""]]  HasSimsaiDryRun: !Not [!Equals [!Ref simsaiDryRun, ""]]
+
+  HasSimsaiApiKey: !Not [!Equals [!Ref simsaiApiKey, ""]]
+
+  HasSimsaiAgentId: !Not [!Equals [!Ref simsaiAgentId, ""]]
+
+  HasSimsaiUsername: !Not [!Equals [!Ref simsaiUsername, ""]]
+
+  HasSimsaiDryRun: !Not [!Equals [!Ref simsaiDryRun, ""]]
+
 Resources:
 
   AgentParamSimsaiApiKeyParameter:

@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   akashChatApiKey:
     Type: 'String'
     Description: 'Parameter for AKASH_CHAT_API_KEY'
@@ -22,7 +27,15 @@ Parameters:
     Description: 'Parameter for LARGE_AKASH_CHAT_API_MODEL'
     
 Conditions:
-  HasAkashChatApiKey: !Not [!Equals [!Ref akashChatApiKey, ""]]  HasSmallAkashChatApiModel: !Not [!Equals [!Ref smallAkashChatApiModel, ""]]  HasMediumAkashChatApiModel: !Not [!Equals [!Ref mediumAkashChatApiModel, ""]]  HasLargeAkashChatApiModel: !Not [!Equals [!Ref largeAkashChatApiModel, ""]]
+
+  HasAkashChatApiKey: !Not [!Equals [!Ref akashChatApiKey, ""]]
+
+  HasSmallAkashChatApiModel: !Not [!Equals [!Ref smallAkashChatApiModel, ""]]
+
+  HasMediumAkashChatApiModel: !Not [!Equals [!Ref mediumAkashChatApiModel, ""]]
+
+  HasLargeAkashChatApiModel: !Not [!Equals [!Ref largeAkashChatApiModel, ""]]
+
 Resources:
 
   AgentParamAkashChatApiKeyParameter:

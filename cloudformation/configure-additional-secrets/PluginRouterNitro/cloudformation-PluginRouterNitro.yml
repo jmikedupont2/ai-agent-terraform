@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   routerNitroEvmAddress:
     Type: 'String'
     Description: 'Parameter for ROUTER_NITRO_EVM_ADDRESS'
@@ -14,7 +19,11 @@ Parameters:
     Description: 'Parameter for ROUTER_NITRO_EVM_PRIVATE_KEY'
     
 Conditions:
-  HasRouterNitroEvmAddress: !Not [!Equals [!Ref routerNitroEvmAddress, ""]]  HasRouterNitroEvmPrivateKey: !Not [!Equals [!Ref routerNitroEvmPrivateKey, ""]]
+
+  HasRouterNitroEvmAddress: !Not [!Equals [!Ref routerNitroEvmAddress, ""]]
+
+  HasRouterNitroEvmPrivateKey: !Not [!Equals [!Ref routerNitroEvmPrivateKey, ""]]
+
 Resources:
 
   AgentParamRouterNitroEvmAddressParameter:

@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   livepeerGatewayUrl:
     Type: 'String'
     Description: 'Parameter for LIVEPEER_GATEWAY_URL'
@@ -26,7 +31,17 @@ Parameters:
     Description: 'Parameter for LARGE_LIVEPEER_MODEL'
     
 Conditions:
-  HasLivepeerGatewayUrl: !Not [!Equals [!Ref livepeerGatewayUrl, ""]]  HasImageLivepeerModel: !Not [!Equals [!Ref imageLivepeerModel, ""]]  HasSmallLivepeerModel: !Not [!Equals [!Ref smallLivepeerModel, ""]]  HasMediumLivepeerModel: !Not [!Equals [!Ref mediumLivepeerModel, ""]]  HasLargeLivepeerModel: !Not [!Equals [!Ref largeLivepeerModel, ""]]
+
+  HasLivepeerGatewayUrl: !Not [!Equals [!Ref livepeerGatewayUrl, ""]]
+
+  HasImageLivepeerModel: !Not [!Equals [!Ref imageLivepeerModel, ""]]
+
+  HasSmallLivepeerModel: !Not [!Equals [!Ref smallLivepeerModel, ""]]
+
+  HasMediumLivepeerModel: !Not [!Equals [!Ref mediumLivepeerModel, ""]]
+
+  HasLargeLivepeerModel: !Not [!Equals [!Ref largeLivepeerModel, ""]]
+
 Resources:
 
   AgentParamLivepeerGatewayUrlParameter:

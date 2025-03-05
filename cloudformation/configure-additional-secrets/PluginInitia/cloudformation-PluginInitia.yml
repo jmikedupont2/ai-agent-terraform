@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   initiaPrivateKey:
     Type: 'String'
     Description: 'Parameter for INITIA_PRIVATE_KEY'
@@ -18,7 +23,13 @@ Parameters:
     Description: 'Parameter for INITIA_CHAIN_ID'
     
 Conditions:
-  HasInitiaPrivateKey: !Not [!Equals [!Ref initiaPrivateKey, ""]]  HasInitiaNodeUrl: !Not [!Equals [!Ref initiaNodeUrl, ""]]  HasInitiaChainId: !Not [!Equals [!Ref initiaChainId, ""]]
+
+  HasInitiaPrivateKey: !Not [!Equals [!Ref initiaPrivateKey, ""]]
+
+  HasInitiaNodeUrl: !Not [!Equals [!Ref initiaNodeUrl, ""]]
+
+  HasInitiaChainId: !Not [!Equals [!Ref initiaChainId, ""]]
+
 Resources:
 
   AgentParamInitiaPrivateKeyParameter:

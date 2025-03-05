@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   smallNanogptModel:
     Type: 'String'
     Description: 'Parameter for SMALL_NANOGPT_MODEL'
@@ -22,7 +27,15 @@ Parameters:
     Description: 'Parameter for NANOGPT_API_KEY'
     
 Conditions:
-  HasSmallNanogptModel: !Not [!Equals [!Ref smallNanogptModel, ""]]  HasMediumNanogptModel: !Not [!Equals [!Ref mediumNanogptModel, ""]]  HasLargeNanogptModel: !Not [!Equals [!Ref largeNanogptModel, ""]]  HasNanogptApiKey: !Not [!Equals [!Ref nanogptApiKey, ""]]
+
+  HasSmallNanogptModel: !Not [!Equals [!Ref smallNanogptModel, ""]]
+
+  HasMediumNanogptModel: !Not [!Equals [!Ref mediumNanogptModel, ""]]
+
+  HasLargeNanogptModel: !Not [!Equals [!Ref largeNanogptModel, ""]]
+
+  HasNanogptApiKey: !Not [!Equals [!Ref nanogptApiKey, ""]]
+
 Resources:
 
   AgentParamSmallNanogptModelParameter:

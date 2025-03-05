@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   isCharitable:
     Type: 'String'
     Description: 'Parameter for IS_CHARITABLE'
@@ -30,7 +35,19 @@ Parameters:
     Description: 'Parameter for CHARITY_ADDRESS_POL'
     
 Conditions:
-  HasIsCharitable: !Not [!Equals [!Ref isCharitable, ""]]  HasCharityAddressBase: !Not [!Equals [!Ref charityAddressBase, ""]]  HasCharityAddressSol: !Not [!Equals [!Ref charityAddressSol, ""]]  HasCharityAddressEth: !Not [!Equals [!Ref charityAddressEth, ""]]  HasCharityAddressArb: !Not [!Equals [!Ref charityAddressArb, ""]]  HasCharityAddressPol: !Not [!Equals [!Ref charityAddressPol, ""]]
+
+  HasIsCharitable: !Not [!Equals [!Ref isCharitable, ""]]
+
+  HasCharityAddressBase: !Not [!Equals [!Ref charityAddressBase, ""]]
+
+  HasCharityAddressSol: !Not [!Equals [!Ref charityAddressSol, ""]]
+
+  HasCharityAddressEth: !Not [!Equals [!Ref charityAddressEth, ""]]
+
+  HasCharityAddressArb: !Not [!Equals [!Ref charityAddressArb, ""]]
+
+  HasCharityAddressPol: !Not [!Equals [!Ref charityAddressPol, ""]]
+
 Resources:
 
   AgentParamIsCharitableParameter:

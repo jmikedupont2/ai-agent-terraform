@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   lensAddress:
     Type: 'String'
     Description: 'Parameter for LENS_ADDRESS'
@@ -14,7 +19,11 @@ Parameters:
     Description: 'Parameter for LENS_PRIVATE_KEY'
     
 Conditions:
-  HasLensAddress: !Not [!Equals [!Ref lensAddress, ""]]  HasLensPrivateKey: !Not [!Equals [!Ref lensPrivateKey, ""]]
+
+  HasLensAddress: !Not [!Equals [!Ref lensAddress, ""]]
+
+  HasLensPrivateKey: !Not [!Equals [!Ref lensPrivateKey, ""]]
+
 Resources:
 
   AgentParamLensAddressParameter:

@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   internetComputerPrivateKey:
     Type: 'String'
     Description: 'Parameter for INTERNET_COMPUTER_PRIVATE_KEY'
@@ -14,7 +19,11 @@ Parameters:
     Description: 'Parameter for INTERNET_COMPUTER_ADDRESS'
     
 Conditions:
-  HasInternetComputerPrivateKey: !Not [!Equals [!Ref internetComputerPrivateKey, ""]]  HasInternetComputerAddress: !Not [!Equals [!Ref internetComputerAddress, ""]]
+
+  HasInternetComputerPrivateKey: !Not [!Equals [!Ref internetComputerPrivateKey, ""]]
+
+  HasInternetComputerAddress: !Not [!Equals [!Ref internetComputerAddress, ""]]
+
 Resources:
 
   AgentParamInternetComputerPrivateKeyParameter:

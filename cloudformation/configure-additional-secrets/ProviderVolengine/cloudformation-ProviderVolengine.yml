@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   volengineApiUrl:
     Type: 'String'
     Description: 'Parameter for VOLENGINE_API_URL'
@@ -30,7 +35,19 @@ Parameters:
     Description: 'Parameter for VOLENGINE_EMBEDDING_MODEL'
     
 Conditions:
-  HasVolengineApiUrl: !Not [!Equals [!Ref volengineApiUrl, ""]]  HasVolengineModel: !Not [!Equals [!Ref volengineModel, ""]]  HasSmallVolengineModel: !Not [!Equals [!Ref smallVolengineModel, ""]]  HasMediumVolengineModel: !Not [!Equals [!Ref mediumVolengineModel, ""]]  HasLargeVolengineModel: !Not [!Equals [!Ref largeVolengineModel, ""]]  HasVolengineEmbeddingModel: !Not [!Equals [!Ref volengineEmbeddingModel, ""]]
+
+  HasVolengineApiUrl: !Not [!Equals [!Ref volengineApiUrl, ""]]
+
+  HasVolengineModel: !Not [!Equals [!Ref volengineModel, ""]]
+
+  HasSmallVolengineModel: !Not [!Equals [!Ref smallVolengineModel, ""]]
+
+  HasMediumVolengineModel: !Not [!Equals [!Ref mediumVolengineModel, ""]]
+
+  HasLargeVolengineModel: !Not [!Equals [!Ref largeVolengineModel, ""]]
+
+  HasVolengineEmbeddingModel: !Not [!Equals [!Ref volengineEmbeddingModel, ""]]
+
 Resources:
 
   AgentParamVolengineApiUrlParameter:

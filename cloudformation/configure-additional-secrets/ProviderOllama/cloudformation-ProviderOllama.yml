@@ -5,6 +5,11 @@ Metadata:
 Description: "parameters extracted from https://github.com/sekmet/synapzeai"
 Parameters:
 
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
   ollamaServerUrl:
     Type: 'String'
     Description: 'Parameter for OLLAMA_SERVER_URL'
@@ -34,7 +39,21 @@ Parameters:
     Description: 'Parameter for LARGE_OLLAMA_MODEL'
     
 Conditions:
-  HasOllamaServerUrl: !Not [!Equals [!Ref ollamaServerUrl, ""]]  HasOllamaModel: !Not [!Equals [!Ref ollamaModel, ""]]  HasUseOllamaEmbedding: !Not [!Equals [!Ref useOllamaEmbedding, ""]]  HasOllamaEmbeddingModel: !Not [!Equals [!Ref ollamaEmbeddingModel, ""]]  HasSmallOllamaModel: !Not [!Equals [!Ref smallOllamaModel, ""]]  HasMediumOllamaModel: !Not [!Equals [!Ref mediumOllamaModel, ""]]  HasLargeOllamaModel: !Not [!Equals [!Ref largeOllamaModel, ""]]
+
+  HasOllamaServerUrl: !Not [!Equals [!Ref ollamaServerUrl, ""]]
+
+  HasOllamaModel: !Not [!Equals [!Ref ollamaModel, ""]]
+
+  HasUseOllamaEmbedding: !Not [!Equals [!Ref useOllamaEmbedding, ""]]
+
+  HasOllamaEmbeddingModel: !Not [!Equals [!Ref ollamaEmbeddingModel, ""]]
+
+  HasSmallOllamaModel: !Not [!Equals [!Ref smallOllamaModel, ""]]
+
+  HasMediumOllamaModel: !Not [!Equals [!Ref mediumOllamaModel, ""]]
+
+  HasLargeOllamaModel: !Not [!Equals [!Ref largeOllamaModel, ""]]
+
 Resources:
 
   AgentParamOllamaServerUrlParameter:
