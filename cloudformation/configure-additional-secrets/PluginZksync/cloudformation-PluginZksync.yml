@@ -1,0 +1,37 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  zksyncAddress:
+    Type: 'String'
+    Description: 'Parameter for ZKSYNC_ADDRESS'
+    
+  zksyncPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for ZKSYNC_PRIVATE_KEY'
+    
+Conditions:
+  HasZksyncAddress: !Not [!Equals [!Ref zksyncAddress, ""]]  HasZksyncPrivateKey: !Not [!Equals [!Ref zksyncPrivateKey, ""]]
+Resources:
+
+  AgentParamZksyncAddressParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasZksyncAddress
+    Properties:
+      Name: !Sub '${AgentCodeName}_ZKSYNC_ADDRESS'
+      Type: 'String'
+      Value: !Ref zksyncAddress
+      Tier: 'Standard'
+      Description: 'Parameter for ZKSYNC_ADDRESS'
+  AgentParamZksyncPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasZksyncPrivateKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_ZKSYNC_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref zksyncPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for ZKSYNC_PRIVATE_KEY'

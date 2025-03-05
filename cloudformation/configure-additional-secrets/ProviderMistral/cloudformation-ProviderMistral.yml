@@ -1,0 +1,63 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  mistralModel:
+    Type: 'String'
+    Description: 'Parameter for MISTRAL_MODEL'
+    
+  smallMistralModel:
+    Type: 'String'
+    Description: 'Parameter for SMALL_MISTRAL_MODEL'
+    
+  mediumMistralModel:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_MISTRAL_MODEL'
+    
+  largeMistralModel:
+    Type: 'String'
+    Description: 'Parameter for LARGE_MISTRAL_MODEL'
+    
+Conditions:
+  HasMistralModel: !Not [!Equals [!Ref mistralModel, ""]]  HasSmallMistralModel: !Not [!Equals [!Ref smallMistralModel, ""]]  HasMediumMistralModel: !Not [!Equals [!Ref mediumMistralModel, ""]]  HasLargeMistralModel: !Not [!Equals [!Ref largeMistralModel, ""]]
+Resources:
+
+  AgentParamMistralModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasMistralModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_MISTRAL_MODEL'
+      Type: 'String'
+      Value: !Ref mistralModel
+      Tier: 'Standard'
+      Description: 'Parameter for MISTRAL_MODEL'
+  AgentParamSmallMistralModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSmallMistralModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_MISTRAL_MODEL'
+      Type: 'String'
+      Value: !Ref smallMistralModel
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_MISTRAL_MODEL'
+  AgentParamMediumMistralModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasMediumMistralModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_MISTRAL_MODEL'
+      Type: 'String'
+      Value: !Ref mediumMistralModel
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_MISTRAL_MODEL'
+  AgentParamLargeMistralModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasLargeMistralModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_MISTRAL_MODEL'
+      Type: 'String'
+      Value: !Ref largeMistralModel
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_MISTRAL_MODEL'

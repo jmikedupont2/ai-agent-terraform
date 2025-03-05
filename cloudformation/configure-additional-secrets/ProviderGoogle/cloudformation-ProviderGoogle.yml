@@ -1,0 +1,89 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  googleModel:
+    Type: 'String'
+    Description: 'Parameter for GOOGLE_MODEL'
+    
+  smallGoogleModel:
+    Type: 'String'
+    Description: 'Parameter for SMALL_GOOGLE_MODEL'
+    
+  mediumGoogleModel:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_GOOGLE_MODEL'
+    
+  largeGoogleModel:
+    Type: 'String'
+    Description: 'Parameter for LARGE_GOOGLE_MODEL'
+    
+  embeddingGoogleModel:
+    Type: 'String'
+    Description: 'Parameter for EMBEDDING_GOOGLE_MODEL'
+    
+  googleGenerativeAiApiKey:
+    Type: 'String'
+    Description: 'Parameter for GOOGLE_GENERATIVE_AI_API_KEY'
+    
+Conditions:
+  HasGoogleModel: !Not [!Equals [!Ref googleModel, ""]]  HasSmallGoogleModel: !Not [!Equals [!Ref smallGoogleModel, ""]]  HasMediumGoogleModel: !Not [!Equals [!Ref mediumGoogleModel, ""]]  HasLargeGoogleModel: !Not [!Equals [!Ref largeGoogleModel, ""]]  HasEmbeddingGoogleModel: !Not [!Equals [!Ref embeddingGoogleModel, ""]]  HasGoogleGenerativeAiApiKey: !Not [!Equals [!Ref googleGenerativeAiApiKey, ""]]
+Resources:
+
+  AgentParamGoogleModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasGoogleModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_GOOGLE_MODEL'
+      Type: 'String'
+      Value: !Ref googleModel
+      Tier: 'Standard'
+      Description: 'Parameter for GOOGLE_MODEL'
+  AgentParamSmallGoogleModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSmallGoogleModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_GOOGLE_MODEL'
+      Type: 'String'
+      Value: !Ref smallGoogleModel
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_GOOGLE_MODEL'
+  AgentParamMediumGoogleModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasMediumGoogleModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_GOOGLE_MODEL'
+      Type: 'String'
+      Value: !Ref mediumGoogleModel
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_GOOGLE_MODEL'
+  AgentParamLargeGoogleModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasLargeGoogleModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_GOOGLE_MODEL'
+      Type: 'String'
+      Value: !Ref largeGoogleModel
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_GOOGLE_MODEL'
+  AgentParamEmbeddingGoogleModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasEmbeddingGoogleModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_EMBEDDING_GOOGLE_MODEL'
+      Type: 'String'
+      Value: !Ref embeddingGoogleModel
+      Tier: 'Standard'
+      Description: 'Parameter for EMBEDDING_GOOGLE_MODEL'
+  AgentParamGoogleGenerativeAiApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasGoogleGenerativeAiApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_GOOGLE_GENERATIVE_AI_API_KEY'
+      Type: 'String'
+      Value: !Ref googleGenerativeAiApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for GOOGLE_GENERATIVE_AI_API_KEY'

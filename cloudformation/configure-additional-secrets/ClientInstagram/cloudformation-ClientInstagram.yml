@@ -1,0 +1,154 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  instagramDryRun:
+    Type: 'String'
+    Description: 'Parameter for INSTAGRAM_DRY_RUN'
+    Default: 'false'
+  instagramUsername:
+    Type: 'String'
+    Description: 'Parameter for INSTAGRAM_USERNAME'
+    
+  instagramPassword:
+    Type: 'String'
+    Description: 'Parameter for INSTAGRAM_PASSWORD'
+    
+  instagramAppId:
+    Type: 'String'
+    Description: 'Parameter for INSTAGRAM_APP_ID'
+    
+  instagramAppSecret:
+    Type: 'String'
+    Description: 'Parameter for INSTAGRAM_APP_SECRET'
+    
+  instagramBusinessAccountId:
+    Type: 'String'
+    Description: 'Parameter for INSTAGRAM_BUSINESS_ACCOUNT_ID'
+    
+  instagramPostIntervalMin:
+    Type: 'Number'
+    Description: 'Parameter for INSTAGRAM_POST_INTERVAL_MIN'
+    
+  instagramPostIntervalMax:
+    Type: 'Number'
+    Description: 'Parameter for INSTAGRAM_POST_INTERVAL_MAX'
+    
+  instagramEnableActionProcessing:
+    Type: 'String'
+    Description: 'Parameter for INSTAGRAM_ENABLE_ACTION_PROCESSING'
+    Default: 'false'
+  instagramActionInterval:
+    Type: 'Number'
+    Description: 'Parameter for INSTAGRAM_ACTION_INTERVAL'
+    
+  instagramMaxActions:
+    Type: 'Number'
+    Description: 'Parameter for INSTAGRAM_MAX_ACTIONS'
+    
+Conditions:
+  HasInstagramDryRun: !Not [!Equals [!Ref instagramDryRun, ""]]  HasInstagramUsername: !Not [!Equals [!Ref instagramUsername, ""]]  HasInstagramPassword: !Not [!Equals [!Ref instagramPassword, ""]]  HasInstagramAppId: !Not [!Equals [!Ref instagramAppId, ""]]  HasInstagramAppSecret: !Not [!Equals [!Ref instagramAppSecret, ""]]  HasInstagramBusinessAccountId: !Not [!Equals [!Ref instagramBusinessAccountId, ""]]  HasInstagramPostIntervalMin: !Not [!Equals [!Ref instagramPostIntervalMin, ""]]  HasInstagramPostIntervalMax: !Not [!Equals [!Ref instagramPostIntervalMax, ""]]  HasInstagramEnableActionProcessing: !Not [!Equals [!Ref instagramEnableActionProcessing, ""]]  HasInstagramActionInterval: !Not [!Equals [!Ref instagramActionInterval, ""]]  HasInstagramMaxActions: !Not [!Equals [!Ref instagramMaxActions, ""]]
+Resources:
+
+  AgentParamInstagramDryRunParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasInstagramDryRun
+    Properties:
+      Name: !Sub '${AgentCodeName}_INSTAGRAM_DRY_RUN'
+      Type: 'String'
+      Value: !Ref instagramDryRun
+      Tier: 'Standard'
+      Description: 'Parameter for INSTAGRAM_DRY_RUN'
+  AgentParamInstagramUsernameParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasInstagramUsername
+    Properties:
+      Name: !Sub '${AgentCodeName}_INSTAGRAM_USERNAME'
+      Type: 'String'
+      Value: !Ref instagramUsername
+      Tier: 'Standard'
+      Description: 'Parameter for INSTAGRAM_USERNAME'
+  AgentParamInstagramPasswordParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasInstagramPassword
+    Properties:
+      Name: !Sub '${AgentCodeName}_INSTAGRAM_PASSWORD'
+      Type: 'String'
+      Value: !Ref instagramPassword
+      Tier: 'Standard'
+      Description: 'Parameter for INSTAGRAM_PASSWORD'
+  AgentParamInstagramAppIdParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasInstagramAppId
+    Properties:
+      Name: !Sub '${AgentCodeName}_INSTAGRAM_APP_ID'
+      Type: 'String'
+      Value: !Ref instagramAppId
+      Tier: 'Standard'
+      Description: 'Parameter for INSTAGRAM_APP_ID'
+  AgentParamInstagramAppSecretParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasInstagramAppSecret
+    Properties:
+      Name: !Sub '${AgentCodeName}_INSTAGRAM_APP_SECRET'
+      Type: 'String'
+      Value: !Ref instagramAppSecret
+      Tier: 'Standard'
+      Description: 'Parameter for INSTAGRAM_APP_SECRET'
+  AgentParamInstagramBusinessAccountIdParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasInstagramBusinessAccountId
+    Properties:
+      Name: !Sub '${AgentCodeName}_INSTAGRAM_BUSINESS_ACCOUNT_ID'
+      Type: 'String'
+      Value: !Ref instagramBusinessAccountId
+      Tier: 'Standard'
+      Description: 'Parameter for INSTAGRAM_BUSINESS_ACCOUNT_ID'
+  AgentParamInstagramPostIntervalMinParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasInstagramPostIntervalMin
+    Properties:
+      Name: !Sub '${AgentCodeName}_INSTAGRAM_POST_INTERVAL_MIN'
+      Type: 'String'
+      Value: !Ref instagramPostIntervalMin
+      Tier: 'Standard'
+      Description: 'Parameter for INSTAGRAM_POST_INTERVAL_MIN'
+  AgentParamInstagramPostIntervalMaxParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasInstagramPostIntervalMax
+    Properties:
+      Name: !Sub '${AgentCodeName}_INSTAGRAM_POST_INTERVAL_MAX'
+      Type: 'String'
+      Value: !Ref instagramPostIntervalMax
+      Tier: 'Standard'
+      Description: 'Parameter for INSTAGRAM_POST_INTERVAL_MAX'
+  AgentParamInstagramEnableActionProcessingParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasInstagramEnableActionProcessing
+    Properties:
+      Name: !Sub '${AgentCodeName}_INSTAGRAM_ENABLE_ACTION_PROCESSING'
+      Type: 'String'
+      Value: !Ref instagramEnableActionProcessing
+      Tier: 'Standard'
+      Description: 'Parameter for INSTAGRAM_ENABLE_ACTION_PROCESSING'
+  AgentParamInstagramActionIntervalParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasInstagramActionInterval
+    Properties:
+      Name: !Sub '${AgentCodeName}_INSTAGRAM_ACTION_INTERVAL'
+      Type: 'String'
+      Value: !Ref instagramActionInterval
+      Tier: 'Standard'
+      Description: 'Parameter for INSTAGRAM_ACTION_INTERVAL'
+  AgentParamInstagramMaxActionsParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasInstagramMaxActions
+    Properties:
+      Name: !Sub '${AgentCodeName}_INSTAGRAM_MAX_ACTIONS'
+      Type: 'String'
+      Value: !Ref instagramMaxActions
+      Tier: 'Standard'
+      Description: 'Parameter for INSTAGRAM_MAX_ACTIONS'

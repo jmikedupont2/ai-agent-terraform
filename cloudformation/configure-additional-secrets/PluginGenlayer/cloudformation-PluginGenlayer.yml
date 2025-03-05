@@ -1,0 +1,24 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  genlayerPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for GENLAYER_PRIVATE_KEY'
+    
+Conditions:
+  HasGenlayerPrivateKey: !Not [!Equals [!Ref genlayerPrivateKey, ""]]
+Resources:
+
+  AgentParamGenlayerPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasGenlayerPrivateKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_GENLAYER_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref genlayerPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for GENLAYER_PRIVATE_KEY'

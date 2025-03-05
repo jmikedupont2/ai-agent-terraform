@@ -1,0 +1,50 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  spheronPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for SPHERON_PRIVATE_KEY'
+    
+  spheronProviderProxyUrl:
+    Type: 'String'
+    Description: 'Parameter for SPHERON_PROVIDER_PROXY_URL'
+    
+  spheronWalletAddress:
+    Type: 'String'
+    Description: 'Parameter for SPHERON_WALLET_ADDRESS'
+    
+Conditions:
+  HasSpheronPrivateKey: !Not [!Equals [!Ref spheronPrivateKey, ""]]  HasSpheronProviderProxyUrl: !Not [!Equals [!Ref spheronProviderProxyUrl, ""]]  HasSpheronWalletAddress: !Not [!Equals [!Ref spheronWalletAddress, ""]]
+Resources:
+
+  AgentParamSpheronPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSpheronPrivateKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_SPHERON_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref spheronPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for SPHERON_PRIVATE_KEY'
+  AgentParamSpheronProviderProxyUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSpheronProviderProxyUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_SPHERON_PROVIDER_PROXY_URL'
+      Type: 'String'
+      Value: !Ref spheronProviderProxyUrl
+      Tier: 'Standard'
+      Description: 'Parameter for SPHERON_PROVIDER_PROXY_URL'
+  AgentParamSpheronWalletAddressParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSpheronWalletAddress
+    Properties:
+      Name: !Sub '${AgentCodeName}_SPHERON_WALLET_ADDRESS'
+      Type: 'String'
+      Value: !Ref spheronWalletAddress
+      Tier: 'Standard'
+      Description: 'Parameter for SPHERON_WALLET_ADDRESS'

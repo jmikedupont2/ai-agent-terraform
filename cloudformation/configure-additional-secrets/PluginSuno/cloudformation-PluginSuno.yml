@@ -1,0 +1,24 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  sunoApiKey:
+    Type: 'String'
+    Description: 'Parameter for SUNO_API_KEY'
+    
+Conditions:
+  HasSunoApiKey: !Not [!Equals [!Ref sunoApiKey, ""]]
+Resources:
+
+  AgentParamSunoApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSunoApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_SUNO_API_KEY'
+      Type: 'String'
+      Value: !Ref sunoApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for SUNO_API_KEY'

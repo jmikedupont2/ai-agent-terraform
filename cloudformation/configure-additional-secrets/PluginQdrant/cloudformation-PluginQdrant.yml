@@ -1,0 +1,63 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  qdrantUrl:
+    Type: 'String'
+    Description: 'Parameter for QDRANT_URL'
+    
+  qdrantKey:
+    Type: 'String'
+    Description: 'Parameter for QDRANT_KEY'
+    
+  qdrantPort:
+    Type: 'Number'
+    Description: 'Parameter for QDRANT_PORT'
+    
+  qdrantVectorSize:
+    Type: 'Number'
+    Description: 'Parameter for QDRANT_VECTOR_SIZE'
+    
+Conditions:
+  HasQdrantUrl: !Not [!Equals [!Ref qdrantUrl, ""]]  HasQdrantKey: !Not [!Equals [!Ref qdrantKey, ""]]  HasQdrantPort: !Not [!Equals [!Ref qdrantPort, ""]]  HasQdrantVectorSize: !Not [!Equals [!Ref qdrantVectorSize, ""]]
+Resources:
+
+  AgentParamQdrantUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasQdrantUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_QDRANT_URL'
+      Type: 'String'
+      Value: !Ref qdrantUrl
+      Tier: 'Standard'
+      Description: 'Parameter for QDRANT_URL'
+  AgentParamQdrantKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasQdrantKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_QDRANT_KEY'
+      Type: 'String'
+      Value: !Ref qdrantKey
+      Tier: 'Standard'
+      Description: 'Parameter for QDRANT_KEY'
+  AgentParamQdrantPortParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasQdrantPort
+    Properties:
+      Name: !Sub '${AgentCodeName}_QDRANT_PORT'
+      Type: 'String'
+      Value: !Ref qdrantPort
+      Tier: 'Standard'
+      Description: 'Parameter for QDRANT_PORT'
+  AgentParamQdrantVectorSizeParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasQdrantVectorSize
+    Properties:
+      Name: !Sub '${AgentCodeName}_QDRANT_VECTOR_SIZE'
+      Type: 'String'
+      Value: !Ref qdrantVectorSize
+      Tier: 'Standard'
+      Description: 'Parameter for QDRANT_VECTOR_SIZE'

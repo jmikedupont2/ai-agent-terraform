@@ -1,0 +1,37 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  alloraApiKey:
+    Type: 'String'
+    Description: 'Parameter for ALLORA_API_KEY'
+    
+  alloraChainSlug:
+    Type: 'String'
+    Description: 'Parameter for ALLORA_CHAIN_SLUG'
+    
+Conditions:
+  HasAlloraApiKey: !Not [!Equals [!Ref alloraApiKey, ""]]  HasAlloraChainSlug: !Not [!Equals [!Ref alloraChainSlug, ""]]
+Resources:
+
+  AgentParamAlloraApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAlloraApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_ALLORA_API_KEY'
+      Type: 'String'
+      Value: !Ref alloraApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for ALLORA_API_KEY'
+  AgentParamAlloraChainSlugParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAlloraChainSlug
+    Properties:
+      Name: !Sub '${AgentCodeName}_ALLORA_CHAIN_SLUG'
+      Type: 'String'
+      Value: !Ref alloraChainSlug
+      Tier: 'Standard'
+      Description: 'Parameter for ALLORA_CHAIN_SLUG'

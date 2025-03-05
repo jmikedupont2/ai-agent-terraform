@@ -1,0 +1,89 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  volengineApiUrl:
+    Type: 'String'
+    Description: 'Parameter for VOLENGINE_API_URL'
+    
+  volengineModel:
+    Type: 'String'
+    Description: 'Parameter for VOLENGINE_MODEL'
+    
+  smallVolengineModel:
+    Type: 'String'
+    Description: 'Parameter for SMALL_VOLENGINE_MODEL'
+    
+  mediumVolengineModel:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_VOLENGINE_MODEL'
+    
+  largeVolengineModel:
+    Type: 'String'
+    Description: 'Parameter for LARGE_VOLENGINE_MODEL'
+    
+  volengineEmbeddingModel:
+    Type: 'String'
+    Description: 'Parameter for VOLENGINE_EMBEDDING_MODEL'
+    
+Conditions:
+  HasVolengineApiUrl: !Not [!Equals [!Ref volengineApiUrl, ""]]  HasVolengineModel: !Not [!Equals [!Ref volengineModel, ""]]  HasSmallVolengineModel: !Not [!Equals [!Ref smallVolengineModel, ""]]  HasMediumVolengineModel: !Not [!Equals [!Ref mediumVolengineModel, ""]]  HasLargeVolengineModel: !Not [!Equals [!Ref largeVolengineModel, ""]]  HasVolengineEmbeddingModel: !Not [!Equals [!Ref volengineEmbeddingModel, ""]]
+Resources:
+
+  AgentParamVolengineApiUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasVolengineApiUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_VOLENGINE_API_URL'
+      Type: 'String'
+      Value: !Ref volengineApiUrl
+      Tier: 'Standard'
+      Description: 'Parameter for VOLENGINE_API_URL'
+  AgentParamVolengineModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasVolengineModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_VOLENGINE_MODEL'
+      Type: 'String'
+      Value: !Ref volengineModel
+      Tier: 'Standard'
+      Description: 'Parameter for VOLENGINE_MODEL'
+  AgentParamSmallVolengineModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSmallVolengineModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_VOLENGINE_MODEL'
+      Type: 'String'
+      Value: !Ref smallVolengineModel
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_VOLENGINE_MODEL'
+  AgentParamMediumVolengineModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasMediumVolengineModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_VOLENGINE_MODEL'
+      Type: 'String'
+      Value: !Ref mediumVolengineModel
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_VOLENGINE_MODEL'
+  AgentParamLargeVolengineModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasLargeVolengineModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_VOLENGINE_MODEL'
+      Type: 'String'
+      Value: !Ref largeVolengineModel
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_VOLENGINE_MODEL'
+  AgentParamVolengineEmbeddingModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasVolengineEmbeddingModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_VOLENGINE_EMBEDDING_MODEL'
+      Type: 'String'
+      Value: !Ref volengineEmbeddingModel
+      Tier: 'Standard'
+      Description: 'Parameter for VOLENGINE_EMBEDDING_MODEL'

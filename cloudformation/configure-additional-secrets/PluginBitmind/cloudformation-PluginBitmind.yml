@@ -1,0 +1,37 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  bitmind:
+    Type: 'String'
+    Description: 'Parameter for BITMIND'
+    Default: 'false'
+  bitmindApiToken:
+    Type: 'String'
+    Description: 'Parameter for BITMIND_API_TOKEN'
+    
+Conditions:
+  HasBitmind: !Not [!Equals [!Ref bitmind, ""]]  HasBitmindApiToken: !Not [!Equals [!Ref bitmindApiToken, ""]]
+Resources:
+
+  AgentParamBitmindParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasBitmind
+    Properties:
+      Name: !Sub '${AgentCodeName}_BITMIND'
+      Type: 'String'
+      Value: !Ref bitmind
+      Tier: 'Standard'
+      Description: 'Parameter for BITMIND'
+  AgentParamBitmindApiTokenParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasBitmindApiToken
+    Properties:
+      Name: !Sub '${AgentCodeName}_BITMIND_API_TOKEN'
+      Type: 'String'
+      Value: !Ref bitmindApiToken
+      Tier: 'Standard'
+      Description: 'Parameter for BITMIND_API_TOKEN'

@@ -1,0 +1,76 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  veniceApiKey:
+    Type: 'String'
+    Description: 'Parameter for VENICE_API_KEY'
+    
+  smallVeniceModel:
+    Type: 'String'
+    Description: 'Parameter for SMALL_VENICE_MODEL'
+    
+  mediumVeniceModel:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_VENICE_MODEL'
+    
+  largeVeniceModel:
+    Type: 'String'
+    Description: 'Parameter for LARGE_VENICE_MODEL'
+    
+  imageVeniceModel:
+    Type: 'String'
+    Description: 'Parameter for IMAGE_VENICE_MODEL'
+    
+Conditions:
+  HasVeniceApiKey: !Not [!Equals [!Ref veniceApiKey, ""]]  HasSmallVeniceModel: !Not [!Equals [!Ref smallVeniceModel, ""]]  HasMediumVeniceModel: !Not [!Equals [!Ref mediumVeniceModel, ""]]  HasLargeVeniceModel: !Not [!Equals [!Ref largeVeniceModel, ""]]  HasImageVeniceModel: !Not [!Equals [!Ref imageVeniceModel, ""]]
+Resources:
+
+  AgentParamVeniceApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasVeniceApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_VENICE_API_KEY'
+      Type: 'String'
+      Value: !Ref veniceApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for VENICE_API_KEY'
+  AgentParamSmallVeniceModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSmallVeniceModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_VENICE_MODEL'
+      Type: 'String'
+      Value: !Ref smallVeniceModel
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_VENICE_MODEL'
+  AgentParamMediumVeniceModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasMediumVeniceModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_VENICE_MODEL'
+      Type: 'String'
+      Value: !Ref mediumVeniceModel
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_VENICE_MODEL'
+  AgentParamLargeVeniceModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasLargeVeniceModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_VENICE_MODEL'
+      Type: 'String'
+      Value: !Ref largeVeniceModel
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_VENICE_MODEL'
+  AgentParamImageVeniceModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasImageVeniceModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_IMAGE_VENICE_MODEL'
+      Type: 'String'
+      Value: !Ref imageVeniceModel
+      Tier: 'Standard'
+      Description: 'Parameter for IMAGE_VENICE_MODEL'

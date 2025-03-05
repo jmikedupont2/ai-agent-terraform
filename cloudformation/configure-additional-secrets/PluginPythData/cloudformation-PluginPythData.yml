@@ -1,0 +1,284 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  pythNetworkEnv:
+    Type: 'String'
+    Description: 'Parameter for PYTH_NETWORK_ENV'
+    
+  pythMainnetHermesUrl:
+    Type: 'String'
+    Description: 'Parameter for PYTH_MAINNET_HERMES_URL'
+    
+  pythMainnetWssUrl:
+    Type: 'String'
+    Description: 'Parameter for PYTH_MAINNET_WSS_URL'
+    
+  pythMainnetPythnetUrl:
+    Type: 'String'
+    Description: 'Parameter for PYTH_MAINNET_PYTHNET_URL'
+    
+  pythMainnetContractRegistry:
+    Type: 'String'
+    Description: 'Parameter for PYTH_MAINNET_CONTRACT_REGISTRY'
+    
+  pythMainnetProgramKey:
+    Type: 'String'
+    Description: 'Parameter for PYTH_MAINNET_PROGRAM_KEY'
+    
+  pythTestnetHermesUrl:
+    Type: 'String'
+    Description: 'Parameter for PYTH_TESTNET_HERMES_URL'
+    
+  pythTestnetWssUrl:
+    Type: 'String'
+    Description: 'Parameter for PYTH_TESTNET_WSS_URL'
+    
+  pythTestnetPythnetUrl:
+    Type: 'String'
+    Description: 'Parameter for PYTH_TESTNET_PYTHNET_URL'
+    
+  pythTestnetContractRegistry:
+    Type: 'String'
+    Description: 'Parameter for PYTH_TESTNET_CONTRACT_REGISTRY'
+    
+  pythTestnetProgramKey:
+    Type: 'String'
+    Description: 'Parameter for PYTH_TESTNET_PROGRAM_KEY'
+    
+  pythMaxRetries:
+    Type: 'Number'
+    Description: 'Parameter for PYTH_MAX_RETRIES'
+    
+  pythRetryDelay:
+    Type: 'Number'
+    Description: 'Parameter for PYTH_RETRY_DELAY'
+    
+  pythTimeout:
+    Type: 'Number'
+    Description: 'Parameter for PYTH_TIMEOUT'
+    
+  pythGranularLog:
+    Type: 'String'
+    Description: 'Parameter for PYTH_GRANULAR_LOG'
+    Default: 'false'
+  pythLogLevel:
+    Type: 'String'
+    Description: 'Parameter for PYTH_LOG_LEVEL'
+    
+  runtimeCheckMode:
+    Type: 'String'
+    Description: 'Parameter for RUNTIME_CHECK_MODE'
+    Default: 'false'
+  pythEnablePriceStreaming:
+    Type: 'String'
+    Description: 'Parameter for PYTH_ENABLE_PRICE_STREAMING'
+    Default: 'false'
+  pythMaxPriceStreams:
+    Type: 'Number'
+    Description: 'Parameter for PYTH_MAX_PRICE_STREAMS'
+    
+  pythTestId01:
+    Type: 'String'
+    Description: 'Parameter for PYTH_TEST_ID01'
+    
+  pythTestId02:
+    Type: 'String'
+    Description: 'Parameter for PYTH_TEST_ID02'
+    
+Conditions:
+  HasPythNetworkEnv: !Not [!Equals [!Ref pythNetworkEnv, ""]]  HasPythMainnetHermesUrl: !Not [!Equals [!Ref pythMainnetHermesUrl, ""]]  HasPythMainnetWssUrl: !Not [!Equals [!Ref pythMainnetWssUrl, ""]]  HasPythMainnetPythnetUrl: !Not [!Equals [!Ref pythMainnetPythnetUrl, ""]]  HasPythMainnetContractRegistry: !Not [!Equals [!Ref pythMainnetContractRegistry, ""]]  HasPythMainnetProgramKey: !Not [!Equals [!Ref pythMainnetProgramKey, ""]]  HasPythTestnetHermesUrl: !Not [!Equals [!Ref pythTestnetHermesUrl, ""]]  HasPythTestnetWssUrl: !Not [!Equals [!Ref pythTestnetWssUrl, ""]]  HasPythTestnetPythnetUrl: !Not [!Equals [!Ref pythTestnetPythnetUrl, ""]]  HasPythTestnetContractRegistry: !Not [!Equals [!Ref pythTestnetContractRegistry, ""]]  HasPythTestnetProgramKey: !Not [!Equals [!Ref pythTestnetProgramKey, ""]]  HasPythMaxRetries: !Not [!Equals [!Ref pythMaxRetries, ""]]  HasPythRetryDelay: !Not [!Equals [!Ref pythRetryDelay, ""]]  HasPythTimeout: !Not [!Equals [!Ref pythTimeout, ""]]  HasPythGranularLog: !Not [!Equals [!Ref pythGranularLog, ""]]  HasPythLogLevel: !Not [!Equals [!Ref pythLogLevel, ""]]  HasRuntimeCheckMode: !Not [!Equals [!Ref runtimeCheckMode, ""]]  HasPythEnablePriceStreaming: !Not [!Equals [!Ref pythEnablePriceStreaming, ""]]  HasPythMaxPriceStreams: !Not [!Equals [!Ref pythMaxPriceStreams, ""]]  HasPythTestId01: !Not [!Equals [!Ref pythTestId01, ""]]  HasPythTestId02: !Not [!Equals [!Ref pythTestId02, ""]]
+Resources:
+
+  AgentParamPythNetworkEnvParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasPythNetworkEnv
+    Properties:
+      Name: !Sub '${AgentCodeName}_PYTH_NETWORK_ENV'
+      Type: 'String'
+      Value: !Ref pythNetworkEnv
+      Tier: 'Standard'
+      Description: 'Parameter for PYTH_NETWORK_ENV'
+  AgentParamPythMainnetHermesUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasPythMainnetHermesUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_PYTH_MAINNET_HERMES_URL'
+      Type: 'String'
+      Value: !Ref pythMainnetHermesUrl
+      Tier: 'Standard'
+      Description: 'Parameter for PYTH_MAINNET_HERMES_URL'
+  AgentParamPythMainnetWssUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasPythMainnetWssUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_PYTH_MAINNET_WSS_URL'
+      Type: 'String'
+      Value: !Ref pythMainnetWssUrl
+      Tier: 'Standard'
+      Description: 'Parameter for PYTH_MAINNET_WSS_URL'
+  AgentParamPythMainnetPythnetUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasPythMainnetPythnetUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_PYTH_MAINNET_PYTHNET_URL'
+      Type: 'String'
+      Value: !Ref pythMainnetPythnetUrl
+      Tier: 'Standard'
+      Description: 'Parameter for PYTH_MAINNET_PYTHNET_URL'
+  AgentParamPythMainnetContractRegistryParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasPythMainnetContractRegistry
+    Properties:
+      Name: !Sub '${AgentCodeName}_PYTH_MAINNET_CONTRACT_REGISTRY'
+      Type: 'String'
+      Value: !Ref pythMainnetContractRegistry
+      Tier: 'Standard'
+      Description: 'Parameter for PYTH_MAINNET_CONTRACT_REGISTRY'
+  AgentParamPythMainnetProgramKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasPythMainnetProgramKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_PYTH_MAINNET_PROGRAM_KEY'
+      Type: 'String'
+      Value: !Ref pythMainnetProgramKey
+      Tier: 'Standard'
+      Description: 'Parameter for PYTH_MAINNET_PROGRAM_KEY'
+  AgentParamPythTestnetHermesUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasPythTestnetHermesUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_PYTH_TESTNET_HERMES_URL'
+      Type: 'String'
+      Value: !Ref pythTestnetHermesUrl
+      Tier: 'Standard'
+      Description: 'Parameter for PYTH_TESTNET_HERMES_URL'
+  AgentParamPythTestnetWssUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasPythTestnetWssUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_PYTH_TESTNET_WSS_URL'
+      Type: 'String'
+      Value: !Ref pythTestnetWssUrl
+      Tier: 'Standard'
+      Description: 'Parameter for PYTH_TESTNET_WSS_URL'
+  AgentParamPythTestnetPythnetUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasPythTestnetPythnetUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_PYTH_TESTNET_PYTHNET_URL'
+      Type: 'String'
+      Value: !Ref pythTestnetPythnetUrl
+      Tier: 'Standard'
+      Description: 'Parameter for PYTH_TESTNET_PYTHNET_URL'
+  AgentParamPythTestnetContractRegistryParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasPythTestnetContractRegistry
+    Properties:
+      Name: !Sub '${AgentCodeName}_PYTH_TESTNET_CONTRACT_REGISTRY'
+      Type: 'String'
+      Value: !Ref pythTestnetContractRegistry
+      Tier: 'Standard'
+      Description: 'Parameter for PYTH_TESTNET_CONTRACT_REGISTRY'
+  AgentParamPythTestnetProgramKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasPythTestnetProgramKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_PYTH_TESTNET_PROGRAM_KEY'
+      Type: 'String'
+      Value: !Ref pythTestnetProgramKey
+      Tier: 'Standard'
+      Description: 'Parameter for PYTH_TESTNET_PROGRAM_KEY'
+  AgentParamPythMaxRetriesParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasPythMaxRetries
+    Properties:
+      Name: !Sub '${AgentCodeName}_PYTH_MAX_RETRIES'
+      Type: 'String'
+      Value: !Ref pythMaxRetries
+      Tier: 'Standard'
+      Description: 'Parameter for PYTH_MAX_RETRIES'
+  AgentParamPythRetryDelayParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasPythRetryDelay
+    Properties:
+      Name: !Sub '${AgentCodeName}_PYTH_RETRY_DELAY'
+      Type: 'String'
+      Value: !Ref pythRetryDelay
+      Tier: 'Standard'
+      Description: 'Parameter for PYTH_RETRY_DELAY'
+  AgentParamPythTimeoutParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasPythTimeout
+    Properties:
+      Name: !Sub '${AgentCodeName}_PYTH_TIMEOUT'
+      Type: 'String'
+      Value: !Ref pythTimeout
+      Tier: 'Standard'
+      Description: 'Parameter for PYTH_TIMEOUT'
+  AgentParamPythGranularLogParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasPythGranularLog
+    Properties:
+      Name: !Sub '${AgentCodeName}_PYTH_GRANULAR_LOG'
+      Type: 'String'
+      Value: !Ref pythGranularLog
+      Tier: 'Standard'
+      Description: 'Parameter for PYTH_GRANULAR_LOG'
+  AgentParamPythLogLevelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasPythLogLevel
+    Properties:
+      Name: !Sub '${AgentCodeName}_PYTH_LOG_LEVEL'
+      Type: 'String'
+      Value: !Ref pythLogLevel
+      Tier: 'Standard'
+      Description: 'Parameter for PYTH_LOG_LEVEL'
+  AgentParamRuntimeCheckModeParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasRuntimeCheckMode
+    Properties:
+      Name: !Sub '${AgentCodeName}_RUNTIME_CHECK_MODE'
+      Type: 'String'
+      Value: !Ref runtimeCheckMode
+      Tier: 'Standard'
+      Description: 'Parameter for RUNTIME_CHECK_MODE'
+  AgentParamPythEnablePriceStreamingParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasPythEnablePriceStreaming
+    Properties:
+      Name: !Sub '${AgentCodeName}_PYTH_ENABLE_PRICE_STREAMING'
+      Type: 'String'
+      Value: !Ref pythEnablePriceStreaming
+      Tier: 'Standard'
+      Description: 'Parameter for PYTH_ENABLE_PRICE_STREAMING'
+  AgentParamPythMaxPriceStreamsParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasPythMaxPriceStreams
+    Properties:
+      Name: !Sub '${AgentCodeName}_PYTH_MAX_PRICE_STREAMS'
+      Type: 'String'
+      Value: !Ref pythMaxPriceStreams
+      Tier: 'Standard'
+      Description: 'Parameter for PYTH_MAX_PRICE_STREAMS'
+  AgentParamPythTestId01Parameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasPythTestId01
+    Properties:
+      Name: !Sub '${AgentCodeName}_PYTH_TEST_ID01'
+      Type: 'String'
+      Value: !Ref pythTestId01
+      Tier: 'Standard'
+      Description: 'Parameter for PYTH_TEST_ID01'
+  AgentParamPythTestId02Parameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasPythTestId02
+    Properties:
+      Name: !Sub '${AgentCodeName}_PYTH_TEST_ID02'
+      Type: 'String'
+      Value: !Ref pythTestId02
+      Tier: 'Standard'
+      Description: 'Parameter for PYTH_TEST_ID02'

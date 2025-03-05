@@ -1,0 +1,37 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  letzaiApiKey:
+    Type: 'String'
+    Description: 'Parameter for LETZAI_API_KEY'
+    
+  letzaiModels:
+    Type: 'String'
+    Description: 'Parameter for LETZAI_MODELS'
+    
+Conditions:
+  HasLetzaiApiKey: !Not [!Equals [!Ref letzaiApiKey, ""]]  HasLetzaiModels: !Not [!Equals [!Ref letzaiModels, ""]]
+Resources:
+
+  AgentParamLetzaiApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasLetzaiApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_LETZAI_API_KEY'
+      Type: 'String'
+      Value: !Ref letzaiApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for LETZAI_API_KEY'
+  AgentParamLetzaiModelsParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasLetzaiModels
+    Properties:
+      Name: !Sub '${AgentCodeName}_LETZAI_MODELS'
+      Type: 'String'
+      Value: !Ref letzaiModels
+      Tier: 'Standard'
+      Description: 'Parameter for LETZAI_MODELS'

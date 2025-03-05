@@ -1,0 +1,115 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  echochambersApiUrl:
+    Type: 'String'
+    Description: 'Parameter for ECHOCHAMBERS_API_URL'
+    
+  echochambersApiKey:
+    Type: 'String'
+    Description: 'Parameter for ECHOCHAMBERS_API_KEY'
+    
+  echochambersUsername:
+    Type: 'String'
+    Description: 'Parameter for ECHOCHAMBERS_USERNAME'
+    
+  echochambersRooms:
+    Type: 'String'
+    Description: 'Parameter for ECHOCHAMBERS_ROOMS'
+    
+  echochambersPollInterval:
+    Type: 'Number'
+    Description: 'Parameter for ECHOCHAMBERS_POLL_INTERVAL'
+    
+  echochambersMaxMessages:
+    Type: 'Number'
+    Description: 'Parameter for ECHOCHAMBERS_MAX_MESSAGES'
+    
+  echochambersConversationStarterInterval:
+    Type: 'Number'
+    Description: 'Parameter for ECHOCHAMBERS_CONVERSATION_STARTER_INTERVAL'
+    
+  echochambersQuietPeriod:
+    Type: 'Number'
+    Description: 'Parameter for ECHOCHAMBERS_QUIET_PERIOD'
+    
+Conditions:
+  HasEchochambersApiUrl: !Not [!Equals [!Ref echochambersApiUrl, ""]]  HasEchochambersApiKey: !Not [!Equals [!Ref echochambersApiKey, ""]]  HasEchochambersUsername: !Not [!Equals [!Ref echochambersUsername, ""]]  HasEchochambersRooms: !Not [!Equals [!Ref echochambersRooms, ""]]  HasEchochambersPollInterval: !Not [!Equals [!Ref echochambersPollInterval, ""]]  HasEchochambersMaxMessages: !Not [!Equals [!Ref echochambersMaxMessages, ""]]  HasEchochambersConversationStarterInterval: !Not [!Equals [!Ref echochambersConversationStarterInterval, ""]]  HasEchochambersQuietPeriod: !Not [!Equals [!Ref echochambersQuietPeriod, ""]]
+Resources:
+
+  AgentParamEchochambersApiUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasEchochambersApiUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_ECHOCHAMBERS_API_URL'
+      Type: 'String'
+      Value: !Ref echochambersApiUrl
+      Tier: 'Standard'
+      Description: 'Parameter for ECHOCHAMBERS_API_URL'
+  AgentParamEchochambersApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasEchochambersApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_ECHOCHAMBERS_API_KEY'
+      Type: 'String'
+      Value: !Ref echochambersApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for ECHOCHAMBERS_API_KEY'
+  AgentParamEchochambersUsernameParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasEchochambersUsername
+    Properties:
+      Name: !Sub '${AgentCodeName}_ECHOCHAMBERS_USERNAME'
+      Type: 'String'
+      Value: !Ref echochambersUsername
+      Tier: 'Standard'
+      Description: 'Parameter for ECHOCHAMBERS_USERNAME'
+  AgentParamEchochambersRoomsParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasEchochambersRooms
+    Properties:
+      Name: !Sub '${AgentCodeName}_ECHOCHAMBERS_ROOMS'
+      Type: 'String'
+      Value: !Ref echochambersRooms
+      Tier: 'Standard'
+      Description: 'Parameter for ECHOCHAMBERS_ROOMS'
+  AgentParamEchochambersPollIntervalParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasEchochambersPollInterval
+    Properties:
+      Name: !Sub '${AgentCodeName}_ECHOCHAMBERS_POLL_INTERVAL'
+      Type: 'String'
+      Value: !Ref echochambersPollInterval
+      Tier: 'Standard'
+      Description: 'Parameter for ECHOCHAMBERS_POLL_INTERVAL'
+  AgentParamEchochambersMaxMessagesParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasEchochambersMaxMessages
+    Properties:
+      Name: !Sub '${AgentCodeName}_ECHOCHAMBERS_MAX_MESSAGES'
+      Type: 'String'
+      Value: !Ref echochambersMaxMessages
+      Tier: 'Standard'
+      Description: 'Parameter for ECHOCHAMBERS_MAX_MESSAGES'
+  AgentParamEchochambersConversationStarterIntervalParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasEchochambersConversationStarterInterval
+    Properties:
+      Name: !Sub '${AgentCodeName}_ECHOCHAMBERS_CONVERSATION_STARTER_INTERVAL'
+      Type: 'String'
+      Value: !Ref echochambersConversationStarterInterval
+      Tier: 'Standard'
+      Description: 'Parameter for ECHOCHAMBERS_CONVERSATION_STARTER_INTERVAL'
+  AgentParamEchochambersQuietPeriodParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasEchochambersQuietPeriod
+    Properties:
+      Name: !Sub '${AgentCodeName}_ECHOCHAMBERS_QUIET_PERIOD'
+      Type: 'String'
+      Value: !Ref echochambersQuietPeriod
+      Tier: 'Standard'
+      Description: 'Parameter for ECHOCHAMBERS_QUIET_PERIOD'

@@ -1,0 +1,63 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  omniflixApiUrl:
+    Type: 'String'
+    Description: 'Parameter for OMNIFLIX_API_URL'
+    
+  omniflixMnemonic:
+    Type: 'String'
+    Description: 'Parameter for OMNIFLIX_MNEMONIC'
+    
+  omniflixRpcEndpoint:
+    Type: 'String'
+    Description: 'Parameter for OMNIFLIX_RPC_ENDPOINT'
+    
+  omniflixPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for OMNIFLIX_PRIVATE_KEY'
+    
+Conditions:
+  HasOmniflixApiUrl: !Not [!Equals [!Ref omniflixApiUrl, ""]]  HasOmniflixMnemonic: !Not [!Equals [!Ref omniflixMnemonic, ""]]  HasOmniflixRpcEndpoint: !Not [!Equals [!Ref omniflixRpcEndpoint, ""]]  HasOmniflixPrivateKey: !Not [!Equals [!Ref omniflixPrivateKey, ""]]
+Resources:
+
+  AgentParamOmniflixApiUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasOmniflixApiUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_OMNIFLIX_API_URL'
+      Type: 'String'
+      Value: !Ref omniflixApiUrl
+      Tier: 'Standard'
+      Description: 'Parameter for OMNIFLIX_API_URL'
+  AgentParamOmniflixMnemonicParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasOmniflixMnemonic
+    Properties:
+      Name: !Sub '${AgentCodeName}_OMNIFLIX_MNEMONIC'
+      Type: 'String'
+      Value: !Ref omniflixMnemonic
+      Tier: 'Standard'
+      Description: 'Parameter for OMNIFLIX_MNEMONIC'
+  AgentParamOmniflixRpcEndpointParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasOmniflixRpcEndpoint
+    Properties:
+      Name: !Sub '${AgentCodeName}_OMNIFLIX_RPC_ENDPOINT'
+      Type: 'String'
+      Value: !Ref omniflixRpcEndpoint
+      Tier: 'Standard'
+      Description: 'Parameter for OMNIFLIX_RPC_ENDPOINT'
+  AgentParamOmniflixPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasOmniflixPrivateKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_OMNIFLIX_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref omniflixPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for OMNIFLIX_PRIVATE_KEY'

@@ -1,0 +1,24 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  chainbaseApiKey:
+    Type: 'String'
+    Description: 'Parameter for CHAINBASE_API_KEY'
+    
+Conditions:
+  HasChainbaseApiKey: !Not [!Equals [!Ref chainbaseApiKey, ""]]
+Resources:
+
+  AgentParamChainbaseApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasChainbaseApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_CHAINBASE_API_KEY'
+      Type: 'String'
+      Value: !Ref chainbaseApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for CHAINBASE_API_KEY'

@@ -1,0 +1,128 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  elevenlabsXiApiKey:
+    Type: 'String'
+    Description: 'Parameter for ELEVENLABS_XI_API_KEY'
+    
+  elevenlabsModelId:
+    Type: 'String'
+    Description: 'Parameter for ELEVENLABS_MODEL_ID'
+    
+  elevenlabsVoiceId:
+    Type: 'String'
+    Description: 'Parameter for ELEVENLABS_VOICE_ID'
+    
+  elevenlabsVoiceStability:
+    Type: 'Number'
+    Description: 'Parameter for ELEVENLABS_VOICE_STABILITY'
+    
+  elevenlabsVoiceSimilarityBoost:
+    Type: 'Number'
+    Description: 'Parameter for ELEVENLABS_VOICE_SIMILARITY_BOOST'
+    
+  elevenlabsVoiceStyle:
+    Type: 'Number'
+    Description: 'Parameter for ELEVENLABS_VOICE_STYLE'
+    
+  elevenlabsVoiceUseSpeakerBoost:
+    Type: 'String'
+    Description: 'Parameter for ELEVENLABS_VOICE_USE_SPEAKER_BOOST'
+    Default: 'false'
+  elevenlabsOptimizeStreamingLatency:
+    Type: 'Number'
+    Description: 'Parameter for ELEVENLABS_OPTIMIZE_STREAMING_LATENCY'
+    
+  elevenlabsOutputFormat:
+    Type: 'String'
+    Description: 'Parameter for ELEVENLABS_OUTPUT_FORMAT'
+    
+Conditions:
+  HasElevenlabsXiApiKey: !Not [!Equals [!Ref elevenlabsXiApiKey, ""]]  HasElevenlabsModelId: !Not [!Equals [!Ref elevenlabsModelId, ""]]  HasElevenlabsVoiceId: !Not [!Equals [!Ref elevenlabsVoiceId, ""]]  HasElevenlabsVoiceStability: !Not [!Equals [!Ref elevenlabsVoiceStability, ""]]  HasElevenlabsVoiceSimilarityBoost: !Not [!Equals [!Ref elevenlabsVoiceSimilarityBoost, ""]]  HasElevenlabsVoiceStyle: !Not [!Equals [!Ref elevenlabsVoiceStyle, ""]]  HasElevenlabsVoiceUseSpeakerBoost: !Not [!Equals [!Ref elevenlabsVoiceUseSpeakerBoost, ""]]  HasElevenlabsOptimizeStreamingLatency: !Not [!Equals [!Ref elevenlabsOptimizeStreamingLatency, ""]]  HasElevenlabsOutputFormat: !Not [!Equals [!Ref elevenlabsOutputFormat, ""]]
+Resources:
+
+  AgentParamElevenlabsXiApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasElevenlabsXiApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_ELEVENLABS_XI_API_KEY'
+      Type: 'String'
+      Value: !Ref elevenlabsXiApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for ELEVENLABS_XI_API_KEY'
+  AgentParamElevenlabsModelIdParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasElevenlabsModelId
+    Properties:
+      Name: !Sub '${AgentCodeName}_ELEVENLABS_MODEL_ID'
+      Type: 'String'
+      Value: !Ref elevenlabsModelId
+      Tier: 'Standard'
+      Description: 'Parameter for ELEVENLABS_MODEL_ID'
+  AgentParamElevenlabsVoiceIdParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasElevenlabsVoiceId
+    Properties:
+      Name: !Sub '${AgentCodeName}_ELEVENLABS_VOICE_ID'
+      Type: 'String'
+      Value: !Ref elevenlabsVoiceId
+      Tier: 'Standard'
+      Description: 'Parameter for ELEVENLABS_VOICE_ID'
+  AgentParamElevenlabsVoiceStabilityParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasElevenlabsVoiceStability
+    Properties:
+      Name: !Sub '${AgentCodeName}_ELEVENLABS_VOICE_STABILITY'
+      Type: 'String'
+      Value: !Ref elevenlabsVoiceStability
+      Tier: 'Standard'
+      Description: 'Parameter for ELEVENLABS_VOICE_STABILITY'
+  AgentParamElevenlabsVoiceSimilarityBoostParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasElevenlabsVoiceSimilarityBoost
+    Properties:
+      Name: !Sub '${AgentCodeName}_ELEVENLABS_VOICE_SIMILARITY_BOOST'
+      Type: 'String'
+      Value: !Ref elevenlabsVoiceSimilarityBoost
+      Tier: 'Standard'
+      Description: 'Parameter for ELEVENLABS_VOICE_SIMILARITY_BOOST'
+  AgentParamElevenlabsVoiceStyleParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasElevenlabsVoiceStyle
+    Properties:
+      Name: !Sub '${AgentCodeName}_ELEVENLABS_VOICE_STYLE'
+      Type: 'String'
+      Value: !Ref elevenlabsVoiceStyle
+      Tier: 'Standard'
+      Description: 'Parameter for ELEVENLABS_VOICE_STYLE'
+  AgentParamElevenlabsVoiceUseSpeakerBoostParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasElevenlabsVoiceUseSpeakerBoost
+    Properties:
+      Name: !Sub '${AgentCodeName}_ELEVENLABS_VOICE_USE_SPEAKER_BOOST'
+      Type: 'String'
+      Value: !Ref elevenlabsVoiceUseSpeakerBoost
+      Tier: 'Standard'
+      Description: 'Parameter for ELEVENLABS_VOICE_USE_SPEAKER_BOOST'
+  AgentParamElevenlabsOptimizeStreamingLatencyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasElevenlabsOptimizeStreamingLatency
+    Properties:
+      Name: !Sub '${AgentCodeName}_ELEVENLABS_OPTIMIZE_STREAMING_LATENCY'
+      Type: 'String'
+      Value: !Ref elevenlabsOptimizeStreamingLatency
+      Tier: 'Standard'
+      Description: 'Parameter for ELEVENLABS_OPTIMIZE_STREAMING_LATENCY'
+  AgentParamElevenlabsOutputFormatParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasElevenlabsOutputFormat
+    Properties:
+      Name: !Sub '${AgentCodeName}_ELEVENLABS_OUTPUT_FORMAT'
+      Type: 'String'
+      Value: !Ref elevenlabsOutputFormat
+      Tier: 'Standard'
+      Description: 'Parameter for ELEVENLABS_OUTPUT_FORMAT'

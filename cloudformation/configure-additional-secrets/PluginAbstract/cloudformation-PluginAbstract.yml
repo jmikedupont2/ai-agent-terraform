@@ -1,0 +1,50 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  abstractAddress:
+    Type: 'String'
+    Description: 'Parameter for ABSTRACT_ADDRESS'
+    
+  abstractPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for ABSTRACT_PRIVATE_KEY'
+    
+  abstractRpcUrl:
+    Type: 'String'
+    Description: 'Parameter for ABSTRACT_RPC_URL'
+    
+Conditions:
+  HasAbstractAddress: !Not [!Equals [!Ref abstractAddress, ""]]  HasAbstractPrivateKey: !Not [!Equals [!Ref abstractPrivateKey, ""]]  HasAbstractRpcUrl: !Not [!Equals [!Ref abstractRpcUrl, ""]]
+Resources:
+
+  AgentParamAbstractAddressParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAbstractAddress
+    Properties:
+      Name: !Sub '${AgentCodeName}_ABSTRACT_ADDRESS'
+      Type: 'String'
+      Value: !Ref abstractAddress
+      Tier: 'Standard'
+      Description: 'Parameter for ABSTRACT_ADDRESS'
+  AgentParamAbstractPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAbstractPrivateKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_ABSTRACT_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref abstractPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for ABSTRACT_PRIVATE_KEY'
+  AgentParamAbstractRpcUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAbstractRpcUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_ABSTRACT_RPC_URL'
+      Type: 'String'
+      Value: !Ref abstractRpcUrl
+      Tier: 'Standard'
+      Description: 'Parameter for ABSTRACT_RPC_URL'

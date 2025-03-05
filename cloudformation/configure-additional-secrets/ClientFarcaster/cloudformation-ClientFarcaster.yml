@@ -1,0 +1,76 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  farcasterFid:
+    Type: 'String'
+    Description: 'Parameter for FARCASTER_FID'
+    
+  farcasterNeynarApiKey:
+    Type: 'String'
+    Description: 'Parameter for FARCASTER_NEYNAR_API_KEY'
+    
+  farcasterNeynarSignerUuid:
+    Type: 'String'
+    Description: 'Parameter for FARCASTER_NEYNAR_SIGNER_UUID'
+    
+  farcasterDryRun:
+    Type: 'String'
+    Description: 'Parameter for FARCASTER_DRY_RUN'
+    Default: 'false'
+  farcasterPollInterval:
+    Type: 'Number'
+    Description: 'Parameter for FARCASTER_POLL_INTERVAL'
+    
+Conditions:
+  HasFarcasterFid: !Not [!Equals [!Ref farcasterFid, ""]]  HasFarcasterNeynarApiKey: !Not [!Equals [!Ref farcasterNeynarApiKey, ""]]  HasFarcasterNeynarSignerUuid: !Not [!Equals [!Ref farcasterNeynarSignerUuid, ""]]  HasFarcasterDryRun: !Not [!Equals [!Ref farcasterDryRun, ""]]  HasFarcasterPollInterval: !Not [!Equals [!Ref farcasterPollInterval, ""]]
+Resources:
+
+  AgentParamFarcasterFidParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasFarcasterFid
+    Properties:
+      Name: !Sub '${AgentCodeName}_FARCASTER_FID'
+      Type: 'String'
+      Value: !Ref farcasterFid
+      Tier: 'Standard'
+      Description: 'Parameter for FARCASTER_FID'
+  AgentParamFarcasterNeynarApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasFarcasterNeynarApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_FARCASTER_NEYNAR_API_KEY'
+      Type: 'String'
+      Value: !Ref farcasterNeynarApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for FARCASTER_NEYNAR_API_KEY'
+  AgentParamFarcasterNeynarSignerUuidParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasFarcasterNeynarSignerUuid
+    Properties:
+      Name: !Sub '${AgentCodeName}_FARCASTER_NEYNAR_SIGNER_UUID'
+      Type: 'String'
+      Value: !Ref farcasterNeynarSignerUuid
+      Tier: 'Standard'
+      Description: 'Parameter for FARCASTER_NEYNAR_SIGNER_UUID'
+  AgentParamFarcasterDryRunParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasFarcasterDryRun
+    Properties:
+      Name: !Sub '${AgentCodeName}_FARCASTER_DRY_RUN'
+      Type: 'String'
+      Value: !Ref farcasterDryRun
+      Tier: 'Standard'
+      Description: 'Parameter for FARCASTER_DRY_RUN'
+  AgentParamFarcasterPollIntervalParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasFarcasterPollInterval
+    Properties:
+      Name: !Sub '${AgentCodeName}_FARCASTER_POLL_INTERVAL'
+      Type: 'String'
+      Value: !Ref farcasterPollInterval
+      Tier: 'Standard'
+      Description: 'Parameter for FARCASTER_POLL_INTERVAL'

@@ -1,0 +1,50 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  opacityTeamId:
+    Type: 'String'
+    Description: 'Parameter for OPACITY_TEAM_ID'
+    
+  opacityCloudflareName:
+    Type: 'String'
+    Description: 'Parameter for OPACITY_CLOUDFLARE_NAME'
+    
+  opacityProverUrl:
+    Type: 'String'
+    Description: 'Parameter for OPACITY_PROVER_URL'
+    
+Conditions:
+  HasOpacityTeamId: !Not [!Equals [!Ref opacityTeamId, ""]]  HasOpacityCloudflareName: !Not [!Equals [!Ref opacityCloudflareName, ""]]  HasOpacityProverUrl: !Not [!Equals [!Ref opacityProverUrl, ""]]
+Resources:
+
+  AgentParamOpacityTeamIdParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasOpacityTeamId
+    Properties:
+      Name: !Sub '${AgentCodeName}_OPACITY_TEAM_ID'
+      Type: 'String'
+      Value: !Ref opacityTeamId
+      Tier: 'Standard'
+      Description: 'Parameter for OPACITY_TEAM_ID'
+  AgentParamOpacityCloudflareNameParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasOpacityCloudflareName
+    Properties:
+      Name: !Sub '${AgentCodeName}_OPACITY_CLOUDFLARE_NAME'
+      Type: 'String'
+      Value: !Ref opacityCloudflareName
+      Tier: 'Standard'
+      Description: 'Parameter for OPACITY_CLOUDFLARE_NAME'
+  AgentParamOpacityProverUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasOpacityProverUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_OPACITY_PROVER_URL'
+      Type: 'String'
+      Value: !Ref opacityProverUrl
+      Tier: 'Standard'
+      Description: 'Parameter for OPACITY_PROVER_URL'

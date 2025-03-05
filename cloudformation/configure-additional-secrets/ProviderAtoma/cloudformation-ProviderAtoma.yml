@@ -1,0 +1,76 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  atomasdkBearerAuth:
+    Type: 'String'
+    Description: 'Parameter for ATOMASDK_BEARER_AUTH'
+    
+  atomaApiUrl:
+    Type: 'String'
+    Description: 'Parameter for ATOMA_API_URL'
+    
+  smallAtomaModel:
+    Type: 'String'
+    Description: 'Parameter for SMALL_ATOMA_MODEL'
+    
+  mediumAtomaModel:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_ATOMA_MODEL'
+    
+  largeAtomaModel:
+    Type: 'String'
+    Description: 'Parameter for LARGE_ATOMA_MODEL'
+    
+Conditions:
+  HasAtomasdkBearerAuth: !Not [!Equals [!Ref atomasdkBearerAuth, ""]]  HasAtomaApiUrl: !Not [!Equals [!Ref atomaApiUrl, ""]]  HasSmallAtomaModel: !Not [!Equals [!Ref smallAtomaModel, ""]]  HasMediumAtomaModel: !Not [!Equals [!Ref mediumAtomaModel, ""]]  HasLargeAtomaModel: !Not [!Equals [!Ref largeAtomaModel, ""]]
+Resources:
+
+  AgentParamAtomasdkBearerAuthParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAtomasdkBearerAuth
+    Properties:
+      Name: !Sub '${AgentCodeName}_ATOMASDK_BEARER_AUTH'
+      Type: 'String'
+      Value: !Ref atomasdkBearerAuth
+      Tier: 'Standard'
+      Description: 'Parameter for ATOMASDK_BEARER_AUTH'
+  AgentParamAtomaApiUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAtomaApiUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_ATOMA_API_URL'
+      Type: 'String'
+      Value: !Ref atomaApiUrl
+      Tier: 'Standard'
+      Description: 'Parameter for ATOMA_API_URL'
+  AgentParamSmallAtomaModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSmallAtomaModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_ATOMA_MODEL'
+      Type: 'String'
+      Value: !Ref smallAtomaModel
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_ATOMA_MODEL'
+  AgentParamMediumAtomaModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasMediumAtomaModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_ATOMA_MODEL'
+      Type: 'String'
+      Value: !Ref mediumAtomaModel
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_ATOMA_MODEL'
+  AgentParamLargeAtomaModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasLargeAtomaModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_ATOMA_MODEL'
+      Type: 'String'
+      Value: !Ref largeAtomaModel
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_ATOMA_MODEL'

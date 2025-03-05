@@ -1,0 +1,63 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  smallNanogptModel:
+    Type: 'String'
+    Description: 'Parameter for SMALL_NANOGPT_MODEL'
+    
+  mediumNanogptModel:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_NANOGPT_MODEL'
+    
+  largeNanogptModel:
+    Type: 'String'
+    Description: 'Parameter for LARGE_NANOGPT_MODEL'
+    
+  nanogptApiKey:
+    Type: 'String'
+    Description: 'Parameter for NANOGPT_API_KEY'
+    
+Conditions:
+  HasSmallNanogptModel: !Not [!Equals [!Ref smallNanogptModel, ""]]  HasMediumNanogptModel: !Not [!Equals [!Ref mediumNanogptModel, ""]]  HasLargeNanogptModel: !Not [!Equals [!Ref largeNanogptModel, ""]]  HasNanogptApiKey: !Not [!Equals [!Ref nanogptApiKey, ""]]
+Resources:
+
+  AgentParamSmallNanogptModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSmallNanogptModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_NANOGPT_MODEL'
+      Type: 'String'
+      Value: !Ref smallNanogptModel
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_NANOGPT_MODEL'
+  AgentParamMediumNanogptModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasMediumNanogptModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_NANOGPT_MODEL'
+      Type: 'String'
+      Value: !Ref mediumNanogptModel
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_NANOGPT_MODEL'
+  AgentParamLargeNanogptModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasLargeNanogptModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_NANOGPT_MODEL'
+      Type: 'String'
+      Value: !Ref largeNanogptModel
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_NANOGPT_MODEL'
+  AgentParamNanogptApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasNanogptApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_NANOGPT_API_KEY'
+      Type: 'String'
+      Value: !Ref nanogptApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for NANOGPT_API_KEY'

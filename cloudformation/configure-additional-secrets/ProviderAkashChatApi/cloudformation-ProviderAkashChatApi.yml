@@ -1,0 +1,63 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  akashChatApiKey:
+    Type: 'String'
+    Description: 'Parameter for AKASH_CHAT_API_KEY'
+    
+  smallAkashChatApiModel:
+    Type: 'String'
+    Description: 'Parameter for SMALL_AKASH_CHAT_API_MODEL'
+    
+  mediumAkashChatApiModel:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_AKASH_CHAT_API_MODEL'
+    
+  largeAkashChatApiModel:
+    Type: 'String'
+    Description: 'Parameter for LARGE_AKASH_CHAT_API_MODEL'
+    
+Conditions:
+  HasAkashChatApiKey: !Not [!Equals [!Ref akashChatApiKey, ""]]  HasSmallAkashChatApiModel: !Not [!Equals [!Ref smallAkashChatApiModel, ""]]  HasMediumAkashChatApiModel: !Not [!Equals [!Ref mediumAkashChatApiModel, ""]]  HasLargeAkashChatApiModel: !Not [!Equals [!Ref largeAkashChatApiModel, ""]]
+Resources:
+
+  AgentParamAkashChatApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAkashChatApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_CHAT_API_KEY'
+      Type: 'String'
+      Value: !Ref akashChatApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_CHAT_API_KEY'
+  AgentParamSmallAkashChatApiModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSmallAkashChatApiModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_AKASH_CHAT_API_MODEL'
+      Type: 'String'
+      Value: !Ref smallAkashChatApiModel
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_AKASH_CHAT_API_MODEL'
+  AgentParamMediumAkashChatApiModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasMediumAkashChatApiModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_AKASH_CHAT_API_MODEL'
+      Type: 'String'
+      Value: !Ref mediumAkashChatApiModel
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_AKASH_CHAT_API_MODEL'
+  AgentParamLargeAkashChatApiModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasLargeAkashChatApiModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_AKASH_CHAT_API_MODEL'
+      Type: 'String'
+      Value: !Ref largeAkashChatApiModel
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_AKASH_CHAT_API_MODEL'

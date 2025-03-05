@@ -1,0 +1,37 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  zeroExApiKey:
+    Type: 'String'
+    Description: 'Parameter for ZERO_EX_API_KEY'
+    
+  alchemyHttpTransportUrl:
+    Type: 'String'
+    Description: 'Parameter for ALCHEMY_HTTP_TRANSPORT_URL'
+    
+Conditions:
+  HasZeroExApiKey: !Not [!Equals [!Ref zeroExApiKey, ""]]  HasAlchemyHttpTransportUrl: !Not [!Equals [!Ref alchemyHttpTransportUrl, ""]]
+Resources:
+
+  AgentParamZeroExApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasZeroExApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_ZERO_EX_API_KEY'
+      Type: 'String'
+      Value: !Ref zeroExApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for ZERO_EX_API_KEY'
+  AgentParamAlchemyHttpTransportUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAlchemyHttpTransportUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_ALCHEMY_HTTP_TRANSPORT_URL'
+      Type: 'String'
+      Value: !Ref alchemyHttpTransportUrl
+      Tier: 'Standard'
+      Description: 'Parameter for ALCHEMY_HTTP_TRANSPORT_URL'

@@ -1,0 +1,63 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  bnbPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for BNB_PRIVATE_KEY'
+    
+  bnbPublicKey:
+    Type: 'String'
+    Description: 'Parameter for BNB_PUBLIC_KEY'
+    
+  bscProviderUrl:
+    Type: 'String'
+    Description: 'Parameter for BSC_PROVIDER_URL'
+    
+  opbnbProviderUrl:
+    Type: 'String'
+    Description: 'Parameter for OPBNB_PROVIDER_URL'
+    
+Conditions:
+  HasBnbPrivateKey: !Not [!Equals [!Ref bnbPrivateKey, ""]]  HasBnbPublicKey: !Not [!Equals [!Ref bnbPublicKey, ""]]  HasBscProviderUrl: !Not [!Equals [!Ref bscProviderUrl, ""]]  HasOpbnbProviderUrl: !Not [!Equals [!Ref opbnbProviderUrl, ""]]
+Resources:
+
+  AgentParamBnbPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasBnbPrivateKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_BNB_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref bnbPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for BNB_PRIVATE_KEY'
+  AgentParamBnbPublicKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasBnbPublicKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_BNB_PUBLIC_KEY'
+      Type: 'String'
+      Value: !Ref bnbPublicKey
+      Tier: 'Standard'
+      Description: 'Parameter for BNB_PUBLIC_KEY'
+  AgentParamBscProviderUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasBscProviderUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_BSC_PROVIDER_URL'
+      Type: 'String'
+      Value: !Ref bscProviderUrl
+      Tier: 'Standard'
+      Description: 'Parameter for BSC_PROVIDER_URL'
+  AgentParamOpbnbProviderUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasOpbnbProviderUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_OPBNB_PROVIDER_URL'
+      Type: 'String'
+      Value: !Ref opbnbProviderUrl
+      Tier: 'Standard'
+      Description: 'Parameter for OPBNB_PROVIDER_URL'

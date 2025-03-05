@@ -1,0 +1,50 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  discordApplicationId:
+    Type: 'String'
+    Description: 'Parameter for DISCORD_APPLICATION_ID'
+    
+  discordApiToken:
+    Type: 'String'
+    Description: 'Parameter for DISCORD_API_TOKEN'
+    
+  discordVoiceChannelId:
+    Type: 'String'
+    Description: 'Parameter for DISCORD_VOICE_CHANNEL_ID'
+    
+Conditions:
+  HasDiscordApplicationId: !Not [!Equals [!Ref discordApplicationId, ""]]  HasDiscordApiToken: !Not [!Equals [!Ref discordApiToken, ""]]  HasDiscordVoiceChannelId: !Not [!Equals [!Ref discordVoiceChannelId, ""]]
+Resources:
+
+  AgentParamDiscordApplicationIdParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasDiscordApplicationId
+    Properties:
+      Name: !Sub '${AgentCodeName}_DISCORD_APPLICATION_ID'
+      Type: 'String'
+      Value: !Ref discordApplicationId
+      Tier: 'Standard'
+      Description: 'Parameter for DISCORD_APPLICATION_ID'
+  AgentParamDiscordApiTokenParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasDiscordApiToken
+    Properties:
+      Name: !Sub '${AgentCodeName}_DISCORD_API_TOKEN'
+      Type: 'String'
+      Value: !Ref discordApiToken
+      Tier: 'Standard'
+      Description: 'Parameter for DISCORD_API_TOKEN'
+  AgentParamDiscordVoiceChannelIdParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasDiscordVoiceChannelId
+    Properties:
+      Name: !Sub '${AgentCodeName}_DISCORD_VOICE_CHANNEL_ID'
+      Type: 'String'
+      Value: !Ref discordVoiceChannelId
+      Tier: 'Standard'
+      Description: 'Parameter for DISCORD_VOICE_CHANNEL_ID'

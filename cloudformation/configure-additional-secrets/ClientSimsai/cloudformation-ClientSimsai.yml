@@ -1,0 +1,63 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  simsaiApiKey:
+    Type: 'String'
+    Description: 'Parameter for SIMSAI_API_KEY'
+    
+  simsaiAgentId:
+    Type: 'String'
+    Description: 'Parameter for SIMSAI_AGENT_ID'
+    
+  simsaiUsername:
+    Type: 'String'
+    Description: 'Parameter for SIMSAI_USERNAME'
+    
+  simsaiDryRun:
+    Type: 'String'
+    Description: 'Parameter for SIMSAI_DRY_RUN'
+    Default: 'false'
+Conditions:
+  HasSimsaiApiKey: !Not [!Equals [!Ref simsaiApiKey, ""]]  HasSimsaiAgentId: !Not [!Equals [!Ref simsaiAgentId, ""]]  HasSimsaiUsername: !Not [!Equals [!Ref simsaiUsername, ""]]  HasSimsaiDryRun: !Not [!Equals [!Ref simsaiDryRun, ""]]
+Resources:
+
+  AgentParamSimsaiApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSimsaiApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_SIMSAI_API_KEY'
+      Type: 'String'
+      Value: !Ref simsaiApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for SIMSAI_API_KEY'
+  AgentParamSimsaiAgentIdParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSimsaiAgentId
+    Properties:
+      Name: !Sub '${AgentCodeName}_SIMSAI_AGENT_ID'
+      Type: 'String'
+      Value: !Ref simsaiAgentId
+      Tier: 'Standard'
+      Description: 'Parameter for SIMSAI_AGENT_ID'
+  AgentParamSimsaiUsernameParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSimsaiUsername
+    Properties:
+      Name: !Sub '${AgentCodeName}_SIMSAI_USERNAME'
+      Type: 'String'
+      Value: !Ref simsaiUsername
+      Tier: 'Standard'
+      Description: 'Parameter for SIMSAI_USERNAME'
+  AgentParamSimsaiDryRunParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSimsaiDryRun
+    Properties:
+      Name: !Sub '${AgentCodeName}_SIMSAI_DRY_RUN'
+      Type: 'String'
+      Value: !Ref simsaiDryRun
+      Tier: 'Standard'
+      Description: 'Parameter for SIMSAI_DRY_RUN'

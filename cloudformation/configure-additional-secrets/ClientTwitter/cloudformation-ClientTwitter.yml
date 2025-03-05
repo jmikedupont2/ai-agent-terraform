@@ -1,0 +1,336 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  twitterDryRun:
+    Type: 'String'
+    Description: 'Parameter for TWITTER_DRY_RUN'
+    Default: 'false'
+  twitterUsername:
+    Type: 'String'
+    Description: 'Parameter for TWITTER_USERNAME'
+    
+  twitterPassword:
+    Type: 'String'
+    Description: 'Parameter for TWITTER_PASSWORD'
+    
+  twitterEmail:
+    Type: 'String'
+    Description: 'Parameter for TWITTER_EMAIL'
+    
+  twitter2faSecret:
+    Type: 'String'
+    Description: 'Parameter for TWITTER_2FA_SECRET'
+    
+  twitterCookiesAuthToken:
+    Type: 'String'
+    Description: 'Parameter for TWITTER_COOKIES_AUTH_TOKEN'
+    
+  twitterCookiesCt0:
+    Type: 'String'
+    Description: 'Parameter for TWITTER_COOKIES_CT0'
+    
+  twitterCookiesGuestId:
+    Type: 'String'
+    Description: 'Parameter for TWITTER_COOKIES_GUEST_ID'
+    
+  twitterPollInterval:
+    Type: 'Number'
+    Description: 'Parameter for TWITTER_POLL_INTERVAL'
+    
+  twitterSearchEnable:
+    Type: 'String'
+    Description: 'Parameter for TWITTER_SEARCH_ENABLE'
+    Default: 'false'
+  twitterTargetUsers:
+    Type: 'String'
+    Description: 'Parameter for TWITTER_TARGET_USERS'
+    
+  twitterRetryLimit:
+    Type: 'Number'
+    Description: 'Parameter for TWITTER_RETRY_LIMIT'
+    
+  twitterSpacesEnable:
+    Type: 'String'
+    Description: 'Parameter for TWITTER_SPACES_ENABLE'
+    Default: 'false'
+  enableTwitterPostGeneration:
+    Type: 'String'
+    Description: 'Parameter for ENABLE_TWITTER_POST_GENERATION'
+    Default: 'false'
+  postIntervalMin:
+    Type: 'Number'
+    Description: 'Parameter for POST_INTERVAL_MIN'
+    
+  postIntervalMax:
+    Type: 'Number'
+    Description: 'Parameter for POST_INTERVAL_MAX'
+    
+  postImmediately:
+    Type: 'String'
+    Description: 'Parameter for POST_IMMEDIATELY'
+    Default: 'false'
+  actionInterval:
+    Type: 'Number'
+    Description: 'Parameter for ACTION_INTERVAL'
+    
+  enableActionProcessing:
+    Type: 'String'
+    Description: 'Parameter for ENABLE_ACTION_PROCESSING'
+    Default: 'false'
+  maxActionsProcessing:
+    Type: 'Number'
+    Description: 'Parameter for MAX_ACTIONS_PROCESSING'
+    
+  actionTimelineType:
+    Type: 'String'
+    Description: 'Parameter for ACTION_TIMELINE_TYPE'
+    
+  twitterApprovalDiscordChannelId:
+    Type: 'String'
+    Description: 'Parameter for TWITTER_APPROVAL_DISCORD_CHANNEL_ID'
+    
+  twitterApprovalDiscordBotToken:
+    Type: 'String'
+    Description: 'Parameter for TWITTER_APPROVAL_DISCORD_BOT_TOKEN'
+    
+  twitterApprovalEnabled:
+    Type: 'String'
+    Description: 'Parameter for TWITTER_APPROVAL_ENABLED'
+    Default: 'false'
+  twitterApprovalCheckInterval:
+    Type: 'Number'
+    Description: 'Parameter for TWITTER_APPROVAL_CHECK_INTERVAL'
+    
+Conditions:
+  HasTwitterDryRun: !Not [!Equals [!Ref twitterDryRun, ""]]  HasTwitterUsername: !Not [!Equals [!Ref twitterUsername, ""]]  HasTwitterPassword: !Not [!Equals [!Ref twitterPassword, ""]]  HasTwitterEmail: !Not [!Equals [!Ref twitterEmail, ""]]  HasTwitter2faSecret: !Not [!Equals [!Ref twitter2faSecret, ""]]  HasTwitterCookiesAuthToken: !Not [!Equals [!Ref twitterCookiesAuthToken, ""]]  HasTwitterCookiesCt0: !Not [!Equals [!Ref twitterCookiesCt0, ""]]  HasTwitterCookiesGuestId: !Not [!Equals [!Ref twitterCookiesGuestId, ""]]  HasTwitterPollInterval: !Not [!Equals [!Ref twitterPollInterval, ""]]  HasTwitterSearchEnable: !Not [!Equals [!Ref twitterSearchEnable, ""]]  HasTwitterTargetUsers: !Not [!Equals [!Ref twitterTargetUsers, ""]]  HasTwitterRetryLimit: !Not [!Equals [!Ref twitterRetryLimit, ""]]  HasTwitterSpacesEnable: !Not [!Equals [!Ref twitterSpacesEnable, ""]]  HasEnableTwitterPostGeneration: !Not [!Equals [!Ref enableTwitterPostGeneration, ""]]  HasPostIntervalMin: !Not [!Equals [!Ref postIntervalMin, ""]]  HasPostIntervalMax: !Not [!Equals [!Ref postIntervalMax, ""]]  HasPostImmediately: !Not [!Equals [!Ref postImmediately, ""]]  HasActionInterval: !Not [!Equals [!Ref actionInterval, ""]]  HasEnableActionProcessing: !Not [!Equals [!Ref enableActionProcessing, ""]]  HasMaxActionsProcessing: !Not [!Equals [!Ref maxActionsProcessing, ""]]  HasActionTimelineType: !Not [!Equals [!Ref actionTimelineType, ""]]  HasTwitterApprovalDiscordChannelId: !Not [!Equals [!Ref twitterApprovalDiscordChannelId, ""]]  HasTwitterApprovalDiscordBotToken: !Not [!Equals [!Ref twitterApprovalDiscordBotToken, ""]]  HasTwitterApprovalEnabled: !Not [!Equals [!Ref twitterApprovalEnabled, ""]]  HasTwitterApprovalCheckInterval: !Not [!Equals [!Ref twitterApprovalCheckInterval, ""]]
+Resources:
+
+  AgentParamTwitterDryRunParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasTwitterDryRun
+    Properties:
+      Name: !Sub '${AgentCodeName}_TWITTER_DRY_RUN'
+      Type: 'String'
+      Value: !Ref twitterDryRun
+      Tier: 'Standard'
+      Description: 'Parameter for TWITTER_DRY_RUN'
+  AgentParamTwitterUsernameParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasTwitterUsername
+    Properties:
+      Name: !Sub '${AgentCodeName}_TWITTER_USERNAME'
+      Type: 'String'
+      Value: !Ref twitterUsername
+      Tier: 'Standard'
+      Description: 'Parameter for TWITTER_USERNAME'
+  AgentParamTwitterPasswordParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasTwitterPassword
+    Properties:
+      Name: !Sub '${AgentCodeName}_TWITTER_PASSWORD'
+      Type: 'String'
+      Value: !Ref twitterPassword
+      Tier: 'Standard'
+      Description: 'Parameter for TWITTER_PASSWORD'
+  AgentParamTwitterEmailParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasTwitterEmail
+    Properties:
+      Name: !Sub '${AgentCodeName}_TWITTER_EMAIL'
+      Type: 'String'
+      Value: !Ref twitterEmail
+      Tier: 'Standard'
+      Description: 'Parameter for TWITTER_EMAIL'
+  AgentParamTwitter2faSecretParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasTwitter2faSecret
+    Properties:
+      Name: !Sub '${AgentCodeName}_TWITTER_2FA_SECRET'
+      Type: 'String'
+      Value: !Ref twitter2faSecret
+      Tier: 'Standard'
+      Description: 'Parameter for TWITTER_2FA_SECRET'
+  AgentParamTwitterCookiesAuthTokenParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasTwitterCookiesAuthToken
+    Properties:
+      Name: !Sub '${AgentCodeName}_TWITTER_COOKIES_AUTH_TOKEN'
+      Type: 'String'
+      Value: !Ref twitterCookiesAuthToken
+      Tier: 'Standard'
+      Description: 'Parameter for TWITTER_COOKIES_AUTH_TOKEN'
+  AgentParamTwitterCookiesCt0Parameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasTwitterCookiesCt0
+    Properties:
+      Name: !Sub '${AgentCodeName}_TWITTER_COOKIES_CT0'
+      Type: 'String'
+      Value: !Ref twitterCookiesCt0
+      Tier: 'Standard'
+      Description: 'Parameter for TWITTER_COOKIES_CT0'
+  AgentParamTwitterCookiesGuestIdParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasTwitterCookiesGuestId
+    Properties:
+      Name: !Sub '${AgentCodeName}_TWITTER_COOKIES_GUEST_ID'
+      Type: 'String'
+      Value: !Ref twitterCookiesGuestId
+      Tier: 'Standard'
+      Description: 'Parameter for TWITTER_COOKIES_GUEST_ID'
+  AgentParamTwitterPollIntervalParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasTwitterPollInterval
+    Properties:
+      Name: !Sub '${AgentCodeName}_TWITTER_POLL_INTERVAL'
+      Type: 'String'
+      Value: !Ref twitterPollInterval
+      Tier: 'Standard'
+      Description: 'Parameter for TWITTER_POLL_INTERVAL'
+  AgentParamTwitterSearchEnableParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasTwitterSearchEnable
+    Properties:
+      Name: !Sub '${AgentCodeName}_TWITTER_SEARCH_ENABLE'
+      Type: 'String'
+      Value: !Ref twitterSearchEnable
+      Tier: 'Standard'
+      Description: 'Parameter for TWITTER_SEARCH_ENABLE'
+  AgentParamTwitterTargetUsersParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasTwitterTargetUsers
+    Properties:
+      Name: !Sub '${AgentCodeName}_TWITTER_TARGET_USERS'
+      Type: 'String'
+      Value: !Ref twitterTargetUsers
+      Tier: 'Standard'
+      Description: 'Parameter for TWITTER_TARGET_USERS'
+  AgentParamTwitterRetryLimitParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasTwitterRetryLimit
+    Properties:
+      Name: !Sub '${AgentCodeName}_TWITTER_RETRY_LIMIT'
+      Type: 'String'
+      Value: !Ref twitterRetryLimit
+      Tier: 'Standard'
+      Description: 'Parameter for TWITTER_RETRY_LIMIT'
+  AgentParamTwitterSpacesEnableParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasTwitterSpacesEnable
+    Properties:
+      Name: !Sub '${AgentCodeName}_TWITTER_SPACES_ENABLE'
+      Type: 'String'
+      Value: !Ref twitterSpacesEnable
+      Tier: 'Standard'
+      Description: 'Parameter for TWITTER_SPACES_ENABLE'
+  AgentParamEnableTwitterPostGenerationParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasEnableTwitterPostGeneration
+    Properties:
+      Name: !Sub '${AgentCodeName}_ENABLE_TWITTER_POST_GENERATION'
+      Type: 'String'
+      Value: !Ref enableTwitterPostGeneration
+      Tier: 'Standard'
+      Description: 'Parameter for ENABLE_TWITTER_POST_GENERATION'
+  AgentParamPostIntervalMinParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasPostIntervalMin
+    Properties:
+      Name: !Sub '${AgentCodeName}_POST_INTERVAL_MIN'
+      Type: 'String'
+      Value: !Ref postIntervalMin
+      Tier: 'Standard'
+      Description: 'Parameter for POST_INTERVAL_MIN'
+  AgentParamPostIntervalMaxParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasPostIntervalMax
+    Properties:
+      Name: !Sub '${AgentCodeName}_POST_INTERVAL_MAX'
+      Type: 'String'
+      Value: !Ref postIntervalMax
+      Tier: 'Standard'
+      Description: 'Parameter for POST_INTERVAL_MAX'
+  AgentParamPostImmediatelyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasPostImmediately
+    Properties:
+      Name: !Sub '${AgentCodeName}_POST_IMMEDIATELY'
+      Type: 'String'
+      Value: !Ref postImmediately
+      Tier: 'Standard'
+      Description: 'Parameter for POST_IMMEDIATELY'
+  AgentParamActionIntervalParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasActionInterval
+    Properties:
+      Name: !Sub '${AgentCodeName}_ACTION_INTERVAL'
+      Type: 'String'
+      Value: !Ref actionInterval
+      Tier: 'Standard'
+      Description: 'Parameter for ACTION_INTERVAL'
+  AgentParamEnableActionProcessingParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasEnableActionProcessing
+    Properties:
+      Name: !Sub '${AgentCodeName}_ENABLE_ACTION_PROCESSING'
+      Type: 'String'
+      Value: !Ref enableActionProcessing
+      Tier: 'Standard'
+      Description: 'Parameter for ENABLE_ACTION_PROCESSING'
+  AgentParamMaxActionsProcessingParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasMaxActionsProcessing
+    Properties:
+      Name: !Sub '${AgentCodeName}_MAX_ACTIONS_PROCESSING'
+      Type: 'String'
+      Value: !Ref maxActionsProcessing
+      Tier: 'Standard'
+      Description: 'Parameter for MAX_ACTIONS_PROCESSING'
+  AgentParamActionTimelineTypeParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasActionTimelineType
+    Properties:
+      Name: !Sub '${AgentCodeName}_ACTION_TIMELINE_TYPE'
+      Type: 'String'
+      Value: !Ref actionTimelineType
+      Tier: 'Standard'
+      Description: 'Parameter for ACTION_TIMELINE_TYPE'
+  AgentParamTwitterApprovalDiscordChannelIdParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasTwitterApprovalDiscordChannelId
+    Properties:
+      Name: !Sub '${AgentCodeName}_TWITTER_APPROVAL_DISCORD_CHANNEL_ID'
+      Type: 'String'
+      Value: !Ref twitterApprovalDiscordChannelId
+      Tier: 'Standard'
+      Description: 'Parameter for TWITTER_APPROVAL_DISCORD_CHANNEL_ID'
+  AgentParamTwitterApprovalDiscordBotTokenParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasTwitterApprovalDiscordBotToken
+    Properties:
+      Name: !Sub '${AgentCodeName}_TWITTER_APPROVAL_DISCORD_BOT_TOKEN'
+      Type: 'String'
+      Value: !Ref twitterApprovalDiscordBotToken
+      Tier: 'Standard'
+      Description: 'Parameter for TWITTER_APPROVAL_DISCORD_BOT_TOKEN'
+  AgentParamTwitterApprovalEnabledParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasTwitterApprovalEnabled
+    Properties:
+      Name: !Sub '${AgentCodeName}_TWITTER_APPROVAL_ENABLED'
+      Type: 'String'
+      Value: !Ref twitterApprovalEnabled
+      Tier: 'Standard'
+      Description: 'Parameter for TWITTER_APPROVAL_ENABLED'
+  AgentParamTwitterApprovalCheckIntervalParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasTwitterApprovalCheckInterval
+    Properties:
+      Name: !Sub '${AgentCodeName}_TWITTER_APPROVAL_CHECK_INTERVAL'
+      Type: 'String'
+      Value: !Ref twitterApprovalCheckInterval
+      Tier: 'Standard'
+      Description: 'Parameter for TWITTER_APPROVAL_CHECK_INTERVAL'

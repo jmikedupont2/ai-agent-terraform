@@ -1,0 +1,37 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  aptosPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for APTOS_PRIVATE_KEY'
+    
+  aptosNetwork:
+    Type: 'String'
+    Description: 'Parameter for APTOS_NETWORK'
+    
+Conditions:
+  HasAptosPrivateKey: !Not [!Equals [!Ref aptosPrivateKey, ""]]  HasAptosNetwork: !Not [!Equals [!Ref aptosNetwork, ""]]
+Resources:
+
+  AgentParamAptosPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAptosPrivateKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_APTOS_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref aptosPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for APTOS_PRIVATE_KEY'
+  AgentParamAptosNetworkParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAptosNetwork
+    Properties:
+      Name: !Sub '${AgentCodeName}_APTOS_NETWORK'
+      Type: 'String'
+      Value: !Ref aptosNetwork
+      Tier: 'Standard'
+      Description: 'Parameter for APTOS_NETWORK'

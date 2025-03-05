@@ -1,0 +1,89 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  coinbaseCommerceKey:
+    Type: 'String'
+    Description: 'Parameter for COINBASE_COMMERCE_KEY'
+    
+  coinbaseApiKey:
+    Type: 'String'
+    Description: 'Parameter for COINBASE_API_KEY'
+    
+  coinbasePrivateKey:
+    Type: 'String'
+    Description: 'Parameter for COINBASE_PRIVATE_KEY'
+    
+  coinbaseGeneratedWalletId:
+    Type: 'String'
+    Description: 'Parameter for COINBASE_GENERATED_WALLET_ID'
+    
+  coinbaseGeneratedWalletHexSeed:
+    Type: 'String'
+    Description: 'Parameter for COINBASE_GENERATED_WALLET_HEX_SEED'
+    
+  coinbaseNotificationUri:
+    Type: 'String'
+    Description: 'Parameter for COINBASE_NOTIFICATION_URI'
+    
+Conditions:
+  HasCoinbaseCommerceKey: !Not [!Equals [!Ref coinbaseCommerceKey, ""]]  HasCoinbaseApiKey: !Not [!Equals [!Ref coinbaseApiKey, ""]]  HasCoinbasePrivateKey: !Not [!Equals [!Ref coinbasePrivateKey, ""]]  HasCoinbaseGeneratedWalletId: !Not [!Equals [!Ref coinbaseGeneratedWalletId, ""]]  HasCoinbaseGeneratedWalletHexSeed: !Not [!Equals [!Ref coinbaseGeneratedWalletHexSeed, ""]]  HasCoinbaseNotificationUri: !Not [!Equals [!Ref coinbaseNotificationUri, ""]]
+Resources:
+
+  AgentParamCoinbaseCommerceKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasCoinbaseCommerceKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_COINBASE_COMMERCE_KEY'
+      Type: 'String'
+      Value: !Ref coinbaseCommerceKey
+      Tier: 'Standard'
+      Description: 'Parameter for COINBASE_COMMERCE_KEY'
+  AgentParamCoinbaseApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasCoinbaseApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_COINBASE_API_KEY'
+      Type: 'String'
+      Value: !Ref coinbaseApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for COINBASE_API_KEY'
+  AgentParamCoinbasePrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasCoinbasePrivateKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_COINBASE_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref coinbasePrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for COINBASE_PRIVATE_KEY'
+  AgentParamCoinbaseGeneratedWalletIdParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasCoinbaseGeneratedWalletId
+    Properties:
+      Name: !Sub '${AgentCodeName}_COINBASE_GENERATED_WALLET_ID'
+      Type: 'String'
+      Value: !Ref coinbaseGeneratedWalletId
+      Tier: 'Standard'
+      Description: 'Parameter for COINBASE_GENERATED_WALLET_ID'
+  AgentParamCoinbaseGeneratedWalletHexSeedParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasCoinbaseGeneratedWalletHexSeed
+    Properties:
+      Name: !Sub '${AgentCodeName}_COINBASE_GENERATED_WALLET_HEX_SEED'
+      Type: 'String'
+      Value: !Ref coinbaseGeneratedWalletHexSeed
+      Tier: 'Standard'
+      Description: 'Parameter for COINBASE_GENERATED_WALLET_HEX_SEED'
+  AgentParamCoinbaseNotificationUriParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasCoinbaseNotificationUri
+    Properties:
+      Name: !Sub '${AgentCodeName}_COINBASE_NOTIFICATION_URI'
+      Type: 'String'
+      Value: !Ref coinbaseNotificationUri
+      Tier: 'Standard'
+      Description: 'Parameter for COINBASE_NOTIFICATION_URI'

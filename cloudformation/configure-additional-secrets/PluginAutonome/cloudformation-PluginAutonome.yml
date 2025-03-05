@@ -1,0 +1,37 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  autonomeJwtToken:
+    Type: 'String'
+    Description: 'Parameter for AUTONOME_JWT_TOKEN'
+    
+  autonomeRpc:
+    Type: 'String'
+    Description: 'Parameter for AUTONOME_RPC'
+    
+Conditions:
+  HasAutonomeJwtToken: !Not [!Equals [!Ref autonomeJwtToken, ""]]  HasAutonomeRpc: !Not [!Equals [!Ref autonomeRpc, ""]]
+Resources:
+
+  AgentParamAutonomeJwtTokenParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAutonomeJwtToken
+    Properties:
+      Name: !Sub '${AgentCodeName}_AUTONOME_JWT_TOKEN'
+      Type: 'String'
+      Value: !Ref autonomeJwtToken
+      Tier: 'Standard'
+      Description: 'Parameter for AUTONOME_JWT_TOKEN'
+  AgentParamAutonomeRpcParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAutonomeRpc
+    Properties:
+      Name: !Sub '${AgentCodeName}_AUTONOME_RPC'
+      Type: 'String'
+      Value: !Ref autonomeRpc
+      Tier: 'Standard'
+      Description: 'Parameter for AUTONOME_RPC'

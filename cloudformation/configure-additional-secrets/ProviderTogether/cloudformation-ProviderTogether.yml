@@ -1,0 +1,24 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  togetherApiKey:
+    Type: 'String'
+    Description: 'Parameter for TOGETHER_API_KEY'
+    
+Conditions:
+  HasTogetherApiKey: !Not [!Equals [!Ref togetherApiKey, ""]]
+Resources:
+
+  AgentParamTogetherApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasTogetherApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_TOGETHER_API_KEY'
+      Type: 'String'
+      Value: !Ref togetherApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for TOGETHER_API_KEY'

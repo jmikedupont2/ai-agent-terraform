@@ -1,0 +1,76 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  livepeerGatewayUrl:
+    Type: 'String'
+    Description: 'Parameter for LIVEPEER_GATEWAY_URL'
+    
+  imageLivepeerModel:
+    Type: 'String'
+    Description: 'Parameter for IMAGE_LIVEPEER_MODEL'
+    
+  smallLivepeerModel:
+    Type: 'String'
+    Description: 'Parameter for SMALL_LIVEPEER_MODEL'
+    
+  mediumLivepeerModel:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_LIVEPEER_MODEL'
+    
+  largeLivepeerModel:
+    Type: 'String'
+    Description: 'Parameter for LARGE_LIVEPEER_MODEL'
+    
+Conditions:
+  HasLivepeerGatewayUrl: !Not [!Equals [!Ref livepeerGatewayUrl, ""]]  HasImageLivepeerModel: !Not [!Equals [!Ref imageLivepeerModel, ""]]  HasSmallLivepeerModel: !Not [!Equals [!Ref smallLivepeerModel, ""]]  HasMediumLivepeerModel: !Not [!Equals [!Ref mediumLivepeerModel, ""]]  HasLargeLivepeerModel: !Not [!Equals [!Ref largeLivepeerModel, ""]]
+Resources:
+
+  AgentParamLivepeerGatewayUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasLivepeerGatewayUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_LIVEPEER_GATEWAY_URL'
+      Type: 'String'
+      Value: !Ref livepeerGatewayUrl
+      Tier: 'Standard'
+      Description: 'Parameter for LIVEPEER_GATEWAY_URL'
+  AgentParamImageLivepeerModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasImageLivepeerModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_IMAGE_LIVEPEER_MODEL'
+      Type: 'String'
+      Value: !Ref imageLivepeerModel
+      Tier: 'Standard'
+      Description: 'Parameter for IMAGE_LIVEPEER_MODEL'
+  AgentParamSmallLivepeerModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSmallLivepeerModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_LIVEPEER_MODEL'
+      Type: 'String'
+      Value: !Ref smallLivepeerModel
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_LIVEPEER_MODEL'
+  AgentParamMediumLivepeerModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasMediumLivepeerModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_LIVEPEER_MODEL'
+      Type: 'String'
+      Value: !Ref mediumLivepeerModel
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_LIVEPEER_MODEL'
+  AgentParamLargeLivepeerModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasLargeLivepeerModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_LIVEPEER_MODEL'
+      Type: 'String'
+      Value: !Ref largeLivepeerModel
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_LIVEPEER_MODEL'

@@ -367,6 +367,6 @@ resource "local_file" "items_to_html" {
     for alias in local.all_regions :
     alias.full_html_url
   ])
-  filename = "runbook.md"
+  filename = "runbook_${var.runbook}.md"
 }
 

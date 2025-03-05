@@ -1,0 +1,24 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  intifaceWebsocketUrl:
+    Type: 'String'
+    Description: 'Parameter for INTIFACE_WEBSOCKET_URL'
+    
+Conditions:
+  HasIntifaceWebsocketUrl: !Not [!Equals [!Ref intifaceWebsocketUrl, ""]]
+Resources:
+
+  AgentParamIntifaceWebsocketUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasIntifaceWebsocketUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_INTIFACE_WEBSOCKET_URL'
+      Type: 'String'
+      Value: !Ref intifaceWebsocketUrl
+      Tier: 'Standard'
+      Description: 'Parameter for INTIFACE_WEBSOCKET_URL'

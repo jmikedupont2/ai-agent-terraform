@@ -1,0 +1,37 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  nknClientPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for NKN_CLIENT_PRIVATE_KEY'
+    
+  nknClientId:
+    Type: 'String'
+    Description: 'Parameter for NKN_CLIENT_ID'
+    
+Conditions:
+  HasNknClientPrivateKey: !Not [!Equals [!Ref nknClientPrivateKey, ""]]  HasNknClientId: !Not [!Equals [!Ref nknClientId, ""]]
+Resources:
+
+  AgentParamNknClientPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasNknClientPrivateKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_NKN_CLIENT_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref nknClientPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for NKN_CLIENT_PRIVATE_KEY'
+  AgentParamNknClientIdParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasNknClientId
+    Properties:
+      Name: !Sub '${AgentCodeName}_NKN_CLIENT_ID'
+      Type: 'String'
+      Value: !Ref nknClientId
+      Tier: 'Standard'
+      Description: 'Parameter for NKN_CLIENT_ID'

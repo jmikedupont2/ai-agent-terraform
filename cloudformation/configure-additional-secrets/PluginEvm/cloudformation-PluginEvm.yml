@@ -1,0 +1,37 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  evmPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for EVM_PRIVATE_KEY'
+    
+  evmProviderUrl:
+    Type: 'String'
+    Description: 'Parameter for EVM_PROVIDER_URL'
+    
+Conditions:
+  HasEvmPrivateKey: !Not [!Equals [!Ref evmPrivateKey, ""]]  HasEvmProviderUrl: !Not [!Equals [!Ref evmProviderUrl, ""]]
+Resources:
+
+  AgentParamEvmPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasEvmPrivateKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_EVM_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref evmPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for EVM_PRIVATE_KEY'
+  AgentParamEvmProviderUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasEvmProviderUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_EVM_PROVIDER_URL'
+      Type: 'String'
+      Value: !Ref evmProviderUrl
+      Tier: 'Standard'
+      Description: 'Parameter for EVM_PROVIDER_URL'

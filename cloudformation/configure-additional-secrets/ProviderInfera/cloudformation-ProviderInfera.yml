@@ -1,0 +1,89 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  inferaApiKey:
+    Type: 'String'
+    Description: 'Parameter for INFERA_API_KEY'
+    
+  inferaModel:
+    Type: 'String'
+    Description: 'Parameter for INFERA_MODEL'
+    
+  inferaServerUrl:
+    Type: 'String'
+    Description: 'Parameter for INFERA_SERVER_URL'
+    
+  smallInferaModel:
+    Type: 'String'
+    Description: 'Parameter for SMALL_INFERA_MODEL'
+    
+  mediumInferaModel:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_INFERA_MODEL'
+    
+  largeInferaModel:
+    Type: 'String'
+    Description: 'Parameter for LARGE_INFERA_MODEL'
+    
+Conditions:
+  HasInferaApiKey: !Not [!Equals [!Ref inferaApiKey, ""]]  HasInferaModel: !Not [!Equals [!Ref inferaModel, ""]]  HasInferaServerUrl: !Not [!Equals [!Ref inferaServerUrl, ""]]  HasSmallInferaModel: !Not [!Equals [!Ref smallInferaModel, ""]]  HasMediumInferaModel: !Not [!Equals [!Ref mediumInferaModel, ""]]  HasLargeInferaModel: !Not [!Equals [!Ref largeInferaModel, ""]]
+Resources:
+
+  AgentParamInferaApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasInferaApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_INFERA_API_KEY'
+      Type: 'String'
+      Value: !Ref inferaApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for INFERA_API_KEY'
+  AgentParamInferaModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasInferaModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_INFERA_MODEL'
+      Type: 'String'
+      Value: !Ref inferaModel
+      Tier: 'Standard'
+      Description: 'Parameter for INFERA_MODEL'
+  AgentParamInferaServerUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasInferaServerUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_INFERA_SERVER_URL'
+      Type: 'String'
+      Value: !Ref inferaServerUrl
+      Tier: 'Standard'
+      Description: 'Parameter for INFERA_SERVER_URL'
+  AgentParamSmallInferaModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSmallInferaModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_INFERA_MODEL'
+      Type: 'String'
+      Value: !Ref smallInferaModel
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_INFERA_MODEL'
+  AgentParamMediumInferaModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasMediumInferaModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_INFERA_MODEL'
+      Type: 'String'
+      Value: !Ref mediumInferaModel
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_INFERA_MODEL'
+  AgentParamLargeInferaModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasLargeInferaModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_INFERA_MODEL'
+      Type: 'String'
+      Value: !Ref largeInferaModel
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_INFERA_MODEL'

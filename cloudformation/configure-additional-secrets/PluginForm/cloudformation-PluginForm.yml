@@ -1,0 +1,37 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  formPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for FORM_PRIVATE_KEY'
+    
+  formTestnet:
+    Type: 'String'
+    Description: 'Parameter for FORM_TESTNET'
+    Default: 'false'
+Conditions:
+  HasFormPrivateKey: !Not [!Equals [!Ref formPrivateKey, ""]]  HasFormTestnet: !Not [!Equals [!Ref formTestnet, ""]]
+Resources:
+
+  AgentParamFormPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasFormPrivateKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_FORM_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref formPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for FORM_PRIVATE_KEY'
+  AgentParamFormTestnetParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasFormTestnet
+    Properties:
+      Name: !Sub '${AgentCodeName}_FORM_TESTNET'
+      Type: 'String'
+      Value: !Ref formTestnet
+      Tier: 'Standard'
+      Description: 'Parameter for FORM_TESTNET'

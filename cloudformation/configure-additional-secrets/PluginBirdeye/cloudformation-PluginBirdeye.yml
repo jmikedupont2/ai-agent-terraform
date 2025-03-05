@@ -1,0 +1,24 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  birdeyeApiKey:
+    Type: 'String'
+    Description: 'Parameter for BIRDEYE_API_KEY'
+    
+Conditions:
+  HasBirdeyeApiKey: !Not [!Equals [!Ref birdeyeApiKey, ""]]
+Resources:
+
+  AgentParamBirdeyeApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasBirdeyeApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_BIRDEYE_API_KEY'
+      Type: 'String'
+      Value: !Ref birdeyeApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for BIRDEYE_API_KEY'

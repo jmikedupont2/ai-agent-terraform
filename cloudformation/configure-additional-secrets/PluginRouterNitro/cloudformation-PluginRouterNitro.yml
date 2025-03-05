@@ -1,0 +1,37 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  routerNitroEvmAddress:
+    Type: 'String'
+    Description: 'Parameter for ROUTER_NITRO_EVM_ADDRESS'
+    
+  routerNitroEvmPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for ROUTER_NITRO_EVM_PRIVATE_KEY'
+    
+Conditions:
+  HasRouterNitroEvmAddress: !Not [!Equals [!Ref routerNitroEvmAddress, ""]]  HasRouterNitroEvmPrivateKey: !Not [!Equals [!Ref routerNitroEvmPrivateKey, ""]]
+Resources:
+
+  AgentParamRouterNitroEvmAddressParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasRouterNitroEvmAddress
+    Properties:
+      Name: !Sub '${AgentCodeName}_ROUTER_NITRO_EVM_ADDRESS'
+      Type: 'String'
+      Value: !Ref routerNitroEvmAddress
+      Tier: 'Standard'
+      Description: 'Parameter for ROUTER_NITRO_EVM_ADDRESS'
+  AgentParamRouterNitroEvmPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasRouterNitroEvmPrivateKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_ROUTER_NITRO_EVM_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref routerNitroEvmPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for ROUTER_NITRO_EVM_PRIVATE_KEY'

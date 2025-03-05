@@ -1,0 +1,63 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  storyPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for STORY_PRIVATE_KEY'
+    
+  storyApiBaseUrl:
+    Type: 'String'
+    Description: 'Parameter for STORY_API_BASE_URL'
+    
+  storyApiKey:
+    Type: 'String'
+    Description: 'Parameter for STORY_API_KEY'
+    
+  pinataJwt:
+    Type: 'String'
+    Description: 'Parameter for PINATA_JWT'
+    
+Conditions:
+  HasStoryPrivateKey: !Not [!Equals [!Ref storyPrivateKey, ""]]  HasStoryApiBaseUrl: !Not [!Equals [!Ref storyApiBaseUrl, ""]]  HasStoryApiKey: !Not [!Equals [!Ref storyApiKey, ""]]  HasPinataJwt: !Not [!Equals [!Ref pinataJwt, ""]]
+Resources:
+
+  AgentParamStoryPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasStoryPrivateKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_STORY_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref storyPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for STORY_PRIVATE_KEY'
+  AgentParamStoryApiBaseUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasStoryApiBaseUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_STORY_API_BASE_URL'
+      Type: 'String'
+      Value: !Ref storyApiBaseUrl
+      Tier: 'Standard'
+      Description: 'Parameter for STORY_API_BASE_URL'
+  AgentParamStoryApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasStoryApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_STORY_API_KEY'
+      Type: 'String'
+      Value: !Ref storyApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for STORY_API_KEY'
+  AgentParamPinataJwtParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasPinataJwt
+    Properties:
+      Name: !Sub '${AgentCodeName}_PINATA_JWT'
+      Type: 'String'
+      Value: !Ref pinataJwt
+      Tier: 'Standard'
+      Description: 'Parameter for PINATA_JWT'

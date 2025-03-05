@@ -1,0 +1,115 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  eternalaiUrl:
+    Type: 'String'
+    Description: 'Parameter for ETERNALAI_URL'
+    
+  eternalaiModel:
+    Type: 'String'
+    Description: 'Parameter for ETERNALAI_MODEL'
+    
+  eternalaiChainId:
+    Type: 'String'
+    Description: 'Parameter for ETERNALAI_CHAIN_ID'
+    
+  eternalaiRpcUrl:
+    Type: 'String'
+    Description: 'Parameter for ETERNALAI_RPC_URL'
+    
+  eternalaiAgentContractAddress:
+    Type: 'String'
+    Description: 'Parameter for ETERNALAI_AGENT_CONTRACT_ADDRESS'
+    
+  eternalaiAgentId:
+    Type: 'String'
+    Description: 'Parameter for ETERNALAI_AGENT_ID'
+    
+  eternalaiApiKey:
+    Type: 'String'
+    Description: 'Parameter for ETERNALAI_API_KEY'
+    
+  eternalaiLog:
+    Type: 'String'
+    Description: 'Parameter for ETERNALAI_LOG'
+    Default: 'false'
+Conditions:
+  HasEternalaiUrl: !Not [!Equals [!Ref eternalaiUrl, ""]]  HasEternalaiModel: !Not [!Equals [!Ref eternalaiModel, ""]]  HasEternalaiChainId: !Not [!Equals [!Ref eternalaiChainId, ""]]  HasEternalaiRpcUrl: !Not [!Equals [!Ref eternalaiRpcUrl, ""]]  HasEternalaiAgentContractAddress: !Not [!Equals [!Ref eternalaiAgentContractAddress, ""]]  HasEternalaiAgentId: !Not [!Equals [!Ref eternalaiAgentId, ""]]  HasEternalaiApiKey: !Not [!Equals [!Ref eternalaiApiKey, ""]]  HasEternalaiLog: !Not [!Equals [!Ref eternalaiLog, ""]]
+Resources:
+
+  AgentParamEternalaiUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasEternalaiUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_ETERNALAI_URL'
+      Type: 'String'
+      Value: !Ref eternalaiUrl
+      Tier: 'Standard'
+      Description: 'Parameter for ETERNALAI_URL'
+  AgentParamEternalaiModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasEternalaiModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_ETERNALAI_MODEL'
+      Type: 'String'
+      Value: !Ref eternalaiModel
+      Tier: 'Standard'
+      Description: 'Parameter for ETERNALAI_MODEL'
+  AgentParamEternalaiChainIdParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasEternalaiChainId
+    Properties:
+      Name: !Sub '${AgentCodeName}_ETERNALAI_CHAIN_ID'
+      Type: 'String'
+      Value: !Ref eternalaiChainId
+      Tier: 'Standard'
+      Description: 'Parameter for ETERNALAI_CHAIN_ID'
+  AgentParamEternalaiRpcUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasEternalaiRpcUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_ETERNALAI_RPC_URL'
+      Type: 'String'
+      Value: !Ref eternalaiRpcUrl
+      Tier: 'Standard'
+      Description: 'Parameter for ETERNALAI_RPC_URL'
+  AgentParamEternalaiAgentContractAddressParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasEternalaiAgentContractAddress
+    Properties:
+      Name: !Sub '${AgentCodeName}_ETERNALAI_AGENT_CONTRACT_ADDRESS'
+      Type: 'String'
+      Value: !Ref eternalaiAgentContractAddress
+      Tier: 'Standard'
+      Description: 'Parameter for ETERNALAI_AGENT_CONTRACT_ADDRESS'
+  AgentParamEternalaiAgentIdParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasEternalaiAgentId
+    Properties:
+      Name: !Sub '${AgentCodeName}_ETERNALAI_AGENT_ID'
+      Type: 'String'
+      Value: !Ref eternalaiAgentId
+      Tier: 'Standard'
+      Description: 'Parameter for ETERNALAI_AGENT_ID'
+  AgentParamEternalaiApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasEternalaiApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_ETERNALAI_API_KEY'
+      Type: 'String'
+      Value: !Ref eternalaiApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for ETERNALAI_API_KEY'
+  AgentParamEternalaiLogParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasEternalaiLog
+    Properties:
+      Name: !Sub '${AgentCodeName}_ETERNALAI_LOG'
+      Type: 'String'
+      Value: !Ref eternalaiLog
+      Tier: 'Standard'
+      Description: 'Parameter for ETERNALAI_LOG'

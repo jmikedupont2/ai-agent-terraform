@@ -1,0 +1,37 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  cosmosRecoveryPhrase:
+    Type: 'String'
+    Description: 'Parameter for COSMOS_RECOVERY_PHRASE'
+    
+  cosmosAvailableChains:
+    Type: 'String'
+    Description: 'Parameter for COSMOS_AVAILABLE_CHAINS'
+    
+Conditions:
+  HasCosmosRecoveryPhrase: !Not [!Equals [!Ref cosmosRecoveryPhrase, ""]]  HasCosmosAvailableChains: !Not [!Equals [!Ref cosmosAvailableChains, ""]]
+Resources:
+
+  AgentParamCosmosRecoveryPhraseParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasCosmosRecoveryPhrase
+    Properties:
+      Name: !Sub '${AgentCodeName}_COSMOS_RECOVERY_PHRASE'
+      Type: 'String'
+      Value: !Ref cosmosRecoveryPhrase
+      Tier: 'Standard'
+      Description: 'Parameter for COSMOS_RECOVERY_PHRASE'
+  AgentParamCosmosAvailableChainsParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasCosmosAvailableChains
+    Properties:
+      Name: !Sub '${AgentCodeName}_COSMOS_AVAILABLE_CHAINS'
+      Type: 'String'
+      Value: !Ref cosmosAvailableChains
+      Tier: 'Standard'
+      Description: 'Parameter for COSMOS_AVAILABLE_CHAINS'

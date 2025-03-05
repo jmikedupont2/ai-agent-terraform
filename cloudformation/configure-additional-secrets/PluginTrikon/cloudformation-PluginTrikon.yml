@@ -1,0 +1,37 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  trikonWalletAddress:
+    Type: 'String'
+    Description: 'Parameter for TRIKON_WALLET_ADDRESS'
+    
+  trikonInitialBalance:
+    Type: 'String'
+    Description: 'Parameter for TRIKON_INITIAL_BALANCE'
+    
+Conditions:
+  HasTrikonWalletAddress: !Not [!Equals [!Ref trikonWalletAddress, ""]]  HasTrikonInitialBalance: !Not [!Equals [!Ref trikonInitialBalance, ""]]
+Resources:
+
+  AgentParamTrikonWalletAddressParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasTrikonWalletAddress
+    Properties:
+      Name: !Sub '${AgentCodeName}_TRIKON_WALLET_ADDRESS'
+      Type: 'String'
+      Value: !Ref trikonWalletAddress
+      Tier: 'Standard'
+      Description: 'Parameter for TRIKON_WALLET_ADDRESS'
+  AgentParamTrikonInitialBalanceParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasTrikonInitialBalance
+    Properties:
+      Name: !Sub '${AgentCodeName}_TRIKON_INITIAL_BALANCE'
+      Type: 'String'
+      Value: !Ref trikonInitialBalance
+      Tier: 'Standard'
+      Description: 'Parameter for TRIKON_INITIAL_BALANCE'

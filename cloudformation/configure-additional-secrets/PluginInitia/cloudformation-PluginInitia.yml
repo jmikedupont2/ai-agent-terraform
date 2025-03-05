@@ -1,0 +1,50 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  initiaPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for INITIA_PRIVATE_KEY'
+    
+  initiaNodeUrl:
+    Type: 'String'
+    Description: 'Parameter for INITIA_NODE_URL'
+    
+  initiaChainId:
+    Type: 'String'
+    Description: 'Parameter for INITIA_CHAIN_ID'
+    
+Conditions:
+  HasInitiaPrivateKey: !Not [!Equals [!Ref initiaPrivateKey, ""]]  HasInitiaNodeUrl: !Not [!Equals [!Ref initiaNodeUrl, ""]]  HasInitiaChainId: !Not [!Equals [!Ref initiaChainId, ""]]
+Resources:
+
+  AgentParamInitiaPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasInitiaPrivateKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_INITIA_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref initiaPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for INITIA_PRIVATE_KEY'
+  AgentParamInitiaNodeUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasInitiaNodeUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_INITIA_NODE_URL'
+      Type: 'String'
+      Value: !Ref initiaNodeUrl
+      Tier: 'Standard'
+      Description: 'Parameter for INITIA_NODE_URL'
+  AgentParamInitiaChainIdParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasInitiaChainId
+    Properties:
+      Name: !Sub '${AgentCodeName}_INITIA_CHAIN_ID'
+      Type: 'String'
+      Value: !Ref initiaChainId
+      Tier: 'Standard'
+      Description: 'Parameter for INITIA_CHAIN_ID'

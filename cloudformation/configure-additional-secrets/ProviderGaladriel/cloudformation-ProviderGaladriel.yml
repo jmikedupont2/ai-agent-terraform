@@ -1,0 +1,76 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  galadrielApiKey:
+    Type: 'String'
+    Description: 'Parameter for GALADRIEL_API_KEY'
+    
+  smallGaladrielModel:
+    Type: 'String'
+    Description: 'Parameter for SMALL_GALADRIEL_MODEL'
+    
+  mediumGaladrielModel:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_GALADRIEL_MODEL'
+    
+  largeGaladrielModel:
+    Type: 'String'
+    Description: 'Parameter for LARGE_GALADRIEL_MODEL'
+    
+  galadrielFineTuneApiKey:
+    Type: 'String'
+    Description: 'Parameter for GALADRIEL_FINE_TUNE_API_KEY'
+    
+Conditions:
+  HasGaladrielApiKey: !Not [!Equals [!Ref galadrielApiKey, ""]]  HasSmallGaladrielModel: !Not [!Equals [!Ref smallGaladrielModel, ""]]  HasMediumGaladrielModel: !Not [!Equals [!Ref mediumGaladrielModel, ""]]  HasLargeGaladrielModel: !Not [!Equals [!Ref largeGaladrielModel, ""]]  HasGaladrielFineTuneApiKey: !Not [!Equals [!Ref galadrielFineTuneApiKey, ""]]
+Resources:
+
+  AgentParamGaladrielApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasGaladrielApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_GALADRIEL_API_KEY'
+      Type: 'String'
+      Value: !Ref galadrielApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for GALADRIEL_API_KEY'
+  AgentParamSmallGaladrielModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSmallGaladrielModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_GALADRIEL_MODEL'
+      Type: 'String'
+      Value: !Ref smallGaladrielModel
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_GALADRIEL_MODEL'
+  AgentParamMediumGaladrielModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasMediumGaladrielModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_GALADRIEL_MODEL'
+      Type: 'String'
+      Value: !Ref mediumGaladrielModel
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_GALADRIEL_MODEL'
+  AgentParamLargeGaladrielModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasLargeGaladrielModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_GALADRIEL_MODEL'
+      Type: 'String'
+      Value: !Ref largeGaladrielModel
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_GALADRIEL_MODEL'
+  AgentParamGaladrielFineTuneApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasGaladrielFineTuneApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_GALADRIEL_FINE_TUNE_API_KEY'
+      Type: 'String'
+      Value: !Ref galadrielFineTuneApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for GALADRIEL_FINE_TUNE_API_KEY'

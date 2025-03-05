@@ -1,0 +1,24 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  giphyApiKey:
+    Type: 'String'
+    Description: 'Parameter for GIPHY_API_KEY'
+    
+Conditions:
+  HasGiphyApiKey: !Not [!Equals [!Ref giphyApiKey, ""]]
+Resources:
+
+  AgentParamGiphyApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasGiphyApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_GIPHY_API_KEY'
+      Type: 'String'
+      Value: !Ref giphyApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for GIPHY_API_KEY'

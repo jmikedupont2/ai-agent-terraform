@@ -1,0 +1,76 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  nineteenAiApiKey:
+    Type: 'String'
+    Description: 'Parameter for NINETEEN_AI_API_KEY'
+    
+  smallNineteenAiModel:
+    Type: 'String'
+    Description: 'Parameter for SMALL_NINETEEN_AI_MODEL'
+    
+  mediumNineteenAiModel:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_NINETEEN_AI_MODEL'
+    
+  largeNineteenAiModel:
+    Type: 'String'
+    Description: 'Parameter for LARGE_NINETEEN_AI_MODEL'
+    
+  imageNineteenAiMode:
+    Type: 'String'
+    Description: 'Parameter for IMAGE_NINETEEN_AI_MODE'
+    
+Conditions:
+  HasNineteenAiApiKey: !Not [!Equals [!Ref nineteenAiApiKey, ""]]  HasSmallNineteenAiModel: !Not [!Equals [!Ref smallNineteenAiModel, ""]]  HasMediumNineteenAiModel: !Not [!Equals [!Ref mediumNineteenAiModel, ""]]  HasLargeNineteenAiModel: !Not [!Equals [!Ref largeNineteenAiModel, ""]]  HasImageNineteenAiMode: !Not [!Equals [!Ref imageNineteenAiMode, ""]]
+Resources:
+
+  AgentParamNineteenAiApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasNineteenAiApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_NINETEEN_AI_API_KEY'
+      Type: 'String'
+      Value: !Ref nineteenAiApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for NINETEEN_AI_API_KEY'
+  AgentParamSmallNineteenAiModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSmallNineteenAiModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_NINETEEN_AI_MODEL'
+      Type: 'String'
+      Value: !Ref smallNineteenAiModel
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_NINETEEN_AI_MODEL'
+  AgentParamMediumNineteenAiModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasMediumNineteenAiModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_NINETEEN_AI_MODEL'
+      Type: 'String'
+      Value: !Ref mediumNineteenAiModel
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_NINETEEN_AI_MODEL'
+  AgentParamLargeNineteenAiModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasLargeNineteenAiModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_NINETEEN_AI_MODEL'
+      Type: 'String'
+      Value: !Ref largeNineteenAiModel
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_NINETEEN_AI_MODEL'
+  AgentParamImageNineteenAiModeParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasImageNineteenAiMode
+    Properties:
+      Name: !Sub '${AgentCodeName}_IMAGE_NINETEEN_AI_MODE'
+      Type: 'String'
+      Value: !Ref imageNineteenAiMode
+      Tier: 'Standard'
+      Description: 'Parameter for IMAGE_NINETEEN_AI_MODE'

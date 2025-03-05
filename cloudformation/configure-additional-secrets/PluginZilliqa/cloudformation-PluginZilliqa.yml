@@ -1,0 +1,37 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  zilliqaPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for ZILLIQA_PRIVATE_KEY'
+    
+  zilliqaProviderUrl:
+    Type: 'String'
+    Description: 'Parameter for ZILLIQA_PROVIDER_URL'
+    
+Conditions:
+  HasZilliqaPrivateKey: !Not [!Equals [!Ref zilliqaPrivateKey, ""]]  HasZilliqaProviderUrl: !Not [!Equals [!Ref zilliqaProviderUrl, ""]]
+Resources:
+
+  AgentParamZilliqaPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasZilliqaPrivateKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_ZILLIQA_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref zilliqaPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for ZILLIQA_PRIVATE_KEY'
+  AgentParamZilliqaProviderUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasZilliqaProviderUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_ZILLIQA_PROVIDER_URL'
+      Type: 'String'
+      Value: !Ref zilliqaProviderUrl
+      Tier: 'Standard'
+      Description: 'Parameter for ZILLIQA_PROVIDER_URL'

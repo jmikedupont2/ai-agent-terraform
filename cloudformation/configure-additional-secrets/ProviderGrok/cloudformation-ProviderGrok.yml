@@ -1,0 +1,76 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  grokApiKey:
+    Type: 'String'
+    Description: 'Parameter for GROK_API_KEY'
+    
+  smallGrokModel:
+    Type: 'String'
+    Description: 'Parameter for SMALL_GROK_MODEL'
+    
+  mediumGrokModel:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_GROK_MODEL'
+    
+  largeGrokModel:
+    Type: 'String'
+    Description: 'Parameter for LARGE_GROK_MODEL'
+    
+  embeddingGrokModel:
+    Type: 'String'
+    Description: 'Parameter for EMBEDDING_GROK_MODEL'
+    
+Conditions:
+  HasGrokApiKey: !Not [!Equals [!Ref grokApiKey, ""]]  HasSmallGrokModel: !Not [!Equals [!Ref smallGrokModel, ""]]  HasMediumGrokModel: !Not [!Equals [!Ref mediumGrokModel, ""]]  HasLargeGrokModel: !Not [!Equals [!Ref largeGrokModel, ""]]  HasEmbeddingGrokModel: !Not [!Equals [!Ref embeddingGrokModel, ""]]
+Resources:
+
+  AgentParamGrokApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasGrokApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_GROK_API_KEY'
+      Type: 'String'
+      Value: !Ref grokApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for GROK_API_KEY'
+  AgentParamSmallGrokModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSmallGrokModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_GROK_MODEL'
+      Type: 'String'
+      Value: !Ref smallGrokModel
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_GROK_MODEL'
+  AgentParamMediumGrokModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasMediumGrokModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_GROK_MODEL'
+      Type: 'String'
+      Value: !Ref mediumGrokModel
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_GROK_MODEL'
+  AgentParamLargeGrokModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasLargeGrokModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_GROK_MODEL'
+      Type: 'String'
+      Value: !Ref largeGrokModel
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_GROK_MODEL'
+  AgentParamEmbeddingGrokModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasEmbeddingGrokModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_EMBEDDING_GROK_MODEL'
+      Type: 'String'
+      Value: !Ref embeddingGrokModel
+      Tier: 'Standard'
+      Description: 'Parameter for EMBEDDING_GROK_MODEL'

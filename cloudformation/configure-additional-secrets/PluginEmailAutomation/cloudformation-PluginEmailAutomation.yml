@@ -1,0 +1,76 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  resendApiKey:
+    Type: 'String'
+    Description: 'Parameter for RESEND_API_KEY'
+    
+  defaultToEmail:
+    Type: 'String'
+    Description: 'Parameter for DEFAULT_TO_EMAIL'
+    
+  defaultFromEmail:
+    Type: 'String'
+    Description: 'Parameter for DEFAULT_FROM_EMAIL'
+    
+  emailAutomationEnabled:
+    Type: 'String'
+    Description: 'Parameter for EMAIL_AUTOMATION_ENABLED'
+    Default: 'false'
+  emailEvaluationPrompt:
+    Type: 'String'
+    Description: 'Parameter for EMAIL_EVALUATION_PROMPT'
+    
+Conditions:
+  HasResendApiKey: !Not [!Equals [!Ref resendApiKey, ""]]  HasDefaultToEmail: !Not [!Equals [!Ref defaultToEmail, ""]]  HasDefaultFromEmail: !Not [!Equals [!Ref defaultFromEmail, ""]]  HasEmailAutomationEnabled: !Not [!Equals [!Ref emailAutomationEnabled, ""]]  HasEmailEvaluationPrompt: !Not [!Equals [!Ref emailEvaluationPrompt, ""]]
+Resources:
+
+  AgentParamResendApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasResendApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_RESEND_API_KEY'
+      Type: 'String'
+      Value: !Ref resendApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for RESEND_API_KEY'
+  AgentParamDefaultToEmailParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasDefaultToEmail
+    Properties:
+      Name: !Sub '${AgentCodeName}_DEFAULT_TO_EMAIL'
+      Type: 'String'
+      Value: !Ref defaultToEmail
+      Tier: 'Standard'
+      Description: 'Parameter for DEFAULT_TO_EMAIL'
+  AgentParamDefaultFromEmailParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasDefaultFromEmail
+    Properties:
+      Name: !Sub '${AgentCodeName}_DEFAULT_FROM_EMAIL'
+      Type: 'String'
+      Value: !Ref defaultFromEmail
+      Tier: 'Standard'
+      Description: 'Parameter for DEFAULT_FROM_EMAIL'
+  AgentParamEmailAutomationEnabledParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasEmailAutomationEnabled
+    Properties:
+      Name: !Sub '${AgentCodeName}_EMAIL_AUTOMATION_ENABLED'
+      Type: 'String'
+      Value: !Ref emailAutomationEnabled
+      Tier: 'Standard'
+      Description: 'Parameter for EMAIL_AUTOMATION_ENABLED'
+  AgentParamEmailEvaluationPromptParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasEmailEvaluationPrompt
+    Properties:
+      Name: !Sub '${AgentCodeName}_EMAIL_EVALUATION_PROMPT'
+      Type: 'String'
+      Value: !Ref emailEvaluationPrompt
+      Tier: 'Standard'
+      Description: 'Parameter for EMAIL_EVALUATION_PROMPT'

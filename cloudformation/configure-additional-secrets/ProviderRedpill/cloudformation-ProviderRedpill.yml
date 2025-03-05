@@ -1,0 +1,76 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  redpillApiKey:
+    Type: 'String'
+    Description: 'Parameter for REDPILL_API_KEY'
+    
+  redpillModel:
+    Type: 'String'
+    Description: 'Parameter for REDPILL_MODEL'
+    
+  smallRedpillModel:
+    Type: 'String'
+    Description: 'Parameter for SMALL_REDPILL_MODEL'
+    
+  mediumRedpillModel:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_REDPILL_MODEL'
+    
+  largeRedpillModel:
+    Type: 'String'
+    Description: 'Parameter for LARGE_REDPILL_MODEL'
+    
+Conditions:
+  HasRedpillApiKey: !Not [!Equals [!Ref redpillApiKey, ""]]  HasRedpillModel: !Not [!Equals [!Ref redpillModel, ""]]  HasSmallRedpillModel: !Not [!Equals [!Ref smallRedpillModel, ""]]  HasMediumRedpillModel: !Not [!Equals [!Ref mediumRedpillModel, ""]]  HasLargeRedpillModel: !Not [!Equals [!Ref largeRedpillModel, ""]]
+Resources:
+
+  AgentParamRedpillApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasRedpillApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_REDPILL_API_KEY'
+      Type: 'String'
+      Value: !Ref redpillApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for REDPILL_API_KEY'
+  AgentParamRedpillModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasRedpillModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_REDPILL_MODEL'
+      Type: 'String'
+      Value: !Ref redpillModel
+      Tier: 'Standard'
+      Description: 'Parameter for REDPILL_MODEL'
+  AgentParamSmallRedpillModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSmallRedpillModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_REDPILL_MODEL'
+      Type: 'String'
+      Value: !Ref smallRedpillModel
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_REDPILL_MODEL'
+  AgentParamMediumRedpillModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasMediumRedpillModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_REDPILL_MODEL'
+      Type: 'String'
+      Value: !Ref mediumRedpillModel
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_REDPILL_MODEL'
+  AgentParamLargeRedpillModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasLargeRedpillModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_REDPILL_MODEL'
+      Type: 'String'
+      Value: !Ref largeRedpillModel
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_REDPILL_MODEL'

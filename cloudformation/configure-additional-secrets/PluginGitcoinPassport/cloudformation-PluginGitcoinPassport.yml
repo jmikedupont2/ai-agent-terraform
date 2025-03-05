@@ -1,0 +1,37 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  passportApiKey:
+    Type: 'String'
+    Description: 'Parameter for PASSPORT_API_KEY'
+    
+  passportScorer:
+    Type: 'String'
+    Description: 'Parameter for PASSPORT_SCORER'
+    
+Conditions:
+  HasPassportApiKey: !Not [!Equals [!Ref passportApiKey, ""]]  HasPassportScorer: !Not [!Equals [!Ref passportScorer, ""]]
+Resources:
+
+  AgentParamPassportApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasPassportApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_PASSPORT_API_KEY'
+      Type: 'String'
+      Value: !Ref passportApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for PASSPORT_API_KEY'
+  AgentParamPassportScorerParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasPassportScorer
+    Properties:
+      Name: !Sub '${AgentCodeName}_PASSPORT_SCORER'
+      Type: 'String'
+      Value: !Ref passportScorer
+      Tier: 'Standard'
+      Description: 'Parameter for PASSPORT_SCORER'

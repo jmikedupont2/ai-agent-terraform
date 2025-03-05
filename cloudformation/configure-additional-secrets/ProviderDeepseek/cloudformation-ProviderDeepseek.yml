@@ -1,0 +1,76 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  deepseekApiKey:
+    Type: 'String'
+    Description: 'Parameter for DEEPSEEK_API_KEY'
+    
+  deepseekApiUrl:
+    Type: 'String'
+    Description: 'Parameter for DEEPSEEK_API_URL'
+    
+  smallDeepseekModel:
+    Type: 'String'
+    Description: 'Parameter for SMALL_DEEPSEEK_MODEL'
+    
+  mediumDeepseekModel:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_DEEPSEEK_MODEL'
+    
+  largeDeepseekModel:
+    Type: 'String'
+    Description: 'Parameter for LARGE_DEEPSEEK_MODEL'
+    
+Conditions:
+  HasDeepseekApiKey: !Not [!Equals [!Ref deepseekApiKey, ""]]  HasDeepseekApiUrl: !Not [!Equals [!Ref deepseekApiUrl, ""]]  HasSmallDeepseekModel: !Not [!Equals [!Ref smallDeepseekModel, ""]]  HasMediumDeepseekModel: !Not [!Equals [!Ref mediumDeepseekModel, ""]]  HasLargeDeepseekModel: !Not [!Equals [!Ref largeDeepseekModel, ""]]
+Resources:
+
+  AgentParamDeepseekApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasDeepseekApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_DEEPSEEK_API_KEY'
+      Type: 'String'
+      Value: !Ref deepseekApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for DEEPSEEK_API_KEY'
+  AgentParamDeepseekApiUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasDeepseekApiUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_DEEPSEEK_API_URL'
+      Type: 'String'
+      Value: !Ref deepseekApiUrl
+      Tier: 'Standard'
+      Description: 'Parameter for DEEPSEEK_API_URL'
+  AgentParamSmallDeepseekModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSmallDeepseekModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_DEEPSEEK_MODEL'
+      Type: 'String'
+      Value: !Ref smallDeepseekModel
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_DEEPSEEK_MODEL'
+  AgentParamMediumDeepseekModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasMediumDeepseekModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_DEEPSEEK_MODEL'
+      Type: 'String'
+      Value: !Ref mediumDeepseekModel
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_DEEPSEEK_MODEL'
+  AgentParamLargeDeepseekModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasLargeDeepseekModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_DEEPSEEK_MODEL'
+      Type: 'String'
+      Value: !Ref largeDeepseekModel
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_DEEPSEEK_MODEL'

@@ -1,0 +1,102 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  tonPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for TON_PRIVATE_KEY'
+    
+  tonRpcUrl:
+    Type: 'String'
+    Description: 'Parameter for TON_RPC_URL'
+    
+  tonRpcApiKey:
+    Type: 'String'
+    Description: 'Parameter for TON_RPC_API_KEY'
+    
+  tonNftImagesFolder:
+    Type: 'String'
+    Description: 'Parameter for TON_NFT_IMAGES_FOLDER'
+    
+  tonNftMetadataFolder:
+    Type: 'String'
+    Description: 'Parameter for TON_NFT_METADATA_FOLDER'
+    
+  pinataApiKey:
+    Type: 'String'
+    Description: 'Parameter for PINATA_API_KEY'
+    
+  pinataApiSecret:
+    Type: 'String'
+    Description: 'Parameter for PINATA_API_SECRET'
+    
+Conditions:
+  HasTonPrivateKey: !Not [!Equals [!Ref tonPrivateKey, ""]]  HasTonRpcUrl: !Not [!Equals [!Ref tonRpcUrl, ""]]  HasTonRpcApiKey: !Not [!Equals [!Ref tonRpcApiKey, ""]]  HasTonNftImagesFolder: !Not [!Equals [!Ref tonNftImagesFolder, ""]]  HasTonNftMetadataFolder: !Not [!Equals [!Ref tonNftMetadataFolder, ""]]  HasPinataApiKey: !Not [!Equals [!Ref pinataApiKey, ""]]  HasPinataApiSecret: !Not [!Equals [!Ref pinataApiSecret, ""]]
+Resources:
+
+  AgentParamTonPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasTonPrivateKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_TON_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref tonPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for TON_PRIVATE_KEY'
+  AgentParamTonRpcUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasTonRpcUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_TON_RPC_URL'
+      Type: 'String'
+      Value: !Ref tonRpcUrl
+      Tier: 'Standard'
+      Description: 'Parameter for TON_RPC_URL'
+  AgentParamTonRpcApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasTonRpcApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_TON_RPC_API_KEY'
+      Type: 'String'
+      Value: !Ref tonRpcApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for TON_RPC_API_KEY'
+  AgentParamTonNftImagesFolderParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasTonNftImagesFolder
+    Properties:
+      Name: !Sub '${AgentCodeName}_TON_NFT_IMAGES_FOLDER'
+      Type: 'String'
+      Value: !Ref tonNftImagesFolder
+      Tier: 'Standard'
+      Description: 'Parameter for TON_NFT_IMAGES_FOLDER'
+  AgentParamTonNftMetadataFolderParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasTonNftMetadataFolder
+    Properties:
+      Name: !Sub '${AgentCodeName}_TON_NFT_METADATA_FOLDER'
+      Type: 'String'
+      Value: !Ref tonNftMetadataFolder
+      Tier: 'Standard'
+      Description: 'Parameter for TON_NFT_METADATA_FOLDER'
+  AgentParamPinataApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasPinataApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_PINATA_API_KEY'
+      Type: 'String'
+      Value: !Ref pinataApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for PINATA_API_KEY'
+  AgentParamPinataApiSecretParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasPinataApiSecret
+    Properties:
+      Name: !Sub '${AgentCodeName}_PINATA_API_SECRET'
+      Type: 'String'
+      Value: !Ref pinataApiSecret
+      Tier: 'Standard'
+      Description: 'Parameter for PINATA_API_SECRET'

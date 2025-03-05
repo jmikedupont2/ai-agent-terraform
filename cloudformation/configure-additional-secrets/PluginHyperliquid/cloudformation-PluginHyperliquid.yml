@@ -1,0 +1,37 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  hyperliquidPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for HYPERLIQUID_PRIVATE_KEY'
+    
+  hyperliquidTestnet:
+    Type: 'String'
+    Description: 'Parameter for HYPERLIQUID_TESTNET'
+    Default: 'false'
+Conditions:
+  HasHyperliquidPrivateKey: !Not [!Equals [!Ref hyperliquidPrivateKey, ""]]  HasHyperliquidTestnet: !Not [!Equals [!Ref hyperliquidTestnet, ""]]
+Resources:
+
+  AgentParamHyperliquidPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasHyperliquidPrivateKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_HYPERLIQUID_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref hyperliquidPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for HYPERLIQUID_PRIVATE_KEY'
+  AgentParamHyperliquidTestnetParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasHyperliquidTestnet
+    Properties:
+      Name: !Sub '${AgentCodeName}_HYPERLIQUID_TESTNET'
+      Type: 'String'
+      Value: !Ref hyperliquidTestnet
+      Tier: 'Standard'
+      Description: 'Parameter for HYPERLIQUID_TESTNET'

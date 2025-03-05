@@ -1,0 +1,76 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  whatsappAccessToken:
+    Type: 'String'
+    Description: 'Parameter for WHATSAPP_ACCESS_TOKEN'
+    
+  whatsappPhoneNumberId:
+    Type: 'String'
+    Description: 'Parameter for WHATSAPP_PHONE_NUMBER_ID'
+    
+  whatsappBusinessAccountId:
+    Type: 'String'
+    Description: 'Parameter for WHATSAPP_BUSINESS_ACCOUNT_ID'
+    
+  whatsappWebhookVerifyToken:
+    Type: 'String'
+    Description: 'Parameter for WHATSAPP_WEBHOOK_VERIFY_TOKEN'
+    
+  whatsappApiVersion:
+    Type: 'String'
+    Description: 'Parameter for WHATSAPP_API_VERSION'
+    
+Conditions:
+  HasWhatsappAccessToken: !Not [!Equals [!Ref whatsappAccessToken, ""]]  HasWhatsappPhoneNumberId: !Not [!Equals [!Ref whatsappPhoneNumberId, ""]]  HasWhatsappBusinessAccountId: !Not [!Equals [!Ref whatsappBusinessAccountId, ""]]  HasWhatsappWebhookVerifyToken: !Not [!Equals [!Ref whatsappWebhookVerifyToken, ""]]  HasWhatsappApiVersion: !Not [!Equals [!Ref whatsappApiVersion, ""]]
+Resources:
+
+  AgentParamWhatsappAccessTokenParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasWhatsappAccessToken
+    Properties:
+      Name: !Sub '${AgentCodeName}_WHATSAPP_ACCESS_TOKEN'
+      Type: 'String'
+      Value: !Ref whatsappAccessToken
+      Tier: 'Standard'
+      Description: 'Parameter for WHATSAPP_ACCESS_TOKEN'
+  AgentParamWhatsappPhoneNumberIdParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasWhatsappPhoneNumberId
+    Properties:
+      Name: !Sub '${AgentCodeName}_WHATSAPP_PHONE_NUMBER_ID'
+      Type: 'String'
+      Value: !Ref whatsappPhoneNumberId
+      Tier: 'Standard'
+      Description: 'Parameter for WHATSAPP_PHONE_NUMBER_ID'
+  AgentParamWhatsappBusinessAccountIdParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasWhatsappBusinessAccountId
+    Properties:
+      Name: !Sub '${AgentCodeName}_WHATSAPP_BUSINESS_ACCOUNT_ID'
+      Type: 'String'
+      Value: !Ref whatsappBusinessAccountId
+      Tier: 'Standard'
+      Description: 'Parameter for WHATSAPP_BUSINESS_ACCOUNT_ID'
+  AgentParamWhatsappWebhookVerifyTokenParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasWhatsappWebhookVerifyToken
+    Properties:
+      Name: !Sub '${AgentCodeName}_WHATSAPP_WEBHOOK_VERIFY_TOKEN'
+      Type: 'String'
+      Value: !Ref whatsappWebhookVerifyToken
+      Tier: 'Standard'
+      Description: 'Parameter for WHATSAPP_WEBHOOK_VERIFY_TOKEN'
+  AgentParamWhatsappApiVersionParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasWhatsappApiVersion
+    Properties:
+      Name: !Sub '${AgentCodeName}_WHATSAPP_API_VERSION'
+      Type: 'String'
+      Value: !Ref whatsappApiVersion
+      Tier: 'Standard'
+      Description: 'Parameter for WHATSAPP_API_VERSION'
