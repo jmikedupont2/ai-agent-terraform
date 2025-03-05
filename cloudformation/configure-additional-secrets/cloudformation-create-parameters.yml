@@ -1,0 +1,6925 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for setting and finding parameters'
+    Default: 'tine_agent_2'
+      
+  cacheDir:
+    Type: 'String'
+    Description: 'Parameter for CACHE_DIR'
+    
+
+  redisUrl:
+    Type: 'String'
+    Description: 'Parameter for REDIS_URL'
+    
+
+  serverUrl:
+    Type: 'String'
+    Description: 'Parameter for SERVER_URL'
+    
+
+  serverPort:
+    Type: 'Number'
+    Description: 'Parameter for SERVER_PORT'
+    
+
+  remoteCharacterUrls:
+    Type: 'String'
+    Description: 'Parameter for REMOTE_CHARACTER_URLS'
+    
+
+  useCharacterStorage:
+    Type: 'String'
+    Description: 'Parameter for USE_CHARACTER_STORAGE'
+      Default: 'false'
+
+  defaultLogLevel:
+    Type: 'String'
+    Description: 'Parameter for DEFAULT_LOG_LEVEL'
+    
+
+  logJsonFormat:
+    Type: 'String'
+    Description: 'Parameter for LOG_JSON_FORMAT'
+      Default: 'false'
+
+  expressMaxPayload:
+    Type: 'String'
+    Description: 'Parameter for EXPRESS_MAX_PAYLOAD'
+    
+
+  transcriptionProvider:
+    Type: 'String'
+    Description: 'Parameter for TRANSCRIPTION_PROVIDER'
+    
+
+  walletPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for WALLET_PRIVATE_KEY'
+    
+
+  walletPublicKey:
+    Type: 'String'
+    Description: 'Parameter for WALLET_PUBLIC_KEY'
+    
+
+  tokenizer:
+    Type: 'String'
+    Description: 'Parameter for tokenizer'
+    
+
+  cloudflare:
+    Type: 'String'
+    Description: 'Parameter for cloudflare'
+    
+
+  aws:
+    Type: 'String'
+    Description: 'Parameter for aws'
+    
+
+  verifiableInference:
+    Type: 'String'
+    Description: 'Parameter for verifiable_inference'
+    
+
+  supabaseAnonKey:
+    Type: 'String'
+    Description: 'Parameter for SUPABASE_ANON_KEY'
+    
+
+  mongodbDatabase:
+    Type: 'String'
+    Description: 'Parameter for MONGODB_DATABASE'
+    
+
+  discordApiToken:
+    Type: 'String'
+    Description: 'Parameter for DISCORD_API_TOKEN'
+    
+
+  discordVoiceChannelId:
+    Type: 'String'
+    Description: 'Parameter for DISCORD_VOICE_CHANNEL_ID'
+    
+
+  farcasterNeynarApiKey:
+    Type: 'String'
+    Description: 'Parameter for FARCASTER_NEYNAR_API_KEY'
+    
+
+  farcasterNeynarSignerUuid:
+    Type: 'String'
+    Description: 'Parameter for FARCASTER_NEYNAR_SIGNER_UUID'
+    
+
+  farcasterDryRun:
+    Type: 'String'
+    Description: 'Parameter for FARCASTER_DRY_RUN'
+      Default: 'false'
+
+  farcasterPollInterval:
+    Type: 'Number'
+    Description: 'Parameter for FARCASTER_POLL_INTERVAL'
+    
+
+  telegramAccountPhone:
+    Type: 'String'
+    Description: 'Parameter for TELEGRAM_ACCOUNT_PHONE'
+    
+
+  telegramAccountAppId:
+    Type: 'String'
+    Description: 'Parameter for TELEGRAM_ACCOUNT_APP_ID'
+    
+
+  telegramAccountAppHash:
+    Type: 'String'
+    Description: 'Parameter for TELEGRAM_ACCOUNT_APP_HASH'
+    
+
+  telegramAccountDeviceModel:
+    Type: 'String'
+    Description: 'Parameter for TELEGRAM_ACCOUNT_DEVICE_MODEL'
+    
+
+  telegramAccountSystemVersion:
+    Type: 'String'
+    Description: 'Parameter for TELEGRAM_ACCOUNT_SYSTEM_VERSION'
+    
+
+  twitterUsername:
+    Type: 'String'
+    Description: 'Parameter for TWITTER_USERNAME'
+    
+
+  twitterPassword:
+    Type: 'String'
+    Description: 'Parameter for TWITTER_PASSWORD'
+    
+
+  twitterEmail:
+    Type: 'String'
+    Description: 'Parameter for TWITTER_EMAIL'
+    
+
+  twitter2faSecret:
+    Type: 'String'
+    Description: 'Parameter for TWITTER_2FA_SECRET'
+    
+
+  twitterCookiesAuthToken:
+    Type: 'String'
+    Description: 'Parameter for TWITTER_COOKIES_AUTH_TOKEN'
+    
+
+  twitterCookiesCt0:
+    Type: 'String'
+    Description: 'Parameter for TWITTER_COOKIES_CT0'
+    
+
+  twitterCookiesGuestId:
+    Type: 'String'
+    Description: 'Parameter for TWITTER_COOKIES_GUEST_ID'
+    
+
+  twitterPollInterval:
+    Type: 'Number'
+    Description: 'Parameter for TWITTER_POLL_INTERVAL'
+    
+
+  twitterSearchEnable:
+    Type: 'String'
+    Description: 'Parameter for TWITTER_SEARCH_ENABLE'
+      Default: 'false'
+
+  twitterTargetUsers:
+    Type: 'String'
+    Description: 'Parameter for TWITTER_TARGET_USERS'
+    
+
+  twitterRetryLimit:
+    Type: 'Number'
+    Description: 'Parameter for TWITTER_RETRY_LIMIT'
+    
+
+  twitterSpacesEnable:
+    Type: 'String'
+    Description: 'Parameter for TWITTER_SPACES_ENABLE'
+      Default: 'false'
+
+  enableTwitterPostGeneration:
+    Type: 'String'
+    Description: 'Parameter for ENABLE_TWITTER_POST_GENERATION'
+      Default: 'false'
+
+  postIntervalMin:
+    Type: 'Number'
+    Description: 'Parameter for POST_INTERVAL_MIN'
+    
+
+  postIntervalMax:
+    Type: 'Number'
+    Description: 'Parameter for POST_INTERVAL_MAX'
+    
+
+  postImmediately:
+    Type: 'String'
+    Description: 'Parameter for POST_IMMEDIATELY'
+      Default: 'false'
+
+  actionInterval:
+    Type: 'Number'
+    Description: 'Parameter for ACTION_INTERVAL'
+    
+
+  enableActionProcessing:
+    Type: 'String'
+    Description: 'Parameter for ENABLE_ACTION_PROCESSING'
+      Default: 'false'
+
+  maxActionsProcessing:
+    Type: 'Number'
+    Description: 'Parameter for MAX_ACTIONS_PROCESSING'
+    
+
+  actionTimelineType:
+    Type: 'String'
+    Description: 'Parameter for ACTION_TIMELINE_TYPE'
+    
+
+  twitterApprovalDiscordChannelId:
+    Type: 'String'
+    Description: 'Parameter for TWITTER_APPROVAL_DISCORD_CHANNEL_ID'
+    
+
+  twitterApprovalDiscordBotToken:
+    Type: 'String'
+    Description: 'Parameter for TWITTER_APPROVAL_DISCORD_BOT_TOKEN'
+    
+
+  twitterApprovalEnabled:
+    Type: 'String'
+    Description: 'Parameter for TWITTER_APPROVAL_ENABLED'
+      Default: 'false'
+
+  twitterApprovalCheckInterval:
+    Type: 'Number'
+    Description: 'Parameter for TWITTER_APPROVAL_CHECK_INTERVAL'
+    
+
+  whatsappPhoneNumberId:
+    Type: 'String'
+    Description: 'Parameter for WHATSAPP_PHONE_NUMBER_ID'
+    
+
+  whatsappBusinessAccountId:
+    Type: 'String'
+    Description: 'Parameter for WHATSAPP_BUSINESS_ACCOUNT_ID'
+    
+
+  whatsappWebhookVerifyToken:
+    Type: 'String'
+    Description: 'Parameter for WHATSAPP_WEBHOOK_VERIFY_TOKEN'
+    
+
+  whatsappApiVersion:
+    Type: 'String'
+    Description: 'Parameter for WHATSAPP_API_VERSION'
+    
+
+  instagramUsername:
+    Type: 'String'
+    Description: 'Parameter for INSTAGRAM_USERNAME'
+    
+
+  instagramPassword:
+    Type: 'String'
+    Description: 'Parameter for INSTAGRAM_PASSWORD'
+    
+
+  instagramAppId:
+    Type: 'String'
+    Description: 'Parameter for INSTAGRAM_APP_ID'
+    
+
+  instagramAppSecret:
+    Type: 'String'
+    Description: 'Parameter for INSTAGRAM_APP_SECRET'
+    
+
+  instagramBusinessAccountId:
+    Type: 'String'
+    Description: 'Parameter for INSTAGRAM_BUSINESS_ACCOUNT_ID'
+    
+
+  instagramPostIntervalMin:
+    Type: 'Number'
+    Description: 'Parameter for INSTAGRAM_POST_INTERVAL_MIN'
+    
+
+  instagramPostIntervalMax:
+    Type: 'Number'
+    Description: 'Parameter for INSTAGRAM_POST_INTERVAL_MAX'
+    
+
+  instagramEnableActionProcessing:
+    Type: 'String'
+    Description: 'Parameter for INSTAGRAM_ENABLE_ACTION_PROCESSING'
+      Default: 'false'
+
+  instagramActionInterval:
+    Type: 'Number'
+    Description: 'Parameter for INSTAGRAM_ACTION_INTERVAL'
+    
+
+  instagramMaxActions:
+    Type: 'Number'
+    Description: 'Parameter for INSTAGRAM_MAX_ACTIONS'
+    
+
+  alexaClientId:
+    Type: 'String'
+    Description: 'Parameter for ALEXA_CLIENT_ID'
+    
+
+  alexaClientSecret:
+    Type: 'String'
+    Description: 'Parameter for ALEXA_CLIENT_SECRET'
+    
+
+  simsaiAgentId:
+    Type: 'String'
+    Description: 'Parameter for SIMSAI_AGENT_ID'
+    
+
+  simsaiUsername:
+    Type: 'String'
+    Description: 'Parameter for SIMSAI_USERNAME'
+    
+
+  simsaiDryRun:
+    Type: 'String'
+    Description: 'Parameter for SIMSAI_DRY_RUN'
+      Default: 'false'
+
+  openaiApiUrl:
+    Type: 'String'
+    Description: 'Parameter for OPENAI_API_URL'
+    
+
+  smallOpenaiModel:
+    Type: 'String'
+    Description: 'Parameter for SMALL_OPENAI_MODEL'
+    
+
+  mediumOpenaiModel:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_OPENAI_MODEL'
+    
+
+  largeOpenaiModel:
+    Type: 'String'
+    Description: 'Parameter for LARGE_OPENAI_MODEL'
+    
+
+  embeddingOpenaiModel:
+    Type: 'String'
+    Description: 'Parameter for EMBEDDING_OPENAI_MODEL'
+    
+
+  imageOpenaiModel:
+    Type: 'String'
+    Description: 'Parameter for IMAGE_OPENAI_MODEL'
+    
+
+  useOpenaiEmbedding:
+    Type: 'String'
+    Description: 'Parameter for USE_OPENAI_EMBEDDING'
+      Default: 'false'
+
+  enableOpenAiCommunityPlugin:
+    Type: 'String'
+    Description: 'Parameter for ENABLE_OPEN_AI_COMMUNITY_PLUGIN'
+      Default: 'false'
+
+  openaiDefaultModel:
+    Type: 'String'
+    Description: 'Parameter for OPENAI_DEFAULT_MODEL'
+    
+
+  openaiMaxTokens:
+    Type: 'Number'
+    Description: 'Parameter for OPENAI_MAX_TOKENS'
+    
+
+  openaiTemperature:
+    Type: 'Number'
+    Description: 'Parameter for OPENAI_TEMPERATURE'
+    
+
+  atomaApiUrl:
+    Type: 'String'
+    Description: 'Parameter for ATOMA_API_URL'
+    
+
+  smallAtomaModel:
+    Type: 'String'
+    Description: 'Parameter for SMALL_ATOMA_MODEL'
+    
+
+  mediumAtomaModel:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_ATOMA_MODEL'
+    
+
+  largeAtomaModel:
+    Type: 'String'
+    Description: 'Parameter for LARGE_ATOMA_MODEL'
+    
+
+  eternalaiModel:
+    Type: 'String'
+    Description: 'Parameter for ETERNALAI_MODEL'
+    
+
+  eternalaiChainId:
+    Type: 'String'
+    Description: 'Parameter for ETERNALAI_CHAIN_ID'
+    
+
+  eternalaiRpcUrl:
+    Type: 'String'
+    Description: 'Parameter for ETERNALAI_RPC_URL'
+    
+
+  eternalaiAgentContractAddress:
+    Type: 'String'
+    Description: 'Parameter for ETERNALAI_AGENT_CONTRACT_ADDRESS'
+    
+
+  eternalaiAgentId:
+    Type: 'String'
+    Description: 'Parameter for ETERNALAI_AGENT_ID'
+    
+
+  eternalaiApiKey:
+    Type: 'String'
+    Description: 'Parameter for ETERNALAI_API_KEY'
+    
+
+  eternalaiLog:
+    Type: 'String'
+    Description: 'Parameter for ETERNALAI_LOG'
+      Default: 'false'
+
+  hyperbolicModel:
+    Type: 'String'
+    Description: 'Parameter for HYPERBOLIC_MODEL'
+    
+
+  imageHyperbolicModel:
+    Type: 'String'
+    Description: 'Parameter for IMAGE_HYPERBOLIC_MODEL'
+    
+
+  smallHyperbolicModel:
+    Type: 'String'
+    Description: 'Parameter for SMALL_HYPERBOLIC_MODEL'
+    
+
+  mediumHyperbolicModel:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_HYPERBOLIC_MODEL'
+    
+
+  largeHyperbolicModel:
+    Type: 'String'
+    Description: 'Parameter for LARGE_HYPERBOLIC_MODEL'
+    
+
+  hyperbolicEnv:
+    Type: 'String'
+    Description: 'Parameter for HYPERBOLIC_ENV'
+    
+
+  hyperbolicGranularLog:
+    Type: 'String'
+    Description: 'Parameter for HYPERBOLIC_GRANULAR_LOG'
+      Default: 'false'
+
+  hyperbolicSpash:
+    Type: 'String'
+    Description: 'Parameter for HYPERBOLIC_SPASH'
+      Default: 'false'
+
+  hyperbolicLogLevel:
+    Type: 'String'
+    Description: 'Parameter for HYPERBOLIC_LOG_LEVEL'
+    
+
+  inferaModel:
+    Type: 'String'
+    Description: 'Parameter for INFERA_MODEL'
+    
+
+  inferaServerUrl:
+    Type: 'String'
+    Description: 'Parameter for INFERA_SERVER_URL'
+    
+
+  smallInferaModel:
+    Type: 'String'
+    Description: 'Parameter for SMALL_INFERA_MODEL'
+    
+
+  mediumInferaModel:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_INFERA_MODEL'
+    
+
+  largeInferaModel:
+    Type: 'String'
+    Description: 'Parameter for LARGE_INFERA_MODEL'
+    
+
+  smallVeniceModel:
+    Type: 'String'
+    Description: 'Parameter for SMALL_VENICE_MODEL'
+    
+
+  mediumVeniceModel:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_VENICE_MODEL'
+    
+
+  largeVeniceModel:
+    Type: 'String'
+    Description: 'Parameter for LARGE_VENICE_MODEL'
+    
+
+  imageVeniceModel:
+    Type: 'String'
+    Description: 'Parameter for IMAGE_VENICE_MODEL'
+    
+
+  smallNineteenAiModel:
+    Type: 'String'
+    Description: 'Parameter for SMALL_NINETEEN_AI_MODEL'
+    
+
+  mediumNineteenAiModel:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_NINETEEN_AI_MODEL'
+    
+
+  largeNineteenAiModel:
+    Type: 'String'
+    Description: 'Parameter for LARGE_NINETEEN_AI_MODEL'
+    
+
+  imageNineteenAiMode:
+    Type: 'String'
+    Description: 'Parameter for IMAGE_NINETEEN_AI_MODE'
+    
+
+  smallAkashChatApiModel:
+    Type: 'String'
+    Description: 'Parameter for SMALL_AKASH_CHAT_API_MODEL'
+    
+
+  mediumAkashChatApiModel:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_AKASH_CHAT_API_MODEL'
+    
+
+  largeAkashChatApiModel:
+    Type: 'String'
+    Description: 'Parameter for LARGE_AKASH_CHAT_API_MODEL'
+    
+
+  imageLivepeerModel:
+    Type: 'String'
+    Description: 'Parameter for IMAGE_LIVEPEER_MODEL'
+    
+
+  smallLivepeerModel:
+    Type: 'String'
+    Description: 'Parameter for SMALL_LIVEPEER_MODEL'
+    
+
+  mediumLivepeerModel:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_LIVEPEER_MODEL'
+    
+
+  largeLivepeerModel:
+    Type: 'String'
+    Description: 'Parameter for LARGE_LIVEPEER_MODEL'
+    
+
+  elevenlabsModelId:
+    Type: 'String'
+    Description: 'Parameter for ELEVENLABS_MODEL_ID'
+    
+
+  elevenlabsVoiceId:
+    Type: 'String'
+    Description: 'Parameter for ELEVENLABS_VOICE_ID'
+    
+
+  elevenlabsVoiceStability:
+    Type: 'Number'
+    Description: 'Parameter for ELEVENLABS_VOICE_STABILITY'
+    
+
+  elevenlabsVoiceSimilarityBoost:
+    Type: 'Number'
+    Description: 'Parameter for ELEVENLABS_VOICE_SIMILARITY_BOOST'
+    
+
+  elevenlabsVoiceStyle:
+    Type: 'Number'
+    Description: 'Parameter for ELEVENLABS_VOICE_STYLE'
+    
+
+  elevenlabsVoiceUseSpeakerBoost:
+    Type: 'String'
+    Description: 'Parameter for ELEVENLABS_VOICE_USE_SPEAKER_BOOST'
+      Default: 'false'
+
+  elevenlabsOptimizeStreamingLatency:
+    Type: 'Number'
+    Description: 'Parameter for ELEVENLABS_OPTIMIZE_STREAMING_LATENCY'
+    
+
+  elevenlabsOutputFormat:
+    Type: 'String'
+    Description: 'Parameter for ELEVENLABS_OUTPUT_FORMAT'
+    
+
+  openrouterModel:
+    Type: 'String'
+    Description: 'Parameter for OPENROUTER_MODEL'
+    
+
+  smallOpenrouterModel:
+    Type: 'String'
+    Description: 'Parameter for SMALL_OPENROUTER_MODEL'
+    
+
+  mediumOpenrouterModel:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_OPENROUTER_MODEL'
+    
+
+  largeOpenrouterModel:
+    Type: 'String'
+    Description: 'Parameter for LARGE_OPENROUTER_MODEL'
+    
+
+  redpillModel:
+    Type: 'String'
+    Description: 'Parameter for REDPILL_MODEL'
+    
+
+  smallRedpillModel:
+    Type: 'String'
+    Description: 'Parameter for SMALL_REDPILL_MODEL'
+    
+
+  mediumRedpillModel:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_REDPILL_MODEL'
+    
+
+  largeRedpillModel:
+    Type: 'String'
+    Description: 'Parameter for LARGE_REDPILL_MODEL'
+    
+
+  smallGrokModel:
+    Type: 'String'
+    Description: 'Parameter for SMALL_GROK_MODEL'
+    
+
+  mediumGrokModel:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_GROK_MODEL'
+    
+
+  largeGrokModel:
+    Type: 'String'
+    Description: 'Parameter for LARGE_GROK_MODEL'
+    
+
+  embeddingGrokModel:
+    Type: 'String'
+    Description: 'Parameter for EMBEDDING_GROK_MODEL'
+    
+
+  ollamaModel:
+    Type: 'String'
+    Description: 'Parameter for OLLAMA_MODEL'
+    
+
+  useOllamaEmbedding:
+    Type: 'String'
+    Description: 'Parameter for USE_OLLAMA_EMBEDDING'
+      Default: 'false'
+
+  ollamaEmbeddingModel:
+    Type: 'String'
+    Description: 'Parameter for OLLAMA_EMBEDDING_MODEL'
+    
+
+  smallOllamaModel:
+    Type: 'String'
+    Description: 'Parameter for SMALL_OLLAMA_MODEL'
+    
+
+  mediumOllamaModel:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_OLLAMA_MODEL'
+    
+
+  largeOllamaModel:
+    Type: 'String'
+    Description: 'Parameter for LARGE_OLLAMA_MODEL'
+    
+
+  smallGoogleModel:
+    Type: 'String'
+    Description: 'Parameter for SMALL_GOOGLE_MODEL'
+    
+
+  mediumGoogleModel:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_GOOGLE_MODEL'
+    
+
+  largeGoogleModel:
+    Type: 'String'
+    Description: 'Parameter for LARGE_GOOGLE_MODEL'
+    
+
+  embeddingGoogleModel:
+    Type: 'String'
+    Description: 'Parameter for EMBEDDING_GOOGLE_MODEL'
+    
+
+  googleGenerativeAiApiKey:
+    Type: 'String'
+    Description: 'Parameter for GOOGLE_GENERATIVE_AI_API_KEY'
+    
+
+  smallMistralModel:
+    Type: 'String'
+    Description: 'Parameter for SMALL_MISTRAL_MODEL'
+    
+
+  mediumMistralModel:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_MISTRAL_MODEL'
+    
+
+  largeMistralModel:
+    Type: 'String'
+    Description: 'Parameter for LARGE_MISTRAL_MODEL'
+    
+
+  smallGroqModel:
+    Type: 'String'
+    Description: 'Parameter for SMALL_GROQ_MODEL'
+    
+
+  mediumGroqModel:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_GROQ_MODEL'
+    
+
+  largeGroqModel:
+    Type: 'String'
+    Description: 'Parameter for LARGE_GROQ_MODEL'
+    
+
+  embeddingGroqModel:
+    Type: 'String'
+    Description: 'Parameter for EMBEDDING_GROQ_MODEL'
+    
+
+  mediumNanogptModel:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_NANOGPT_MODEL'
+    
+
+  largeNanogptModel:
+    Type: 'String'
+    Description: 'Parameter for LARGE_NANOGPT_MODEL'
+    
+
+  nanogptApiKey:
+    Type: 'String'
+    Description: 'Parameter for NANOGPT_API_KEY'
+    
+
+  smallAnthropicModel:
+    Type: 'String'
+    Description: 'Parameter for SMALL_ANTHROPIC_MODEL'
+    
+
+  mediumAnthropicModel:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_ANTHROPIC_MODEL'
+    
+
+  largeAnthropicModel:
+    Type: 'String'
+    Description: 'Parameter for LARGE_ANTHROPIC_MODEL'
+    
+
+  smallHeuristModel:
+    Type: 'String'
+    Description: 'Parameter for SMALL_HEURIST_MODEL'
+    
+
+  mediumHeuristModel:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_HEURIST_MODEL'
+    
+
+  largeHeuristModel:
+    Type: 'String'
+    Description: 'Parameter for LARGE_HEURIST_MODEL'
+    
+
+  heuristImageModel:
+    Type: 'String'
+    Description: 'Parameter for HEURIST_IMAGE_MODEL'
+    
+
+  heuristEmbeddingModel:
+    Type: 'String'
+    Description: 'Parameter for HEURIST_EMBEDDING_MODEL'
+    
+
+  useHeuristEmbedding:
+    Type: 'String'
+    Description: 'Parameter for USE_HEURIST_EMBEDDING'
+      Default: 'false'
+
+  gaianetServerUrl:
+    Type: 'String'
+    Description: 'Parameter for GAIANET_SERVER_URL'
+    
+
+  smallGaianetModel:
+    Type: 'String'
+    Description: 'Parameter for SMALL_GAIANET_MODEL'
+    
+
+  smallGaianetServerUrl:
+    Type: 'String'
+    Description: 'Parameter for SMALL_GAIANET_SERVER_URL'
+    
+
+  mediumGaianetModel:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_GAIANET_MODEL'
+    
+
+  mediumGaianetServerUrl:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_GAIANET_SERVER_URL'
+    
+
+  largeGaianetModel:
+    Type: 'String'
+    Description: 'Parameter for LARGE_GAIANET_MODEL'
+    
+
+  largeGaianetServerUrl:
+    Type: 'String'
+    Description: 'Parameter for LARGE_GAIANET_SERVER_URL'
+    
+
+  gaianetEmbeddingModel:
+    Type: 'String'
+    Description: 'Parameter for GAIANET_EMBEDDING_MODEL'
+    
+
+  useGaianetEmbedding:
+    Type: 'String'
+    Description: 'Parameter for USE_GAIANET_EMBEDDING'
+      Default: 'false'
+
+  volengineModel:
+    Type: 'String'
+    Description: 'Parameter for VOLENGINE_MODEL'
+    
+
+  smallVolengineModel:
+    Type: 'String'
+    Description: 'Parameter for SMALL_VOLENGINE_MODEL'
+    
+
+  mediumVolengineModel:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_VOLENGINE_MODEL'
+    
+
+  largeVolengineModel:
+    Type: 'String'
+    Description: 'Parameter for LARGE_VOLENGINE_MODEL'
+    
+
+  volengineEmbeddingModel:
+    Type: 'String'
+    Description: 'Parameter for VOLENGINE_EMBEDDING_MODEL'
+    
+
+  deepseekApiUrl:
+    Type: 'String'
+    Description: 'Parameter for DEEPSEEK_API_URL'
+    
+
+  smallDeepseekModel:
+    Type: 'String'
+    Description: 'Parameter for SMALL_DEEPSEEK_MODEL'
+    
+
+  mediumDeepseekModel:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_DEEPSEEK_MODEL'
+    
+
+  largeDeepseekModel:
+    Type: 'String'
+    Description: 'Parameter for LARGE_DEEPSEEK_MODEL'
+    
+
+  falAiLoraPath:
+    Type: 'String'
+    Description: 'Parameter for FAL_AI_LORA_PATH'
+    
+
+  letzaiModels:
+    Type: 'String'
+    Description: 'Parameter for LETZAI_MODELS'
+    
+
+  smallGaladrielModel:
+    Type: 'String'
+    Description: 'Parameter for SMALL_GALADRIEL_MODEL'
+    
+
+  mediumGaladrielModel:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_GALADRIEL_MODEL'
+    
+
+  largeGaladrielModel:
+    Type: 'String'
+    Description: 'Parameter for LARGE_GALADRIEL_MODEL'
+    
+
+  galadrielFineTuneApiKey:
+    Type: 'String'
+    Description: 'Parameter for GALADRIEL_FINE_TUNE_API_KEY'
+    
+
+  lmstudioModel:
+    Type: 'String'
+    Description: 'Parameter for LMSTUDIO_MODEL'
+    
+
+  smallLmstudioModel:
+    Type: 'String'
+    Description: 'Parameter for SMALL_LMSTUDIO_MODEL'
+    
+
+  mediumLmstudioModel:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_LMSTUDIO_MODEL'
+    
+
+  largeLmstudioModel:
+    Type: 'String'
+    Description: 'Parameter for LARGE_LMSTUDIO_MODEL'
+    
+
+  secretAiUrl:
+    Type: 'String'
+    Description: 'Parameter for SECRET_AI_URL'
+    
+
+  smallSecretAiModel:
+    Type: 'String'
+    Description: 'Parameter for SMALL_SECRET_AI_MODEL'
+    
+
+  mediumSecretAiModel:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_SECRET_AI_MODEL'
+    
+
+  largeSecretAiModel:
+    Type: 'String'
+    Description: 'Parameter for LARGE_SECRET_AI_MODEL'
+    
+
+  nearaiApiKey:
+    Type: 'String'
+    Description: 'Parameter for NEARAI_API_KEY'
+    
+
+  nearaiModel:
+    Type: 'String'
+    Description: 'Parameter for NEARAI_MODEL'
+    
+
+  smallNearaiModel:
+    Type: 'String'
+    Description: 'Parameter for SMALL_NEARAI_MODEL'
+    
+
+  mediumNearaiModel:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_NEARAI_MODEL'
+    
+
+  largeNearaiModel:
+    Type: 'String'
+    Description: 'Parameter for LARGE_NEARAI_MODEL'
+    
+
+  imageNearaiModel:
+    Type: 'String'
+    Description: 'Parameter for IMAGE_NEARAI_MODEL'
+    
+
+  coingeckoProApiKey:
+    Type: 'String'
+    Description: 'Parameter for COINGECKO_PRO_API_KEY'
+    
+
+  evmProviderUrl:
+    Type: 'String'
+    Description: 'Parameter for EVM_PROVIDER_URL'
+    
+
+  zilliqaProviderUrl:
+    Type: 'String'
+    Description: 'Parameter for ZILLIQA_PROVIDER_URL'
+    
+
+  avalanchePublicKey:
+    Type: 'String'
+    Description: 'Parameter for AVALANCHE_PUBLIC_KEY'
+    
+
+  solanaPublicKey:
+    Type: 'String'
+    Description: 'Parameter for SOLANA_PUBLIC_KEY'
+    
+
+  solanaCluster:
+    Type: 'String'
+    Description: 'Parameter for SOLANA_CLUSTER'
+    
+
+  solanaAdminPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for SOLANA_ADMIN_PRIVATE_KEY'
+    
+
+  solanaAdminPublicKey:
+    Type: 'String'
+    Description: 'Parameter for SOLANA_ADMIN_PUBLIC_KEY'
+    
+
+  solanaVerifyToken:
+    Type: 'String'
+    Description: 'Parameter for SOLANA_VERIFY_TOKEN'
+    
+
+  solAddress:
+    Type: 'String'
+    Description: 'Parameter for SOL_ADDRESS'
+    
+
+  slippage:
+    Type: 'Number'
+    Description: 'Parameter for SLIPPAGE'
+    
+
+  baseMint:
+    Type: 'String'
+    Description: 'Parameter for BASE_MINT'
+    
+
+  solanaRpcUrl:
+    Type: 'String'
+    Description: 'Parameter for SOLANA_RPC_URL'
+    
+
+  heliusApiKey:
+    Type: 'String'
+    Description: 'Parameter for HELIUS_API_KEY'
+    
+
+  injectivePublicKey:
+    Type: 'String'
+    Description: 'Parameter for INJECTIVE_PUBLIC_KEY'
+    
+
+  injectiveNetwork:
+    Type: 'String'
+    Description: 'Parameter for INJECTIVE_NETWORK'
+    
+
+  abstractPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for ABSTRACT_PRIVATE_KEY'
+    
+
+  abstractRpcUrl:
+    Type: 'String'
+    Description: 'Parameter for ABSTRACT_RPC_URL'
+    
+
+  starknetPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for STARKNET_PRIVATE_KEY'
+    
+
+  starknetRpcUrl:
+    Type: 'String'
+    Description: 'Parameter for STARKNET_RPC_URL'
+    
+
+  lensPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for LENS_PRIVATE_KEY'
+    
+
+  formTestnet:
+    Type: 'String'
+    Description: 'Parameter for FORM_TESTNET'
+      Default: 'false'
+
+  coinbaseApiKey:
+    Type: 'String'
+    Description: 'Parameter for COINBASE_API_KEY'
+    
+
+  coinbasePrivateKey:
+    Type: 'String'
+    Description: 'Parameter for COINBASE_PRIVATE_KEY'
+    
+
+  coinbaseGeneratedWalletId:
+    Type: 'String'
+    Description: 'Parameter for COINBASE_GENERATED_WALLET_ID'
+    
+
+  coinbaseGeneratedWalletHexSeed:
+    Type: 'String'
+    Description: 'Parameter for COINBASE_GENERATED_WALLET_HEX_SEED'
+    
+
+  coinbaseNotificationUri:
+    Type: 'String'
+    Description: 'Parameter for COINBASE_NOTIFICATION_URI'
+    
+
+  cdpApiKeyPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for CDP_API_KEY_PRIVATE_KEY'
+    
+
+  cdpAgentKitNetwork:
+    Type: 'String'
+    Description: 'Parameter for CDP_AGENT_KIT_NETWORK'
+    
+
+  charityAddressBase:
+    Type: 'String'
+    Description: 'Parameter for CHARITY_ADDRESS_BASE'
+    
+
+  charityAddressSol:
+    Type: 'String'
+    Description: 'Parameter for CHARITY_ADDRESS_SOL'
+    
+
+  charityAddressEth:
+    Type: 'String'
+    Description: 'Parameter for CHARITY_ADDRESS_ETH'
+    
+
+  charityAddressArb:
+    Type: 'String'
+    Description: 'Parameter for CHARITY_ADDRESS_ARB'
+    
+
+  charityAddressPol:
+    Type: 'String'
+    Description: 'Parameter for CHARITY_ADDRESS_POL'
+    
+
+  confluxCoreSpaceRpcUrl:
+    Type: 'String'
+    Description: 'Parameter for CONFLUX_CORE_SPACE_RPC_URL'
+    
+
+  confluxEspacePrivateKey:
+    Type: 'String'
+    Description: 'Parameter for CONFLUX_ESPACE_PRIVATE_KEY'
+    
+
+  confluxEspaceRpcUrl:
+    Type: 'String'
+    Description: 'Parameter for CONFLUX_ESPACE_RPC_URL'
+    
+
+  confluxMemeContractAddress:
+    Type: 'String'
+    Description: 'Parameter for CONFLUX_MEME_CONTRACT_ADDRESS'
+    
+
+  mindColdWalletAddress:
+    Type: 'String'
+    Description: 'Parameter for MIND_COLD_WALLET_ADDRESS'
+    
+
+  zerogEvmRpc:
+    Type: 'String'
+    Description: 'Parameter for ZEROG_EVM_RPC'
+    
+
+  zerogPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for ZEROG_PRIVATE_KEY'
+    
+
+  zerogFlowAddress:
+    Type: 'String'
+    Description: 'Parameter for ZEROG_FLOW_ADDRESS'
+    
+
+  iqsolrpc:
+    Type: 'String'
+    Description: 'Parameter for IQSOlRPC'
+    
+
+  squidIntegratorId:
+    Type: 'String'
+    Description: 'Parameter for SQUID_INTEGRATOR_ID'
+    
+
+  squidEvmAddress:
+    Type: 'String'
+    Description: 'Parameter for SQUID_EVM_ADDRESS'
+    
+
+  squidEvmPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for SQUID_EVM_PRIVATE_KEY'
+    
+
+  squidApiThrottleInterval:
+    Type: 'Number'
+    Description: 'Parameter for SQUID_API_THROTTLE_INTERVAL'
+    
+
+  walletSecretSalt:
+    Type: 'String'
+    Description: 'Parameter for WALLET_SECRET_SALT'
+    
+
+  teeLogDbPath:
+    Type: 'String'
+    Description: 'Parameter for TEE_LOG_DB_PATH'
+    
+
+  vlog:
+    Type: 'String'
+    Description: 'Parameter for VLOG'
+      Default: 'false'
+
+  enableTeeLog:
+    Type: 'String'
+    Description: 'Parameter for ENABLE_TEE_LOG'
+      Default: 'false'
+
+  flowPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for FLOW_PRIVATE_KEY'
+    
+
+  flowNetwork:
+    Type: 'String'
+    Description: 'Parameter for FLOW_NETWORK'
+    
+
+  flowEndpointUrl:
+    Type: 'String'
+    Description: 'Parameter for FLOW_ENDPOINT_URL'
+    
+
+  internetComputerAddress:
+    Type: 'String'
+    Description: 'Parameter for INTERNET_COMPUTER_ADDRESS'
+    
+
+  aptosNetwork:
+    Type: 'String'
+    Description: 'Parameter for APTOS_NETWORK'
+    
+
+  mvxNetwork:
+    Type: 'String'
+    Description: 'Parameter for MVX_NETWORK'
+    
+
+  accessTokenManagementTo:
+    Type: 'String'
+    Description: 'Parameter for ACCESS_TOKEN_MANAGEMENT_TO'
+    
+
+  nearWalletPublicKey:
+    Type: 'String'
+    Description: 'Parameter for NEAR_WALLET_PUBLIC_KEY'
+    
+
+  nearAddress:
+    Type: 'String'
+    Description: 'Parameter for NEAR_ADDRESS'
+    
+
+  nearSlippage:
+    Type: 'Number'
+    Description: 'Parameter for NEAR_SLIPPAGE'
+    
+
+  nearRpcUrl:
+    Type: 'String'
+    Description: 'Parameter for NEAR_RPC_URL'
+    
+
+  nearNetwork:
+    Type: 'String'
+    Description: 'Parameter for NEAR_NETWORK'
+    
+
+  zksyncPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for ZKSYNC_PRIVATE_KEY'
+    
+
+  availSeed:
+    Type: 'String'
+    Description: 'Parameter for AVAIL_SEED'
+    
+
+  availAppId:
+    Type: 'Number'
+    Description: 'Parameter for AVAIL_APP_ID'
+    
+
+  availRpcUrl:
+    Type: 'String'
+    Description: 'Parameter for AVAIL_RPC_URL'
+    
+
+  teeMarlinAttestationEndpoint:
+    Type: 'String'
+    Description: 'Parameter for TEE_MARLIN_ATTESTATION_ENDPOINT'
+    
+
+  tonRpcUrl:
+    Type: 'String'
+    Description: 'Parameter for TON_RPC_URL'
+    
+
+  tonRpcApiKey:
+    Type: 'String'
+    Description: 'Parameter for TON_RPC_API_KEY'
+    
+
+  tonNftImagesFolder:
+    Type: 'String'
+    Description: 'Parameter for TON_NFT_IMAGES_FOLDER'
+    
+
+  tonNftMetadataFolder:
+    Type: 'String'
+    Description: 'Parameter for TON_NFT_METADATA_FOLDER'
+    
+
+  pinataApiKey:
+    Type: 'String'
+    Description: 'Parameter for PINATA_API_KEY'
+    
+
+  pinataApiSecret:
+    Type: 'String'
+    Description: 'Parameter for PINATA_API_SECRET'
+    
+
+  suiNetwork:
+    Type: 'String'
+    Description: 'Parameter for SUI_NETWORK'
+    
+
+  minaNetwork:
+    Type: 'String'
+    Description: 'Parameter for MINA_NETWORK'
+    
+
+  storyApiBaseUrl:
+    Type: 'String'
+    Description: 'Parameter for STORY_API_BASE_URL'
+    
+
+  storyApiKey:
+    Type: 'String'
+    Description: 'Parameter for STORY_API_KEY'
+    
+
+  pinataJwt:
+    Type: 'String'
+    Description: 'Parameter for PINATA_JWT'
+    
+
+  cosmosAvailableChains:
+    Type: 'String'
+    Description: 'Parameter for COSMOS_AVAILABLE_CHAINS'
+    
+
+  cronoszkevmPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for CRONOSZKEVM_PRIVATE_KEY'
+    
+
+  spheronProviderProxyUrl:
+    Type: 'String'
+    Description: 'Parameter for SPHERON_PROVIDER_PROXY_URL'
+    
+
+  spheronWalletAddress:
+    Type: 'String'
+    Description: 'Parameter for SPHERON_WALLET_ADDRESS'
+    
+
+  bnbPublicKey:
+    Type: 'String'
+    Description: 'Parameter for BNB_PUBLIC_KEY'
+    
+
+  bscProviderUrl:
+    Type: 'String'
+    Description: 'Parameter for BSC_PROVIDER_URL'
+    
+
+  opbnbProviderUrl:
+    Type: 'String'
+    Description: 'Parameter for OPBNB_PROVIDER_URL'
+    
+
+  bitmindApiToken:
+    Type: 'String'
+    Description: 'Parameter for BITMIND_API_TOKEN'
+    
+
+  passportScorer:
+    Type: 'String'
+    Description: 'Parameter for PASSPORT_SCORER'
+    
+
+  echochambersApiKey:
+    Type: 'String'
+    Description: 'Parameter for ECHOCHAMBERS_API_KEY'
+    
+
+  echochambersUsername:
+    Type: 'String'
+    Description: 'Parameter for ECHOCHAMBERS_USERNAME'
+    
+
+  echochambersRooms:
+    Type: 'String'
+    Description: 'Parameter for ECHOCHAMBERS_ROOMS'
+    
+
+  echochambersPollInterval:
+    Type: 'Number'
+    Description: 'Parameter for ECHOCHAMBERS_POLL_INTERVAL'
+    
+
+  echochambersMaxMessages:
+    Type: 'Number'
+    Description: 'Parameter for ECHOCHAMBERS_MAX_MESSAGES'
+    
+
+  echochambersConversationStarterInterval:
+    Type: 'Number'
+    Description: 'Parameter for ECHOCHAMBERS_CONVERSATION_STARTER_INTERVAL'
+    
+
+  echochambersQuietPeriod:
+    Type: 'Number'
+    Description: 'Parameter for ECHOCHAMBERS_QUIET_PERIOD'
+    
+
+  alloraChainSlug:
+    Type: 'String'
+    Description: 'Parameter for ALLORA_CHAIN_SLUG'
+    
+
+  opacityCloudflareName:
+    Type: 'String'
+    Description: 'Parameter for OPACITY_CLOUDFLARE_NAME'
+    
+
+  opacityProverUrl:
+    Type: 'String'
+    Description: 'Parameter for OPACITY_PROVER_URL'
+    
+
+  devaApiBaseUrl:
+    Type: 'String'
+    Description: 'Parameter for DEVA_API_BASE_URL'
+    
+
+  qdrantKey:
+    Type: 'String'
+    Description: 'Parameter for QDRANT_KEY'
+    
+
+  qdrantPort:
+    Type: 'Number'
+    Description: 'Parameter for QDRANT_PORT'
+    
+
+  qdrantVectorSize:
+    Type: 'Number'
+    Description: 'Parameter for QDRANT_VECTOR_SIZE'
+    
+
+  autonomeRpc:
+    Type: 'String'
+    Description: 'Parameter for AUTONOME_RPC'
+    
+
+  akashNet:
+    Type: 'String'
+    Description: 'Parameter for AKASH_NET'
+    
+
+  rpcEndpoint:
+    Type: 'String'
+    Description: 'Parameter for RPC_ENDPOINT'
+    
+
+  akashGasPrices:
+    Type: 'String'
+    Description: 'Parameter for AKASH_GAS_PRICES'
+    
+
+  akashGasAdjustment:
+    Type: 'Number'
+    Description: 'Parameter for AKASH_GAS_ADJUSTMENT'
+    
+
+  akashKeyringBackend:
+    Type: 'String'
+    Description: 'Parameter for AKASH_KEYRING_BACKEND'
+    
+
+  akashFrom:
+    Type: 'String'
+    Description: 'Parameter for AKASH_FROM'
+    
+
+  akashFees:
+    Type: 'String'
+    Description: 'Parameter for AKASH_FEES'
+    
+
+  akashDeposit:
+    Type: 'String'
+    Description: 'Parameter for AKASH_DEPOSIT'
+    
+
+  akashMnemonic:
+    Type: 'String'
+    Description: 'Parameter for AKASH_MNEMONIC'
+    
+
+  akashWalletAddress:
+    Type: 'String'
+    Description: 'Parameter for AKASH_WALLET_ADDRESS'
+    
+
+  akashPricingApiUrl:
+    Type: 'String'
+    Description: 'Parameter for AKASH_PRICING_API_URL'
+    
+
+  akashDefaultCpu:
+    Type: 'Number'
+    Description: 'Parameter for AKASH_DEFAULT_CPU'
+    
+
+  akashDefaultMemory:
+    Type: 'Number'
+    Description: 'Parameter for AKASH_DEFAULT_MEMORY'
+    
+
+  akashDefaultStorage:
+    Type: 'Number'
+    Description: 'Parameter for AKASH_DEFAULT_STORAGE'
+    
+
+  akashSdl:
+    Type: 'String'
+    Description: 'Parameter for AKASH_SDL'
+    
+
+  akashCloseDep:
+    Type: 'String'
+    Description: 'Parameter for AKASH_CLOSE_DEP'
+    
+
+  akashCloseDseq:
+    Type: 'String'
+    Description: 'Parameter for AKASH_CLOSE_DSEQ'
+    
+
+  akashProviderInfo:
+    Type: 'String'
+    Description: 'Parameter for AKASH_PROVIDER_INFO'
+    
+
+  akashDepStatus:
+    Type: 'String'
+    Description: 'Parameter for AKASH_DEP_STATUS'
+    
+
+  akashDepDseq:
+    Type: 'String'
+    Description: 'Parameter for AKASH_DEP_DSEQ'
+    
+
+  akashGasOperation:
+    Type: 'String'
+    Description: 'Parameter for AKASH_GAS_OPERATION'
+    
+
+  akashGasDseq:
+    Type: 'String'
+    Description: 'Parameter for AKASH_GAS_DSEQ'
+    
+
+  akashManifestMode:
+    Type: 'String'
+    Description: 'Parameter for AKASH_MANIFEST_MODE'
+    
+
+  akashManifestPath:
+    Type: 'String'
+    Description: 'Parameter for AKASH_MANIFEST_PATH'
+    
+
+  akashManifestValidationLevel:
+    Type: 'String'
+    Description: 'Parameter for AKASH_MANIFEST_VALIDATION_LEVEL'
+    
+
+  quaiRpcUrl:
+    Type: 'String'
+    Description: 'Parameter for QUAI_RPC_URL'
+    
+
+  alchemyHttpTransportUrl:
+    Type: 'String'
+    Description: 'Parameter for ALCHEMY_HTTP_TRANSPORT_URL'
+    
+
+  pythMainnetHermesUrl:
+    Type: 'String'
+    Description: 'Parameter for PYTH_MAINNET_HERMES_URL'
+    
+
+  pythMainnetWssUrl:
+    Type: 'String'
+    Description: 'Parameter for PYTH_MAINNET_WSS_URL'
+    
+
+  pythMainnetPythnetUrl:
+    Type: 'String'
+    Description: 'Parameter for PYTH_MAINNET_PYTHNET_URL'
+    
+
+  pythMainnetContractRegistry:
+    Type: 'String'
+    Description: 'Parameter for PYTH_MAINNET_CONTRACT_REGISTRY'
+    
+
+  pythMainnetProgramKey:
+    Type: 'String'
+    Description: 'Parameter for PYTH_MAINNET_PROGRAM_KEY'
+    
+
+  pythTestnetHermesUrl:
+    Type: 'String'
+    Description: 'Parameter for PYTH_TESTNET_HERMES_URL'
+    
+
+  pythTestnetWssUrl:
+    Type: 'String'
+    Description: 'Parameter for PYTH_TESTNET_WSS_URL'
+    
+
+  pythTestnetPythnetUrl:
+    Type: 'String'
+    Description: 'Parameter for PYTH_TESTNET_PYTHNET_URL'
+    
+
+  pythTestnetContractRegistry:
+    Type: 'String'
+    Description: 'Parameter for PYTH_TESTNET_CONTRACT_REGISTRY'
+    
+
+  pythTestnetProgramKey:
+    Type: 'String'
+    Description: 'Parameter for PYTH_TESTNET_PROGRAM_KEY'
+    
+
+  pythMaxRetries:
+    Type: 'Number'
+    Description: 'Parameter for PYTH_MAX_RETRIES'
+    
+
+  pythRetryDelay:
+    Type: 'Number'
+    Description: 'Parameter for PYTH_RETRY_DELAY'
+    
+
+  pythTimeout:
+    Type: 'Number'
+    Description: 'Parameter for PYTH_TIMEOUT'
+    
+
+  pythGranularLog:
+    Type: 'String'
+    Description: 'Parameter for PYTH_GRANULAR_LOG'
+      Default: 'false'
+
+  pythLogLevel:
+    Type: 'String'
+    Description: 'Parameter for PYTH_LOG_LEVEL'
+    
+
+  runtimeCheckMode:
+    Type: 'String'
+    Description: 'Parameter for RUNTIME_CHECK_MODE'
+      Default: 'false'
+
+  pythEnablePriceStreaming:
+    Type: 'String'
+    Description: 'Parameter for PYTH_ENABLE_PRICE_STREAMING'
+      Default: 'false'
+
+  pythMaxPriceStreams:
+    Type: 'Number'
+    Description: 'Parameter for PYTH_MAX_PRICE_STREAMS'
+    
+
+  pythTestId01:
+    Type: 'String'
+    Description: 'Parameter for PYTH_TEST_ID01'
+    
+
+  pythTestId02:
+    Type: 'String'
+    Description: 'Parameter for PYTH_TEST_ID02'
+    
+
+  routerNitroEvmPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for ROUTER_NITRO_EVM_PRIVATE_KEY'
+    
+
+  dkgHostname:
+    Type: 'String'
+    Description: 'Parameter for DKG_HOSTNAME'
+    
+
+  dkgPort:
+    Type: 'String'
+    Description: 'Parameter for DKG_PORT'
+    
+
+  dkgPublicKey:
+    Type: 'String'
+    Description: 'Parameter for DKG_PUBLIC_KEY'
+    
+
+  dkgPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for DKG_PRIVATE_KEY'
+    
+
+  dkgBlockchainName:
+    Type: 'String'
+    Description: 'Parameter for DKG_BLOCKCHAIN_NAME'
+    
+
+  initiaNodeUrl:
+    Type: 'String'
+    Description: 'Parameter for INITIA_NODE_URL'
+    
+
+  initiaChainId:
+    Type: 'String'
+    Description: 'Parameter for INITIA_CHAIN_ID'
+    
+
+  nvidiaNimSpash:
+    Type: 'String'
+    Description: 'Parameter for NVIDIA_NIM_SPASH'
+      Default: 'false'
+
+  nvidiaNimApiKey:
+    Type: 'String'
+    Description: 'Parameter for NVIDIA_NIM_API_KEY'
+    
+
+  nvidiaNgcApiKey:
+    Type: 'String'
+    Description: 'Parameter for NVIDIA_NGC_API_KEY'
+    
+
+  nvidiaNimMaxRetries:
+    Type: 'Number'
+    Description: 'Parameter for NVIDIA_NIM_MAX_RETRIES'
+    
+
+  nvidiaNimRetryDelay:
+    Type: 'Number'
+    Description: 'Parameter for NVIDIA_NIM_RETRY_DELAY'
+    
+
+  nvidiaNimTimeout:
+    Type: 'Number'
+    Description: 'Parameter for NVIDIA_NIM_TIMEOUT'
+    
+
+  nvidiaGranularLog:
+    Type: 'String'
+    Description: 'Parameter for NVIDIA_GRANULAR_LOG'
+      Default: 'false'
+
+  nvidiaLogLevel:
+    Type: 'String'
+    Description: 'Parameter for NVIDIA_LOG_LEVEL'
+    
+
+  nvidiaOfftopicSystem:
+    Type: 'String'
+    Description: 'Parameter for NVIDIA_OFFTOPIC_SYSTEM'
+    
+
+  nvidiaOfftopicUser:
+    Type: 'String'
+    Description: 'Parameter for NVIDIA_OFFTOPIC_USER'
+    
+
+  nvidiaNimBaseVisionUrl:
+    Type: 'String'
+    Description: 'Parameter for NVIDIA_NIM_BASE_VISION_URL'
+    
+
+  nvidiaCosmosModel:
+    Type: 'String'
+    Description: 'Parameter for NVIDIA_COSMOS_MODEL'
+    
+
+  nvidiaCosmosInvokeUrl:
+    Type: 'String'
+    Description: 'Parameter for NVIDIA_COSMOS_INVOKE_URL'
+    
+
+  nvidiaCosmosAssetUrl:
+    Type: 'String'
+    Description: 'Parameter for NVIDIA_COSMOS_ASSET_URL'
+    
+
+  nvidiaCosmosMaxTokens:
+    Type: 'Number'
+    Description: 'Parameter for NVIDIA_COSMOS_MAX_TOKENS'
+    
+
+  emailOutgoingHost:
+    Type: 'String'
+    Description: 'Parameter for EMAIL_OUTGOING_HOST'
+    
+
+  emailOutgoingPort:
+    Type: 'Number'
+    Description: 'Parameter for EMAIL_OUTGOING_PORT'
+    
+
+  emailOutgoingUser:
+    Type: 'String'
+    Description: 'Parameter for EMAIL_OUTGOING_USER'
+    
+
+  emailOutgoingPass:
+    Type: 'String'
+    Description: 'Parameter for EMAIL_OUTGOING_PASS'
+    
+
+  emailIncomingService:
+    Type: 'String'
+    Description: 'Parameter for EMAIL_INCOMING_SERVICE'
+    
+
+  emailIncomingHost:
+    Type: 'String'
+    Description: 'Parameter for EMAIL_INCOMING_HOST'
+    
+
+  emailIncomingPort:
+    Type: 'Number'
+    Description: 'Parameter for EMAIL_INCOMING_PORT'
+    
+
+  emailIncomingUser:
+    Type: 'String'
+    Description: 'Parameter for EMAIL_INCOMING_USER'
+    
+
+  emailIncomingPass:
+    Type: 'String'
+    Description: 'Parameter for EMAIL_INCOMING_PASS'
+    
+
+  seiNetwork:
+    Type: 'String'
+    Description: 'Parameter for SEI_NETWORK'
+    
+
+  seiRpcUrl:
+    Type: 'String'
+    Description: 'Parameter for SEI_RPC_URL'
+    
+
+  omniflixMnemonic:
+    Type: 'String'
+    Description: 'Parameter for OMNIFLIX_MNEMONIC'
+    
+
+  omniflixRpcEndpoint:
+    Type: 'String'
+    Description: 'Parameter for OMNIFLIX_RPC_ENDPOINT'
+    
+
+  omniflixPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for OMNIFLIX_PRIVATE_KEY'
+    
+
+  imgflipPassword:
+    Type: 'String'
+    Description: 'Parameter for IMGFLIP_PASSWORD'
+    
+
+  hyperliquidTestnet:
+    Type: 'String'
+    Description: 'Parameter for HYPERLIQUID_TESTNET'
+      Default: 'false'
+
+  evmRpcUrl:
+    Type: 'String'
+    Description: 'Parameter for EVM_RPC_URL'
+    
+
+  ethstorageAddress:
+    Type: 'String'
+    Description: 'Parameter for ETHSTORAGE_ADDRESS'
+    
+
+  ethstorageRpcUrl:
+    Type: 'String'
+    Description: 'Parameter for ETHSTORAGE_RPC_URL'
+    
+
+  defaultToEmail:
+    Type: 'String'
+    Description: 'Parameter for DEFAULT_TO_EMAIL'
+    
+
+  defaultFromEmail:
+    Type: 'String'
+    Description: 'Parameter for DEFAULT_FROM_EMAIL'
+    
+
+  emailAutomationEnabled:
+    Type: 'String'
+    Description: 'Parameter for EMAIL_AUTOMATION_ENABLED'
+      Default: 'false'
+
+  emailEvaluationPrompt:
+    Type: 'String'
+    Description: 'Parameter for EMAIL_EVALUATION_PROMPT'
+    
+
+  ankrWallet:
+    Type: 'String'
+    Description: 'Parameter for ANKR_WALLET'
+    
+
+  ankrMaxRetries:
+    Type: 'Number'
+    Description: 'Parameter for ANKR_MAX_RETRIES'
+    
+
+  ankrRetryDelay:
+    Type: 'Number'
+    Description: 'Parameter for ANKR_RETRY_DELAY'
+    
+
+  ankrTimeout:
+    Type: 'Number'
+    Description: 'Parameter for ANKR_TIMEOUT'
+    
+
+  ankrGranularLog:
+    Type: 'String'
+    Description: 'Parameter for ANKR_GRANULAR_LOG'
+      Default: 'false'
+
+  ankrLogLevel:
+    Type: 'String'
+    Description: 'Parameter for ANKR_LOG_LEVEL'
+    
+
+  ankrRuntimeCheckMode:
+    Type: 'String'
+    Description: 'Parameter for ANKR_RUNTIME_CHECK_MODE'
+      Default: 'false'
+
+  ankrSpash:
+    Type: 'String'
+    Description: 'Parameter for ANKR_SPASH'
+      Default: 'false'
+
+  dcapMode:
+    Type: 'String'
+    Description: 'Parameter for DCAP_MODE'
+    
+
+  btcPrivateKeyWif:
+    Type: 'String'
+    Description: 'Parameter for BTC_PRIVATE_KEY_WIF'
+    
+
+  btcAddress:
+    Type: 'String'
+    Description: 'Parameter for BTC_ADDRESS'
+    
+
+  btcMintCap:
+    Type: 'Number'
+    Description: 'Parameter for BTC_MINT_CAP'
+    
+
+  btcMintDeadline:
+    Type: 'Number'
+    Description: 'Parameter for BTC_MINT_DEADLINE'
+    
+
+  btcFundraisingCap:
+    Type: 'Number'
+    Description: 'Parameter for BTC_FUNDRAISING_CAP'
+    
+
+  trikonInitialBalance:
+    Type: 'String'
+    Description: 'Parameter for TRIKON_INITIAL_BALANCE'
+    
+
+  arbitrageEvmProviderUrl:
+    Type: 'String'
+    Description: 'Parameter for ARBITRAGE_EVM_PROVIDER_URL'
+    
+
+  arbitrageEvmPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for ARBITRAGE_EVM_PRIVATE_KEY'
+    
+
+  flashbotsRelaySigningKey:
+    Type: 'String'
+    Description: 'Parameter for FLASHBOTS_RELAY_SIGNING_KEY'
+    
+
+  bundleExecutorAddress:
+    Type: 'String'
+    Description: 'Parameter for BUNDLE_EXECUTOR_ADDRESS'
+    
+
+  deskExchangeNetwork:
+    Type: 'String'
+    Description: 'Parameter for DESK_EXCHANGE_NETWORK'
+    
+
+  compassArbitrumRpcUrl:
+    Type: 'String'
+    Description: 'Parameter for COMPASS_ARBITRUM_RPC_URL'
+    
+
+  compassEthereumRpcUrl:
+    Type: 'String'
+    Description: 'Parameter for COMPASS_ETHEREUM_RPC_URL'
+    
+
+  compassBaseRpcUrl:
+    Type: 'String'
+    Description: 'Parameter for COMPASS_BASE_RPC_URL'
+    
+
+  dataAuthToken:
+    Type: 'String'
+    Description: 'Parameter for DATA_AUTH_TOKEN'
+    
+
+  nknClientId:
+    Type: 'String'
+    Description: 'Parameter for NKN_CLIENT_ID'
+    
+Resources:
+
+
+  
+  ConditionalResource:
+    Condition: cacheDir
+    AgentParamCacheDirParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_CACHE_DIR'
+      Type: 'String'
+      Value: !Ref cacheDir
+      Tier: 'Standard'
+      Description: 'Parameter for CACHE_DIR'
+
+  ConditionalResource:
+    Condition: redisUrl
+    AgentParamRedisUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_REDIS_URL'
+      Type: 'String'
+      Value: !Ref redisUrl
+      Tier: 'Standard'
+      Description: 'Parameter for REDIS_URL'
+
+  ConditionalResource:
+    Condition: serverUrl
+    AgentParamServerUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_SERVER_URL'
+      Type: 'String'
+      Value: !Ref serverUrl
+      Tier: 'Standard'
+      Description: 'Parameter for SERVER_URL'
+
+  ConditionalResource:
+    Condition: serverPort
+    AgentParamServerPortParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_SERVER_PORT'
+      Type: 'String'
+      Value: !Ref serverPort
+      Tier: 'Standard'
+      Description: 'Parameter for SERVER_PORT'
+
+  ConditionalResource:
+    Condition: remoteCharacterUrls
+    AgentParamRemoteCharacterUrlsParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_REMOTE_CHARACTER_URLS'
+      Type: 'String'
+      Value: !Ref remoteCharacterUrls
+      Tier: 'Standard'
+      Description: 'Parameter for REMOTE_CHARACTER_URLS'
+
+  ConditionalResource:
+    Condition: useCharacterStorage
+    AgentParamUseCharacterStorageParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_USE_CHARACTER_STORAGE'
+      Type: 'String'
+      Value: !Ref useCharacterStorage
+      Tier: 'Standard'
+      Description: 'Parameter for USE_CHARACTER_STORAGE'
+
+  ConditionalResource:
+    Condition: defaultLogLevel
+    AgentParamDefaultLogLevelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_DEFAULT_LOG_LEVEL'
+      Type: 'String'
+      Value: !Ref defaultLogLevel
+      Tier: 'Standard'
+      Description: 'Parameter for DEFAULT_LOG_LEVEL'
+
+  ConditionalResource:
+    Condition: logJsonFormat
+    AgentParamLogJsonFormatParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_LOG_JSON_FORMAT'
+      Type: 'String'
+      Value: !Ref logJsonFormat
+      Tier: 'Standard'
+      Description: 'Parameter for LOG_JSON_FORMAT'
+
+  ConditionalResource:
+    Condition: expressMaxPayload
+    AgentParamExpressMaxPayloadParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_EXPRESS_MAX_PAYLOAD'
+      Type: 'String'
+      Value: !Ref expressMaxPayload
+      Tier: 'Standard'
+      Description: 'Parameter for EXPRESS_MAX_PAYLOAD'
+
+  ConditionalResource:
+    Condition: transcriptionProvider
+    AgentParamTranscriptionProviderParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_TRANSCRIPTION_PROVIDER'
+      Type: 'String'
+      Value: !Ref transcriptionProvider
+      Tier: 'Standard'
+      Description: 'Parameter for TRANSCRIPTION_PROVIDER'
+
+  ConditionalResource:
+    Condition: walletPrivateKey
+    AgentParamWalletPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_WALLET_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref walletPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for WALLET_PRIVATE_KEY'
+
+  ConditionalResource:
+    Condition: walletPublicKey
+    AgentParamWalletPublicKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_WALLET_PUBLIC_KEY'
+      Type: 'String'
+      Value: !Ref walletPublicKey
+      Tier: 'Standard'
+      Description: 'Parameter for WALLET_PUBLIC_KEY'
+
+  ConditionalResource:
+    Condition: tokenizer
+    AgentParamTokenizerParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_tokenizer'
+      Type: 'String'
+      Value: !Ref tokenizer
+      Tier: 'Standard'
+      Description: 'Parameter for tokenizer'
+
+  ConditionalResource:
+    Condition: cloudflare
+    AgentParamCloudflareParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_cloudflare'
+      Type: 'String'
+      Value: !Ref cloudflare
+      Tier: 'Standard'
+      Description: 'Parameter for cloudflare'
+
+  ConditionalResource:
+    Condition: aws
+    AgentParamAwsParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_aws'
+      Type: 'String'
+      Value: !Ref aws
+      Tier: 'Standard'
+      Description: 'Parameter for aws'
+
+  ConditionalResource:
+    Condition: verifiableInference
+    AgentParamVerifiableInferenceParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_verifiable_inference'
+      Type: 'String'
+      Value: !Ref verifiableInference
+      Tier: 'Standard'
+      Description: 'Parameter for verifiable_inference'
+
+  ConditionalResource:
+    Condition: supabaseAnonKey
+    AgentParamSupabaseAnonKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_SUPABASE_ANON_KEY'
+      Type: 'String'
+      Value: !Ref supabaseAnonKey
+      Tier: 'Standard'
+      Description: 'Parameter for SUPABASE_ANON_KEY'
+
+  ConditionalResource:
+    Condition: mongodbDatabase
+    AgentParamMongodbDatabaseParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_MONGODB_DATABASE'
+      Type: 'String'
+      Value: !Ref mongodbDatabase
+      Tier: 'Standard'
+      Description: 'Parameter for MONGODB_DATABASE'
+
+  ConditionalResource:
+    Condition: discordApiToken
+    AgentParamDiscordApiTokenParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_DISCORD_API_TOKEN'
+      Type: 'String'
+      Value: !Ref discordApiToken
+      Tier: 'Standard'
+      Description: 'Parameter for DISCORD_API_TOKEN'
+
+  ConditionalResource:
+    Condition: discordVoiceChannelId
+    AgentParamDiscordVoiceChannelIdParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_DISCORD_VOICE_CHANNEL_ID'
+      Type: 'String'
+      Value: !Ref discordVoiceChannelId
+      Tier: 'Standard'
+      Description: 'Parameter for DISCORD_VOICE_CHANNEL_ID'
+
+  ConditionalResource:
+    Condition: farcasterNeynarApiKey
+    AgentParamFarcasterNeynarApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_FARCASTER_NEYNAR_API_KEY'
+      Type: 'String'
+      Value: !Ref farcasterNeynarApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for FARCASTER_NEYNAR_API_KEY'
+
+  ConditionalResource:
+    Condition: farcasterNeynarSignerUuid
+    AgentParamFarcasterNeynarSignerUuidParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_FARCASTER_NEYNAR_SIGNER_UUID'
+      Type: 'String'
+      Value: !Ref farcasterNeynarSignerUuid
+      Tier: 'Standard'
+      Description: 'Parameter for FARCASTER_NEYNAR_SIGNER_UUID'
+
+  ConditionalResource:
+    Condition: farcasterDryRun
+    AgentParamFarcasterDryRunParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_FARCASTER_DRY_RUN'
+      Type: 'String'
+      Value: !Ref farcasterDryRun
+      Tier: 'Standard'
+      Description: 'Parameter for FARCASTER_DRY_RUN'
+
+  ConditionalResource:
+    Condition: farcasterPollInterval
+    AgentParamFarcasterPollIntervalParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_FARCASTER_POLL_INTERVAL'
+      Type: 'String'
+      Value: !Ref farcasterPollInterval
+      Tier: 'Standard'
+      Description: 'Parameter for FARCASTER_POLL_INTERVAL'
+
+  ConditionalResource:
+    Condition: telegramAccountPhone
+    AgentParamTelegramAccountPhoneParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_TELEGRAM_ACCOUNT_PHONE'
+      Type: 'String'
+      Value: !Ref telegramAccountPhone
+      Tier: 'Standard'
+      Description: 'Parameter for TELEGRAM_ACCOUNT_PHONE'
+
+  ConditionalResource:
+    Condition: telegramAccountAppId
+    AgentParamTelegramAccountAppIdParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_TELEGRAM_ACCOUNT_APP_ID'
+      Type: 'String'
+      Value: !Ref telegramAccountAppId
+      Tier: 'Standard'
+      Description: 'Parameter for TELEGRAM_ACCOUNT_APP_ID'
+
+  ConditionalResource:
+    Condition: telegramAccountAppHash
+    AgentParamTelegramAccountAppHashParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_TELEGRAM_ACCOUNT_APP_HASH'
+      Type: 'String'
+      Value: !Ref telegramAccountAppHash
+      Tier: 'Standard'
+      Description: 'Parameter for TELEGRAM_ACCOUNT_APP_HASH'
+
+  ConditionalResource:
+    Condition: telegramAccountDeviceModel
+    AgentParamTelegramAccountDeviceModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_TELEGRAM_ACCOUNT_DEVICE_MODEL'
+      Type: 'String'
+      Value: !Ref telegramAccountDeviceModel
+      Tier: 'Standard'
+      Description: 'Parameter for TELEGRAM_ACCOUNT_DEVICE_MODEL'
+
+  ConditionalResource:
+    Condition: telegramAccountSystemVersion
+    AgentParamTelegramAccountSystemVersionParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_TELEGRAM_ACCOUNT_SYSTEM_VERSION'
+      Type: 'String'
+      Value: !Ref telegramAccountSystemVersion
+      Tier: 'Standard'
+      Description: 'Parameter for TELEGRAM_ACCOUNT_SYSTEM_VERSION'
+
+  ConditionalResource:
+    Condition: twitterUsername
+    AgentParamTwitterUsernameParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_TWITTER_USERNAME'
+      Type: 'String'
+      Value: !Ref twitterUsername
+      Tier: 'Standard'
+      Description: 'Parameter for TWITTER_USERNAME'
+
+  ConditionalResource:
+    Condition: twitterPassword
+    AgentParamTwitterPasswordParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_TWITTER_PASSWORD'
+      Type: 'String'
+      Value: !Ref twitterPassword
+      Tier: 'Standard'
+      Description: 'Parameter for TWITTER_PASSWORD'
+
+  ConditionalResource:
+    Condition: twitterEmail
+    AgentParamTwitterEmailParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_TWITTER_EMAIL'
+      Type: 'String'
+      Value: !Ref twitterEmail
+      Tier: 'Standard'
+      Description: 'Parameter for TWITTER_EMAIL'
+
+  ConditionalResource:
+    Condition: twitter2faSecret
+    AgentParamTwitter2faSecretParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_TWITTER_2FA_SECRET'
+      Type: 'String'
+      Value: !Ref twitter2faSecret
+      Tier: 'Standard'
+      Description: 'Parameter for TWITTER_2FA_SECRET'
+
+  ConditionalResource:
+    Condition: twitterCookiesAuthToken
+    AgentParamTwitterCookiesAuthTokenParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_TWITTER_COOKIES_AUTH_TOKEN'
+      Type: 'String'
+      Value: !Ref twitterCookiesAuthToken
+      Tier: 'Standard'
+      Description: 'Parameter for TWITTER_COOKIES_AUTH_TOKEN'
+
+  ConditionalResource:
+    Condition: twitterCookiesCt0
+    AgentParamTwitterCookiesCt0Parameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_TWITTER_COOKIES_CT0'
+      Type: 'String'
+      Value: !Ref twitterCookiesCt0
+      Tier: 'Standard'
+      Description: 'Parameter for TWITTER_COOKIES_CT0'
+
+  ConditionalResource:
+    Condition: twitterCookiesGuestId
+    AgentParamTwitterCookiesGuestIdParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_TWITTER_COOKIES_GUEST_ID'
+      Type: 'String'
+      Value: !Ref twitterCookiesGuestId
+      Tier: 'Standard'
+      Description: 'Parameter for TWITTER_COOKIES_GUEST_ID'
+
+  ConditionalResource:
+    Condition: twitterPollInterval
+    AgentParamTwitterPollIntervalParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_TWITTER_POLL_INTERVAL'
+      Type: 'String'
+      Value: !Ref twitterPollInterval
+      Tier: 'Standard'
+      Description: 'Parameter for TWITTER_POLL_INTERVAL'
+
+  ConditionalResource:
+    Condition: twitterSearchEnable
+    AgentParamTwitterSearchEnableParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_TWITTER_SEARCH_ENABLE'
+      Type: 'String'
+      Value: !Ref twitterSearchEnable
+      Tier: 'Standard'
+      Description: 'Parameter for TWITTER_SEARCH_ENABLE'
+
+  ConditionalResource:
+    Condition: twitterTargetUsers
+    AgentParamTwitterTargetUsersParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_TWITTER_TARGET_USERS'
+      Type: 'String'
+      Value: !Ref twitterTargetUsers
+      Tier: 'Standard'
+      Description: 'Parameter for TWITTER_TARGET_USERS'
+
+  ConditionalResource:
+    Condition: twitterRetryLimit
+    AgentParamTwitterRetryLimitParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_TWITTER_RETRY_LIMIT'
+      Type: 'String'
+      Value: !Ref twitterRetryLimit
+      Tier: 'Standard'
+      Description: 'Parameter for TWITTER_RETRY_LIMIT'
+
+  ConditionalResource:
+    Condition: twitterSpacesEnable
+    AgentParamTwitterSpacesEnableParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_TWITTER_SPACES_ENABLE'
+      Type: 'String'
+      Value: !Ref twitterSpacesEnable
+      Tier: 'Standard'
+      Description: 'Parameter for TWITTER_SPACES_ENABLE'
+
+  ConditionalResource:
+    Condition: enableTwitterPostGeneration
+    AgentParamEnableTwitterPostGenerationParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ENABLE_TWITTER_POST_GENERATION'
+      Type: 'String'
+      Value: !Ref enableTwitterPostGeneration
+      Tier: 'Standard'
+      Description: 'Parameter for ENABLE_TWITTER_POST_GENERATION'
+
+  ConditionalResource:
+    Condition: postIntervalMin
+    AgentParamPostIntervalMinParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_POST_INTERVAL_MIN'
+      Type: 'String'
+      Value: !Ref postIntervalMin
+      Tier: 'Standard'
+      Description: 'Parameter for POST_INTERVAL_MIN'
+
+  ConditionalResource:
+    Condition: postIntervalMax
+    AgentParamPostIntervalMaxParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_POST_INTERVAL_MAX'
+      Type: 'String'
+      Value: !Ref postIntervalMax
+      Tier: 'Standard'
+      Description: 'Parameter for POST_INTERVAL_MAX'
+
+  ConditionalResource:
+    Condition: postImmediately
+    AgentParamPostImmediatelyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_POST_IMMEDIATELY'
+      Type: 'String'
+      Value: !Ref postImmediately
+      Tier: 'Standard'
+      Description: 'Parameter for POST_IMMEDIATELY'
+
+  ConditionalResource:
+    Condition: actionInterval
+    AgentParamActionIntervalParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ACTION_INTERVAL'
+      Type: 'String'
+      Value: !Ref actionInterval
+      Tier: 'Standard'
+      Description: 'Parameter for ACTION_INTERVAL'
+
+  ConditionalResource:
+    Condition: enableActionProcessing
+    AgentParamEnableActionProcessingParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ENABLE_ACTION_PROCESSING'
+      Type: 'String'
+      Value: !Ref enableActionProcessing
+      Tier: 'Standard'
+      Description: 'Parameter for ENABLE_ACTION_PROCESSING'
+
+  ConditionalResource:
+    Condition: maxActionsProcessing
+    AgentParamMaxActionsProcessingParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_MAX_ACTIONS_PROCESSING'
+      Type: 'String'
+      Value: !Ref maxActionsProcessing
+      Tier: 'Standard'
+      Description: 'Parameter for MAX_ACTIONS_PROCESSING'
+
+  ConditionalResource:
+    Condition: actionTimelineType
+    AgentParamActionTimelineTypeParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ACTION_TIMELINE_TYPE'
+      Type: 'String'
+      Value: !Ref actionTimelineType
+      Tier: 'Standard'
+      Description: 'Parameter for ACTION_TIMELINE_TYPE'
+
+  ConditionalResource:
+    Condition: twitterApprovalDiscordChannelId
+    AgentParamTwitterApprovalDiscordChannelIdParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_TWITTER_APPROVAL_DISCORD_CHANNEL_ID'
+      Type: 'String'
+      Value: !Ref twitterApprovalDiscordChannelId
+      Tier: 'Standard'
+      Description: 'Parameter for TWITTER_APPROVAL_DISCORD_CHANNEL_ID'
+
+  ConditionalResource:
+    Condition: twitterApprovalDiscordBotToken
+    AgentParamTwitterApprovalDiscordBotTokenParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_TWITTER_APPROVAL_DISCORD_BOT_TOKEN'
+      Type: 'String'
+      Value: !Ref twitterApprovalDiscordBotToken
+      Tier: 'Standard'
+      Description: 'Parameter for TWITTER_APPROVAL_DISCORD_BOT_TOKEN'
+
+  ConditionalResource:
+    Condition: twitterApprovalEnabled
+    AgentParamTwitterApprovalEnabledParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_TWITTER_APPROVAL_ENABLED'
+      Type: 'String'
+      Value: !Ref twitterApprovalEnabled
+      Tier: 'Standard'
+      Description: 'Parameter for TWITTER_APPROVAL_ENABLED'
+
+  ConditionalResource:
+    Condition: twitterApprovalCheckInterval
+    AgentParamTwitterApprovalCheckIntervalParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_TWITTER_APPROVAL_CHECK_INTERVAL'
+      Type: 'String'
+      Value: !Ref twitterApprovalCheckInterval
+      Tier: 'Standard'
+      Description: 'Parameter for TWITTER_APPROVAL_CHECK_INTERVAL'
+
+  ConditionalResource:
+    Condition: whatsappPhoneNumberId
+    AgentParamWhatsappPhoneNumberIdParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_WHATSAPP_PHONE_NUMBER_ID'
+      Type: 'String'
+      Value: !Ref whatsappPhoneNumberId
+      Tier: 'Standard'
+      Description: 'Parameter for WHATSAPP_PHONE_NUMBER_ID'
+
+  ConditionalResource:
+    Condition: whatsappBusinessAccountId
+    AgentParamWhatsappBusinessAccountIdParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_WHATSAPP_BUSINESS_ACCOUNT_ID'
+      Type: 'String'
+      Value: !Ref whatsappBusinessAccountId
+      Tier: 'Standard'
+      Description: 'Parameter for WHATSAPP_BUSINESS_ACCOUNT_ID'
+
+  ConditionalResource:
+    Condition: whatsappWebhookVerifyToken
+    AgentParamWhatsappWebhookVerifyTokenParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_WHATSAPP_WEBHOOK_VERIFY_TOKEN'
+      Type: 'String'
+      Value: !Ref whatsappWebhookVerifyToken
+      Tier: 'Standard'
+      Description: 'Parameter for WHATSAPP_WEBHOOK_VERIFY_TOKEN'
+
+  ConditionalResource:
+    Condition: whatsappApiVersion
+    AgentParamWhatsappApiVersionParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_WHATSAPP_API_VERSION'
+      Type: 'String'
+      Value: !Ref whatsappApiVersion
+      Tier: 'Standard'
+      Description: 'Parameter for WHATSAPP_API_VERSION'
+
+  ConditionalResource:
+    Condition: instagramUsername
+    AgentParamInstagramUsernameParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_INSTAGRAM_USERNAME'
+      Type: 'String'
+      Value: !Ref instagramUsername
+      Tier: 'Standard'
+      Description: 'Parameter for INSTAGRAM_USERNAME'
+
+  ConditionalResource:
+    Condition: instagramPassword
+    AgentParamInstagramPasswordParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_INSTAGRAM_PASSWORD'
+      Type: 'String'
+      Value: !Ref instagramPassword
+      Tier: 'Standard'
+      Description: 'Parameter for INSTAGRAM_PASSWORD'
+
+  ConditionalResource:
+    Condition: instagramAppId
+    AgentParamInstagramAppIdParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_INSTAGRAM_APP_ID'
+      Type: 'String'
+      Value: !Ref instagramAppId
+      Tier: 'Standard'
+      Description: 'Parameter for INSTAGRAM_APP_ID'
+
+  ConditionalResource:
+    Condition: instagramAppSecret
+    AgentParamInstagramAppSecretParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_INSTAGRAM_APP_SECRET'
+      Type: 'String'
+      Value: !Ref instagramAppSecret
+      Tier: 'Standard'
+      Description: 'Parameter for INSTAGRAM_APP_SECRET'
+
+  ConditionalResource:
+    Condition: instagramBusinessAccountId
+    AgentParamInstagramBusinessAccountIdParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_INSTAGRAM_BUSINESS_ACCOUNT_ID'
+      Type: 'String'
+      Value: !Ref instagramBusinessAccountId
+      Tier: 'Standard'
+      Description: 'Parameter for INSTAGRAM_BUSINESS_ACCOUNT_ID'
+
+  ConditionalResource:
+    Condition: instagramPostIntervalMin
+    AgentParamInstagramPostIntervalMinParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_INSTAGRAM_POST_INTERVAL_MIN'
+      Type: 'String'
+      Value: !Ref instagramPostIntervalMin
+      Tier: 'Standard'
+      Description: 'Parameter for INSTAGRAM_POST_INTERVAL_MIN'
+
+  ConditionalResource:
+    Condition: instagramPostIntervalMax
+    AgentParamInstagramPostIntervalMaxParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_INSTAGRAM_POST_INTERVAL_MAX'
+      Type: 'String'
+      Value: !Ref instagramPostIntervalMax
+      Tier: 'Standard'
+      Description: 'Parameter for INSTAGRAM_POST_INTERVAL_MAX'
+
+  ConditionalResource:
+    Condition: instagramEnableActionProcessing
+    AgentParamInstagramEnableActionProcessingParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_INSTAGRAM_ENABLE_ACTION_PROCESSING'
+      Type: 'String'
+      Value: !Ref instagramEnableActionProcessing
+      Tier: 'Standard'
+      Description: 'Parameter for INSTAGRAM_ENABLE_ACTION_PROCESSING'
+
+  ConditionalResource:
+    Condition: instagramActionInterval
+    AgentParamInstagramActionIntervalParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_INSTAGRAM_ACTION_INTERVAL'
+      Type: 'String'
+      Value: !Ref instagramActionInterval
+      Tier: 'Standard'
+      Description: 'Parameter for INSTAGRAM_ACTION_INTERVAL'
+
+  ConditionalResource:
+    Condition: instagramMaxActions
+    AgentParamInstagramMaxActionsParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_INSTAGRAM_MAX_ACTIONS'
+      Type: 'String'
+      Value: !Ref instagramMaxActions
+      Tier: 'Standard'
+      Description: 'Parameter for INSTAGRAM_MAX_ACTIONS'
+
+  ConditionalResource:
+    Condition: alexaClientId
+    AgentParamAlexaClientIdParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ALEXA_CLIENT_ID'
+      Type: 'String'
+      Value: !Ref alexaClientId
+      Tier: 'Standard'
+      Description: 'Parameter for ALEXA_CLIENT_ID'
+
+  ConditionalResource:
+    Condition: alexaClientSecret
+    AgentParamAlexaClientSecretParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ALEXA_CLIENT_SECRET'
+      Type: 'String'
+      Value: !Ref alexaClientSecret
+      Tier: 'Standard'
+      Description: 'Parameter for ALEXA_CLIENT_SECRET'
+
+  ConditionalResource:
+    Condition: simsaiAgentId
+    AgentParamSimsaiAgentIdParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_SIMSAI_AGENT_ID'
+      Type: 'String'
+      Value: !Ref simsaiAgentId
+      Tier: 'Standard'
+      Description: 'Parameter for SIMSAI_AGENT_ID'
+
+  ConditionalResource:
+    Condition: simsaiUsername
+    AgentParamSimsaiUsernameParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_SIMSAI_USERNAME'
+      Type: 'String'
+      Value: !Ref simsaiUsername
+      Tier: 'Standard'
+      Description: 'Parameter for SIMSAI_USERNAME'
+
+  ConditionalResource:
+    Condition: simsaiDryRun
+    AgentParamSimsaiDryRunParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_SIMSAI_DRY_RUN'
+      Type: 'String'
+      Value: !Ref simsaiDryRun
+      Tier: 'Standard'
+      Description: 'Parameter for SIMSAI_DRY_RUN'
+
+  ConditionalResource:
+    Condition: openaiApiUrl
+    AgentParamOpenaiApiUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_OPENAI_API_URL'
+      Type: 'String'
+      Value: !Ref openaiApiUrl
+      Tier: 'Standard'
+      Description: 'Parameter for OPENAI_API_URL'
+
+  ConditionalResource:
+    Condition: smallOpenaiModel
+    AgentParamSmallOpenaiModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_OPENAI_MODEL'
+      Type: 'String'
+      Value: !Ref smallOpenaiModel
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_OPENAI_MODEL'
+
+  ConditionalResource:
+    Condition: mediumOpenaiModel
+    AgentParamMediumOpenaiModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_OPENAI_MODEL'
+      Type: 'String'
+      Value: !Ref mediumOpenaiModel
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_OPENAI_MODEL'
+
+  ConditionalResource:
+    Condition: largeOpenaiModel
+    AgentParamLargeOpenaiModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_OPENAI_MODEL'
+      Type: 'String'
+      Value: !Ref largeOpenaiModel
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_OPENAI_MODEL'
+
+  ConditionalResource:
+    Condition: embeddingOpenaiModel
+    AgentParamEmbeddingOpenaiModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_EMBEDDING_OPENAI_MODEL'
+      Type: 'String'
+      Value: !Ref embeddingOpenaiModel
+      Tier: 'Standard'
+      Description: 'Parameter for EMBEDDING_OPENAI_MODEL'
+
+  ConditionalResource:
+    Condition: imageOpenaiModel
+    AgentParamImageOpenaiModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_IMAGE_OPENAI_MODEL'
+      Type: 'String'
+      Value: !Ref imageOpenaiModel
+      Tier: 'Standard'
+      Description: 'Parameter for IMAGE_OPENAI_MODEL'
+
+  ConditionalResource:
+    Condition: useOpenaiEmbedding
+    AgentParamUseOpenaiEmbeddingParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_USE_OPENAI_EMBEDDING'
+      Type: 'String'
+      Value: !Ref useOpenaiEmbedding
+      Tier: 'Standard'
+      Description: 'Parameter for USE_OPENAI_EMBEDDING'
+
+  ConditionalResource:
+    Condition: enableOpenAiCommunityPlugin
+    AgentParamEnableOpenAiCommunityPluginParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ENABLE_OPEN_AI_COMMUNITY_PLUGIN'
+      Type: 'String'
+      Value: !Ref enableOpenAiCommunityPlugin
+      Tier: 'Standard'
+      Description: 'Parameter for ENABLE_OPEN_AI_COMMUNITY_PLUGIN'
+
+  ConditionalResource:
+    Condition: openaiDefaultModel
+    AgentParamOpenaiDefaultModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_OPENAI_DEFAULT_MODEL'
+      Type: 'String'
+      Value: !Ref openaiDefaultModel
+      Tier: 'Standard'
+      Description: 'Parameter for OPENAI_DEFAULT_MODEL'
+
+  ConditionalResource:
+    Condition: openaiMaxTokens
+    AgentParamOpenaiMaxTokensParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_OPENAI_MAX_TOKENS'
+      Type: 'String'
+      Value: !Ref openaiMaxTokens
+      Tier: 'Standard'
+      Description: 'Parameter for OPENAI_MAX_TOKENS'
+
+  ConditionalResource:
+    Condition: openaiTemperature
+    AgentParamOpenaiTemperatureParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_OPENAI_TEMPERATURE'
+      Type: 'String'
+      Value: !Ref openaiTemperature
+      Tier: 'Standard'
+      Description: 'Parameter for OPENAI_TEMPERATURE'
+
+  ConditionalResource:
+    Condition: atomaApiUrl
+    AgentParamAtomaApiUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ATOMA_API_URL'
+      Type: 'String'
+      Value: !Ref atomaApiUrl
+      Tier: 'Standard'
+      Description: 'Parameter for ATOMA_API_URL'
+
+  ConditionalResource:
+    Condition: smallAtomaModel
+    AgentParamSmallAtomaModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_ATOMA_MODEL'
+      Type: 'String'
+      Value: !Ref smallAtomaModel
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_ATOMA_MODEL'
+
+  ConditionalResource:
+    Condition: mediumAtomaModel
+    AgentParamMediumAtomaModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_ATOMA_MODEL'
+      Type: 'String'
+      Value: !Ref mediumAtomaModel
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_ATOMA_MODEL'
+
+  ConditionalResource:
+    Condition: largeAtomaModel
+    AgentParamLargeAtomaModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_ATOMA_MODEL'
+      Type: 'String'
+      Value: !Ref largeAtomaModel
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_ATOMA_MODEL'
+
+  ConditionalResource:
+    Condition: eternalaiModel
+    AgentParamEternalaiModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ETERNALAI_MODEL'
+      Type: 'String'
+      Value: !Ref eternalaiModel
+      Tier: 'Standard'
+      Description: 'Parameter for ETERNALAI_MODEL'
+
+  ConditionalResource:
+    Condition: eternalaiChainId
+    AgentParamEternalaiChainIdParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ETERNALAI_CHAIN_ID'
+      Type: 'String'
+      Value: !Ref eternalaiChainId
+      Tier: 'Standard'
+      Description: 'Parameter for ETERNALAI_CHAIN_ID'
+
+  ConditionalResource:
+    Condition: eternalaiRpcUrl
+    AgentParamEternalaiRpcUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ETERNALAI_RPC_URL'
+      Type: 'String'
+      Value: !Ref eternalaiRpcUrl
+      Tier: 'Standard'
+      Description: 'Parameter for ETERNALAI_RPC_URL'
+
+  ConditionalResource:
+    Condition: eternalaiAgentContractAddress
+    AgentParamEternalaiAgentContractAddressParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ETERNALAI_AGENT_CONTRACT_ADDRESS'
+      Type: 'String'
+      Value: !Ref eternalaiAgentContractAddress
+      Tier: 'Standard'
+      Description: 'Parameter for ETERNALAI_AGENT_CONTRACT_ADDRESS'
+
+  ConditionalResource:
+    Condition: eternalaiAgentId
+    AgentParamEternalaiAgentIdParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ETERNALAI_AGENT_ID'
+      Type: 'String'
+      Value: !Ref eternalaiAgentId
+      Tier: 'Standard'
+      Description: 'Parameter for ETERNALAI_AGENT_ID'
+
+  ConditionalResource:
+    Condition: eternalaiApiKey
+    AgentParamEternalaiApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ETERNALAI_API_KEY'
+      Type: 'String'
+      Value: !Ref eternalaiApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for ETERNALAI_API_KEY'
+
+  ConditionalResource:
+    Condition: eternalaiLog
+    AgentParamEternalaiLogParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ETERNALAI_LOG'
+      Type: 'String'
+      Value: !Ref eternalaiLog
+      Tier: 'Standard'
+      Description: 'Parameter for ETERNALAI_LOG'
+
+  ConditionalResource:
+    Condition: hyperbolicModel
+    AgentParamHyperbolicModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_HYPERBOLIC_MODEL'
+      Type: 'String'
+      Value: !Ref hyperbolicModel
+      Tier: 'Standard'
+      Description: 'Parameter for HYPERBOLIC_MODEL'
+
+  ConditionalResource:
+    Condition: imageHyperbolicModel
+    AgentParamImageHyperbolicModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_IMAGE_HYPERBOLIC_MODEL'
+      Type: 'String'
+      Value: !Ref imageHyperbolicModel
+      Tier: 'Standard'
+      Description: 'Parameter for IMAGE_HYPERBOLIC_MODEL'
+
+  ConditionalResource:
+    Condition: smallHyperbolicModel
+    AgentParamSmallHyperbolicModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_HYPERBOLIC_MODEL'
+      Type: 'String'
+      Value: !Ref smallHyperbolicModel
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_HYPERBOLIC_MODEL'
+
+  ConditionalResource:
+    Condition: mediumHyperbolicModel
+    AgentParamMediumHyperbolicModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_HYPERBOLIC_MODEL'
+      Type: 'String'
+      Value: !Ref mediumHyperbolicModel
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_HYPERBOLIC_MODEL'
+
+  ConditionalResource:
+    Condition: largeHyperbolicModel
+    AgentParamLargeHyperbolicModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_HYPERBOLIC_MODEL'
+      Type: 'String'
+      Value: !Ref largeHyperbolicModel
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_HYPERBOLIC_MODEL'
+
+  ConditionalResource:
+    Condition: hyperbolicEnv
+    AgentParamHyperbolicEnvParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_HYPERBOLIC_ENV'
+      Type: 'String'
+      Value: !Ref hyperbolicEnv
+      Tier: 'Standard'
+      Description: 'Parameter for HYPERBOLIC_ENV'
+
+  ConditionalResource:
+    Condition: hyperbolicGranularLog
+    AgentParamHyperbolicGranularLogParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_HYPERBOLIC_GRANULAR_LOG'
+      Type: 'String'
+      Value: !Ref hyperbolicGranularLog
+      Tier: 'Standard'
+      Description: 'Parameter for HYPERBOLIC_GRANULAR_LOG'
+
+  ConditionalResource:
+    Condition: hyperbolicSpash
+    AgentParamHyperbolicSpashParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_HYPERBOLIC_SPASH'
+      Type: 'String'
+      Value: !Ref hyperbolicSpash
+      Tier: 'Standard'
+      Description: 'Parameter for HYPERBOLIC_SPASH'
+
+  ConditionalResource:
+    Condition: hyperbolicLogLevel
+    AgentParamHyperbolicLogLevelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_HYPERBOLIC_LOG_LEVEL'
+      Type: 'String'
+      Value: !Ref hyperbolicLogLevel
+      Tier: 'Standard'
+      Description: 'Parameter for HYPERBOLIC_LOG_LEVEL'
+
+  ConditionalResource:
+    Condition: inferaModel
+    AgentParamInferaModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_INFERA_MODEL'
+      Type: 'String'
+      Value: !Ref inferaModel
+      Tier: 'Standard'
+      Description: 'Parameter for INFERA_MODEL'
+
+  ConditionalResource:
+    Condition: inferaServerUrl
+    AgentParamInferaServerUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_INFERA_SERVER_URL'
+      Type: 'String'
+      Value: !Ref inferaServerUrl
+      Tier: 'Standard'
+      Description: 'Parameter for INFERA_SERVER_URL'
+
+  ConditionalResource:
+    Condition: smallInferaModel
+    AgentParamSmallInferaModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_INFERA_MODEL'
+      Type: 'String'
+      Value: !Ref smallInferaModel
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_INFERA_MODEL'
+
+  ConditionalResource:
+    Condition: mediumInferaModel
+    AgentParamMediumInferaModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_INFERA_MODEL'
+      Type: 'String'
+      Value: !Ref mediumInferaModel
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_INFERA_MODEL'
+
+  ConditionalResource:
+    Condition: largeInferaModel
+    AgentParamLargeInferaModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_INFERA_MODEL'
+      Type: 'String'
+      Value: !Ref largeInferaModel
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_INFERA_MODEL'
+
+  ConditionalResource:
+    Condition: smallVeniceModel
+    AgentParamSmallVeniceModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_VENICE_MODEL'
+      Type: 'String'
+      Value: !Ref smallVeniceModel
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_VENICE_MODEL'
+
+  ConditionalResource:
+    Condition: mediumVeniceModel
+    AgentParamMediumVeniceModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_VENICE_MODEL'
+      Type: 'String'
+      Value: !Ref mediumVeniceModel
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_VENICE_MODEL'
+
+  ConditionalResource:
+    Condition: largeVeniceModel
+    AgentParamLargeVeniceModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_VENICE_MODEL'
+      Type: 'String'
+      Value: !Ref largeVeniceModel
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_VENICE_MODEL'
+
+  ConditionalResource:
+    Condition: imageVeniceModel
+    AgentParamImageVeniceModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_IMAGE_VENICE_MODEL'
+      Type: 'String'
+      Value: !Ref imageVeniceModel
+      Tier: 'Standard'
+      Description: 'Parameter for IMAGE_VENICE_MODEL'
+
+  ConditionalResource:
+    Condition: smallNineteenAiModel
+    AgentParamSmallNineteenAiModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_NINETEEN_AI_MODEL'
+      Type: 'String'
+      Value: !Ref smallNineteenAiModel
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_NINETEEN_AI_MODEL'
+
+  ConditionalResource:
+    Condition: mediumNineteenAiModel
+    AgentParamMediumNineteenAiModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_NINETEEN_AI_MODEL'
+      Type: 'String'
+      Value: !Ref mediumNineteenAiModel
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_NINETEEN_AI_MODEL'
+
+  ConditionalResource:
+    Condition: largeNineteenAiModel
+    AgentParamLargeNineteenAiModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_NINETEEN_AI_MODEL'
+      Type: 'String'
+      Value: !Ref largeNineteenAiModel
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_NINETEEN_AI_MODEL'
+
+  ConditionalResource:
+    Condition: imageNineteenAiMode
+    AgentParamImageNineteenAiModeParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_IMAGE_NINETEEN_AI_MODE'
+      Type: 'String'
+      Value: !Ref imageNineteenAiMode
+      Tier: 'Standard'
+      Description: 'Parameter for IMAGE_NINETEEN_AI_MODE'
+
+  ConditionalResource:
+    Condition: smallAkashChatApiModel
+    AgentParamSmallAkashChatApiModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_AKASH_CHAT_API_MODEL'
+      Type: 'String'
+      Value: !Ref smallAkashChatApiModel
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_AKASH_CHAT_API_MODEL'
+
+  ConditionalResource:
+    Condition: mediumAkashChatApiModel
+    AgentParamMediumAkashChatApiModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_AKASH_CHAT_API_MODEL'
+      Type: 'String'
+      Value: !Ref mediumAkashChatApiModel
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_AKASH_CHAT_API_MODEL'
+
+  ConditionalResource:
+    Condition: largeAkashChatApiModel
+    AgentParamLargeAkashChatApiModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_AKASH_CHAT_API_MODEL'
+      Type: 'String'
+      Value: !Ref largeAkashChatApiModel
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_AKASH_CHAT_API_MODEL'
+
+  ConditionalResource:
+    Condition: imageLivepeerModel
+    AgentParamImageLivepeerModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_IMAGE_LIVEPEER_MODEL'
+      Type: 'String'
+      Value: !Ref imageLivepeerModel
+      Tier: 'Standard'
+      Description: 'Parameter for IMAGE_LIVEPEER_MODEL'
+
+  ConditionalResource:
+    Condition: smallLivepeerModel
+    AgentParamSmallLivepeerModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_LIVEPEER_MODEL'
+      Type: 'String'
+      Value: !Ref smallLivepeerModel
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_LIVEPEER_MODEL'
+
+  ConditionalResource:
+    Condition: mediumLivepeerModel
+    AgentParamMediumLivepeerModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_LIVEPEER_MODEL'
+      Type: 'String'
+      Value: !Ref mediumLivepeerModel
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_LIVEPEER_MODEL'
+
+  ConditionalResource:
+    Condition: largeLivepeerModel
+    AgentParamLargeLivepeerModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_LIVEPEER_MODEL'
+      Type: 'String'
+      Value: !Ref largeLivepeerModel
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_LIVEPEER_MODEL'
+
+  ConditionalResource:
+    Condition: elevenlabsModelId
+    AgentParamElevenlabsModelIdParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ELEVENLABS_MODEL_ID'
+      Type: 'String'
+      Value: !Ref elevenlabsModelId
+      Tier: 'Standard'
+      Description: 'Parameter for ELEVENLABS_MODEL_ID'
+
+  ConditionalResource:
+    Condition: elevenlabsVoiceId
+    AgentParamElevenlabsVoiceIdParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ELEVENLABS_VOICE_ID'
+      Type: 'String'
+      Value: !Ref elevenlabsVoiceId
+      Tier: 'Standard'
+      Description: 'Parameter for ELEVENLABS_VOICE_ID'
+
+  ConditionalResource:
+    Condition: elevenlabsVoiceStability
+    AgentParamElevenlabsVoiceStabilityParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ELEVENLABS_VOICE_STABILITY'
+      Type: 'String'
+      Value: !Ref elevenlabsVoiceStability
+      Tier: 'Standard'
+      Description: 'Parameter for ELEVENLABS_VOICE_STABILITY'
+
+  ConditionalResource:
+    Condition: elevenlabsVoiceSimilarityBoost
+    AgentParamElevenlabsVoiceSimilarityBoostParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ELEVENLABS_VOICE_SIMILARITY_BOOST'
+      Type: 'String'
+      Value: !Ref elevenlabsVoiceSimilarityBoost
+      Tier: 'Standard'
+      Description: 'Parameter for ELEVENLABS_VOICE_SIMILARITY_BOOST'
+
+  ConditionalResource:
+    Condition: elevenlabsVoiceStyle
+    AgentParamElevenlabsVoiceStyleParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ELEVENLABS_VOICE_STYLE'
+      Type: 'String'
+      Value: !Ref elevenlabsVoiceStyle
+      Tier: 'Standard'
+      Description: 'Parameter for ELEVENLABS_VOICE_STYLE'
+
+  ConditionalResource:
+    Condition: elevenlabsVoiceUseSpeakerBoost
+    AgentParamElevenlabsVoiceUseSpeakerBoostParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ELEVENLABS_VOICE_USE_SPEAKER_BOOST'
+      Type: 'String'
+      Value: !Ref elevenlabsVoiceUseSpeakerBoost
+      Tier: 'Standard'
+      Description: 'Parameter for ELEVENLABS_VOICE_USE_SPEAKER_BOOST'
+
+  ConditionalResource:
+    Condition: elevenlabsOptimizeStreamingLatency
+    AgentParamElevenlabsOptimizeStreamingLatencyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ELEVENLABS_OPTIMIZE_STREAMING_LATENCY'
+      Type: 'String'
+      Value: !Ref elevenlabsOptimizeStreamingLatency
+      Tier: 'Standard'
+      Description: 'Parameter for ELEVENLABS_OPTIMIZE_STREAMING_LATENCY'
+
+  ConditionalResource:
+    Condition: elevenlabsOutputFormat
+    AgentParamElevenlabsOutputFormatParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ELEVENLABS_OUTPUT_FORMAT'
+      Type: 'String'
+      Value: !Ref elevenlabsOutputFormat
+      Tier: 'Standard'
+      Description: 'Parameter for ELEVENLABS_OUTPUT_FORMAT'
+
+  ConditionalResource:
+    Condition: openrouterModel
+    AgentParamOpenrouterModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_OPENROUTER_MODEL'
+      Type: 'String'
+      Value: !Ref openrouterModel
+      Tier: 'Standard'
+      Description: 'Parameter for OPENROUTER_MODEL'
+
+  ConditionalResource:
+    Condition: smallOpenrouterModel
+    AgentParamSmallOpenrouterModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_OPENROUTER_MODEL'
+      Type: 'String'
+      Value: !Ref smallOpenrouterModel
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_OPENROUTER_MODEL'
+
+  ConditionalResource:
+    Condition: mediumOpenrouterModel
+    AgentParamMediumOpenrouterModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_OPENROUTER_MODEL'
+      Type: 'String'
+      Value: !Ref mediumOpenrouterModel
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_OPENROUTER_MODEL'
+
+  ConditionalResource:
+    Condition: largeOpenrouterModel
+    AgentParamLargeOpenrouterModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_OPENROUTER_MODEL'
+      Type: 'String'
+      Value: !Ref largeOpenrouterModel
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_OPENROUTER_MODEL'
+
+  ConditionalResource:
+    Condition: redpillModel
+    AgentParamRedpillModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_REDPILL_MODEL'
+      Type: 'String'
+      Value: !Ref redpillModel
+      Tier: 'Standard'
+      Description: 'Parameter for REDPILL_MODEL'
+
+  ConditionalResource:
+    Condition: smallRedpillModel
+    AgentParamSmallRedpillModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_REDPILL_MODEL'
+      Type: 'String'
+      Value: !Ref smallRedpillModel
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_REDPILL_MODEL'
+
+  ConditionalResource:
+    Condition: mediumRedpillModel
+    AgentParamMediumRedpillModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_REDPILL_MODEL'
+      Type: 'String'
+      Value: !Ref mediumRedpillModel
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_REDPILL_MODEL'
+
+  ConditionalResource:
+    Condition: largeRedpillModel
+    AgentParamLargeRedpillModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_REDPILL_MODEL'
+      Type: 'String'
+      Value: !Ref largeRedpillModel
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_REDPILL_MODEL'
+
+  ConditionalResource:
+    Condition: smallGrokModel
+    AgentParamSmallGrokModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_GROK_MODEL'
+      Type: 'String'
+      Value: !Ref smallGrokModel
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_GROK_MODEL'
+
+  ConditionalResource:
+    Condition: mediumGrokModel
+    AgentParamMediumGrokModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_GROK_MODEL'
+      Type: 'String'
+      Value: !Ref mediumGrokModel
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_GROK_MODEL'
+
+  ConditionalResource:
+    Condition: largeGrokModel
+    AgentParamLargeGrokModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_GROK_MODEL'
+      Type: 'String'
+      Value: !Ref largeGrokModel
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_GROK_MODEL'
+
+  ConditionalResource:
+    Condition: embeddingGrokModel
+    AgentParamEmbeddingGrokModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_EMBEDDING_GROK_MODEL'
+      Type: 'String'
+      Value: !Ref embeddingGrokModel
+      Tier: 'Standard'
+      Description: 'Parameter for EMBEDDING_GROK_MODEL'
+
+  ConditionalResource:
+    Condition: ollamaModel
+    AgentParamOllamaModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_OLLAMA_MODEL'
+      Type: 'String'
+      Value: !Ref ollamaModel
+      Tier: 'Standard'
+      Description: 'Parameter for OLLAMA_MODEL'
+
+  ConditionalResource:
+    Condition: useOllamaEmbedding
+    AgentParamUseOllamaEmbeddingParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_USE_OLLAMA_EMBEDDING'
+      Type: 'String'
+      Value: !Ref useOllamaEmbedding
+      Tier: 'Standard'
+      Description: 'Parameter for USE_OLLAMA_EMBEDDING'
+
+  ConditionalResource:
+    Condition: ollamaEmbeddingModel
+    AgentParamOllamaEmbeddingModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_OLLAMA_EMBEDDING_MODEL'
+      Type: 'String'
+      Value: !Ref ollamaEmbeddingModel
+      Tier: 'Standard'
+      Description: 'Parameter for OLLAMA_EMBEDDING_MODEL'
+
+  ConditionalResource:
+    Condition: smallOllamaModel
+    AgentParamSmallOllamaModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_OLLAMA_MODEL'
+      Type: 'String'
+      Value: !Ref smallOllamaModel
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_OLLAMA_MODEL'
+
+  ConditionalResource:
+    Condition: mediumOllamaModel
+    AgentParamMediumOllamaModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_OLLAMA_MODEL'
+      Type: 'String'
+      Value: !Ref mediumOllamaModel
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_OLLAMA_MODEL'
+
+  ConditionalResource:
+    Condition: largeOllamaModel
+    AgentParamLargeOllamaModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_OLLAMA_MODEL'
+      Type: 'String'
+      Value: !Ref largeOllamaModel
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_OLLAMA_MODEL'
+
+  ConditionalResource:
+    Condition: smallGoogleModel
+    AgentParamSmallGoogleModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_GOOGLE_MODEL'
+      Type: 'String'
+      Value: !Ref smallGoogleModel
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_GOOGLE_MODEL'
+
+  ConditionalResource:
+    Condition: mediumGoogleModel
+    AgentParamMediumGoogleModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_GOOGLE_MODEL'
+      Type: 'String'
+      Value: !Ref mediumGoogleModel
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_GOOGLE_MODEL'
+
+  ConditionalResource:
+    Condition: largeGoogleModel
+    AgentParamLargeGoogleModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_GOOGLE_MODEL'
+      Type: 'String'
+      Value: !Ref largeGoogleModel
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_GOOGLE_MODEL'
+
+  ConditionalResource:
+    Condition: embeddingGoogleModel
+    AgentParamEmbeddingGoogleModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_EMBEDDING_GOOGLE_MODEL'
+      Type: 'String'
+      Value: !Ref embeddingGoogleModel
+      Tier: 'Standard'
+      Description: 'Parameter for EMBEDDING_GOOGLE_MODEL'
+
+  ConditionalResource:
+    Condition: googleGenerativeAiApiKey
+    AgentParamGoogleGenerativeAiApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_GOOGLE_GENERATIVE_AI_API_KEY'
+      Type: 'String'
+      Value: !Ref googleGenerativeAiApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for GOOGLE_GENERATIVE_AI_API_KEY'
+
+  ConditionalResource:
+    Condition: smallMistralModel
+    AgentParamSmallMistralModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_MISTRAL_MODEL'
+      Type: 'String'
+      Value: !Ref smallMistralModel
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_MISTRAL_MODEL'
+
+  ConditionalResource:
+    Condition: mediumMistralModel
+    AgentParamMediumMistralModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_MISTRAL_MODEL'
+      Type: 'String'
+      Value: !Ref mediumMistralModel
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_MISTRAL_MODEL'
+
+  ConditionalResource:
+    Condition: largeMistralModel
+    AgentParamLargeMistralModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_MISTRAL_MODEL'
+      Type: 'String'
+      Value: !Ref largeMistralModel
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_MISTRAL_MODEL'
+
+  ConditionalResource:
+    Condition: smallGroqModel
+    AgentParamSmallGroqModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_GROQ_MODEL'
+      Type: 'String'
+      Value: !Ref smallGroqModel
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_GROQ_MODEL'
+
+  ConditionalResource:
+    Condition: mediumGroqModel
+    AgentParamMediumGroqModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_GROQ_MODEL'
+      Type: 'String'
+      Value: !Ref mediumGroqModel
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_GROQ_MODEL'
+
+  ConditionalResource:
+    Condition: largeGroqModel
+    AgentParamLargeGroqModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_GROQ_MODEL'
+      Type: 'String'
+      Value: !Ref largeGroqModel
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_GROQ_MODEL'
+
+  ConditionalResource:
+    Condition: embeddingGroqModel
+    AgentParamEmbeddingGroqModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_EMBEDDING_GROQ_MODEL'
+      Type: 'String'
+      Value: !Ref embeddingGroqModel
+      Tier: 'Standard'
+      Description: 'Parameter for EMBEDDING_GROQ_MODEL'
+
+  ConditionalResource:
+    Condition: mediumNanogptModel
+    AgentParamMediumNanogptModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_NANOGPT_MODEL'
+      Type: 'String'
+      Value: !Ref mediumNanogptModel
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_NANOGPT_MODEL'
+
+  ConditionalResource:
+    Condition: largeNanogptModel
+    AgentParamLargeNanogptModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_NANOGPT_MODEL'
+      Type: 'String'
+      Value: !Ref largeNanogptModel
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_NANOGPT_MODEL'
+
+  ConditionalResource:
+    Condition: nanogptApiKey
+    AgentParamNanogptApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_NANOGPT_API_KEY'
+      Type: 'String'
+      Value: !Ref nanogptApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for NANOGPT_API_KEY'
+
+  ConditionalResource:
+    Condition: smallAnthropicModel
+    AgentParamSmallAnthropicModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_ANTHROPIC_MODEL'
+      Type: 'String'
+      Value: !Ref smallAnthropicModel
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_ANTHROPIC_MODEL'
+
+  ConditionalResource:
+    Condition: mediumAnthropicModel
+    AgentParamMediumAnthropicModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_ANTHROPIC_MODEL'
+      Type: 'String'
+      Value: !Ref mediumAnthropicModel
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_ANTHROPIC_MODEL'
+
+  ConditionalResource:
+    Condition: largeAnthropicModel
+    AgentParamLargeAnthropicModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_ANTHROPIC_MODEL'
+      Type: 'String'
+      Value: !Ref largeAnthropicModel
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_ANTHROPIC_MODEL'
+
+  ConditionalResource:
+    Condition: smallHeuristModel
+    AgentParamSmallHeuristModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_HEURIST_MODEL'
+      Type: 'String'
+      Value: !Ref smallHeuristModel
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_HEURIST_MODEL'
+
+  ConditionalResource:
+    Condition: mediumHeuristModel
+    AgentParamMediumHeuristModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_HEURIST_MODEL'
+      Type: 'String'
+      Value: !Ref mediumHeuristModel
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_HEURIST_MODEL'
+
+  ConditionalResource:
+    Condition: largeHeuristModel
+    AgentParamLargeHeuristModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_HEURIST_MODEL'
+      Type: 'String'
+      Value: !Ref largeHeuristModel
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_HEURIST_MODEL'
+
+  ConditionalResource:
+    Condition: heuristImageModel
+    AgentParamHeuristImageModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_HEURIST_IMAGE_MODEL'
+      Type: 'String'
+      Value: !Ref heuristImageModel
+      Tier: 'Standard'
+      Description: 'Parameter for HEURIST_IMAGE_MODEL'
+
+  ConditionalResource:
+    Condition: heuristEmbeddingModel
+    AgentParamHeuristEmbeddingModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_HEURIST_EMBEDDING_MODEL'
+      Type: 'String'
+      Value: !Ref heuristEmbeddingModel
+      Tier: 'Standard'
+      Description: 'Parameter for HEURIST_EMBEDDING_MODEL'
+
+  ConditionalResource:
+    Condition: useHeuristEmbedding
+    AgentParamUseHeuristEmbeddingParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_USE_HEURIST_EMBEDDING'
+      Type: 'String'
+      Value: !Ref useHeuristEmbedding
+      Tier: 'Standard'
+      Description: 'Parameter for USE_HEURIST_EMBEDDING'
+
+  ConditionalResource:
+    Condition: gaianetServerUrl
+    AgentParamGaianetServerUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_GAIANET_SERVER_URL'
+      Type: 'String'
+      Value: !Ref gaianetServerUrl
+      Tier: 'Standard'
+      Description: 'Parameter for GAIANET_SERVER_URL'
+
+  ConditionalResource:
+    Condition: smallGaianetModel
+    AgentParamSmallGaianetModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_GAIANET_MODEL'
+      Type: 'String'
+      Value: !Ref smallGaianetModel
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_GAIANET_MODEL'
+
+  ConditionalResource:
+    Condition: smallGaianetServerUrl
+    AgentParamSmallGaianetServerUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_GAIANET_SERVER_URL'
+      Type: 'String'
+      Value: !Ref smallGaianetServerUrl
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_GAIANET_SERVER_URL'
+
+  ConditionalResource:
+    Condition: mediumGaianetModel
+    AgentParamMediumGaianetModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_GAIANET_MODEL'
+      Type: 'String'
+      Value: !Ref mediumGaianetModel
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_GAIANET_MODEL'
+
+  ConditionalResource:
+    Condition: mediumGaianetServerUrl
+    AgentParamMediumGaianetServerUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_GAIANET_SERVER_URL'
+      Type: 'String'
+      Value: !Ref mediumGaianetServerUrl
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_GAIANET_SERVER_URL'
+
+  ConditionalResource:
+    Condition: largeGaianetModel
+    AgentParamLargeGaianetModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_GAIANET_MODEL'
+      Type: 'String'
+      Value: !Ref largeGaianetModel
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_GAIANET_MODEL'
+
+  ConditionalResource:
+    Condition: largeGaianetServerUrl
+    AgentParamLargeGaianetServerUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_GAIANET_SERVER_URL'
+      Type: 'String'
+      Value: !Ref largeGaianetServerUrl
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_GAIANET_SERVER_URL'
+
+  ConditionalResource:
+    Condition: gaianetEmbeddingModel
+    AgentParamGaianetEmbeddingModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_GAIANET_EMBEDDING_MODEL'
+      Type: 'String'
+      Value: !Ref gaianetEmbeddingModel
+      Tier: 'Standard'
+      Description: 'Parameter for GAIANET_EMBEDDING_MODEL'
+
+  ConditionalResource:
+    Condition: useGaianetEmbedding
+    AgentParamUseGaianetEmbeddingParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_USE_GAIANET_EMBEDDING'
+      Type: 'String'
+      Value: !Ref useGaianetEmbedding
+      Tier: 'Standard'
+      Description: 'Parameter for USE_GAIANET_EMBEDDING'
+
+  ConditionalResource:
+    Condition: volengineModel
+    AgentParamVolengineModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_VOLENGINE_MODEL'
+      Type: 'String'
+      Value: !Ref volengineModel
+      Tier: 'Standard'
+      Description: 'Parameter for VOLENGINE_MODEL'
+
+  ConditionalResource:
+    Condition: smallVolengineModel
+    AgentParamSmallVolengineModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_VOLENGINE_MODEL'
+      Type: 'String'
+      Value: !Ref smallVolengineModel
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_VOLENGINE_MODEL'
+
+  ConditionalResource:
+    Condition: mediumVolengineModel
+    AgentParamMediumVolengineModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_VOLENGINE_MODEL'
+      Type: 'String'
+      Value: !Ref mediumVolengineModel
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_VOLENGINE_MODEL'
+
+  ConditionalResource:
+    Condition: largeVolengineModel
+    AgentParamLargeVolengineModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_VOLENGINE_MODEL'
+      Type: 'String'
+      Value: !Ref largeVolengineModel
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_VOLENGINE_MODEL'
+
+  ConditionalResource:
+    Condition: volengineEmbeddingModel
+    AgentParamVolengineEmbeddingModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_VOLENGINE_EMBEDDING_MODEL'
+      Type: 'String'
+      Value: !Ref volengineEmbeddingModel
+      Tier: 'Standard'
+      Description: 'Parameter for VOLENGINE_EMBEDDING_MODEL'
+
+  ConditionalResource:
+    Condition: deepseekApiUrl
+    AgentParamDeepseekApiUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_DEEPSEEK_API_URL'
+      Type: 'String'
+      Value: !Ref deepseekApiUrl
+      Tier: 'Standard'
+      Description: 'Parameter for DEEPSEEK_API_URL'
+
+  ConditionalResource:
+    Condition: smallDeepseekModel
+    AgentParamSmallDeepseekModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_DEEPSEEK_MODEL'
+      Type: 'String'
+      Value: !Ref smallDeepseekModel
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_DEEPSEEK_MODEL'
+
+  ConditionalResource:
+    Condition: mediumDeepseekModel
+    AgentParamMediumDeepseekModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_DEEPSEEK_MODEL'
+      Type: 'String'
+      Value: !Ref mediumDeepseekModel
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_DEEPSEEK_MODEL'
+
+  ConditionalResource:
+    Condition: largeDeepseekModel
+    AgentParamLargeDeepseekModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_DEEPSEEK_MODEL'
+      Type: 'String'
+      Value: !Ref largeDeepseekModel
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_DEEPSEEK_MODEL'
+
+  ConditionalResource:
+    Condition: falAiLoraPath
+    AgentParamFalAiLoraPathParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_FAL_AI_LORA_PATH'
+      Type: 'String'
+      Value: !Ref falAiLoraPath
+      Tier: 'Standard'
+      Description: 'Parameter for FAL_AI_LORA_PATH'
+
+  ConditionalResource:
+    Condition: letzaiModels
+    AgentParamLetzaiModelsParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_LETZAI_MODELS'
+      Type: 'String'
+      Value: !Ref letzaiModels
+      Tier: 'Standard'
+      Description: 'Parameter for LETZAI_MODELS'
+
+  ConditionalResource:
+    Condition: smallGaladrielModel
+    AgentParamSmallGaladrielModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_GALADRIEL_MODEL'
+      Type: 'String'
+      Value: !Ref smallGaladrielModel
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_GALADRIEL_MODEL'
+
+  ConditionalResource:
+    Condition: mediumGaladrielModel
+    AgentParamMediumGaladrielModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_GALADRIEL_MODEL'
+      Type: 'String'
+      Value: !Ref mediumGaladrielModel
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_GALADRIEL_MODEL'
+
+  ConditionalResource:
+    Condition: largeGaladrielModel
+    AgentParamLargeGaladrielModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_GALADRIEL_MODEL'
+      Type: 'String'
+      Value: !Ref largeGaladrielModel
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_GALADRIEL_MODEL'
+
+  ConditionalResource:
+    Condition: galadrielFineTuneApiKey
+    AgentParamGaladrielFineTuneApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_GALADRIEL_FINE_TUNE_API_KEY'
+      Type: 'String'
+      Value: !Ref galadrielFineTuneApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for GALADRIEL_FINE_TUNE_API_KEY'
+
+  ConditionalResource:
+    Condition: lmstudioModel
+    AgentParamLmstudioModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_LMSTUDIO_MODEL'
+      Type: 'String'
+      Value: !Ref lmstudioModel
+      Tier: 'Standard'
+      Description: 'Parameter for LMSTUDIO_MODEL'
+
+  ConditionalResource:
+    Condition: smallLmstudioModel
+    AgentParamSmallLmstudioModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_LMSTUDIO_MODEL'
+      Type: 'String'
+      Value: !Ref smallLmstudioModel
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_LMSTUDIO_MODEL'
+
+  ConditionalResource:
+    Condition: mediumLmstudioModel
+    AgentParamMediumLmstudioModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_LMSTUDIO_MODEL'
+      Type: 'String'
+      Value: !Ref mediumLmstudioModel
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_LMSTUDIO_MODEL'
+
+  ConditionalResource:
+    Condition: largeLmstudioModel
+    AgentParamLargeLmstudioModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_LMSTUDIO_MODEL'
+      Type: 'String'
+      Value: !Ref largeLmstudioModel
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_LMSTUDIO_MODEL'
+
+  ConditionalResource:
+    Condition: secretAiUrl
+    AgentParamSecretAiUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_SECRET_AI_URL'
+      Type: 'String'
+      Value: !Ref secretAiUrl
+      Tier: 'Standard'
+      Description: 'Parameter for SECRET_AI_URL'
+
+  ConditionalResource:
+    Condition: smallSecretAiModel
+    AgentParamSmallSecretAiModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_SECRET_AI_MODEL'
+      Type: 'String'
+      Value: !Ref smallSecretAiModel
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_SECRET_AI_MODEL'
+
+  ConditionalResource:
+    Condition: mediumSecretAiModel
+    AgentParamMediumSecretAiModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_SECRET_AI_MODEL'
+      Type: 'String'
+      Value: !Ref mediumSecretAiModel
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_SECRET_AI_MODEL'
+
+  ConditionalResource:
+    Condition: largeSecretAiModel
+    AgentParamLargeSecretAiModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_SECRET_AI_MODEL'
+      Type: 'String'
+      Value: !Ref largeSecretAiModel
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_SECRET_AI_MODEL'
+
+  ConditionalResource:
+    Condition: nearaiApiKey
+    AgentParamNearaiApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_NEARAI_API_KEY'
+      Type: 'String'
+      Value: !Ref nearaiApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for NEARAI_API_KEY'
+
+  ConditionalResource:
+    Condition: nearaiModel
+    AgentParamNearaiModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_NEARAI_MODEL'
+      Type: 'String'
+      Value: !Ref nearaiModel
+      Tier: 'Standard'
+      Description: 'Parameter for NEARAI_MODEL'
+
+  ConditionalResource:
+    Condition: smallNearaiModel
+    AgentParamSmallNearaiModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_NEARAI_MODEL'
+      Type: 'String'
+      Value: !Ref smallNearaiModel
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_NEARAI_MODEL'
+
+  ConditionalResource:
+    Condition: mediumNearaiModel
+    AgentParamMediumNearaiModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_NEARAI_MODEL'
+      Type: 'String'
+      Value: !Ref mediumNearaiModel
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_NEARAI_MODEL'
+
+  ConditionalResource:
+    Condition: largeNearaiModel
+    AgentParamLargeNearaiModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_NEARAI_MODEL'
+      Type: 'String'
+      Value: !Ref largeNearaiModel
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_NEARAI_MODEL'
+
+  ConditionalResource:
+    Condition: imageNearaiModel
+    AgentParamImageNearaiModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_IMAGE_NEARAI_MODEL'
+      Type: 'String'
+      Value: !Ref imageNearaiModel
+      Tier: 'Standard'
+      Description: 'Parameter for IMAGE_NEARAI_MODEL'
+
+  ConditionalResource:
+    Condition: coingeckoProApiKey
+    AgentParamCoingeckoProApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_COINGECKO_PRO_API_KEY'
+      Type: 'String'
+      Value: !Ref coingeckoProApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for COINGECKO_PRO_API_KEY'
+
+  ConditionalResource:
+    Condition: evmProviderUrl
+    AgentParamEvmProviderUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_EVM_PROVIDER_URL'
+      Type: 'String'
+      Value: !Ref evmProviderUrl
+      Tier: 'Standard'
+      Description: 'Parameter for EVM_PROVIDER_URL'
+
+  ConditionalResource:
+    Condition: zilliqaProviderUrl
+    AgentParamZilliqaProviderUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ZILLIQA_PROVIDER_URL'
+      Type: 'String'
+      Value: !Ref zilliqaProviderUrl
+      Tier: 'Standard'
+      Description: 'Parameter for ZILLIQA_PROVIDER_URL'
+
+  ConditionalResource:
+    Condition: avalanchePublicKey
+    AgentParamAvalanchePublicKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_AVALANCHE_PUBLIC_KEY'
+      Type: 'String'
+      Value: !Ref avalanchePublicKey
+      Tier: 'Standard'
+      Description: 'Parameter for AVALANCHE_PUBLIC_KEY'
+
+  ConditionalResource:
+    Condition: solanaPublicKey
+    AgentParamSolanaPublicKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_SOLANA_PUBLIC_KEY'
+      Type: 'String'
+      Value: !Ref solanaPublicKey
+      Tier: 'Standard'
+      Description: 'Parameter for SOLANA_PUBLIC_KEY'
+
+  ConditionalResource:
+    Condition: solanaCluster
+    AgentParamSolanaClusterParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_SOLANA_CLUSTER'
+      Type: 'String'
+      Value: !Ref solanaCluster
+      Tier: 'Standard'
+      Description: 'Parameter for SOLANA_CLUSTER'
+
+  ConditionalResource:
+    Condition: solanaAdminPrivateKey
+    AgentParamSolanaAdminPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_SOLANA_ADMIN_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref solanaAdminPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for SOLANA_ADMIN_PRIVATE_KEY'
+
+  ConditionalResource:
+    Condition: solanaAdminPublicKey
+    AgentParamSolanaAdminPublicKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_SOLANA_ADMIN_PUBLIC_KEY'
+      Type: 'String'
+      Value: !Ref solanaAdminPublicKey
+      Tier: 'Standard'
+      Description: 'Parameter for SOLANA_ADMIN_PUBLIC_KEY'
+
+  ConditionalResource:
+    Condition: solanaVerifyToken
+    AgentParamSolanaVerifyTokenParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_SOLANA_VERIFY_TOKEN'
+      Type: 'String'
+      Value: !Ref solanaVerifyToken
+      Tier: 'Standard'
+      Description: 'Parameter for SOLANA_VERIFY_TOKEN'
+
+  ConditionalResource:
+    Condition: solAddress
+    AgentParamSolAddressParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_SOL_ADDRESS'
+      Type: 'String'
+      Value: !Ref solAddress
+      Tier: 'Standard'
+      Description: 'Parameter for SOL_ADDRESS'
+
+  ConditionalResource:
+    Condition: slippage
+    AgentParamSlippageParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_SLIPPAGE'
+      Type: 'String'
+      Value: !Ref slippage
+      Tier: 'Standard'
+      Description: 'Parameter for SLIPPAGE'
+
+  ConditionalResource:
+    Condition: baseMint
+    AgentParamBaseMintParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_BASE_MINT'
+      Type: 'String'
+      Value: !Ref baseMint
+      Tier: 'Standard'
+      Description: 'Parameter for BASE_MINT'
+
+  ConditionalResource:
+    Condition: solanaRpcUrl
+    AgentParamSolanaRpcUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_SOLANA_RPC_URL'
+      Type: 'String'
+      Value: !Ref solanaRpcUrl
+      Tier: 'Standard'
+      Description: 'Parameter for SOLANA_RPC_URL'
+
+  ConditionalResource:
+    Condition: heliusApiKey
+    AgentParamHeliusApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_HELIUS_API_KEY'
+      Type: 'String'
+      Value: !Ref heliusApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for HELIUS_API_KEY'
+
+  ConditionalResource:
+    Condition: injectivePublicKey
+    AgentParamInjectivePublicKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_INJECTIVE_PUBLIC_KEY'
+      Type: 'String'
+      Value: !Ref injectivePublicKey
+      Tier: 'Standard'
+      Description: 'Parameter for INJECTIVE_PUBLIC_KEY'
+
+  ConditionalResource:
+    Condition: injectiveNetwork
+    AgentParamInjectiveNetworkParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_INJECTIVE_NETWORK'
+      Type: 'String'
+      Value: !Ref injectiveNetwork
+      Tier: 'Standard'
+      Description: 'Parameter for INJECTIVE_NETWORK'
+
+  ConditionalResource:
+    Condition: abstractPrivateKey
+    AgentParamAbstractPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ABSTRACT_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref abstractPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for ABSTRACT_PRIVATE_KEY'
+
+  ConditionalResource:
+    Condition: abstractRpcUrl
+    AgentParamAbstractRpcUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ABSTRACT_RPC_URL'
+      Type: 'String'
+      Value: !Ref abstractRpcUrl
+      Tier: 'Standard'
+      Description: 'Parameter for ABSTRACT_RPC_URL'
+
+  ConditionalResource:
+    Condition: starknetPrivateKey
+    AgentParamStarknetPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_STARKNET_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref starknetPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for STARKNET_PRIVATE_KEY'
+
+  ConditionalResource:
+    Condition: starknetRpcUrl
+    AgentParamStarknetRpcUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_STARKNET_RPC_URL'
+      Type: 'String'
+      Value: !Ref starknetRpcUrl
+      Tier: 'Standard'
+      Description: 'Parameter for STARKNET_RPC_URL'
+
+  ConditionalResource:
+    Condition: lensPrivateKey
+    AgentParamLensPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_LENS_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref lensPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for LENS_PRIVATE_KEY'
+
+  ConditionalResource:
+    Condition: formTestnet
+    AgentParamFormTestnetParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_FORM_TESTNET'
+      Type: 'String'
+      Value: !Ref formTestnet
+      Tier: 'Standard'
+      Description: 'Parameter for FORM_TESTNET'
+
+  ConditionalResource:
+    Condition: coinbaseApiKey
+    AgentParamCoinbaseApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_COINBASE_API_KEY'
+      Type: 'String'
+      Value: !Ref coinbaseApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for COINBASE_API_KEY'
+
+  ConditionalResource:
+    Condition: coinbasePrivateKey
+    AgentParamCoinbasePrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_COINBASE_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref coinbasePrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for COINBASE_PRIVATE_KEY'
+
+  ConditionalResource:
+    Condition: coinbaseGeneratedWalletId
+    AgentParamCoinbaseGeneratedWalletIdParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_COINBASE_GENERATED_WALLET_ID'
+      Type: 'String'
+      Value: !Ref coinbaseGeneratedWalletId
+      Tier: 'Standard'
+      Description: 'Parameter for COINBASE_GENERATED_WALLET_ID'
+
+  ConditionalResource:
+    Condition: coinbaseGeneratedWalletHexSeed
+    AgentParamCoinbaseGeneratedWalletHexSeedParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_COINBASE_GENERATED_WALLET_HEX_SEED'
+      Type: 'String'
+      Value: !Ref coinbaseGeneratedWalletHexSeed
+      Tier: 'Standard'
+      Description: 'Parameter for COINBASE_GENERATED_WALLET_HEX_SEED'
+
+  ConditionalResource:
+    Condition: coinbaseNotificationUri
+    AgentParamCoinbaseNotificationUriParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_COINBASE_NOTIFICATION_URI'
+      Type: 'String'
+      Value: !Ref coinbaseNotificationUri
+      Tier: 'Standard'
+      Description: 'Parameter for COINBASE_NOTIFICATION_URI'
+
+  ConditionalResource:
+    Condition: cdpApiKeyPrivateKey
+    AgentParamCdpApiKeyPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_CDP_API_KEY_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref cdpApiKeyPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for CDP_API_KEY_PRIVATE_KEY'
+
+  ConditionalResource:
+    Condition: cdpAgentKitNetwork
+    AgentParamCdpAgentKitNetworkParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_CDP_AGENT_KIT_NETWORK'
+      Type: 'String'
+      Value: !Ref cdpAgentKitNetwork
+      Tier: 'Standard'
+      Description: 'Parameter for CDP_AGENT_KIT_NETWORK'
+
+  ConditionalResource:
+    Condition: charityAddressBase
+    AgentParamCharityAddressBaseParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_CHARITY_ADDRESS_BASE'
+      Type: 'String'
+      Value: !Ref charityAddressBase
+      Tier: 'Standard'
+      Description: 'Parameter for CHARITY_ADDRESS_BASE'
+
+  ConditionalResource:
+    Condition: charityAddressSol
+    AgentParamCharityAddressSolParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_CHARITY_ADDRESS_SOL'
+      Type: 'String'
+      Value: !Ref charityAddressSol
+      Tier: 'Standard'
+      Description: 'Parameter for CHARITY_ADDRESS_SOL'
+
+  ConditionalResource:
+    Condition: charityAddressEth
+    AgentParamCharityAddressEthParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_CHARITY_ADDRESS_ETH'
+      Type: 'String'
+      Value: !Ref charityAddressEth
+      Tier: 'Standard'
+      Description: 'Parameter for CHARITY_ADDRESS_ETH'
+
+  ConditionalResource:
+    Condition: charityAddressArb
+    AgentParamCharityAddressArbParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_CHARITY_ADDRESS_ARB'
+      Type: 'String'
+      Value: !Ref charityAddressArb
+      Tier: 'Standard'
+      Description: 'Parameter for CHARITY_ADDRESS_ARB'
+
+  ConditionalResource:
+    Condition: charityAddressPol
+    AgentParamCharityAddressPolParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_CHARITY_ADDRESS_POL'
+      Type: 'String'
+      Value: !Ref charityAddressPol
+      Tier: 'Standard'
+      Description: 'Parameter for CHARITY_ADDRESS_POL'
+
+  ConditionalResource:
+    Condition: confluxCoreSpaceRpcUrl
+    AgentParamConfluxCoreSpaceRpcUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_CONFLUX_CORE_SPACE_RPC_URL'
+      Type: 'String'
+      Value: !Ref confluxCoreSpaceRpcUrl
+      Tier: 'Standard'
+      Description: 'Parameter for CONFLUX_CORE_SPACE_RPC_URL'
+
+  ConditionalResource:
+    Condition: confluxEspacePrivateKey
+    AgentParamConfluxEspacePrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_CONFLUX_ESPACE_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref confluxEspacePrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for CONFLUX_ESPACE_PRIVATE_KEY'
+
+  ConditionalResource:
+    Condition: confluxEspaceRpcUrl
+    AgentParamConfluxEspaceRpcUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_CONFLUX_ESPACE_RPC_URL'
+      Type: 'String'
+      Value: !Ref confluxEspaceRpcUrl
+      Tier: 'Standard'
+      Description: 'Parameter for CONFLUX_ESPACE_RPC_URL'
+
+  ConditionalResource:
+    Condition: confluxMemeContractAddress
+    AgentParamConfluxMemeContractAddressParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_CONFLUX_MEME_CONTRACT_ADDRESS'
+      Type: 'String'
+      Value: !Ref confluxMemeContractAddress
+      Tier: 'Standard'
+      Description: 'Parameter for CONFLUX_MEME_CONTRACT_ADDRESS'
+
+  ConditionalResource:
+    Condition: mindColdWalletAddress
+    AgentParamMindColdWalletAddressParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_MIND_COLD_WALLET_ADDRESS'
+      Type: 'String'
+      Value: !Ref mindColdWalletAddress
+      Tier: 'Standard'
+      Description: 'Parameter for MIND_COLD_WALLET_ADDRESS'
+
+  ConditionalResource:
+    Condition: zerogEvmRpc
+    AgentParamZerogEvmRpcParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ZEROG_EVM_RPC'
+      Type: 'String'
+      Value: !Ref zerogEvmRpc
+      Tier: 'Standard'
+      Description: 'Parameter for ZEROG_EVM_RPC'
+
+  ConditionalResource:
+    Condition: zerogPrivateKey
+    AgentParamZerogPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ZEROG_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref zerogPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for ZEROG_PRIVATE_KEY'
+
+  ConditionalResource:
+    Condition: zerogFlowAddress
+    AgentParamZerogFlowAddressParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ZEROG_FLOW_ADDRESS'
+      Type: 'String'
+      Value: !Ref zerogFlowAddress
+      Tier: 'Standard'
+      Description: 'Parameter for ZEROG_FLOW_ADDRESS'
+
+  ConditionalResource:
+    Condition: iqsolrpc
+    AgentParamIqsolrpcParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_IQSOlRPC'
+      Type: 'String'
+      Value: !Ref iqsolrpc
+      Tier: 'Standard'
+      Description: 'Parameter for IQSOlRPC'
+
+  ConditionalResource:
+    Condition: squidIntegratorId
+    AgentParamSquidIntegratorIdParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_SQUID_INTEGRATOR_ID'
+      Type: 'String'
+      Value: !Ref squidIntegratorId
+      Tier: 'Standard'
+      Description: 'Parameter for SQUID_INTEGRATOR_ID'
+
+  ConditionalResource:
+    Condition: squidEvmAddress
+    AgentParamSquidEvmAddressParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_SQUID_EVM_ADDRESS'
+      Type: 'String'
+      Value: !Ref squidEvmAddress
+      Tier: 'Standard'
+      Description: 'Parameter for SQUID_EVM_ADDRESS'
+
+  ConditionalResource:
+    Condition: squidEvmPrivateKey
+    AgentParamSquidEvmPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_SQUID_EVM_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref squidEvmPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for SQUID_EVM_PRIVATE_KEY'
+
+  ConditionalResource:
+    Condition: squidApiThrottleInterval
+    AgentParamSquidApiThrottleIntervalParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_SQUID_API_THROTTLE_INTERVAL'
+      Type: 'String'
+      Value: !Ref squidApiThrottleInterval
+      Tier: 'Standard'
+      Description: 'Parameter for SQUID_API_THROTTLE_INTERVAL'
+
+  ConditionalResource:
+    Condition: walletSecretSalt
+    AgentParamWalletSecretSaltParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_WALLET_SECRET_SALT'
+      Type: 'String'
+      Value: !Ref walletSecretSalt
+      Tier: 'Standard'
+      Description: 'Parameter for WALLET_SECRET_SALT'
+
+  ConditionalResource:
+    Condition: teeLogDbPath
+    AgentParamTeeLogDbPathParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_TEE_LOG_DB_PATH'
+      Type: 'String'
+      Value: !Ref teeLogDbPath
+      Tier: 'Standard'
+      Description: 'Parameter for TEE_LOG_DB_PATH'
+
+  ConditionalResource:
+    Condition: vlog
+    AgentParamVlogParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_VLOG'
+      Type: 'String'
+      Value: !Ref vlog
+      Tier: 'Standard'
+      Description: 'Parameter for VLOG'
+
+  ConditionalResource:
+    Condition: enableTeeLog
+    AgentParamEnableTeeLogParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ENABLE_TEE_LOG'
+      Type: 'String'
+      Value: !Ref enableTeeLog
+      Tier: 'Standard'
+      Description: 'Parameter for ENABLE_TEE_LOG'
+
+  ConditionalResource:
+    Condition: flowPrivateKey
+    AgentParamFlowPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_FLOW_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref flowPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for FLOW_PRIVATE_KEY'
+
+  ConditionalResource:
+    Condition: flowNetwork
+    AgentParamFlowNetworkParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_FLOW_NETWORK'
+      Type: 'String'
+      Value: !Ref flowNetwork
+      Tier: 'Standard'
+      Description: 'Parameter for FLOW_NETWORK'
+
+  ConditionalResource:
+    Condition: flowEndpointUrl
+    AgentParamFlowEndpointUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_FLOW_ENDPOINT_URL'
+      Type: 'String'
+      Value: !Ref flowEndpointUrl
+      Tier: 'Standard'
+      Description: 'Parameter for FLOW_ENDPOINT_URL'
+
+  ConditionalResource:
+    Condition: internetComputerAddress
+    AgentParamInternetComputerAddressParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_INTERNET_COMPUTER_ADDRESS'
+      Type: 'String'
+      Value: !Ref internetComputerAddress
+      Tier: 'Standard'
+      Description: 'Parameter for INTERNET_COMPUTER_ADDRESS'
+
+  ConditionalResource:
+    Condition: aptosNetwork
+    AgentParamAptosNetworkParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_APTOS_NETWORK'
+      Type: 'String'
+      Value: !Ref aptosNetwork
+      Tier: 'Standard'
+      Description: 'Parameter for APTOS_NETWORK'
+
+  ConditionalResource:
+    Condition: mvxNetwork
+    AgentParamMvxNetworkParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_MVX_NETWORK'
+      Type: 'String'
+      Value: !Ref mvxNetwork
+      Tier: 'Standard'
+      Description: 'Parameter for MVX_NETWORK'
+
+  ConditionalResource:
+    Condition: accessTokenManagementTo
+    AgentParamAccessTokenManagementToParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ACCESS_TOKEN_MANAGEMENT_TO'
+      Type: 'String'
+      Value: !Ref accessTokenManagementTo
+      Tier: 'Standard'
+      Description: 'Parameter for ACCESS_TOKEN_MANAGEMENT_TO'
+
+  ConditionalResource:
+    Condition: nearWalletPublicKey
+    AgentParamNearWalletPublicKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_NEAR_WALLET_PUBLIC_KEY'
+      Type: 'String'
+      Value: !Ref nearWalletPublicKey
+      Tier: 'Standard'
+      Description: 'Parameter for NEAR_WALLET_PUBLIC_KEY'
+
+  ConditionalResource:
+    Condition: nearAddress
+    AgentParamNearAddressParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_NEAR_ADDRESS'
+      Type: 'String'
+      Value: !Ref nearAddress
+      Tier: 'Standard'
+      Description: 'Parameter for NEAR_ADDRESS'
+
+  ConditionalResource:
+    Condition: nearSlippage
+    AgentParamNearSlippageParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_NEAR_SLIPPAGE'
+      Type: 'String'
+      Value: !Ref nearSlippage
+      Tier: 'Standard'
+      Description: 'Parameter for NEAR_SLIPPAGE'
+
+  ConditionalResource:
+    Condition: nearRpcUrl
+    AgentParamNearRpcUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_NEAR_RPC_URL'
+      Type: 'String'
+      Value: !Ref nearRpcUrl
+      Tier: 'Standard'
+      Description: 'Parameter for NEAR_RPC_URL'
+
+  ConditionalResource:
+    Condition: nearNetwork
+    AgentParamNearNetworkParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_NEAR_NETWORK'
+      Type: 'String'
+      Value: !Ref nearNetwork
+      Tier: 'Standard'
+      Description: 'Parameter for NEAR_NETWORK'
+
+  ConditionalResource:
+    Condition: zksyncPrivateKey
+    AgentParamZksyncPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ZKSYNC_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref zksyncPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for ZKSYNC_PRIVATE_KEY'
+
+  ConditionalResource:
+    Condition: availSeed
+    AgentParamAvailSeedParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_AVAIL_SEED'
+      Type: 'String'
+      Value: !Ref availSeed
+      Tier: 'Standard'
+      Description: 'Parameter for AVAIL_SEED'
+
+  ConditionalResource:
+    Condition: availAppId
+    AgentParamAvailAppIdParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_AVAIL_APP_ID'
+      Type: 'String'
+      Value: !Ref availAppId
+      Tier: 'Standard'
+      Description: 'Parameter for AVAIL_APP_ID'
+
+  ConditionalResource:
+    Condition: availRpcUrl
+    AgentParamAvailRpcUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_AVAIL_RPC_URL'
+      Type: 'String'
+      Value: !Ref availRpcUrl
+      Tier: 'Standard'
+      Description: 'Parameter for AVAIL_RPC_URL'
+
+  ConditionalResource:
+    Condition: teeMarlinAttestationEndpoint
+    AgentParamTeeMarlinAttestationEndpointParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_TEE_MARLIN_ATTESTATION_ENDPOINT'
+      Type: 'String'
+      Value: !Ref teeMarlinAttestationEndpoint
+      Tier: 'Standard'
+      Description: 'Parameter for TEE_MARLIN_ATTESTATION_ENDPOINT'
+
+  ConditionalResource:
+    Condition: tonRpcUrl
+    AgentParamTonRpcUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_TON_RPC_URL'
+      Type: 'String'
+      Value: !Ref tonRpcUrl
+      Tier: 'Standard'
+      Description: 'Parameter for TON_RPC_URL'
+
+  ConditionalResource:
+    Condition: tonRpcApiKey
+    AgentParamTonRpcApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_TON_RPC_API_KEY'
+      Type: 'String'
+      Value: !Ref tonRpcApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for TON_RPC_API_KEY'
+
+  ConditionalResource:
+    Condition: tonNftImagesFolder
+    AgentParamTonNftImagesFolderParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_TON_NFT_IMAGES_FOLDER'
+      Type: 'String'
+      Value: !Ref tonNftImagesFolder
+      Tier: 'Standard'
+      Description: 'Parameter for TON_NFT_IMAGES_FOLDER'
+
+  ConditionalResource:
+    Condition: tonNftMetadataFolder
+    AgentParamTonNftMetadataFolderParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_TON_NFT_METADATA_FOLDER'
+      Type: 'String'
+      Value: !Ref tonNftMetadataFolder
+      Tier: 'Standard'
+      Description: 'Parameter for TON_NFT_METADATA_FOLDER'
+
+  ConditionalResource:
+    Condition: pinataApiKey
+    AgentParamPinataApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_PINATA_API_KEY'
+      Type: 'String'
+      Value: !Ref pinataApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for PINATA_API_KEY'
+
+  ConditionalResource:
+    Condition: pinataApiSecret
+    AgentParamPinataApiSecretParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_PINATA_API_SECRET'
+      Type: 'String'
+      Value: !Ref pinataApiSecret
+      Tier: 'Standard'
+      Description: 'Parameter for PINATA_API_SECRET'
+
+  ConditionalResource:
+    Condition: suiNetwork
+    AgentParamSuiNetworkParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_SUI_NETWORK'
+      Type: 'String'
+      Value: !Ref suiNetwork
+      Tier: 'Standard'
+      Description: 'Parameter for SUI_NETWORK'
+
+  ConditionalResource:
+    Condition: minaNetwork
+    AgentParamMinaNetworkParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_MINA_NETWORK'
+      Type: 'String'
+      Value: !Ref minaNetwork
+      Tier: 'Standard'
+      Description: 'Parameter for MINA_NETWORK'
+
+  ConditionalResource:
+    Condition: storyApiBaseUrl
+    AgentParamStoryApiBaseUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_STORY_API_BASE_URL'
+      Type: 'String'
+      Value: !Ref storyApiBaseUrl
+      Tier: 'Standard'
+      Description: 'Parameter for STORY_API_BASE_URL'
+
+  ConditionalResource:
+    Condition: storyApiKey
+    AgentParamStoryApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_STORY_API_KEY'
+      Type: 'String'
+      Value: !Ref storyApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for STORY_API_KEY'
+
+  ConditionalResource:
+    Condition: pinataJwt
+    AgentParamPinataJwtParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_PINATA_JWT'
+      Type: 'String'
+      Value: !Ref pinataJwt
+      Tier: 'Standard'
+      Description: 'Parameter for PINATA_JWT'
+
+  ConditionalResource:
+    Condition: cosmosAvailableChains
+    AgentParamCosmosAvailableChainsParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_COSMOS_AVAILABLE_CHAINS'
+      Type: 'String'
+      Value: !Ref cosmosAvailableChains
+      Tier: 'Standard'
+      Description: 'Parameter for COSMOS_AVAILABLE_CHAINS'
+
+  ConditionalResource:
+    Condition: cronoszkevmPrivateKey
+    AgentParamCronoszkevmPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_CRONOSZKEVM_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref cronoszkevmPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for CRONOSZKEVM_PRIVATE_KEY'
+
+  ConditionalResource:
+    Condition: spheronProviderProxyUrl
+    AgentParamSpheronProviderProxyUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_SPHERON_PROVIDER_PROXY_URL'
+      Type: 'String'
+      Value: !Ref spheronProviderProxyUrl
+      Tier: 'Standard'
+      Description: 'Parameter for SPHERON_PROVIDER_PROXY_URL'
+
+  ConditionalResource:
+    Condition: spheronWalletAddress
+    AgentParamSpheronWalletAddressParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_SPHERON_WALLET_ADDRESS'
+      Type: 'String'
+      Value: !Ref spheronWalletAddress
+      Tier: 'Standard'
+      Description: 'Parameter for SPHERON_WALLET_ADDRESS'
+
+  ConditionalResource:
+    Condition: bnbPublicKey
+    AgentParamBnbPublicKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_BNB_PUBLIC_KEY'
+      Type: 'String'
+      Value: !Ref bnbPublicKey
+      Tier: 'Standard'
+      Description: 'Parameter for BNB_PUBLIC_KEY'
+
+  ConditionalResource:
+    Condition: bscProviderUrl
+    AgentParamBscProviderUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_BSC_PROVIDER_URL'
+      Type: 'String'
+      Value: !Ref bscProviderUrl
+      Tier: 'Standard'
+      Description: 'Parameter for BSC_PROVIDER_URL'
+
+  ConditionalResource:
+    Condition: opbnbProviderUrl
+    AgentParamOpbnbProviderUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_OPBNB_PROVIDER_URL'
+      Type: 'String'
+      Value: !Ref opbnbProviderUrl
+      Tier: 'Standard'
+      Description: 'Parameter for OPBNB_PROVIDER_URL'
+
+  ConditionalResource:
+    Condition: bitmindApiToken
+    AgentParamBitmindApiTokenParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_BITMIND_API_TOKEN'
+      Type: 'String'
+      Value: !Ref bitmindApiToken
+      Tier: 'Standard'
+      Description: 'Parameter for BITMIND_API_TOKEN'
+
+  ConditionalResource:
+    Condition: passportScorer
+    AgentParamPassportScorerParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_PASSPORT_SCORER'
+      Type: 'String'
+      Value: !Ref passportScorer
+      Tier: 'Standard'
+      Description: 'Parameter for PASSPORT_SCORER'
+
+  ConditionalResource:
+    Condition: echochambersApiKey
+    AgentParamEchochambersApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ECHOCHAMBERS_API_KEY'
+      Type: 'String'
+      Value: !Ref echochambersApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for ECHOCHAMBERS_API_KEY'
+
+  ConditionalResource:
+    Condition: echochambersUsername
+    AgentParamEchochambersUsernameParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ECHOCHAMBERS_USERNAME'
+      Type: 'String'
+      Value: !Ref echochambersUsername
+      Tier: 'Standard'
+      Description: 'Parameter for ECHOCHAMBERS_USERNAME'
+
+  ConditionalResource:
+    Condition: echochambersRooms
+    AgentParamEchochambersRoomsParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ECHOCHAMBERS_ROOMS'
+      Type: 'String'
+      Value: !Ref echochambersRooms
+      Tier: 'Standard'
+      Description: 'Parameter for ECHOCHAMBERS_ROOMS'
+
+  ConditionalResource:
+    Condition: echochambersPollInterval
+    AgentParamEchochambersPollIntervalParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ECHOCHAMBERS_POLL_INTERVAL'
+      Type: 'String'
+      Value: !Ref echochambersPollInterval
+      Tier: 'Standard'
+      Description: 'Parameter for ECHOCHAMBERS_POLL_INTERVAL'
+
+  ConditionalResource:
+    Condition: echochambersMaxMessages
+    AgentParamEchochambersMaxMessagesParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ECHOCHAMBERS_MAX_MESSAGES'
+      Type: 'String'
+      Value: !Ref echochambersMaxMessages
+      Tier: 'Standard'
+      Description: 'Parameter for ECHOCHAMBERS_MAX_MESSAGES'
+
+  ConditionalResource:
+    Condition: echochambersConversationStarterInterval
+    AgentParamEchochambersConversationStarterIntervalParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ECHOCHAMBERS_CONVERSATION_STARTER_INTERVAL'
+      Type: 'String'
+      Value: !Ref echochambersConversationStarterInterval
+      Tier: 'Standard'
+      Description: 'Parameter for ECHOCHAMBERS_CONVERSATION_STARTER_INTERVAL'
+
+  ConditionalResource:
+    Condition: echochambersQuietPeriod
+    AgentParamEchochambersQuietPeriodParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ECHOCHAMBERS_QUIET_PERIOD'
+      Type: 'String'
+      Value: !Ref echochambersQuietPeriod
+      Tier: 'Standard'
+      Description: 'Parameter for ECHOCHAMBERS_QUIET_PERIOD'
+
+  ConditionalResource:
+    Condition: alloraChainSlug
+    AgentParamAlloraChainSlugParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ALLORA_CHAIN_SLUG'
+      Type: 'String'
+      Value: !Ref alloraChainSlug
+      Tier: 'Standard'
+      Description: 'Parameter for ALLORA_CHAIN_SLUG'
+
+  ConditionalResource:
+    Condition: opacityCloudflareName
+    AgentParamOpacityCloudflareNameParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_OPACITY_CLOUDFLARE_NAME'
+      Type: 'String'
+      Value: !Ref opacityCloudflareName
+      Tier: 'Standard'
+      Description: 'Parameter for OPACITY_CLOUDFLARE_NAME'
+
+  ConditionalResource:
+    Condition: opacityProverUrl
+    AgentParamOpacityProverUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_OPACITY_PROVER_URL'
+      Type: 'String'
+      Value: !Ref opacityProverUrl
+      Tier: 'Standard'
+      Description: 'Parameter for OPACITY_PROVER_URL'
+
+  ConditionalResource:
+    Condition: devaApiBaseUrl
+    AgentParamDevaApiBaseUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_DEVA_API_BASE_URL'
+      Type: 'String'
+      Value: !Ref devaApiBaseUrl
+      Tier: 'Standard'
+      Description: 'Parameter for DEVA_API_BASE_URL'
+
+  ConditionalResource:
+    Condition: qdrantKey
+    AgentParamQdrantKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_QDRANT_KEY'
+      Type: 'String'
+      Value: !Ref qdrantKey
+      Tier: 'Standard'
+      Description: 'Parameter for QDRANT_KEY'
+
+  ConditionalResource:
+    Condition: qdrantPort
+    AgentParamQdrantPortParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_QDRANT_PORT'
+      Type: 'String'
+      Value: !Ref qdrantPort
+      Tier: 'Standard'
+      Description: 'Parameter for QDRANT_PORT'
+
+  ConditionalResource:
+    Condition: qdrantVectorSize
+    AgentParamQdrantVectorSizeParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_QDRANT_VECTOR_SIZE'
+      Type: 'String'
+      Value: !Ref qdrantVectorSize
+      Tier: 'Standard'
+      Description: 'Parameter for QDRANT_VECTOR_SIZE'
+
+  ConditionalResource:
+    Condition: autonomeRpc
+    AgentParamAutonomeRpcParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_AUTONOME_RPC'
+      Type: 'String'
+      Value: !Ref autonomeRpc
+      Tier: 'Standard'
+      Description: 'Parameter for AUTONOME_RPC'
+
+  ConditionalResource:
+    Condition: akashNet
+    AgentParamAkashNetParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_NET'
+      Type: 'String'
+      Value: !Ref akashNet
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_NET'
+
+  ConditionalResource:
+    Condition: rpcEndpoint
+    AgentParamRpcEndpointParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_RPC_ENDPOINT'
+      Type: 'String'
+      Value: !Ref rpcEndpoint
+      Tier: 'Standard'
+      Description: 'Parameter for RPC_ENDPOINT'
+
+  ConditionalResource:
+    Condition: akashGasPrices
+    AgentParamAkashGasPricesParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_GAS_PRICES'
+      Type: 'String'
+      Value: !Ref akashGasPrices
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_GAS_PRICES'
+
+  ConditionalResource:
+    Condition: akashGasAdjustment
+    AgentParamAkashGasAdjustmentParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_GAS_ADJUSTMENT'
+      Type: 'String'
+      Value: !Ref akashGasAdjustment
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_GAS_ADJUSTMENT'
+
+  ConditionalResource:
+    Condition: akashKeyringBackend
+    AgentParamAkashKeyringBackendParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_KEYRING_BACKEND'
+      Type: 'String'
+      Value: !Ref akashKeyringBackend
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_KEYRING_BACKEND'
+
+  ConditionalResource:
+    Condition: akashFrom
+    AgentParamAkashFromParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_FROM'
+      Type: 'String'
+      Value: !Ref akashFrom
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_FROM'
+
+  ConditionalResource:
+    Condition: akashFees
+    AgentParamAkashFeesParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_FEES'
+      Type: 'String'
+      Value: !Ref akashFees
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_FEES'
+
+  ConditionalResource:
+    Condition: akashDeposit
+    AgentParamAkashDepositParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_DEPOSIT'
+      Type: 'String'
+      Value: !Ref akashDeposit
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_DEPOSIT'
+
+  ConditionalResource:
+    Condition: akashMnemonic
+    AgentParamAkashMnemonicParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_MNEMONIC'
+      Type: 'String'
+      Value: !Ref akashMnemonic
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_MNEMONIC'
+
+  ConditionalResource:
+    Condition: akashWalletAddress
+    AgentParamAkashWalletAddressParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_WALLET_ADDRESS'
+      Type: 'String'
+      Value: !Ref akashWalletAddress
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_WALLET_ADDRESS'
+
+  ConditionalResource:
+    Condition: akashPricingApiUrl
+    AgentParamAkashPricingApiUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_PRICING_API_URL'
+      Type: 'String'
+      Value: !Ref akashPricingApiUrl
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_PRICING_API_URL'
+
+  ConditionalResource:
+    Condition: akashDefaultCpu
+    AgentParamAkashDefaultCpuParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_DEFAULT_CPU'
+      Type: 'String'
+      Value: !Ref akashDefaultCpu
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_DEFAULT_CPU'
+
+  ConditionalResource:
+    Condition: akashDefaultMemory
+    AgentParamAkashDefaultMemoryParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_DEFAULT_MEMORY'
+      Type: 'String'
+      Value: !Ref akashDefaultMemory
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_DEFAULT_MEMORY'
+
+  ConditionalResource:
+    Condition: akashDefaultStorage
+    AgentParamAkashDefaultStorageParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_DEFAULT_STORAGE'
+      Type: 'String'
+      Value: !Ref akashDefaultStorage
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_DEFAULT_STORAGE'
+
+  ConditionalResource:
+    Condition: akashSdl
+    AgentParamAkashSdlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_SDL'
+      Type: 'String'
+      Value: !Ref akashSdl
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_SDL'
+
+  ConditionalResource:
+    Condition: akashCloseDep
+    AgentParamAkashCloseDepParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_CLOSE_DEP'
+      Type: 'String'
+      Value: !Ref akashCloseDep
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_CLOSE_DEP'
+
+  ConditionalResource:
+    Condition: akashCloseDseq
+    AgentParamAkashCloseDseqParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_CLOSE_DSEQ'
+      Type: 'String'
+      Value: !Ref akashCloseDseq
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_CLOSE_DSEQ'
+
+  ConditionalResource:
+    Condition: akashProviderInfo
+    AgentParamAkashProviderInfoParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_PROVIDER_INFO'
+      Type: 'String'
+      Value: !Ref akashProviderInfo
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_PROVIDER_INFO'
+
+  ConditionalResource:
+    Condition: akashDepStatus
+    AgentParamAkashDepStatusParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_DEP_STATUS'
+      Type: 'String'
+      Value: !Ref akashDepStatus
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_DEP_STATUS'
+
+  ConditionalResource:
+    Condition: akashDepDseq
+    AgentParamAkashDepDseqParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_DEP_DSEQ'
+      Type: 'String'
+      Value: !Ref akashDepDseq
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_DEP_DSEQ'
+
+  ConditionalResource:
+    Condition: akashGasOperation
+    AgentParamAkashGasOperationParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_GAS_OPERATION'
+      Type: 'String'
+      Value: !Ref akashGasOperation
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_GAS_OPERATION'
+
+  ConditionalResource:
+    Condition: akashGasDseq
+    AgentParamAkashGasDseqParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_GAS_DSEQ'
+      Type: 'String'
+      Value: !Ref akashGasDseq
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_GAS_DSEQ'
+
+  ConditionalResource:
+    Condition: akashManifestMode
+    AgentParamAkashManifestModeParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_MANIFEST_MODE'
+      Type: 'String'
+      Value: !Ref akashManifestMode
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_MANIFEST_MODE'
+
+  ConditionalResource:
+    Condition: akashManifestPath
+    AgentParamAkashManifestPathParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_MANIFEST_PATH'
+      Type: 'String'
+      Value: !Ref akashManifestPath
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_MANIFEST_PATH'
+
+  ConditionalResource:
+    Condition: akashManifestValidationLevel
+    AgentParamAkashManifestValidationLevelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_MANIFEST_VALIDATION_LEVEL'
+      Type: 'String'
+      Value: !Ref akashManifestValidationLevel
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_MANIFEST_VALIDATION_LEVEL'
+
+  ConditionalResource:
+    Condition: quaiRpcUrl
+    AgentParamQuaiRpcUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_QUAI_RPC_URL'
+      Type: 'String'
+      Value: !Ref quaiRpcUrl
+      Tier: 'Standard'
+      Description: 'Parameter for QUAI_RPC_URL'
+
+  ConditionalResource:
+    Condition: alchemyHttpTransportUrl
+    AgentParamAlchemyHttpTransportUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ALCHEMY_HTTP_TRANSPORT_URL'
+      Type: 'String'
+      Value: !Ref alchemyHttpTransportUrl
+      Tier: 'Standard'
+      Description: 'Parameter for ALCHEMY_HTTP_TRANSPORT_URL'
+
+  ConditionalResource:
+    Condition: pythMainnetHermesUrl
+    AgentParamPythMainnetHermesUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_PYTH_MAINNET_HERMES_URL'
+      Type: 'String'
+      Value: !Ref pythMainnetHermesUrl
+      Tier: 'Standard'
+      Description: 'Parameter for PYTH_MAINNET_HERMES_URL'
+
+  ConditionalResource:
+    Condition: pythMainnetWssUrl
+    AgentParamPythMainnetWssUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_PYTH_MAINNET_WSS_URL'
+      Type: 'String'
+      Value: !Ref pythMainnetWssUrl
+      Tier: 'Standard'
+      Description: 'Parameter for PYTH_MAINNET_WSS_URL'
+
+  ConditionalResource:
+    Condition: pythMainnetPythnetUrl
+    AgentParamPythMainnetPythnetUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_PYTH_MAINNET_PYTHNET_URL'
+      Type: 'String'
+      Value: !Ref pythMainnetPythnetUrl
+      Tier: 'Standard'
+      Description: 'Parameter for PYTH_MAINNET_PYTHNET_URL'
+
+  ConditionalResource:
+    Condition: pythMainnetContractRegistry
+    AgentParamPythMainnetContractRegistryParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_PYTH_MAINNET_CONTRACT_REGISTRY'
+      Type: 'String'
+      Value: !Ref pythMainnetContractRegistry
+      Tier: 'Standard'
+      Description: 'Parameter for PYTH_MAINNET_CONTRACT_REGISTRY'
+
+  ConditionalResource:
+    Condition: pythMainnetProgramKey
+    AgentParamPythMainnetProgramKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_PYTH_MAINNET_PROGRAM_KEY'
+      Type: 'String'
+      Value: !Ref pythMainnetProgramKey
+      Tier: 'Standard'
+      Description: 'Parameter for PYTH_MAINNET_PROGRAM_KEY'
+
+  ConditionalResource:
+    Condition: pythTestnetHermesUrl
+    AgentParamPythTestnetHermesUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_PYTH_TESTNET_HERMES_URL'
+      Type: 'String'
+      Value: !Ref pythTestnetHermesUrl
+      Tier: 'Standard'
+      Description: 'Parameter for PYTH_TESTNET_HERMES_URL'
+
+  ConditionalResource:
+    Condition: pythTestnetWssUrl
+    AgentParamPythTestnetWssUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_PYTH_TESTNET_WSS_URL'
+      Type: 'String'
+      Value: !Ref pythTestnetWssUrl
+      Tier: 'Standard'
+      Description: 'Parameter for PYTH_TESTNET_WSS_URL'
+
+  ConditionalResource:
+    Condition: pythTestnetPythnetUrl
+    AgentParamPythTestnetPythnetUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_PYTH_TESTNET_PYTHNET_URL'
+      Type: 'String'
+      Value: !Ref pythTestnetPythnetUrl
+      Tier: 'Standard'
+      Description: 'Parameter for PYTH_TESTNET_PYTHNET_URL'
+
+  ConditionalResource:
+    Condition: pythTestnetContractRegistry
+    AgentParamPythTestnetContractRegistryParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_PYTH_TESTNET_CONTRACT_REGISTRY'
+      Type: 'String'
+      Value: !Ref pythTestnetContractRegistry
+      Tier: 'Standard'
+      Description: 'Parameter for PYTH_TESTNET_CONTRACT_REGISTRY'
+
+  ConditionalResource:
+    Condition: pythTestnetProgramKey
+    AgentParamPythTestnetProgramKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_PYTH_TESTNET_PROGRAM_KEY'
+      Type: 'String'
+      Value: !Ref pythTestnetProgramKey
+      Tier: 'Standard'
+      Description: 'Parameter for PYTH_TESTNET_PROGRAM_KEY'
+
+  ConditionalResource:
+    Condition: pythMaxRetries
+    AgentParamPythMaxRetriesParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_PYTH_MAX_RETRIES'
+      Type: 'String'
+      Value: !Ref pythMaxRetries
+      Tier: 'Standard'
+      Description: 'Parameter for PYTH_MAX_RETRIES'
+
+  ConditionalResource:
+    Condition: pythRetryDelay
+    AgentParamPythRetryDelayParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_PYTH_RETRY_DELAY'
+      Type: 'String'
+      Value: !Ref pythRetryDelay
+      Tier: 'Standard'
+      Description: 'Parameter for PYTH_RETRY_DELAY'
+
+  ConditionalResource:
+    Condition: pythTimeout
+    AgentParamPythTimeoutParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_PYTH_TIMEOUT'
+      Type: 'String'
+      Value: !Ref pythTimeout
+      Tier: 'Standard'
+      Description: 'Parameter for PYTH_TIMEOUT'
+
+  ConditionalResource:
+    Condition: pythGranularLog
+    AgentParamPythGranularLogParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_PYTH_GRANULAR_LOG'
+      Type: 'String'
+      Value: !Ref pythGranularLog
+      Tier: 'Standard'
+      Description: 'Parameter for PYTH_GRANULAR_LOG'
+
+  ConditionalResource:
+    Condition: pythLogLevel
+    AgentParamPythLogLevelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_PYTH_LOG_LEVEL'
+      Type: 'String'
+      Value: !Ref pythLogLevel
+      Tier: 'Standard'
+      Description: 'Parameter for PYTH_LOG_LEVEL'
+
+  ConditionalResource:
+    Condition: runtimeCheckMode
+    AgentParamRuntimeCheckModeParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_RUNTIME_CHECK_MODE'
+      Type: 'String'
+      Value: !Ref runtimeCheckMode
+      Tier: 'Standard'
+      Description: 'Parameter for RUNTIME_CHECK_MODE'
+
+  ConditionalResource:
+    Condition: pythEnablePriceStreaming
+    AgentParamPythEnablePriceStreamingParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_PYTH_ENABLE_PRICE_STREAMING'
+      Type: 'String'
+      Value: !Ref pythEnablePriceStreaming
+      Tier: 'Standard'
+      Description: 'Parameter for PYTH_ENABLE_PRICE_STREAMING'
+
+  ConditionalResource:
+    Condition: pythMaxPriceStreams
+    AgentParamPythMaxPriceStreamsParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_PYTH_MAX_PRICE_STREAMS'
+      Type: 'String'
+      Value: !Ref pythMaxPriceStreams
+      Tier: 'Standard'
+      Description: 'Parameter for PYTH_MAX_PRICE_STREAMS'
+
+  ConditionalResource:
+    Condition: pythTestId01
+    AgentParamPythTestId01Parameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_PYTH_TEST_ID01'
+      Type: 'String'
+      Value: !Ref pythTestId01
+      Tier: 'Standard'
+      Description: 'Parameter for PYTH_TEST_ID01'
+
+  ConditionalResource:
+    Condition: pythTestId02
+    AgentParamPythTestId02Parameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_PYTH_TEST_ID02'
+      Type: 'String'
+      Value: !Ref pythTestId02
+      Tier: 'Standard'
+      Description: 'Parameter for PYTH_TEST_ID02'
+
+  ConditionalResource:
+    Condition: routerNitroEvmPrivateKey
+    AgentParamRouterNitroEvmPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ROUTER_NITRO_EVM_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref routerNitroEvmPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for ROUTER_NITRO_EVM_PRIVATE_KEY'
+
+  ConditionalResource:
+    Condition: dkgHostname
+    AgentParamDkgHostnameParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_DKG_HOSTNAME'
+      Type: 'String'
+      Value: !Ref dkgHostname
+      Tier: 'Standard'
+      Description: 'Parameter for DKG_HOSTNAME'
+
+  ConditionalResource:
+    Condition: dkgPort
+    AgentParamDkgPortParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_DKG_PORT'
+      Type: 'String'
+      Value: !Ref dkgPort
+      Tier: 'Standard'
+      Description: 'Parameter for DKG_PORT'
+
+  ConditionalResource:
+    Condition: dkgPublicKey
+    AgentParamDkgPublicKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_DKG_PUBLIC_KEY'
+      Type: 'String'
+      Value: !Ref dkgPublicKey
+      Tier: 'Standard'
+      Description: 'Parameter for DKG_PUBLIC_KEY'
+
+  ConditionalResource:
+    Condition: dkgPrivateKey
+    AgentParamDkgPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_DKG_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref dkgPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for DKG_PRIVATE_KEY'
+
+  ConditionalResource:
+    Condition: dkgBlockchainName
+    AgentParamDkgBlockchainNameParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_DKG_BLOCKCHAIN_NAME'
+      Type: 'String'
+      Value: !Ref dkgBlockchainName
+      Tier: 'Standard'
+      Description: 'Parameter for DKG_BLOCKCHAIN_NAME'
+
+  ConditionalResource:
+    Condition: initiaNodeUrl
+    AgentParamInitiaNodeUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_INITIA_NODE_URL'
+      Type: 'String'
+      Value: !Ref initiaNodeUrl
+      Tier: 'Standard'
+      Description: 'Parameter for INITIA_NODE_URL'
+
+  ConditionalResource:
+    Condition: initiaChainId
+    AgentParamInitiaChainIdParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_INITIA_CHAIN_ID'
+      Type: 'String'
+      Value: !Ref initiaChainId
+      Tier: 'Standard'
+      Description: 'Parameter for INITIA_CHAIN_ID'
+
+  ConditionalResource:
+    Condition: nvidiaNimSpash
+    AgentParamNvidiaNimSpashParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_NVIDIA_NIM_SPASH'
+      Type: 'String'
+      Value: !Ref nvidiaNimSpash
+      Tier: 'Standard'
+      Description: 'Parameter for NVIDIA_NIM_SPASH'
+
+  ConditionalResource:
+    Condition: nvidiaNimApiKey
+    AgentParamNvidiaNimApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_NVIDIA_NIM_API_KEY'
+      Type: 'String'
+      Value: !Ref nvidiaNimApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for NVIDIA_NIM_API_KEY'
+
+  ConditionalResource:
+    Condition: nvidiaNgcApiKey
+    AgentParamNvidiaNgcApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_NVIDIA_NGC_API_KEY'
+      Type: 'String'
+      Value: !Ref nvidiaNgcApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for NVIDIA_NGC_API_KEY'
+
+  ConditionalResource:
+    Condition: nvidiaNimMaxRetries
+    AgentParamNvidiaNimMaxRetriesParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_NVIDIA_NIM_MAX_RETRIES'
+      Type: 'String'
+      Value: !Ref nvidiaNimMaxRetries
+      Tier: 'Standard'
+      Description: 'Parameter for NVIDIA_NIM_MAX_RETRIES'
+
+  ConditionalResource:
+    Condition: nvidiaNimRetryDelay
+    AgentParamNvidiaNimRetryDelayParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_NVIDIA_NIM_RETRY_DELAY'
+      Type: 'String'
+      Value: !Ref nvidiaNimRetryDelay
+      Tier: 'Standard'
+      Description: 'Parameter for NVIDIA_NIM_RETRY_DELAY'
+
+  ConditionalResource:
+    Condition: nvidiaNimTimeout
+    AgentParamNvidiaNimTimeoutParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_NVIDIA_NIM_TIMEOUT'
+      Type: 'String'
+      Value: !Ref nvidiaNimTimeout
+      Tier: 'Standard'
+      Description: 'Parameter for NVIDIA_NIM_TIMEOUT'
+
+  ConditionalResource:
+    Condition: nvidiaGranularLog
+    AgentParamNvidiaGranularLogParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_NVIDIA_GRANULAR_LOG'
+      Type: 'String'
+      Value: !Ref nvidiaGranularLog
+      Tier: 'Standard'
+      Description: 'Parameter for NVIDIA_GRANULAR_LOG'
+
+  ConditionalResource:
+    Condition: nvidiaLogLevel
+    AgentParamNvidiaLogLevelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_NVIDIA_LOG_LEVEL'
+      Type: 'String'
+      Value: !Ref nvidiaLogLevel
+      Tier: 'Standard'
+      Description: 'Parameter for NVIDIA_LOG_LEVEL'
+
+  ConditionalResource:
+    Condition: nvidiaOfftopicSystem
+    AgentParamNvidiaOfftopicSystemParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_NVIDIA_OFFTOPIC_SYSTEM'
+      Type: 'String'
+      Value: !Ref nvidiaOfftopicSystem
+      Tier: 'Standard'
+      Description: 'Parameter for NVIDIA_OFFTOPIC_SYSTEM'
+
+  ConditionalResource:
+    Condition: nvidiaOfftopicUser
+    AgentParamNvidiaOfftopicUserParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_NVIDIA_OFFTOPIC_USER'
+      Type: 'String'
+      Value: !Ref nvidiaOfftopicUser
+      Tier: 'Standard'
+      Description: 'Parameter for NVIDIA_OFFTOPIC_USER'
+
+  ConditionalResource:
+    Condition: nvidiaNimBaseVisionUrl
+    AgentParamNvidiaNimBaseVisionUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_NVIDIA_NIM_BASE_VISION_URL'
+      Type: 'String'
+      Value: !Ref nvidiaNimBaseVisionUrl
+      Tier: 'Standard'
+      Description: 'Parameter for NVIDIA_NIM_BASE_VISION_URL'
+
+  ConditionalResource:
+    Condition: nvidiaCosmosModel
+    AgentParamNvidiaCosmosModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_NVIDIA_COSMOS_MODEL'
+      Type: 'String'
+      Value: !Ref nvidiaCosmosModel
+      Tier: 'Standard'
+      Description: 'Parameter for NVIDIA_COSMOS_MODEL'
+
+  ConditionalResource:
+    Condition: nvidiaCosmosInvokeUrl
+    AgentParamNvidiaCosmosInvokeUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_NVIDIA_COSMOS_INVOKE_URL'
+      Type: 'String'
+      Value: !Ref nvidiaCosmosInvokeUrl
+      Tier: 'Standard'
+      Description: 'Parameter for NVIDIA_COSMOS_INVOKE_URL'
+
+  ConditionalResource:
+    Condition: nvidiaCosmosAssetUrl
+    AgentParamNvidiaCosmosAssetUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_NVIDIA_COSMOS_ASSET_URL'
+      Type: 'String'
+      Value: !Ref nvidiaCosmosAssetUrl
+      Tier: 'Standard'
+      Description: 'Parameter for NVIDIA_COSMOS_ASSET_URL'
+
+  ConditionalResource:
+    Condition: nvidiaCosmosMaxTokens
+    AgentParamNvidiaCosmosMaxTokensParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_NVIDIA_COSMOS_MAX_TOKENS'
+      Type: 'String'
+      Value: !Ref nvidiaCosmosMaxTokens
+      Tier: 'Standard'
+      Description: 'Parameter for NVIDIA_COSMOS_MAX_TOKENS'
+
+  ConditionalResource:
+    Condition: emailOutgoingHost
+    AgentParamEmailOutgoingHostParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_EMAIL_OUTGOING_HOST'
+      Type: 'String'
+      Value: !Ref emailOutgoingHost
+      Tier: 'Standard'
+      Description: 'Parameter for EMAIL_OUTGOING_HOST'
+
+  ConditionalResource:
+    Condition: emailOutgoingPort
+    AgentParamEmailOutgoingPortParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_EMAIL_OUTGOING_PORT'
+      Type: 'String'
+      Value: !Ref emailOutgoingPort
+      Tier: 'Standard'
+      Description: 'Parameter for EMAIL_OUTGOING_PORT'
+
+  ConditionalResource:
+    Condition: emailOutgoingUser
+    AgentParamEmailOutgoingUserParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_EMAIL_OUTGOING_USER'
+      Type: 'String'
+      Value: !Ref emailOutgoingUser
+      Tier: 'Standard'
+      Description: 'Parameter for EMAIL_OUTGOING_USER'
+
+  ConditionalResource:
+    Condition: emailOutgoingPass
+    AgentParamEmailOutgoingPassParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_EMAIL_OUTGOING_PASS'
+      Type: 'String'
+      Value: !Ref emailOutgoingPass
+      Tier: 'Standard'
+      Description: 'Parameter for EMAIL_OUTGOING_PASS'
+
+  ConditionalResource:
+    Condition: emailIncomingService
+    AgentParamEmailIncomingServiceParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_EMAIL_INCOMING_SERVICE'
+      Type: 'String'
+      Value: !Ref emailIncomingService
+      Tier: 'Standard'
+      Description: 'Parameter for EMAIL_INCOMING_SERVICE'
+
+  ConditionalResource:
+    Condition: emailIncomingHost
+    AgentParamEmailIncomingHostParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_EMAIL_INCOMING_HOST'
+      Type: 'String'
+      Value: !Ref emailIncomingHost
+      Tier: 'Standard'
+      Description: 'Parameter for EMAIL_INCOMING_HOST'
+
+  ConditionalResource:
+    Condition: emailIncomingPort
+    AgentParamEmailIncomingPortParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_EMAIL_INCOMING_PORT'
+      Type: 'String'
+      Value: !Ref emailIncomingPort
+      Tier: 'Standard'
+      Description: 'Parameter for EMAIL_INCOMING_PORT'
+
+  ConditionalResource:
+    Condition: emailIncomingUser
+    AgentParamEmailIncomingUserParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_EMAIL_INCOMING_USER'
+      Type: 'String'
+      Value: !Ref emailIncomingUser
+      Tier: 'Standard'
+      Description: 'Parameter for EMAIL_INCOMING_USER'
+
+  ConditionalResource:
+    Condition: emailIncomingPass
+    AgentParamEmailIncomingPassParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_EMAIL_INCOMING_PASS'
+      Type: 'String'
+      Value: !Ref emailIncomingPass
+      Tier: 'Standard'
+      Description: 'Parameter for EMAIL_INCOMING_PASS'
+
+  ConditionalResource:
+    Condition: seiNetwork
+    AgentParamSeiNetworkParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_SEI_NETWORK'
+      Type: 'String'
+      Value: !Ref seiNetwork
+      Tier: 'Standard'
+      Description: 'Parameter for SEI_NETWORK'
+
+  ConditionalResource:
+    Condition: seiRpcUrl
+    AgentParamSeiRpcUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_SEI_RPC_URL'
+      Type: 'String'
+      Value: !Ref seiRpcUrl
+      Tier: 'Standard'
+      Description: 'Parameter for SEI_RPC_URL'
+
+  ConditionalResource:
+    Condition: omniflixMnemonic
+    AgentParamOmniflixMnemonicParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_OMNIFLIX_MNEMONIC'
+      Type: 'String'
+      Value: !Ref omniflixMnemonic
+      Tier: 'Standard'
+      Description: 'Parameter for OMNIFLIX_MNEMONIC'
+
+  ConditionalResource:
+    Condition: omniflixRpcEndpoint
+    AgentParamOmniflixRpcEndpointParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_OMNIFLIX_RPC_ENDPOINT'
+      Type: 'String'
+      Value: !Ref omniflixRpcEndpoint
+      Tier: 'Standard'
+      Description: 'Parameter for OMNIFLIX_RPC_ENDPOINT'
+
+  ConditionalResource:
+    Condition: omniflixPrivateKey
+    AgentParamOmniflixPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_OMNIFLIX_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref omniflixPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for OMNIFLIX_PRIVATE_KEY'
+
+  ConditionalResource:
+    Condition: imgflipPassword
+    AgentParamImgflipPasswordParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_IMGFLIP_PASSWORD'
+      Type: 'String'
+      Value: !Ref imgflipPassword
+      Tier: 'Standard'
+      Description: 'Parameter for IMGFLIP_PASSWORD'
+
+  ConditionalResource:
+    Condition: hyperliquidTestnet
+    AgentParamHyperliquidTestnetParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_HYPERLIQUID_TESTNET'
+      Type: 'String'
+      Value: !Ref hyperliquidTestnet
+      Tier: 'Standard'
+      Description: 'Parameter for HYPERLIQUID_TESTNET'
+
+  ConditionalResource:
+    Condition: evmRpcUrl
+    AgentParamEvmRpcUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_EVM_RPC_URL'
+      Type: 'String'
+      Value: !Ref evmRpcUrl
+      Tier: 'Standard'
+      Description: 'Parameter for EVM_RPC_URL'
+
+  ConditionalResource:
+    Condition: ethstorageAddress
+    AgentParamEthstorageAddressParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ETHSTORAGE_ADDRESS'
+      Type: 'String'
+      Value: !Ref ethstorageAddress
+      Tier: 'Standard'
+      Description: 'Parameter for ETHSTORAGE_ADDRESS'
+
+  ConditionalResource:
+    Condition: ethstorageRpcUrl
+    AgentParamEthstorageRpcUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ETHSTORAGE_RPC_URL'
+      Type: 'String'
+      Value: !Ref ethstorageRpcUrl
+      Tier: 'Standard'
+      Description: 'Parameter for ETHSTORAGE_RPC_URL'
+
+  ConditionalResource:
+    Condition: defaultToEmail
+    AgentParamDefaultToEmailParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_DEFAULT_TO_EMAIL'
+      Type: 'String'
+      Value: !Ref defaultToEmail
+      Tier: 'Standard'
+      Description: 'Parameter for DEFAULT_TO_EMAIL'
+
+  ConditionalResource:
+    Condition: defaultFromEmail
+    AgentParamDefaultFromEmailParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_DEFAULT_FROM_EMAIL'
+      Type: 'String'
+      Value: !Ref defaultFromEmail
+      Tier: 'Standard'
+      Description: 'Parameter for DEFAULT_FROM_EMAIL'
+
+  ConditionalResource:
+    Condition: emailAutomationEnabled
+    AgentParamEmailAutomationEnabledParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_EMAIL_AUTOMATION_ENABLED'
+      Type: 'String'
+      Value: !Ref emailAutomationEnabled
+      Tier: 'Standard'
+      Description: 'Parameter for EMAIL_AUTOMATION_ENABLED'
+
+  ConditionalResource:
+    Condition: emailEvaluationPrompt
+    AgentParamEmailEvaluationPromptParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_EMAIL_EVALUATION_PROMPT'
+      Type: 'String'
+      Value: !Ref emailEvaluationPrompt
+      Tier: 'Standard'
+      Description: 'Parameter for EMAIL_EVALUATION_PROMPT'
+
+  ConditionalResource:
+    Condition: ankrWallet
+    AgentParamAnkrWalletParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ANKR_WALLET'
+      Type: 'String'
+      Value: !Ref ankrWallet
+      Tier: 'Standard'
+      Description: 'Parameter for ANKR_WALLET'
+
+  ConditionalResource:
+    Condition: ankrMaxRetries
+    AgentParamAnkrMaxRetriesParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ANKR_MAX_RETRIES'
+      Type: 'String'
+      Value: !Ref ankrMaxRetries
+      Tier: 'Standard'
+      Description: 'Parameter for ANKR_MAX_RETRIES'
+
+  ConditionalResource:
+    Condition: ankrRetryDelay
+    AgentParamAnkrRetryDelayParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ANKR_RETRY_DELAY'
+      Type: 'String'
+      Value: !Ref ankrRetryDelay
+      Tier: 'Standard'
+      Description: 'Parameter for ANKR_RETRY_DELAY'
+
+  ConditionalResource:
+    Condition: ankrTimeout
+    AgentParamAnkrTimeoutParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ANKR_TIMEOUT'
+      Type: 'String'
+      Value: !Ref ankrTimeout
+      Tier: 'Standard'
+      Description: 'Parameter for ANKR_TIMEOUT'
+
+  ConditionalResource:
+    Condition: ankrGranularLog
+    AgentParamAnkrGranularLogParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ANKR_GRANULAR_LOG'
+      Type: 'String'
+      Value: !Ref ankrGranularLog
+      Tier: 'Standard'
+      Description: 'Parameter for ANKR_GRANULAR_LOG'
+
+  ConditionalResource:
+    Condition: ankrLogLevel
+    AgentParamAnkrLogLevelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ANKR_LOG_LEVEL'
+      Type: 'String'
+      Value: !Ref ankrLogLevel
+      Tier: 'Standard'
+      Description: 'Parameter for ANKR_LOG_LEVEL'
+
+  ConditionalResource:
+    Condition: ankrRuntimeCheckMode
+    AgentParamAnkrRuntimeCheckModeParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ANKR_RUNTIME_CHECK_MODE'
+      Type: 'String'
+      Value: !Ref ankrRuntimeCheckMode
+      Tier: 'Standard'
+      Description: 'Parameter for ANKR_RUNTIME_CHECK_MODE'
+
+  ConditionalResource:
+    Condition: ankrSpash
+    AgentParamAnkrSpashParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ANKR_SPASH'
+      Type: 'String'
+      Value: !Ref ankrSpash
+      Tier: 'Standard'
+      Description: 'Parameter for ANKR_SPASH'
+
+  ConditionalResource:
+    Condition: dcapMode
+    AgentParamDcapModeParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_DCAP_MODE'
+      Type: 'String'
+      Value: !Ref dcapMode
+      Tier: 'Standard'
+      Description: 'Parameter for DCAP_MODE'
+
+  ConditionalResource:
+    Condition: btcPrivateKeyWif
+    AgentParamBtcPrivateKeyWifParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_BTC_PRIVATE_KEY_WIF'
+      Type: 'String'
+      Value: !Ref btcPrivateKeyWif
+      Tier: 'Standard'
+      Description: 'Parameter for BTC_PRIVATE_KEY_WIF'
+
+  ConditionalResource:
+    Condition: btcAddress
+    AgentParamBtcAddressParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_BTC_ADDRESS'
+      Type: 'String'
+      Value: !Ref btcAddress
+      Tier: 'Standard'
+      Description: 'Parameter for BTC_ADDRESS'
+
+  ConditionalResource:
+    Condition: btcMintCap
+    AgentParamBtcMintCapParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_BTC_MINT_CAP'
+      Type: 'String'
+      Value: !Ref btcMintCap
+      Tier: 'Standard'
+      Description: 'Parameter for BTC_MINT_CAP'
+
+  ConditionalResource:
+    Condition: btcMintDeadline
+    AgentParamBtcMintDeadlineParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_BTC_MINT_DEADLINE'
+      Type: 'String'
+      Value: !Ref btcMintDeadline
+      Tier: 'Standard'
+      Description: 'Parameter for BTC_MINT_DEADLINE'
+
+  ConditionalResource:
+    Condition: btcFundraisingCap
+    AgentParamBtcFundraisingCapParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_BTC_FUNDRAISING_CAP'
+      Type: 'String'
+      Value: !Ref btcFundraisingCap
+      Tier: 'Standard'
+      Description: 'Parameter for BTC_FUNDRAISING_CAP'
+
+  ConditionalResource:
+    Condition: trikonInitialBalance
+    AgentParamTrikonInitialBalanceParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_TRIKON_INITIAL_BALANCE'
+      Type: 'String'
+      Value: !Ref trikonInitialBalance
+      Tier: 'Standard'
+      Description: 'Parameter for TRIKON_INITIAL_BALANCE'
+
+  ConditionalResource:
+    Condition: arbitrageEvmProviderUrl
+    AgentParamArbitrageEvmProviderUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ARBITRAGE_EVM_PROVIDER_URL'
+      Type: 'String'
+      Value: !Ref arbitrageEvmProviderUrl
+      Tier: 'Standard'
+      Description: 'Parameter for ARBITRAGE_EVM_PROVIDER_URL'
+
+  ConditionalResource:
+    Condition: arbitrageEvmPrivateKey
+    AgentParamArbitrageEvmPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_ARBITRAGE_EVM_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref arbitrageEvmPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for ARBITRAGE_EVM_PRIVATE_KEY'
+
+  ConditionalResource:
+    Condition: flashbotsRelaySigningKey
+    AgentParamFlashbotsRelaySigningKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_FLASHBOTS_RELAY_SIGNING_KEY'
+      Type: 'String'
+      Value: !Ref flashbotsRelaySigningKey
+      Tier: 'Standard'
+      Description: 'Parameter for FLASHBOTS_RELAY_SIGNING_KEY'
+
+  ConditionalResource:
+    Condition: bundleExecutorAddress
+    AgentParamBundleExecutorAddressParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_BUNDLE_EXECUTOR_ADDRESS'
+      Type: 'String'
+      Value: !Ref bundleExecutorAddress
+      Tier: 'Standard'
+      Description: 'Parameter for BUNDLE_EXECUTOR_ADDRESS'
+
+  ConditionalResource:
+    Condition: deskExchangeNetwork
+    AgentParamDeskExchangeNetworkParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_DESK_EXCHANGE_NETWORK'
+      Type: 'String'
+      Value: !Ref deskExchangeNetwork
+      Tier: 'Standard'
+      Description: 'Parameter for DESK_EXCHANGE_NETWORK'
+
+  ConditionalResource:
+    Condition: compassArbitrumRpcUrl
+    AgentParamCompassArbitrumRpcUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_COMPASS_ARBITRUM_RPC_URL'
+      Type: 'String'
+      Value: !Ref compassArbitrumRpcUrl
+      Tier: 'Standard'
+      Description: 'Parameter for COMPASS_ARBITRUM_RPC_URL'
+
+  ConditionalResource:
+    Condition: compassEthereumRpcUrl
+    AgentParamCompassEthereumRpcUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_COMPASS_ETHEREUM_RPC_URL'
+      Type: 'String'
+      Value: !Ref compassEthereumRpcUrl
+      Tier: 'Standard'
+      Description: 'Parameter for COMPASS_ETHEREUM_RPC_URL'
+
+  ConditionalResource:
+    Condition: compassBaseRpcUrl
+    AgentParamCompassBaseRpcUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_COMPASS_BASE_RPC_URL'
+      Type: 'String'
+      Value: !Ref compassBaseRpcUrl
+      Tier: 'Standard'
+      Description: 'Parameter for COMPASS_BASE_RPC_URL'
+
+  ConditionalResource:
+    Condition: dataAuthToken
+    AgentParamDataAuthTokenParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_DATA_AUTH_TOKEN'
+      Type: 'String'
+      Value: !Ref dataAuthToken
+      Tier: 'Standard'
+      Description: 'Parameter for DATA_AUTH_TOKEN'
+
+  ConditionalResource:
+    Condition: nknClientId
+    AgentParamNknClientIdParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_NKN_CLIENT_ID'
+      Type: 'String'
+      Value: !Ref nknClientId
+      Tier: 'Standard'
+      Description: 'Parameter for NKN_CLIENT_ID'
