@@ -1,0 +1,406 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  akashEnv:
+    Type: 'String'
+    Description: 'Parameter for AKASH_ENV'
+    
+  akashNet:
+    Type: 'String'
+    Description: 'Parameter for AKASH_NET'
+    
+  rpcEndpoint:
+    Type: 'String'
+    Description: 'Parameter for RPC_ENDPOINT'
+    
+  akashGasPrices:
+    Type: 'String'
+    Description: 'Parameter for AKASH_GAS_PRICES'
+    
+  akashGasAdjustment:
+    Type: 'Number'
+    Description: 'Parameter for AKASH_GAS_ADJUSTMENT'
+    
+  akashKeyringBackend:
+    Type: 'String'
+    Description: 'Parameter for AKASH_KEYRING_BACKEND'
+    
+  akashFrom:
+    Type: 'String'
+    Description: 'Parameter for AKASH_FROM'
+    
+  akashFees:
+    Type: 'String'
+    Description: 'Parameter for AKASH_FEES'
+    
+  akashDeposit:
+    Type: 'String'
+    Description: 'Parameter for AKASH_DEPOSIT'
+    
+  akashMnemonic:
+    Type: 'String'
+    Description: 'Parameter for AKASH_MNEMONIC'
+    
+  akashWalletAddress:
+    Type: 'String'
+    Description: 'Parameter for AKASH_WALLET_ADDRESS'
+    
+  akashPricingApiUrl:
+    Type: 'String'
+    Description: 'Parameter for AKASH_PRICING_API_URL'
+    
+  akashDefaultCpu:
+    Type: 'Number'
+    Description: 'Parameter for AKASH_DEFAULT_CPU'
+    
+  akashDefaultMemory:
+    Type: 'Number'
+    Description: 'Parameter for AKASH_DEFAULT_MEMORY'
+    
+  akashDefaultStorage:
+    Type: 'Number'
+    Description: 'Parameter for AKASH_DEFAULT_STORAGE'
+    
+  akashSdl:
+    Type: 'String'
+    Description: 'Parameter for AKASH_SDL'
+    
+  akashCloseDep:
+    Type: 'String'
+    Description: 'Parameter for AKASH_CLOSE_DEP'
+    
+  akashCloseDseq:
+    Type: 'String'
+    Description: 'Parameter for AKASH_CLOSE_DSEQ'
+    
+  akashProviderInfo:
+    Type: 'String'
+    Description: 'Parameter for AKASH_PROVIDER_INFO'
+    
+  akashDepStatus:
+    Type: 'String'
+    Description: 'Parameter for AKASH_DEP_STATUS'
+    
+  akashDepDseq:
+    Type: 'String'
+    Description: 'Parameter for AKASH_DEP_DSEQ'
+    
+  akashGasOperation:
+    Type: 'String'
+    Description: 'Parameter for AKASH_GAS_OPERATION'
+    
+  akashGasDseq:
+    Type: 'String'
+    Description: 'Parameter for AKASH_GAS_DSEQ'
+    
+  akashManifestMode:
+    Type: 'String'
+    Description: 'Parameter for AKASH_MANIFEST_MODE'
+    
+  akashManifestPath:
+    Type: 'String'
+    Description: 'Parameter for AKASH_MANIFEST_PATH'
+    
+  akashManifestValidationLevel:
+    Type: 'String'
+    Description: 'Parameter for AKASH_MANIFEST_VALIDATION_LEVEL'
+    
+Conditions:
+
+  HasAkashEnv: !Not [!Equals [!Ref akashEnv, ""]]
+
+  HasAkashNet: !Not [!Equals [!Ref akashNet, ""]]
+
+  HasRpcEndpoint: !Not [!Equals [!Ref rpcEndpoint, ""]]
+
+  HasAkashGasPrices: !Not [!Equals [!Ref akashGasPrices, ""]]
+
+  HasAkashGasAdjustment: !Not [!Equals [!Ref akashGasAdjustment, ""]]
+
+  HasAkashKeyringBackend: !Not [!Equals [!Ref akashKeyringBackend, ""]]
+
+  HasAkashFrom: !Not [!Equals [!Ref akashFrom, ""]]
+
+  HasAkashFees: !Not [!Equals [!Ref akashFees, ""]]
+
+  HasAkashDeposit: !Not [!Equals [!Ref akashDeposit, ""]]
+
+  HasAkashMnemonic: !Not [!Equals [!Ref akashMnemonic, ""]]
+
+  HasAkashWalletAddress: !Not [!Equals [!Ref akashWalletAddress, ""]]
+
+  HasAkashPricingApiUrl: !Not [!Equals [!Ref akashPricingApiUrl, ""]]
+
+  HasAkashDefaultCpu: !Not [!Equals [!Ref akashDefaultCpu, ""]]
+
+  HasAkashDefaultMemory: !Not [!Equals [!Ref akashDefaultMemory, ""]]
+
+  HasAkashDefaultStorage: !Not [!Equals [!Ref akashDefaultStorage, ""]]
+
+  HasAkashSdl: !Not [!Equals [!Ref akashSdl, ""]]
+
+  HasAkashCloseDep: !Not [!Equals [!Ref akashCloseDep, ""]]
+
+  HasAkashCloseDseq: !Not [!Equals [!Ref akashCloseDseq, ""]]
+
+  HasAkashProviderInfo: !Not [!Equals [!Ref akashProviderInfo, ""]]
+
+  HasAkashDepStatus: !Not [!Equals [!Ref akashDepStatus, ""]]
+
+  HasAkashDepDseq: !Not [!Equals [!Ref akashDepDseq, ""]]
+
+  HasAkashGasOperation: !Not [!Equals [!Ref akashGasOperation, ""]]
+
+  HasAkashGasDseq: !Not [!Equals [!Ref akashGasDseq, ""]]
+
+  HasAkashManifestMode: !Not [!Equals [!Ref akashManifestMode, ""]]
+
+  HasAkashManifestPath: !Not [!Equals [!Ref akashManifestPath, ""]]
+
+  HasAkashManifestValidationLevel: !Not [!Equals [!Ref akashManifestValidationLevel, ""]]
+
+Resources:
+
+  AgentParamAkashEnvParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAkashEnv
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_ENV'
+      Type: 'String'
+      Value: !Ref akashEnv
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_ENV'
+  AgentParamAkashNetParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAkashNet
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_NET'
+      Type: 'String'
+      Value: !Ref akashNet
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_NET'
+  AgentParamRpcEndpointParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasRpcEndpoint
+    Properties:
+      Name: !Sub '${AgentCodeName}_RPC_ENDPOINT'
+      Type: 'String'
+      Value: !Ref rpcEndpoint
+      Tier: 'Standard'
+      Description: 'Parameter for RPC_ENDPOINT'
+  AgentParamAkashGasPricesParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAkashGasPrices
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_GAS_PRICES'
+      Type: 'String'
+      Value: !Ref akashGasPrices
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_GAS_PRICES'
+  AgentParamAkashGasAdjustmentParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAkashGasAdjustment
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_GAS_ADJUSTMENT'
+      Type: 'String'
+      Value: !Ref akashGasAdjustment
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_GAS_ADJUSTMENT'
+  AgentParamAkashKeyringBackendParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAkashKeyringBackend
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_KEYRING_BACKEND'
+      Type: 'String'
+      Value: !Ref akashKeyringBackend
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_KEYRING_BACKEND'
+  AgentParamAkashFromParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAkashFrom
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_FROM'
+      Type: 'String'
+      Value: !Ref akashFrom
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_FROM'
+  AgentParamAkashFeesParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAkashFees
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_FEES'
+      Type: 'String'
+      Value: !Ref akashFees
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_FEES'
+  AgentParamAkashDepositParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAkashDeposit
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_DEPOSIT'
+      Type: 'String'
+      Value: !Ref akashDeposit
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_DEPOSIT'
+  AgentParamAkashMnemonicParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAkashMnemonic
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_MNEMONIC'
+      Type: 'String'
+      Value: !Ref akashMnemonic
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_MNEMONIC'
+  AgentParamAkashWalletAddressParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAkashWalletAddress
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_WALLET_ADDRESS'
+      Type: 'String'
+      Value: !Ref akashWalletAddress
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_WALLET_ADDRESS'
+  AgentParamAkashPricingApiUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAkashPricingApiUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_PRICING_API_URL'
+      Type: 'String'
+      Value: !Ref akashPricingApiUrl
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_PRICING_API_URL'
+  AgentParamAkashDefaultCpuParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAkashDefaultCpu
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_DEFAULT_CPU'
+      Type: 'String'
+      Value: !Ref akashDefaultCpu
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_DEFAULT_CPU'
+  AgentParamAkashDefaultMemoryParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAkashDefaultMemory
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_DEFAULT_MEMORY'
+      Type: 'String'
+      Value: !Ref akashDefaultMemory
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_DEFAULT_MEMORY'
+  AgentParamAkashDefaultStorageParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAkashDefaultStorage
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_DEFAULT_STORAGE'
+      Type: 'String'
+      Value: !Ref akashDefaultStorage
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_DEFAULT_STORAGE'
+  AgentParamAkashSdlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAkashSdl
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_SDL'
+      Type: 'String'
+      Value: !Ref akashSdl
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_SDL'
+  AgentParamAkashCloseDepParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAkashCloseDep
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_CLOSE_DEP'
+      Type: 'String'
+      Value: !Ref akashCloseDep
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_CLOSE_DEP'
+  AgentParamAkashCloseDseqParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAkashCloseDseq
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_CLOSE_DSEQ'
+      Type: 'String'
+      Value: !Ref akashCloseDseq
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_CLOSE_DSEQ'
+  AgentParamAkashProviderInfoParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAkashProviderInfo
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_PROVIDER_INFO'
+      Type: 'String'
+      Value: !Ref akashProviderInfo
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_PROVIDER_INFO'
+  AgentParamAkashDepStatusParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAkashDepStatus
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_DEP_STATUS'
+      Type: 'String'
+      Value: !Ref akashDepStatus
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_DEP_STATUS'
+  AgentParamAkashDepDseqParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAkashDepDseq
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_DEP_DSEQ'
+      Type: 'String'
+      Value: !Ref akashDepDseq
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_DEP_DSEQ'
+  AgentParamAkashGasOperationParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAkashGasOperation
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_GAS_OPERATION'
+      Type: 'String'
+      Value: !Ref akashGasOperation
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_GAS_OPERATION'
+  AgentParamAkashGasDseqParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAkashGasDseq
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_GAS_DSEQ'
+      Type: 'String'
+      Value: !Ref akashGasDseq
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_GAS_DSEQ'
+  AgentParamAkashManifestModeParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAkashManifestMode
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_MANIFEST_MODE'
+      Type: 'String'
+      Value: !Ref akashManifestMode
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_MANIFEST_MODE'
+  AgentParamAkashManifestPathParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAkashManifestPath
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_MANIFEST_PATH'
+      Type: 'String'
+      Value: !Ref akashManifestPath
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_MANIFEST_PATH'
+  AgentParamAkashManifestValidationLevelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAkashManifestValidationLevel
+    Properties:
+      Name: !Sub '${AgentCodeName}_AKASH_MANIFEST_VALIDATION_LEVEL'
+      Type: 'String'
+      Value: !Ref akashManifestValidationLevel
+      Tier: 'Standard'
+      Description: 'Parameter for AKASH_MANIFEST_VALIDATION_LEVEL'

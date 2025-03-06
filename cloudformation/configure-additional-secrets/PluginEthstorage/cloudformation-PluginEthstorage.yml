@@ -1,0 +1,61 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  ethstoragePrivateKey:
+    Type: 'String'
+    Description: 'Parameter for ETHSTORAGE_PRIVATE_KEY'
+    
+  ethstorageAddress:
+    Type: 'String'
+    Description: 'Parameter for ETHSTORAGE_ADDRESS'
+    
+  ethstorageRpcUrl:
+    Type: 'String'
+    Description: 'Parameter for ETHSTORAGE_RPC_URL'
+    
+Conditions:
+
+  HasEthstoragePrivateKey: !Not [!Equals [!Ref ethstoragePrivateKey, ""]]
+
+  HasEthstorageAddress: !Not [!Equals [!Ref ethstorageAddress, ""]]
+
+  HasEthstorageRpcUrl: !Not [!Equals [!Ref ethstorageRpcUrl, ""]]
+
+Resources:
+
+  AgentParamEthstoragePrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasEthstoragePrivateKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_ETHSTORAGE_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref ethstoragePrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for ETHSTORAGE_PRIVATE_KEY'
+  AgentParamEthstorageAddressParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasEthstorageAddress
+    Properties:
+      Name: !Sub '${AgentCodeName}_ETHSTORAGE_ADDRESS'
+      Type: 'String'
+      Value: !Ref ethstorageAddress
+      Tier: 'Standard'
+      Description: 'Parameter for ETHSTORAGE_ADDRESS'
+  AgentParamEthstorageRpcUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasEthstorageRpcUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_ETHSTORAGE_RPC_URL'
+      Type: 'String'
+      Value: !Ref ethstorageRpcUrl
+      Tier: 'Standard'
+      Description: 'Parameter for ETHSTORAGE_RPC_URL'

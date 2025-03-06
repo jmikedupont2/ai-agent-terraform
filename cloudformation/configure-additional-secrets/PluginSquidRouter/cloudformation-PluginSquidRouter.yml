@@ -1,0 +1,91 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  squidSdkUrl:
+    Type: 'String'
+    Description: 'Parameter for SQUID_SDK_URL'
+    
+  squidIntegratorId:
+    Type: 'String'
+    Description: 'Parameter for SQUID_INTEGRATOR_ID'
+    
+  squidEvmAddress:
+    Type: 'String'
+    Description: 'Parameter for SQUID_EVM_ADDRESS'
+    
+  squidEvmPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for SQUID_EVM_PRIVATE_KEY'
+    
+  squidApiThrottleInterval:
+    Type: 'Number'
+    Description: 'Parameter for SQUID_API_THROTTLE_INTERVAL'
+    
+Conditions:
+
+  HasSquidSdkUrl: !Not [!Equals [!Ref squidSdkUrl, ""]]
+
+  HasSquidIntegratorId: !Not [!Equals [!Ref squidIntegratorId, ""]]
+
+  HasSquidEvmAddress: !Not [!Equals [!Ref squidEvmAddress, ""]]
+
+  HasSquidEvmPrivateKey: !Not [!Equals [!Ref squidEvmPrivateKey, ""]]
+
+  HasSquidApiThrottleInterval: !Not [!Equals [!Ref squidApiThrottleInterval, ""]]
+
+Resources:
+
+  AgentParamSquidSdkUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSquidSdkUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_SQUID_SDK_URL'
+      Type: 'String'
+      Value: !Ref squidSdkUrl
+      Tier: 'Standard'
+      Description: 'Parameter for SQUID_SDK_URL'
+  AgentParamSquidIntegratorIdParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSquidIntegratorId
+    Properties:
+      Name: !Sub '${AgentCodeName}_SQUID_INTEGRATOR_ID'
+      Type: 'String'
+      Value: !Ref squidIntegratorId
+      Tier: 'Standard'
+      Description: 'Parameter for SQUID_INTEGRATOR_ID'
+  AgentParamSquidEvmAddressParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSquidEvmAddress
+    Properties:
+      Name: !Sub '${AgentCodeName}_SQUID_EVM_ADDRESS'
+      Type: 'String'
+      Value: !Ref squidEvmAddress
+      Tier: 'Standard'
+      Description: 'Parameter for SQUID_EVM_ADDRESS'
+  AgentParamSquidEvmPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSquidEvmPrivateKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_SQUID_EVM_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref squidEvmPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for SQUID_EVM_PRIVATE_KEY'
+  AgentParamSquidApiThrottleIntervalParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSquidApiThrottleInterval
+    Properties:
+      Name: !Sub '${AgentCodeName}_SQUID_API_THROTTLE_INTERVAL'
+      Type: 'String'
+      Value: !Ref squidApiThrottleInterval
+      Tier: 'Standard'
+      Description: 'Parameter for SQUID_API_THROTTLE_INTERVAL'

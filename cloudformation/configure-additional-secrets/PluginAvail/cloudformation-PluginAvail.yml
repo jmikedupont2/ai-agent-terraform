@@ -1,0 +1,76 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  availAddress:
+    Type: 'String'
+    Description: 'Parameter for AVAIL_ADDRESS'
+    
+  availSeed:
+    Type: 'String'
+    Description: 'Parameter for AVAIL_SEED'
+    
+  availAppId:
+    Type: 'Number'
+    Description: 'Parameter for AVAIL_APP_ID'
+    
+  availRpcUrl:
+    Type: 'String'
+    Description: 'Parameter for AVAIL_RPC_URL'
+    
+Conditions:
+
+  HasAvailAddress: !Not [!Equals [!Ref availAddress, ""]]
+
+  HasAvailSeed: !Not [!Equals [!Ref availSeed, ""]]
+
+  HasAvailAppId: !Not [!Equals [!Ref availAppId, ""]]
+
+  HasAvailRpcUrl: !Not [!Equals [!Ref availRpcUrl, ""]]
+
+Resources:
+
+  AgentParamAvailAddressParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAvailAddress
+    Properties:
+      Name: !Sub '${AgentCodeName}_AVAIL_ADDRESS'
+      Type: 'String'
+      Value: !Ref availAddress
+      Tier: 'Standard'
+      Description: 'Parameter for AVAIL_ADDRESS'
+  AgentParamAvailSeedParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAvailSeed
+    Properties:
+      Name: !Sub '${AgentCodeName}_AVAIL_SEED'
+      Type: 'String'
+      Value: !Ref availSeed
+      Tier: 'Standard'
+      Description: 'Parameter for AVAIL_SEED'
+  AgentParamAvailAppIdParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAvailAppId
+    Properties:
+      Name: !Sub '${AgentCodeName}_AVAIL_APP_ID'
+      Type: 'String'
+      Value: !Ref availAppId
+      Tier: 'Standard'
+      Description: 'Parameter for AVAIL_APP_ID'
+  AgentParamAvailRpcUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAvailRpcUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_AVAIL_RPC_URL'
+      Type: 'String'
+      Value: !Ref availRpcUrl
+      Tier: 'Standard'
+      Description: 'Parameter for AVAIL_RPC_URL'

@@ -1,0 +1,106 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  dkgEnvironment:
+    Type: 'String'
+    Description: 'Parameter for DKG_ENVIRONMENT'
+    
+  dkgHostname:
+    Type: 'String'
+    Description: 'Parameter for DKG_HOSTNAME'
+    
+  dkgPort:
+    Type: 'String'
+    Description: 'Parameter for DKG_PORT'
+    
+  dkgPublicKey:
+    Type: 'String'
+    Description: 'Parameter for DKG_PUBLIC_KEY'
+    
+  dkgPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for DKG_PRIVATE_KEY'
+    
+  dkgBlockchainName:
+    Type: 'String'
+    Description: 'Parameter for DKG_BLOCKCHAIN_NAME'
+    
+Conditions:
+
+  HasDkgEnvironment: !Not [!Equals [!Ref dkgEnvironment, ""]]
+
+  HasDkgHostname: !Not [!Equals [!Ref dkgHostname, ""]]
+
+  HasDkgPort: !Not [!Equals [!Ref dkgPort, ""]]
+
+  HasDkgPublicKey: !Not [!Equals [!Ref dkgPublicKey, ""]]
+
+  HasDkgPrivateKey: !Not [!Equals [!Ref dkgPrivateKey, ""]]
+
+  HasDkgBlockchainName: !Not [!Equals [!Ref dkgBlockchainName, ""]]
+
+Resources:
+
+  AgentParamDkgEnvironmentParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasDkgEnvironment
+    Properties:
+      Name: !Sub '${AgentCodeName}_DKG_ENVIRONMENT'
+      Type: 'String'
+      Value: !Ref dkgEnvironment
+      Tier: 'Standard'
+      Description: 'Parameter for DKG_ENVIRONMENT'
+  AgentParamDkgHostnameParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasDkgHostname
+    Properties:
+      Name: !Sub '${AgentCodeName}_DKG_HOSTNAME'
+      Type: 'String'
+      Value: !Ref dkgHostname
+      Tier: 'Standard'
+      Description: 'Parameter for DKG_HOSTNAME'
+  AgentParamDkgPortParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasDkgPort
+    Properties:
+      Name: !Sub '${AgentCodeName}_DKG_PORT'
+      Type: 'String'
+      Value: !Ref dkgPort
+      Tier: 'Standard'
+      Description: 'Parameter for DKG_PORT'
+  AgentParamDkgPublicKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasDkgPublicKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_DKG_PUBLIC_KEY'
+      Type: 'String'
+      Value: !Ref dkgPublicKey
+      Tier: 'Standard'
+      Description: 'Parameter for DKG_PUBLIC_KEY'
+  AgentParamDkgPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasDkgPrivateKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_DKG_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref dkgPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for DKG_PRIVATE_KEY'
+  AgentParamDkgBlockchainNameParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasDkgBlockchainName
+    Properties:
+      Name: !Sub '${AgentCodeName}_DKG_BLOCKCHAIN_NAME'
+      Type: 'String'
+      Value: !Ref dkgBlockchainName
+      Tier: 'Standard'
+      Description: 'Parameter for DKG_BLOCKCHAIN_NAME'

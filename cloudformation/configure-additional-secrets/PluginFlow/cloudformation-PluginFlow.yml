@@ -1,0 +1,76 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  flowAddress:
+    Type: 'String'
+    Description: 'Parameter for FLOW_ADDRESS'
+    
+  flowPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for FLOW_PRIVATE_KEY'
+    
+  flowNetwork:
+    Type: 'String'
+    Description: 'Parameter for FLOW_NETWORK'
+    
+  flowEndpointUrl:
+    Type: 'String'
+    Description: 'Parameter for FLOW_ENDPOINT_URL'
+    
+Conditions:
+
+  HasFlowAddress: !Not [!Equals [!Ref flowAddress, ""]]
+
+  HasFlowPrivateKey: !Not [!Equals [!Ref flowPrivateKey, ""]]
+
+  HasFlowNetwork: !Not [!Equals [!Ref flowNetwork, ""]]
+
+  HasFlowEndpointUrl: !Not [!Equals [!Ref flowEndpointUrl, ""]]
+
+Resources:
+
+  AgentParamFlowAddressParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasFlowAddress
+    Properties:
+      Name: !Sub '${AgentCodeName}_FLOW_ADDRESS'
+      Type: 'String'
+      Value: !Ref flowAddress
+      Tier: 'Standard'
+      Description: 'Parameter for FLOW_ADDRESS'
+  AgentParamFlowPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasFlowPrivateKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_FLOW_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref flowPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for FLOW_PRIVATE_KEY'
+  AgentParamFlowNetworkParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasFlowNetwork
+    Properties:
+      Name: !Sub '${AgentCodeName}_FLOW_NETWORK'
+      Type: 'String'
+      Value: !Ref flowNetwork
+      Tier: 'Standard'
+      Description: 'Parameter for FLOW_NETWORK'
+  AgentParamFlowEndpointUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasFlowEndpointUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_FLOW_ENDPOINT_URL'
+      Type: 'String'
+      Value: !Ref flowEndpointUrl
+      Tier: 'Standard'
+      Description: 'Parameter for FLOW_ENDPOINT_URL'

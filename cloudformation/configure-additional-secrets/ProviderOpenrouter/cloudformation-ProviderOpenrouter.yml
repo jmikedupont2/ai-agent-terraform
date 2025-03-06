@@ -1,0 +1,91 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  openrouterApiKey:
+    Type: 'String'
+    Description: 'Parameter for OPENROUTER_API_KEY'
+    
+  openrouterModel:
+    Type: 'String'
+    Description: 'Parameter for OPENROUTER_MODEL'
+    
+  smallOpenrouterModel:
+    Type: 'String'
+    Description: 'Parameter for SMALL_OPENROUTER_MODEL'
+    
+  mediumOpenrouterModel:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_OPENROUTER_MODEL'
+    
+  largeOpenrouterModel:
+    Type: 'String'
+    Description: 'Parameter for LARGE_OPENROUTER_MODEL'
+    
+Conditions:
+
+  HasOpenrouterApiKey: !Not [!Equals [!Ref openrouterApiKey, ""]]
+
+  HasOpenrouterModel: !Not [!Equals [!Ref openrouterModel, ""]]
+
+  HasSmallOpenrouterModel: !Not [!Equals [!Ref smallOpenrouterModel, ""]]
+
+  HasMediumOpenrouterModel: !Not [!Equals [!Ref mediumOpenrouterModel, ""]]
+
+  HasLargeOpenrouterModel: !Not [!Equals [!Ref largeOpenrouterModel, ""]]
+
+Resources:
+
+  AgentParamOpenrouterApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasOpenrouterApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_OPENROUTER_API_KEY'
+      Type: 'String'
+      Value: !Ref openrouterApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for OPENROUTER_API_KEY'
+  AgentParamOpenrouterModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasOpenrouterModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_OPENROUTER_MODEL'
+      Type: 'String'
+      Value: !Ref openrouterModel
+      Tier: 'Standard'
+      Description: 'Parameter for OPENROUTER_MODEL'
+  AgentParamSmallOpenrouterModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSmallOpenrouterModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_OPENROUTER_MODEL'
+      Type: 'String'
+      Value: !Ref smallOpenrouterModel
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_OPENROUTER_MODEL'
+  AgentParamMediumOpenrouterModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasMediumOpenrouterModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_OPENROUTER_MODEL'
+      Type: 'String'
+      Value: !Ref mediumOpenrouterModel
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_OPENROUTER_MODEL'
+  AgentParamLargeOpenrouterModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasLargeOpenrouterModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_OPENROUTER_MODEL'
+      Type: 'String'
+      Value: !Ref largeOpenrouterModel
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_OPENROUTER_MODEL'

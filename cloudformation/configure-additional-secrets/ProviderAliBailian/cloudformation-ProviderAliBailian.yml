@@ -1,0 +1,31 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  aliBailianApiKey:
+    Type: 'String'
+    Description: 'Parameter for ALI_BAILIAN_API_KEY'
+    
+Conditions:
+
+  HasAliBailianApiKey: !Not [!Equals [!Ref aliBailianApiKey, ""]]
+
+Resources:
+
+  AgentParamAliBailianApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAliBailianApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_ALI_BAILIAN_API_KEY'
+      Type: 'String'
+      Value: !Ref aliBailianApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for ALI_BAILIAN_API_KEY'

@@ -1,0 +1,181 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  solanaPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for SOLANA_PRIVATE_KEY'
+    
+  solanaPublicKey:
+    Type: 'String'
+    Description: 'Parameter for SOLANA_PUBLIC_KEY'
+    
+  solanaCluster:
+    Type: 'String'
+    Description: 'Parameter for SOLANA_CLUSTER'
+    
+  solanaAdminPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for SOLANA_ADMIN_PRIVATE_KEY'
+    
+  solanaAdminPublicKey:
+    Type: 'String'
+    Description: 'Parameter for SOLANA_ADMIN_PUBLIC_KEY'
+    
+  solanaVerifyToken:
+    Type: 'String'
+    Description: 'Parameter for SOLANA_VERIFY_TOKEN'
+    
+  solAddress:
+    Type: 'String'
+    Description: 'Parameter for SOL_ADDRESS'
+    
+  slippage:
+    Type: 'Number'
+    Description: 'Parameter for SLIPPAGE'
+    
+  baseMint:
+    Type: 'String'
+    Description: 'Parameter for BASE_MINT'
+    
+  solanaRpcUrl:
+    Type: 'String'
+    Description: 'Parameter for SOLANA_RPC_URL'
+    
+  heliusApiKey:
+    Type: 'String'
+    Description: 'Parameter for HELIUS_API_KEY'
+    
+Conditions:
+
+  HasSolanaPrivateKey: !Not [!Equals [!Ref solanaPrivateKey, ""]]
+
+  HasSolanaPublicKey: !Not [!Equals [!Ref solanaPublicKey, ""]]
+
+  HasSolanaCluster: !Not [!Equals [!Ref solanaCluster, ""]]
+
+  HasSolanaAdminPrivateKey: !Not [!Equals [!Ref solanaAdminPrivateKey, ""]]
+
+  HasSolanaAdminPublicKey: !Not [!Equals [!Ref solanaAdminPublicKey, ""]]
+
+  HasSolanaVerifyToken: !Not [!Equals [!Ref solanaVerifyToken, ""]]
+
+  HasSolAddress: !Not [!Equals [!Ref solAddress, ""]]
+
+  HasSlippage: !Not [!Equals [!Ref slippage, ""]]
+
+  HasBaseMint: !Not [!Equals [!Ref baseMint, ""]]
+
+  HasSolanaRpcUrl: !Not [!Equals [!Ref solanaRpcUrl, ""]]
+
+  HasHeliusApiKey: !Not [!Equals [!Ref heliusApiKey, ""]]
+
+Resources:
+
+  AgentParamSolanaPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSolanaPrivateKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_SOLANA_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref solanaPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for SOLANA_PRIVATE_KEY'
+  AgentParamSolanaPublicKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSolanaPublicKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_SOLANA_PUBLIC_KEY'
+      Type: 'String'
+      Value: !Ref solanaPublicKey
+      Tier: 'Standard'
+      Description: 'Parameter for SOLANA_PUBLIC_KEY'
+  AgentParamSolanaClusterParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSolanaCluster
+    Properties:
+      Name: !Sub '${AgentCodeName}_SOLANA_CLUSTER'
+      Type: 'String'
+      Value: !Ref solanaCluster
+      Tier: 'Standard'
+      Description: 'Parameter for SOLANA_CLUSTER'
+  AgentParamSolanaAdminPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSolanaAdminPrivateKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_SOLANA_ADMIN_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref solanaAdminPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for SOLANA_ADMIN_PRIVATE_KEY'
+  AgentParamSolanaAdminPublicKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSolanaAdminPublicKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_SOLANA_ADMIN_PUBLIC_KEY'
+      Type: 'String'
+      Value: !Ref solanaAdminPublicKey
+      Tier: 'Standard'
+      Description: 'Parameter for SOLANA_ADMIN_PUBLIC_KEY'
+  AgentParamSolanaVerifyTokenParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSolanaVerifyToken
+    Properties:
+      Name: !Sub '${AgentCodeName}_SOLANA_VERIFY_TOKEN'
+      Type: 'String'
+      Value: !Ref solanaVerifyToken
+      Tier: 'Standard'
+      Description: 'Parameter for SOLANA_VERIFY_TOKEN'
+  AgentParamSolAddressParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSolAddress
+    Properties:
+      Name: !Sub '${AgentCodeName}_SOL_ADDRESS'
+      Type: 'String'
+      Value: !Ref solAddress
+      Tier: 'Standard'
+      Description: 'Parameter for SOL_ADDRESS'
+  AgentParamSlippageParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSlippage
+    Properties:
+      Name: !Sub '${AgentCodeName}_SLIPPAGE'
+      Type: 'String'
+      Value: !Ref slippage
+      Tier: 'Standard'
+      Description: 'Parameter for SLIPPAGE'
+  AgentParamBaseMintParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasBaseMint
+    Properties:
+      Name: !Sub '${AgentCodeName}_BASE_MINT'
+      Type: 'String'
+      Value: !Ref baseMint
+      Tier: 'Standard'
+      Description: 'Parameter for BASE_MINT'
+  AgentParamSolanaRpcUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSolanaRpcUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_SOLANA_RPC_URL'
+      Type: 'String'
+      Value: !Ref solanaRpcUrl
+      Tier: 'Standard'
+      Description: 'Parameter for SOLANA_RPC_URL'
+  AgentParamHeliusApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasHeliusApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_HELIUS_API_KEY'
+      Type: 'String'
+      Value: !Ref heliusApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for HELIUS_API_KEY'

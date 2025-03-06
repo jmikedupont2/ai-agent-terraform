@@ -1,0 +1,46 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  avalanchePrivateKey:
+    Type: 'String'
+    Description: 'Parameter for AVALANCHE_PRIVATE_KEY'
+    
+  avalanchePublicKey:
+    Type: 'String'
+    Description: 'Parameter for AVALANCHE_PUBLIC_KEY'
+    
+Conditions:
+
+  HasAvalanchePrivateKey: !Not [!Equals [!Ref avalanchePrivateKey, ""]]
+
+  HasAvalanchePublicKey: !Not [!Equals [!Ref avalanchePublicKey, ""]]
+
+Resources:
+
+  AgentParamAvalanchePrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAvalanchePrivateKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_AVALANCHE_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref avalanchePrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for AVALANCHE_PRIVATE_KEY'
+  AgentParamAvalanchePublicKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAvalanchePublicKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_AVALANCHE_PUBLIC_KEY'
+      Type: 'String'
+      Value: !Ref avalanchePublicKey
+      Tier: 'Standard'
+      Description: 'Parameter for AVALANCHE_PUBLIC_KEY'

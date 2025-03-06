@@ -1,0 +1,31 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  b2PrivateKey:
+    Type: 'String'
+    Description: 'Parameter for B2_PRIVATE_KEY'
+    
+Conditions:
+
+  HasB2PrivateKey: !Not [!Equals [!Ref b2PrivateKey, ""]]
+
+Resources:
+
+  AgentParamB2PrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasB2PrivateKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_B2_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref b2PrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for B2_PRIVATE_KEY'

@@ -1,0 +1,121 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  nearaiApiUrl:
+    Type: 'String'
+    Description: 'Parameter for NEARAI_API_URL'
+    
+  nearaiApiKey:
+    Type: 'String'
+    Description: 'Parameter for NEARAI_API_KEY'
+    
+  nearaiModel:
+    Type: 'String'
+    Description: 'Parameter for NEARAI_MODEL'
+    
+  smallNearaiModel:
+    Type: 'String'
+    Description: 'Parameter for SMALL_NEARAI_MODEL'
+    
+  mediumNearaiModel:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_NEARAI_MODEL'
+    
+  largeNearaiModel:
+    Type: 'String'
+    Description: 'Parameter for LARGE_NEARAI_MODEL'
+    
+  imageNearaiModel:
+    Type: 'String'
+    Description: 'Parameter for IMAGE_NEARAI_MODEL'
+    
+Conditions:
+
+  HasNearaiApiUrl: !Not [!Equals [!Ref nearaiApiUrl, ""]]
+
+  HasNearaiApiKey: !Not [!Equals [!Ref nearaiApiKey, ""]]
+
+  HasNearaiModel: !Not [!Equals [!Ref nearaiModel, ""]]
+
+  HasSmallNearaiModel: !Not [!Equals [!Ref smallNearaiModel, ""]]
+
+  HasMediumNearaiModel: !Not [!Equals [!Ref mediumNearaiModel, ""]]
+
+  HasLargeNearaiModel: !Not [!Equals [!Ref largeNearaiModel, ""]]
+
+  HasImageNearaiModel: !Not [!Equals [!Ref imageNearaiModel, ""]]
+
+Resources:
+
+  AgentParamNearaiApiUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasNearaiApiUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_NEARAI_API_URL'
+      Type: 'String'
+      Value: !Ref nearaiApiUrl
+      Tier: 'Standard'
+      Description: 'Parameter for NEARAI_API_URL'
+  AgentParamNearaiApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasNearaiApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_NEARAI_API_KEY'
+      Type: 'String'
+      Value: !Ref nearaiApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for NEARAI_API_KEY'
+  AgentParamNearaiModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasNearaiModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_NEARAI_MODEL'
+      Type: 'String'
+      Value: !Ref nearaiModel
+      Tier: 'Standard'
+      Description: 'Parameter for NEARAI_MODEL'
+  AgentParamSmallNearaiModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSmallNearaiModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_NEARAI_MODEL'
+      Type: 'String'
+      Value: !Ref smallNearaiModel
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_NEARAI_MODEL'
+  AgentParamMediumNearaiModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasMediumNearaiModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_NEARAI_MODEL'
+      Type: 'String'
+      Value: !Ref mediumNearaiModel
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_NEARAI_MODEL'
+  AgentParamLargeNearaiModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasLargeNearaiModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_NEARAI_MODEL'
+      Type: 'String'
+      Value: !Ref largeNearaiModel
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_NEARAI_MODEL'
+  AgentParamImageNearaiModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasImageNearaiModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_IMAGE_NEARAI_MODEL'
+      Type: 'String'
+      Value: !Ref imageNearaiModel
+      Tier: 'Standard'
+      Description: 'Parameter for IMAGE_NEARAI_MODEL'

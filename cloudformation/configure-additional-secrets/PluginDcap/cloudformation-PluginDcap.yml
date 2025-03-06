@@ -1,0 +1,46 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  dcapEvmPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for DCAP_EVM_PRIVATE_KEY'
+    
+  dcapMode:
+    Type: 'String'
+    Description: 'Parameter for DCAP_MODE'
+    
+Conditions:
+
+  HasDcapEvmPrivateKey: !Not [!Equals [!Ref dcapEvmPrivateKey, ""]]
+
+  HasDcapMode: !Not [!Equals [!Ref dcapMode, ""]]
+
+Resources:
+
+  AgentParamDcapEvmPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasDcapEvmPrivateKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_DCAP_EVM_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref dcapEvmPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for DCAP_EVM_PRIVATE_KEY'
+  AgentParamDcapModeParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasDcapMode
+    Properties:
+      Name: !Sub '${AgentCodeName}_DCAP_MODE'
+      Type: 'String'
+      Value: !Ref dcapMode
+      Tier: 'Standard'
+      Description: 'Parameter for DCAP_MODE'

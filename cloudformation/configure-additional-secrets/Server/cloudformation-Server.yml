@@ -1,0 +1,271 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  cacheStore:
+    Type: 'String'
+    Description: 'Parameter for CACHE_STORE'
+    
+  cacheDir:
+    Type: 'String'
+    Description: 'Parameter for CACHE_DIR'
+    
+  redisUrl:
+    Type: 'String'
+    Description: 'Parameter for REDIS_URL'
+    
+  serverUrl:
+    Type: 'String'
+    Description: 'Parameter for SERVER_URL'
+    
+  serverPort:
+    Type: 'Number'
+    Description: 'Parameter for SERVER_PORT'
+    
+  remoteCharacterUrls:
+    Type: 'String'
+    Description: 'Parameter for REMOTE_CHARACTER_URLS'
+    
+  useCharacterStorage:
+    Type: 'String'
+    Description: 'Parameter for USE_CHARACTER_STORAGE'
+    Default: 'false'
+  defaultLogLevel:
+    Type: 'String'
+    Description: 'Parameter for DEFAULT_LOG_LEVEL'
+    
+  logJsonFormat:
+    Type: 'String'
+    Description: 'Parameter for LOG_JSON_FORMAT'
+    Default: 'false'
+  expressMaxPayload:
+    Type: 'String'
+    Description: 'Parameter for EXPRESS_MAX_PAYLOAD'
+    
+  transcriptionProvider:
+    Type: 'String'
+    Description: 'Parameter for TRANSCRIPTION_PROVIDER'
+    
+  walletPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for WALLET_PRIVATE_KEY'
+    
+  walletPublicKey:
+    Type: 'String'
+    Description: 'Parameter for WALLET_PUBLIC_KEY'
+    
+  tokenizer:
+    Type: 'String'
+    Description: 'Parameter for tokenizer'
+    
+  cloudflare:
+    Type: 'String'
+    Description: 'Parameter for cloudflare'
+    
+  aws:
+    Type: 'String'
+    Description: 'Parameter for aws'
+    
+  verifiableInference:
+    Type: 'String'
+    Description: 'Parameter for verifiable_inference'
+    
+Conditions:
+
+  HasCacheStore: !Not [!Equals [!Ref cacheStore, ""]]
+
+  HasCacheDir: !Not [!Equals [!Ref cacheDir, ""]]
+
+  HasRedisUrl: !Not [!Equals [!Ref redisUrl, ""]]
+
+  HasServerUrl: !Not [!Equals [!Ref serverUrl, ""]]
+
+  HasServerPort: !Not [!Equals [!Ref serverPort, ""]]
+
+  HasRemoteCharacterUrls: !Not [!Equals [!Ref remoteCharacterUrls, ""]]
+
+  HasUseCharacterStorage: !Not [!Equals [!Ref useCharacterStorage, ""]]
+
+  HasDefaultLogLevel: !Not [!Equals [!Ref defaultLogLevel, ""]]
+
+  HasLogJsonFormat: !Not [!Equals [!Ref logJsonFormat, ""]]
+
+  HasExpressMaxPayload: !Not [!Equals [!Ref expressMaxPayload, ""]]
+
+  HasTranscriptionProvider: !Not [!Equals [!Ref transcriptionProvider, ""]]
+
+  HasWalletPrivateKey: !Not [!Equals [!Ref walletPrivateKey, ""]]
+
+  HasWalletPublicKey: !Not [!Equals [!Ref walletPublicKey, ""]]
+
+  HasTokenizer: !Not [!Equals [!Ref tokenizer, ""]]
+
+  HasCloudflare: !Not [!Equals [!Ref cloudflare, ""]]
+
+  HasAws: !Not [!Equals [!Ref aws, ""]]
+
+  HasVerifiableInference: !Not [!Equals [!Ref verifiableInference, ""]]
+
+Resources:
+
+  AgentParamCacheStoreParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasCacheStore
+    Properties:
+      Name: !Sub '${AgentCodeName}_CACHE_STORE'
+      Type: 'String'
+      Value: !Ref cacheStore
+      Tier: 'Standard'
+      Description: 'Parameter for CACHE_STORE'
+  AgentParamCacheDirParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasCacheDir
+    Properties:
+      Name: !Sub '${AgentCodeName}_CACHE_DIR'
+      Type: 'String'
+      Value: !Ref cacheDir
+      Tier: 'Standard'
+      Description: 'Parameter for CACHE_DIR'
+  AgentParamRedisUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasRedisUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_REDIS_URL'
+      Type: 'String'
+      Value: !Ref redisUrl
+      Tier: 'Standard'
+      Description: 'Parameter for REDIS_URL'
+  AgentParamServerUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasServerUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_SERVER_URL'
+      Type: 'String'
+      Value: !Ref serverUrl
+      Tier: 'Standard'
+      Description: 'Parameter for SERVER_URL'
+  AgentParamServerPortParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasServerPort
+    Properties:
+      Name: !Sub '${AgentCodeName}_SERVER_PORT'
+      Type: 'String'
+      Value: !Ref serverPort
+      Tier: 'Standard'
+      Description: 'Parameter for SERVER_PORT'
+  AgentParamRemoteCharacterUrlsParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasRemoteCharacterUrls
+    Properties:
+      Name: !Sub '${AgentCodeName}_REMOTE_CHARACTER_URLS'
+      Type: 'String'
+      Value: !Ref remoteCharacterUrls
+      Tier: 'Standard'
+      Description: 'Parameter for REMOTE_CHARACTER_URLS'
+  AgentParamUseCharacterStorageParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasUseCharacterStorage
+    Properties:
+      Name: !Sub '${AgentCodeName}_USE_CHARACTER_STORAGE'
+      Type: 'String'
+      Value: !Ref useCharacterStorage
+      Tier: 'Standard'
+      Description: 'Parameter for USE_CHARACTER_STORAGE'
+  AgentParamDefaultLogLevelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasDefaultLogLevel
+    Properties:
+      Name: !Sub '${AgentCodeName}_DEFAULT_LOG_LEVEL'
+      Type: 'String'
+      Value: !Ref defaultLogLevel
+      Tier: 'Standard'
+      Description: 'Parameter for DEFAULT_LOG_LEVEL'
+  AgentParamLogJsonFormatParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasLogJsonFormat
+    Properties:
+      Name: !Sub '${AgentCodeName}_LOG_JSON_FORMAT'
+      Type: 'String'
+      Value: !Ref logJsonFormat
+      Tier: 'Standard'
+      Description: 'Parameter for LOG_JSON_FORMAT'
+  AgentParamExpressMaxPayloadParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasExpressMaxPayload
+    Properties:
+      Name: !Sub '${AgentCodeName}_EXPRESS_MAX_PAYLOAD'
+      Type: 'String'
+      Value: !Ref expressMaxPayload
+      Tier: 'Standard'
+      Description: 'Parameter for EXPRESS_MAX_PAYLOAD'
+  AgentParamTranscriptionProviderParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasTranscriptionProvider
+    Properties:
+      Name: !Sub '${AgentCodeName}_TRANSCRIPTION_PROVIDER'
+      Type: 'String'
+      Value: !Ref transcriptionProvider
+      Tier: 'Standard'
+      Description: 'Parameter for TRANSCRIPTION_PROVIDER'
+  AgentParamWalletPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasWalletPrivateKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_WALLET_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref walletPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for WALLET_PRIVATE_KEY'
+  AgentParamWalletPublicKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasWalletPublicKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_WALLET_PUBLIC_KEY'
+      Type: 'String'
+      Value: !Ref walletPublicKey
+      Tier: 'Standard'
+      Description: 'Parameter for WALLET_PUBLIC_KEY'
+  AgentParamTokenizerParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasTokenizer
+    Properties:
+      Name: !Sub '${AgentCodeName}_tokenizer'
+      Type: 'String'
+      Value: !Ref tokenizer
+      Tier: 'Standard'
+      Description: 'Parameter for tokenizer'
+  AgentParamCloudflareParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasCloudflare
+    Properties:
+      Name: !Sub '${AgentCodeName}_cloudflare'
+      Type: 'String'
+      Value: !Ref cloudflare
+      Tier: 'Standard'
+      Description: 'Parameter for cloudflare'
+  AgentParamAwsParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAws
+    Properties:
+      Name: !Sub '${AgentCodeName}_aws'
+      Type: 'String'
+      Value: !Ref aws
+      Tier: 'Standard'
+      Description: 'Parameter for aws'
+  AgentParamVerifiableInferenceParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasVerifiableInference
+    Properties:
+      Name: !Sub '${AgentCodeName}_verifiable_inference'
+      Type: 'String'
+      Value: !Ref verifiableInference
+      Tier: 'Standard'
+      Description: 'Parameter for verifiable_inference'

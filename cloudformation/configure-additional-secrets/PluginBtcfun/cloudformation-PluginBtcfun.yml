@@ -1,0 +1,106 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  btcfunApiUrl:
+    Type: 'String'
+    Description: 'Parameter for BTCFUN_API_URL'
+    
+  btcPrivateKeyWif:
+    Type: 'String'
+    Description: 'Parameter for BTC_PRIVATE_KEY_WIF'
+    
+  btcAddress:
+    Type: 'String'
+    Description: 'Parameter for BTC_ADDRESS'
+    
+  btcMintCap:
+    Type: 'Number'
+    Description: 'Parameter for BTC_MINT_CAP'
+    
+  btcMintDeadline:
+    Type: 'Number'
+    Description: 'Parameter for BTC_MINT_DEADLINE'
+    
+  btcFundraisingCap:
+    Type: 'Number'
+    Description: 'Parameter for BTC_FUNDRAISING_CAP'
+    
+Conditions:
+
+  HasBtcfunApiUrl: !Not [!Equals [!Ref btcfunApiUrl, ""]]
+
+  HasBtcPrivateKeyWif: !Not [!Equals [!Ref btcPrivateKeyWif, ""]]
+
+  HasBtcAddress: !Not [!Equals [!Ref btcAddress, ""]]
+
+  HasBtcMintCap: !Not [!Equals [!Ref btcMintCap, ""]]
+
+  HasBtcMintDeadline: !Not [!Equals [!Ref btcMintDeadline, ""]]
+
+  HasBtcFundraisingCap: !Not [!Equals [!Ref btcFundraisingCap, ""]]
+
+Resources:
+
+  AgentParamBtcfunApiUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasBtcfunApiUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_BTCFUN_API_URL'
+      Type: 'String'
+      Value: !Ref btcfunApiUrl
+      Tier: 'Standard'
+      Description: 'Parameter for BTCFUN_API_URL'
+  AgentParamBtcPrivateKeyWifParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasBtcPrivateKeyWif
+    Properties:
+      Name: !Sub '${AgentCodeName}_BTC_PRIVATE_KEY_WIF'
+      Type: 'String'
+      Value: !Ref btcPrivateKeyWif
+      Tier: 'Standard'
+      Description: 'Parameter for BTC_PRIVATE_KEY_WIF'
+  AgentParamBtcAddressParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasBtcAddress
+    Properties:
+      Name: !Sub '${AgentCodeName}_BTC_ADDRESS'
+      Type: 'String'
+      Value: !Ref btcAddress
+      Tier: 'Standard'
+      Description: 'Parameter for BTC_ADDRESS'
+  AgentParamBtcMintCapParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasBtcMintCap
+    Properties:
+      Name: !Sub '${AgentCodeName}_BTC_MINT_CAP'
+      Type: 'String'
+      Value: !Ref btcMintCap
+      Tier: 'Standard'
+      Description: 'Parameter for BTC_MINT_CAP'
+  AgentParamBtcMintDeadlineParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasBtcMintDeadline
+    Properties:
+      Name: !Sub '${AgentCodeName}_BTC_MINT_DEADLINE'
+      Type: 'String'
+      Value: !Ref btcMintDeadline
+      Tier: 'Standard'
+      Description: 'Parameter for BTC_MINT_DEADLINE'
+  AgentParamBtcFundraisingCapParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasBtcFundraisingCap
+    Properties:
+      Name: !Sub '${AgentCodeName}_BTC_FUNDRAISING_CAP'
+      Type: 'String'
+      Value: !Ref btcFundraisingCap
+      Tier: 'Standard'
+      Description: 'Parameter for BTC_FUNDRAISING_CAP'

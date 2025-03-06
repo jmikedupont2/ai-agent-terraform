@@ -1,0 +1,46 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  dataApiKey:
+    Type: 'String'
+    Description: 'Parameter for DATA_API_KEY'
+    
+  dataAuthToken:
+    Type: 'String'
+    Description: 'Parameter for DATA_AUTH_TOKEN'
+    
+Conditions:
+
+  HasDataApiKey: !Not [!Equals [!Ref dataApiKey, ""]]
+
+  HasDataAuthToken: !Not [!Equals [!Ref dataAuthToken, ""]]
+
+Resources:
+
+  AgentParamDataApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasDataApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_DATA_API_KEY'
+      Type: 'String'
+      Value: !Ref dataApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for DATA_API_KEY'
+  AgentParamDataAuthTokenParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasDataAuthToken
+    Properties:
+      Name: !Sub '${AgentCodeName}_DATA_AUTH_TOKEN'
+      Type: 'String'
+      Value: !Ref dataAuthToken
+      Tier: 'Standard'
+      Description: 'Parameter for DATA_AUTH_TOKEN'

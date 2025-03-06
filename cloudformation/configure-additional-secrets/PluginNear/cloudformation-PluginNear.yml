@@ -1,0 +1,106 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  nearWalletSecretKey:
+    Type: 'String'
+    Description: 'Parameter for NEAR_WALLET_SECRET_KEY'
+    
+  nearWalletPublicKey:
+    Type: 'String'
+    Description: 'Parameter for NEAR_WALLET_PUBLIC_KEY'
+    
+  nearAddress:
+    Type: 'String'
+    Description: 'Parameter for NEAR_ADDRESS'
+    
+  nearSlippage:
+    Type: 'Number'
+    Description: 'Parameter for NEAR_SLIPPAGE'
+    
+  nearRpcUrl:
+    Type: 'String'
+    Description: 'Parameter for NEAR_RPC_URL'
+    
+  nearNetwork:
+    Type: 'String'
+    Description: 'Parameter for NEAR_NETWORK'
+    
+Conditions:
+
+  HasNearWalletSecretKey: !Not [!Equals [!Ref nearWalletSecretKey, ""]]
+
+  HasNearWalletPublicKey: !Not [!Equals [!Ref nearWalletPublicKey, ""]]
+
+  HasNearAddress: !Not [!Equals [!Ref nearAddress, ""]]
+
+  HasNearSlippage: !Not [!Equals [!Ref nearSlippage, ""]]
+
+  HasNearRpcUrl: !Not [!Equals [!Ref nearRpcUrl, ""]]
+
+  HasNearNetwork: !Not [!Equals [!Ref nearNetwork, ""]]
+
+Resources:
+
+  AgentParamNearWalletSecretKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasNearWalletSecretKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_NEAR_WALLET_SECRET_KEY'
+      Type: 'String'
+      Value: !Ref nearWalletSecretKey
+      Tier: 'Standard'
+      Description: 'Parameter for NEAR_WALLET_SECRET_KEY'
+  AgentParamNearWalletPublicKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasNearWalletPublicKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_NEAR_WALLET_PUBLIC_KEY'
+      Type: 'String'
+      Value: !Ref nearWalletPublicKey
+      Tier: 'Standard'
+      Description: 'Parameter for NEAR_WALLET_PUBLIC_KEY'
+  AgentParamNearAddressParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasNearAddress
+    Properties:
+      Name: !Sub '${AgentCodeName}_NEAR_ADDRESS'
+      Type: 'String'
+      Value: !Ref nearAddress
+      Tier: 'Standard'
+      Description: 'Parameter for NEAR_ADDRESS'
+  AgentParamNearSlippageParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasNearSlippage
+    Properties:
+      Name: !Sub '${AgentCodeName}_NEAR_SLIPPAGE'
+      Type: 'String'
+      Value: !Ref nearSlippage
+      Tier: 'Standard'
+      Description: 'Parameter for NEAR_SLIPPAGE'
+  AgentParamNearRpcUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasNearRpcUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_NEAR_RPC_URL'
+      Type: 'String'
+      Value: !Ref nearRpcUrl
+      Tier: 'Standard'
+      Description: 'Parameter for NEAR_RPC_URL'
+  AgentParamNearNetworkParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasNearNetwork
+    Properties:
+      Name: !Sub '${AgentCodeName}_NEAR_NETWORK'
+      Type: 'String'
+      Value: !Ref nearNetwork
+      Tier: 'Standard'
+      Description: 'Parameter for NEAR_NETWORK'

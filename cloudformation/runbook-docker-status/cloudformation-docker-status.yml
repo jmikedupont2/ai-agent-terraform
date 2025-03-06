@@ -1,0 +1,38 @@
+Description: "DockerStatus"
+Resources:
+  DockerDiagnoseAutomation:
+    Type: AWS::SSM::Document
+    Properties:
+      DocumentType: Automation
+      Content:
+        schemaVersion: "0.3"
+        description: "get docker logs"
+        assumeRole: "{{AutomationAssumeRole}}"
+        parameters:
+          InstanceId:
+            description: "ID of the Instance."
+            type: "String"
+          AutomationAssumeRole:
+            default: ""
+            description: "(Optional) Rolename."
+            type: "String"
+        mainSteps:
+        - name: "DockerStatus"
+          action: "aws:runCommand"
+          maxAttempts: 3
+          timeoutSeconds: 3600
+          inputs:
+            DocumentName: "AWS-RunShellScript"
+            InstanceIds:
+            - "{{InstanceId}}"
+            Parameters:
+              commands:
+                - |
+                   #!/bin/bash
+                   sudo docker ps
+                   sudo docker inspect agent-docker.service
+                   sudo docker logs agent-docker.service
+          outputs:
+          - Type: String
+            Name: payload
+            Selector: $.Payload

@@ -1,0 +1,121 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  heuristApiKey:
+    Type: 'String'
+    Description: 'Parameter for HEURIST_API_KEY'
+    
+  smallHeuristModel:
+    Type: 'String'
+    Description: 'Parameter for SMALL_HEURIST_MODEL'
+    
+  mediumHeuristModel:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_HEURIST_MODEL'
+    
+  largeHeuristModel:
+    Type: 'String'
+    Description: 'Parameter for LARGE_HEURIST_MODEL'
+    
+  heuristImageModel:
+    Type: 'String'
+    Description: 'Parameter for HEURIST_IMAGE_MODEL'
+    
+  heuristEmbeddingModel:
+    Type: 'String'
+    Description: 'Parameter for HEURIST_EMBEDDING_MODEL'
+    
+  useHeuristEmbedding:
+    Type: 'String'
+    Description: 'Parameter for USE_HEURIST_EMBEDDING'
+    Default: 'false'
+Conditions:
+
+  HasHeuristApiKey: !Not [!Equals [!Ref heuristApiKey, ""]]
+
+  HasSmallHeuristModel: !Not [!Equals [!Ref smallHeuristModel, ""]]
+
+  HasMediumHeuristModel: !Not [!Equals [!Ref mediumHeuristModel, ""]]
+
+  HasLargeHeuristModel: !Not [!Equals [!Ref largeHeuristModel, ""]]
+
+  HasHeuristImageModel: !Not [!Equals [!Ref heuristImageModel, ""]]
+
+  HasHeuristEmbeddingModel: !Not [!Equals [!Ref heuristEmbeddingModel, ""]]
+
+  HasUseHeuristEmbedding: !Not [!Equals [!Ref useHeuristEmbedding, ""]]
+
+Resources:
+
+  AgentParamHeuristApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasHeuristApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_HEURIST_API_KEY'
+      Type: 'String'
+      Value: !Ref heuristApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for HEURIST_API_KEY'
+  AgentParamSmallHeuristModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSmallHeuristModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_HEURIST_MODEL'
+      Type: 'String'
+      Value: !Ref smallHeuristModel
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_HEURIST_MODEL'
+  AgentParamMediumHeuristModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasMediumHeuristModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_HEURIST_MODEL'
+      Type: 'String'
+      Value: !Ref mediumHeuristModel
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_HEURIST_MODEL'
+  AgentParamLargeHeuristModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasLargeHeuristModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_HEURIST_MODEL'
+      Type: 'String'
+      Value: !Ref largeHeuristModel
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_HEURIST_MODEL'
+  AgentParamHeuristImageModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasHeuristImageModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_HEURIST_IMAGE_MODEL'
+      Type: 'String'
+      Value: !Ref heuristImageModel
+      Tier: 'Standard'
+      Description: 'Parameter for HEURIST_IMAGE_MODEL'
+  AgentParamHeuristEmbeddingModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasHeuristEmbeddingModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_HEURIST_EMBEDDING_MODEL'
+      Type: 'String'
+      Value: !Ref heuristEmbeddingModel
+      Tier: 'Standard'
+      Description: 'Parameter for HEURIST_EMBEDDING_MODEL'
+  AgentParamUseHeuristEmbeddingParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasUseHeuristEmbedding
+    Properties:
+      Name: !Sub '${AgentCodeName}_USE_HEURIST_EMBEDDING'
+      Type: 'String'
+      Value: !Ref useHeuristEmbedding
+      Tier: 'Standard'
+      Description: 'Parameter for USE_HEURIST_EMBEDDING'

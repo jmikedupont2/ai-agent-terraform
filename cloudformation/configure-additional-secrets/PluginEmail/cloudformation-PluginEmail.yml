@@ -1,0 +1,166 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  emailOutgoingService:
+    Type: 'String'
+    Description: 'Parameter for EMAIL_OUTGOING_SERVICE'
+    
+  emailOutgoingHost:
+    Type: 'String'
+    Description: 'Parameter for EMAIL_OUTGOING_HOST'
+    
+  emailOutgoingPort:
+    Type: 'Number'
+    Description: 'Parameter for EMAIL_OUTGOING_PORT'
+    
+  emailOutgoingUser:
+    Type: 'String'
+    Description: 'Parameter for EMAIL_OUTGOING_USER'
+    
+  emailOutgoingPass:
+    Type: 'String'
+    Description: 'Parameter for EMAIL_OUTGOING_PASS'
+    
+  emailIncomingService:
+    Type: 'String'
+    Description: 'Parameter for EMAIL_INCOMING_SERVICE'
+    
+  emailIncomingHost:
+    Type: 'String'
+    Description: 'Parameter for EMAIL_INCOMING_HOST'
+    
+  emailIncomingPort:
+    Type: 'Number'
+    Description: 'Parameter for EMAIL_INCOMING_PORT'
+    
+  emailIncomingUser:
+    Type: 'String'
+    Description: 'Parameter for EMAIL_INCOMING_USER'
+    
+  emailIncomingPass:
+    Type: 'String'
+    Description: 'Parameter for EMAIL_INCOMING_PASS'
+    
+Conditions:
+
+  HasEmailOutgoingService: !Not [!Equals [!Ref emailOutgoingService, ""]]
+
+  HasEmailOutgoingHost: !Not [!Equals [!Ref emailOutgoingHost, ""]]
+
+  HasEmailOutgoingPort: !Not [!Equals [!Ref emailOutgoingPort, ""]]
+
+  HasEmailOutgoingUser: !Not [!Equals [!Ref emailOutgoingUser, ""]]
+
+  HasEmailOutgoingPass: !Not [!Equals [!Ref emailOutgoingPass, ""]]
+
+  HasEmailIncomingService: !Not [!Equals [!Ref emailIncomingService, ""]]
+
+  HasEmailIncomingHost: !Not [!Equals [!Ref emailIncomingHost, ""]]
+
+  HasEmailIncomingPort: !Not [!Equals [!Ref emailIncomingPort, ""]]
+
+  HasEmailIncomingUser: !Not [!Equals [!Ref emailIncomingUser, ""]]
+
+  HasEmailIncomingPass: !Not [!Equals [!Ref emailIncomingPass, ""]]
+
+Resources:
+
+  AgentParamEmailOutgoingServiceParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasEmailOutgoingService
+    Properties:
+      Name: !Sub '${AgentCodeName}_EMAIL_OUTGOING_SERVICE'
+      Type: 'String'
+      Value: !Ref emailOutgoingService
+      Tier: 'Standard'
+      Description: 'Parameter for EMAIL_OUTGOING_SERVICE'
+  AgentParamEmailOutgoingHostParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasEmailOutgoingHost
+    Properties:
+      Name: !Sub '${AgentCodeName}_EMAIL_OUTGOING_HOST'
+      Type: 'String'
+      Value: !Ref emailOutgoingHost
+      Tier: 'Standard'
+      Description: 'Parameter for EMAIL_OUTGOING_HOST'
+  AgentParamEmailOutgoingPortParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasEmailOutgoingPort
+    Properties:
+      Name: !Sub '${AgentCodeName}_EMAIL_OUTGOING_PORT'
+      Type: 'String'
+      Value: !Ref emailOutgoingPort
+      Tier: 'Standard'
+      Description: 'Parameter for EMAIL_OUTGOING_PORT'
+  AgentParamEmailOutgoingUserParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasEmailOutgoingUser
+    Properties:
+      Name: !Sub '${AgentCodeName}_EMAIL_OUTGOING_USER'
+      Type: 'String'
+      Value: !Ref emailOutgoingUser
+      Tier: 'Standard'
+      Description: 'Parameter for EMAIL_OUTGOING_USER'
+  AgentParamEmailOutgoingPassParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasEmailOutgoingPass
+    Properties:
+      Name: !Sub '${AgentCodeName}_EMAIL_OUTGOING_PASS'
+      Type: 'String'
+      Value: !Ref emailOutgoingPass
+      Tier: 'Standard'
+      Description: 'Parameter for EMAIL_OUTGOING_PASS'
+  AgentParamEmailIncomingServiceParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasEmailIncomingService
+    Properties:
+      Name: !Sub '${AgentCodeName}_EMAIL_INCOMING_SERVICE'
+      Type: 'String'
+      Value: !Ref emailIncomingService
+      Tier: 'Standard'
+      Description: 'Parameter for EMAIL_INCOMING_SERVICE'
+  AgentParamEmailIncomingHostParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasEmailIncomingHost
+    Properties:
+      Name: !Sub '${AgentCodeName}_EMAIL_INCOMING_HOST'
+      Type: 'String'
+      Value: !Ref emailIncomingHost
+      Tier: 'Standard'
+      Description: 'Parameter for EMAIL_INCOMING_HOST'
+  AgentParamEmailIncomingPortParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasEmailIncomingPort
+    Properties:
+      Name: !Sub '${AgentCodeName}_EMAIL_INCOMING_PORT'
+      Type: 'String'
+      Value: !Ref emailIncomingPort
+      Tier: 'Standard'
+      Description: 'Parameter for EMAIL_INCOMING_PORT'
+  AgentParamEmailIncomingUserParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasEmailIncomingUser
+    Properties:
+      Name: !Sub '${AgentCodeName}_EMAIL_INCOMING_USER'
+      Type: 'String'
+      Value: !Ref emailIncomingUser
+      Tier: 'Standard'
+      Description: 'Parameter for EMAIL_INCOMING_USER'
+  AgentParamEmailIncomingPassParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasEmailIncomingPass
+    Properties:
+      Name: !Sub '${AgentCodeName}_EMAIL_INCOMING_PASS'
+      Type: 'String'
+      Value: !Ref emailIncomingPass
+      Tier: 'Standard'
+      Description: 'Parameter for EMAIL_INCOMING_PASS'

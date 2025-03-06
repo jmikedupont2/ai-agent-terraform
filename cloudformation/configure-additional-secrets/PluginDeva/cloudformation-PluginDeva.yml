@@ -1,0 +1,46 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  devaApiKey:
+    Type: 'String'
+    Description: 'Parameter for DEVA_API_KEY'
+    
+  devaApiBaseUrl:
+    Type: 'String'
+    Description: 'Parameter for DEVA_API_BASE_URL'
+    
+Conditions:
+
+  HasDevaApiKey: !Not [!Equals [!Ref devaApiKey, ""]]
+
+  HasDevaApiBaseUrl: !Not [!Equals [!Ref devaApiBaseUrl, ""]]
+
+Resources:
+
+  AgentParamDevaApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasDevaApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_DEVA_API_KEY'
+      Type: 'String'
+      Value: !Ref devaApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for DEVA_API_KEY'
+  AgentParamDevaApiBaseUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasDevaApiBaseUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_DEVA_API_BASE_URL'
+      Type: 'String'
+      Value: !Ref devaApiBaseUrl
+      Tier: 'Standard'
+      Description: 'Parameter for DEVA_API_BASE_URL'

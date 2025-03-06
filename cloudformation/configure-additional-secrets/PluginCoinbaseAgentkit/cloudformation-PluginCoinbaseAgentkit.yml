@@ -1,0 +1,61 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  cdpApiKeyName:
+    Type: 'String'
+    Description: 'Parameter for CDP_API_KEY_NAME'
+    
+  cdpApiKeyPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for CDP_API_KEY_PRIVATE_KEY'
+    
+  cdpAgentKitNetwork:
+    Type: 'String'
+    Description: 'Parameter for CDP_AGENT_KIT_NETWORK'
+    
+Conditions:
+
+  HasCdpApiKeyName: !Not [!Equals [!Ref cdpApiKeyName, ""]]
+
+  HasCdpApiKeyPrivateKey: !Not [!Equals [!Ref cdpApiKeyPrivateKey, ""]]
+
+  HasCdpAgentKitNetwork: !Not [!Equals [!Ref cdpAgentKitNetwork, ""]]
+
+Resources:
+
+  AgentParamCdpApiKeyNameParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasCdpApiKeyName
+    Properties:
+      Name: !Sub '${AgentCodeName}_CDP_API_KEY_NAME'
+      Type: 'String'
+      Value: !Ref cdpApiKeyName
+      Tier: 'Standard'
+      Description: 'Parameter for CDP_API_KEY_NAME'
+  AgentParamCdpApiKeyPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasCdpApiKeyPrivateKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_CDP_API_KEY_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref cdpApiKeyPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for CDP_API_KEY_PRIVATE_KEY'
+  AgentParamCdpAgentKitNetworkParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasCdpAgentKitNetwork
+    Properties:
+      Name: !Sub '${AgentCodeName}_CDP_AGENT_KIT_NETWORK'
+      Type: 'String'
+      Value: !Ref cdpAgentKitNetwork
+      Tier: 'Standard'
+      Description: 'Parameter for CDP_AGENT_KIT_NETWORK'

@@ -1,0 +1,330 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "former2"
+Description: "minimal ec2 asg and lt for eliza"
+Parameters:
+
+  GitRepo:
+    Type: "String"
+    Description: "git repo for the agent you can modify this to your own repo"
+    Default :  "https://github.com/meta-introspector/cloud-deployment-eliza/"
+
+  AgentCharacterFile:
+    Type: "String"
+    Description: "File name of agent to load, FIXME not used yet"
+    # referenced ~/cloud-deployment-eliza/systemd/agent-docker.service
+    Default: "/app/agent/characters/tine-test.character.json"
+
+  GitBranch:
+    Type: "String"
+    Description: "git branch for the agent you can modify this to your own branch"
+    Default: "feature/signoz"
+
+  GroqKey:
+    NoEcho: true
+    Type: 'String'
+    Description: 'secret groq key (hidden)'
+    
+  TwitterEmail:
+    NoEcho: true
+    Type: 'String'
+    Description: 'twitter email (hidden)'
+
+  TwitterPassword:
+    NoEcho: true
+    Type: 'String'
+    Description: 'twitter password (please dont use chars like single quote ()!"${} in the password due to known bugs (hidden)'
+
+  TwitterUserName:
+    NoEcho: true
+    Type: 'String'
+    Description: 'twitter username (hidden)'
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+      
+  LaunchTemplateVersion:
+    Type: "String"
+    Default: "1"
+    Description: 'advanced option to use newer versions of launch templatesz'
+
+  AvailabilityZone:
+    Type: "String"
+    Description: 'is appended to region name to create az'
+    Default: "a"
+
+  AmiId:
+    Type: "String"
+    Description: 'aws image id that is specific to the region you must also accept the licence for the ami'
+
+  SSMParameterPattern:
+    Type: 'String'
+    Description: 'pattern for ssm parameter, leave default'
+    Default: "tine_agent_*"
+
+  S3BucketPattern:
+    Type: 'String'
+    Description: 'pattern for ssm parameter, leave default'
+    Default: "tine_agent_*"
+
+  AgentImage:
+    Type: 'String'
+    Description: 'agent docker image to load'
+    Default: 'h4ckermike/elizaos-eliza:signoz'
+
+  TokenizerImage:
+    Type: 'String'
+    Description: 'public tokenizer image name'
+    Default: 'h4ckermike/arm64-tokenizers:feature-arm64'
+
+Resources:
+  MyDHCPOptions:
+    Type: AWS::EC2::DHCPOptions
+    DeletionPolicy: Delete
+    Properties:
+      DomainNameServers:
+        - AmazonProvidedDNS
+
+  TineAgentAgentImageParameter:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_AGENT_IMAGE'
+      Type: 'String'
+      Value: !Ref AgentImage
+      Tier: 'Standard'
+      Description: 'Parameter for Tine Agent image'
+
+  TineAgentGroqKey:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_GROQ_API_KEY'
+      Type: 'String'
+      Value: !Ref GroqKey
+      Tier: 'Standard'
+      Description: 'Secret Parameter for Groq Key'
+      
+  TineAgentTokenizerImage:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_TOKENIZER_IMAGE'
+      Type: 'String'
+      Value: !Ref TokenizerImage
+      Tier: 'Standard'
+      Description: 'Parameter for Tokenizer Image'
+      
+  TineAgentTwitterEmail:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_TWITTER_EMAIL'
+      Type: 'String'
+      Value: !Ref TwitterEmail
+      Tier: 'Standard'
+      Description: 'Parameter for TwitterEmail'
+      
+  TineAgentTwitterPassword:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_TWITTER_PASSWORD'
+      Type: 'String'
+      Value: !Ref TwitterPassword
+      Tier: 'Standard'
+      Description: 'Parameter for TwitterPassword'
+
+  TineAgentTwitterUserName:
+    Type: 'AWS::SSM::Parameter'
+    Properties:
+      Name: !Sub '${AgentCodeName}_TWITTER_USERNAME'
+      Type: 'String'
+      Value: !Ref TwitterUserName
+      Tier: 'Standard'
+      Description: 'Parameter for TwitterUserName'
+
+  IAMRoleAgent:
+    Type: "AWS::IAM::Role"
+    Properties:
+      Path: "/"
+      RoleName: !Sub '${AgentCodeName}_ssm-tine-deploy-agent-role'
+      AssumeRolePolicyDocument: "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Sid\":\"\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"},\"Action\":\"sts:AssumeRole\"}]}"
+      MaxSessionDuration: 3600
+      ManagedPolicyArns:
+      #- IAMManagedPolicy2
+      - "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+      - "arn:aws:iam::aws:policy/AmazonSSMPatchAssociation"
+      - "arn:aws:iam::aws:policy/AmazonSSMManagedEC2InstanceDefaultPolicy"
+      Policies:
+        - PolicyName: 'SSMDescribeParametersPolicy'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Sid: 'VisualEditor0'
+                Effect: 'Allow'
+                Action: 'ssm:DescribeParameters'
+                Resource: '*'
+                
+  IAMInstanceProfile:
+    DependsOn:
+      - IAMRoleAgent
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Path: "/"
+      InstanceProfileName: !Sub "${AgentCodeName}_agent-instance-profile"
+      Roles:
+        - !Ref IAMRoleAgent
+
+  EC2VPC:
+    Type: "AWS::EC2::VPC"
+    Properties:
+        CidrBlock: "10.0.0.0/16"
+        EnableDnsSupport: true
+        EnableDnsHostnames: true
+
+  EC2SubnetPublicA:
+    Type: "AWS::EC2::Subnet"
+    Properties:
+        AvailabilityZone: !Sub "${AWS::Region}${AvailabilityZone}"
+        CidrBlock: "10.0.4.0/24"
+        VpcId:
+          Ref: "EC2VPC"
+        MapPublicIpOnLaunch: false
+
+  ### setup vpc with routes
+  RouteTable:
+    Type: "AWS::EC2::RouteTable"
+    DependsOn:
+      - InternetGateway
+    Properties:
+      VpcId:
+        Ref: "EC2VPC"
+        
+  InternetGateway:
+    Type: "AWS::EC2::InternetGateway"
+    
+  VPCGatewayAttachment:
+    DependsOn:
+      - InternetGateway
+    Type: "AWS::EC2::VPCGatewayAttachment"
+    Properties:
+      VpcId:
+        Ref: "EC2VPC"
+      InternetGatewayId: !Ref "InternetGateway"
+      
+  InternetRoute:
+    Type: "AWS::EC2::Route"
+    DependsOn:
+      - InternetGateway
+      - RouteTable
+    Properties:
+      DestinationCidrBlock: "0.0.0.0/0"
+      GatewayId: !Ref InternetGateway
+      RouteTableId: !Ref RouteTable
+
+  SubnetARouteTableAssociation:
+    Type: "AWS::EC2::SubnetRouteTableAssociation"
+    Properties:
+      RouteTableId: !Ref RouteTable
+      SubnetId: !Ref EC2SubnetPublicA
+
+  EC2SecurityGroup:
+    Type: "AWS::EC2::SecurityGroup"
+    Properties:
+      GroupDescription: "An internal security group"
+      GroupName: "agent-internal"
+      SecurityGroupEgress:
+        -
+          CidrIp: "0.0.0.0/0"
+          Description: "All protocols"
+          IpProtocol: "-1"
+        -
+          CidrIpv6: "::/0"
+          Description: "All protocols"
+          IpProtocol: "-1"
+      VpcId:
+        Ref: "EC2VPC"
+
+  EC2LaunchTemplate:
+    Type: "AWS::EC2::LaunchTemplate"
+    Properties:
+      LaunchTemplateName: "agent-docker-t4g.small-launch-template"
+      LaunchTemplateData:
+        IamInstanceProfile:
+          Name: !Ref IAMInstanceProfile
+        NetworkInterfaces:
+          -
+            AssociatePublicIpAddress: true
+            # this will cost if you have more than one instance
+            
+            DeleteOnTermination: true
+            DeviceIndex: 0
+            Groups:
+              - !Ref EC2SecurityGroup
+            NetworkCardIndex: 0
+        ImageId: !Sub "${AmiId}"
+        InstanceType: "t4g.small"
+        UserData:
+          Fn::Base64: !Sub |
+              #!/bin/bash -xe
+              export AGENT_NAME="${AgentCodeName}"
+              export GIT_REPO="${GitRepo}" # FIXME
+              export GIT_BRANCH="${GitBranch}" # FIXME
+              export HOME=/root
+              apt update
+              apt-get install -y ec2-instance-connect git wget unzip systemd curl
+              apt-get install -y cloud-utils apt-transport-https ca-certificates curl software-properties-common
+              curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+              add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu  $(lsb_release -cs)  stable"
+              apt-get update
+              apt-get install -y docker-ce
+              usermod -aG docker ubuntu
+              snap install amazon-ssm-agent --classic || echo oops1
+              snap start amazon-ssm-agent || echo oops2
+              if [ ! -d "/opt/agent/" ]; then
+              git clone "${GitRepo}" "/opt/agent/"
+              fi
+              cd "/opt/agent/" || exit 1
+              git stash
+              git fetch --all
+              git checkout --track --force "origin/${GitBranch}"
+              bash -x /opt/agent/rundocker.sh
+
+        BlockDeviceMappings:
+          -
+            DeviceName: "/dev/sda1"
+            Ebs:
+              Encrypted: true
+              # free https://www.reddit.com/r/aws/comments/8vulq0/does_encryption_cost_money_on_aws_ebs_volumes/
+              VolumeSize: 30
+              VolumeType: "gp3"
+
+  AWSServiceRoleForAutoScaling:
+    Type: AWS::IAM::ServiceLinkedRole
+    Properties:
+      CustomSuffix: !Sub '${AgentCodeName}'
+      AWSServiceName: autoscaling.amazonaws.com
+      
+  AutoScalingAutoScalingGroup:
+    Type: "AWS::AutoScaling::AutoScalingGroup"
+    DependsOn:
+      - EC2LaunchTemplate
+      - AWSServiceRoleForAutoScaling
+    Properties:
+      AutoScalingGroupName: "docker-agent-ami-t4g.small"
+      LaunchTemplate:
+        LaunchTemplateName:  "agent-docker-t4g.small-launch-template"
+        Version: !Ref LaunchTemplateVersion
+      MinSize: 1
+      MaxSize: 2
+      DesiredCapacity: 1
+      Cooldown: 300
+      AvailabilityZones:
+        - !Sub "${AWS::Region}${AvailabilityZone}"
+        #              - "us-west-1b"
+      HealthCheckType: "EC2"
+      HealthCheckGracePeriod: 300
+      VPCZoneIdentifier:
+        - !Ref EC2SubnetPublicA
+      TerminationPolicies:
+        - "Default"
+      ServiceLinkedRoleARN: !Sub "arn:aws:iam::${AWS::AccountId}:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling_${AgentCodeName}"
+      NewInstancesProtectedFromScaleIn: false

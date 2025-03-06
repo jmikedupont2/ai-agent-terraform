@@ -1,0 +1,31 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  devinApiToken:
+    Type: 'String'
+    Description: 'Parameter for DEVIN_API_TOKEN'
+    
+Conditions:
+
+  HasDevinApiToken: !Not [!Equals [!Ref devinApiToken, ""]]
+
+Resources:
+
+  AgentParamDevinApiTokenParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasDevinApiToken
+    Properties:
+      Name: !Sub '${AgentCodeName}_DEVIN_API_TOKEN'
+      Type: 'String'
+      Value: !Ref devinApiToken
+      Tier: 'Standard'
+      Description: 'Parameter for DEVIN_API_TOKEN'

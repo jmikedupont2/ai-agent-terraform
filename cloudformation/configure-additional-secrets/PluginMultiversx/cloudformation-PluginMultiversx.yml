@@ -1,0 +1,61 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  mvxPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for MVX_PRIVATE_KEY'
+    
+  mvxNetwork:
+    Type: 'String'
+    Description: 'Parameter for MVX_NETWORK'
+    
+  accessTokenManagementTo:
+    Type: 'String'
+    Description: 'Parameter for ACCESS_TOKEN_MANAGEMENT_TO'
+    
+Conditions:
+
+  HasMvxPrivateKey: !Not [!Equals [!Ref mvxPrivateKey, ""]]
+
+  HasMvxNetwork: !Not [!Equals [!Ref mvxNetwork, ""]]
+
+  HasAccessTokenManagementTo: !Not [!Equals [!Ref accessTokenManagementTo, ""]]
+
+Resources:
+
+  AgentParamMvxPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasMvxPrivateKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_MVX_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref mvxPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for MVX_PRIVATE_KEY'
+  AgentParamMvxNetworkParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasMvxNetwork
+    Properties:
+      Name: !Sub '${AgentCodeName}_MVX_NETWORK'
+      Type: 'String'
+      Value: !Ref mvxNetwork
+      Tier: 'Standard'
+      Description: 'Parameter for MVX_NETWORK'
+  AgentParamAccessTokenManagementToParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAccessTokenManagementTo
+    Properties:
+      Name: !Sub '${AgentCodeName}_ACCESS_TOKEN_MANAGEMENT_TO'
+      Type: 'String'
+      Value: !Ref accessTokenManagementTo
+      Tier: 'Standard'
+      Description: 'Parameter for ACCESS_TOKEN_MANAGEMENT_TO'

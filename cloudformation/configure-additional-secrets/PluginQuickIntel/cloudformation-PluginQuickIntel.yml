@@ -1,0 +1,31 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  quickintelApiKey:
+    Type: 'String'
+    Description: 'Parameter for QUICKINTEL_API_KEY'
+    
+Conditions:
+
+  HasQuickintelApiKey: !Not [!Equals [!Ref quickintelApiKey, ""]]
+
+Resources:
+
+  AgentParamQuickintelApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasQuickintelApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_QUICKINTEL_API_KEY'
+      Type: 'String'
+      Value: !Ref quickintelApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for QUICKINTEL_API_KEY'

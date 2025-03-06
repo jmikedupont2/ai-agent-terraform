@@ -1,0 +1,46 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  internetComputerPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for INTERNET_COMPUTER_PRIVATE_KEY'
+    
+  internetComputerAddress:
+    Type: 'String'
+    Description: 'Parameter for INTERNET_COMPUTER_ADDRESS'
+    
+Conditions:
+
+  HasInternetComputerPrivateKey: !Not [!Equals [!Ref internetComputerPrivateKey, ""]]
+
+  HasInternetComputerAddress: !Not [!Equals [!Ref internetComputerAddress, ""]]
+
+Resources:
+
+  AgentParamInternetComputerPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasInternetComputerPrivateKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_INTERNET_COMPUTER_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref internetComputerPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for INTERNET_COMPUTER_PRIVATE_KEY'
+  AgentParamInternetComputerAddressParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasInternetComputerAddress
+    Properties:
+      Name: !Sub '${AgentCodeName}_INTERNET_COMPUTER_ADDRESS'
+      Type: 'String'
+      Value: !Ref internetComputerAddress
+      Tier: 'Standard'
+      Description: 'Parameter for INTERNET_COMPUTER_ADDRESS'

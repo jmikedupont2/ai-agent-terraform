@@ -1,0 +1,91 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  teeMode:
+    Type: 'String'
+    Description: 'Parameter for TEE_MODE'
+    
+  walletSecretSalt:
+    Type: 'String'
+    Description: 'Parameter for WALLET_SECRET_SALT'
+    
+  teeLogDbPath:
+    Type: 'String'
+    Description: 'Parameter for TEE_LOG_DB_PATH'
+    
+  vlog:
+    Type: 'String'
+    Description: 'Parameter for VLOG'
+    Default: 'false'
+  enableTeeLog:
+    Type: 'String'
+    Description: 'Parameter for ENABLE_TEE_LOG'
+    Default: 'false'
+Conditions:
+
+  HasTeeMode: !Not [!Equals [!Ref teeMode, ""]]
+
+  HasWalletSecretSalt: !Not [!Equals [!Ref walletSecretSalt, ""]]
+
+  HasTeeLogDbPath: !Not [!Equals [!Ref teeLogDbPath, ""]]
+
+  HasVlog: !Not [!Equals [!Ref vlog, ""]]
+
+  HasEnableTeeLog: !Not [!Equals [!Ref enableTeeLog, ""]]
+
+Resources:
+
+  AgentParamTeeModeParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasTeeMode
+    Properties:
+      Name: !Sub '${AgentCodeName}_TEE_MODE'
+      Type: 'String'
+      Value: !Ref teeMode
+      Tier: 'Standard'
+      Description: 'Parameter for TEE_MODE'
+  AgentParamWalletSecretSaltParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasWalletSecretSalt
+    Properties:
+      Name: !Sub '${AgentCodeName}_WALLET_SECRET_SALT'
+      Type: 'String'
+      Value: !Ref walletSecretSalt
+      Tier: 'Standard'
+      Description: 'Parameter for WALLET_SECRET_SALT'
+  AgentParamTeeLogDbPathParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasTeeLogDbPath
+    Properties:
+      Name: !Sub '${AgentCodeName}_TEE_LOG_DB_PATH'
+      Type: 'String'
+      Value: !Ref teeLogDbPath
+      Tier: 'Standard'
+      Description: 'Parameter for TEE_LOG_DB_PATH'
+  AgentParamVlogParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasVlog
+    Properties:
+      Name: !Sub '${AgentCodeName}_VLOG'
+      Type: 'String'
+      Value: !Ref vlog
+      Tier: 'Standard'
+      Description: 'Parameter for VLOG'
+  AgentParamEnableTeeLogParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasEnableTeeLog
+    Properties:
+      Name: !Sub '${AgentCodeName}_ENABLE_TEE_LOG'
+      Type: 'String'
+      Value: !Ref enableTeeLog
+      Tier: 'Standard'
+      Description: 'Parameter for ENABLE_TEE_LOG'

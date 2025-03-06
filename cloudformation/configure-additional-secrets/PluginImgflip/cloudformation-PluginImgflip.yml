@@ -1,0 +1,46 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  imgflipUsername:
+    Type: 'String'
+    Description: 'Parameter for IMGFLIP_USERNAME'
+    
+  imgflipPassword:
+    Type: 'String'
+    Description: 'Parameter for IMGFLIP_PASSWORD'
+    
+Conditions:
+
+  HasImgflipUsername: !Not [!Equals [!Ref imgflipUsername, ""]]
+
+  HasImgflipPassword: !Not [!Equals [!Ref imgflipPassword, ""]]
+
+Resources:
+
+  AgentParamImgflipUsernameParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasImgflipUsername
+    Properties:
+      Name: !Sub '${AgentCodeName}_IMGFLIP_USERNAME'
+      Type: 'String'
+      Value: !Ref imgflipUsername
+      Tier: 'Standard'
+      Description: 'Parameter for IMGFLIP_USERNAME'
+  AgentParamImgflipPasswordParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasImgflipPassword
+    Properties:
+      Name: !Sub '${AgentCodeName}_IMGFLIP_PASSWORD'
+      Type: 'String'
+      Value: !Ref imgflipPassword
+      Tier: 'Standard'
+      Description: 'Parameter for IMGFLIP_PASSWORD'

@@ -1,0 +1,91 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  lmstudioServerUrl:
+    Type: 'String'
+    Description: 'Parameter for LMSTUDIO_SERVER_URL'
+    
+  lmstudioModel:
+    Type: 'String'
+    Description: 'Parameter for LMSTUDIO_MODEL'
+    
+  smallLmstudioModel:
+    Type: 'String'
+    Description: 'Parameter for SMALL_LMSTUDIO_MODEL'
+    
+  mediumLmstudioModel:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_LMSTUDIO_MODEL'
+    
+  largeLmstudioModel:
+    Type: 'String'
+    Description: 'Parameter for LARGE_LMSTUDIO_MODEL'
+    
+Conditions:
+
+  HasLmstudioServerUrl: !Not [!Equals [!Ref lmstudioServerUrl, ""]]
+
+  HasLmstudioModel: !Not [!Equals [!Ref lmstudioModel, ""]]
+
+  HasSmallLmstudioModel: !Not [!Equals [!Ref smallLmstudioModel, ""]]
+
+  HasMediumLmstudioModel: !Not [!Equals [!Ref mediumLmstudioModel, ""]]
+
+  HasLargeLmstudioModel: !Not [!Equals [!Ref largeLmstudioModel, ""]]
+
+Resources:
+
+  AgentParamLmstudioServerUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasLmstudioServerUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_LMSTUDIO_SERVER_URL'
+      Type: 'String'
+      Value: !Ref lmstudioServerUrl
+      Tier: 'Standard'
+      Description: 'Parameter for LMSTUDIO_SERVER_URL'
+  AgentParamLmstudioModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasLmstudioModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_LMSTUDIO_MODEL'
+      Type: 'String'
+      Value: !Ref lmstudioModel
+      Tier: 'Standard'
+      Description: 'Parameter for LMSTUDIO_MODEL'
+  AgentParamSmallLmstudioModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSmallLmstudioModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_LMSTUDIO_MODEL'
+      Type: 'String'
+      Value: !Ref smallLmstudioModel
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_LMSTUDIO_MODEL'
+  AgentParamMediumLmstudioModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasMediumLmstudioModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_LMSTUDIO_MODEL'
+      Type: 'String'
+      Value: !Ref mediumLmstudioModel
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_LMSTUDIO_MODEL'
+  AgentParamLargeLmstudioModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasLargeLmstudioModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_LMSTUDIO_MODEL'
+      Type: 'String'
+      Value: !Ref largeLmstudioModel
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_LMSTUDIO_MODEL'

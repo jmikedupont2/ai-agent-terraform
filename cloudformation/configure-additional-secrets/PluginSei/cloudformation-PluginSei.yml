@@ -1,0 +1,61 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  seiPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for SEI_PRIVATE_KEY'
+    
+  seiNetwork:
+    Type: 'String'
+    Description: 'Parameter for SEI_NETWORK'
+    
+  seiRpcUrl:
+    Type: 'String'
+    Description: 'Parameter for SEI_RPC_URL'
+    
+Conditions:
+
+  HasSeiPrivateKey: !Not [!Equals [!Ref seiPrivateKey, ""]]
+
+  HasSeiNetwork: !Not [!Equals [!Ref seiNetwork, ""]]
+
+  HasSeiRpcUrl: !Not [!Equals [!Ref seiRpcUrl, ""]]
+
+Resources:
+
+  AgentParamSeiPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSeiPrivateKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_SEI_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref seiPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for SEI_PRIVATE_KEY'
+  AgentParamSeiNetworkParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSeiNetwork
+    Properties:
+      Name: !Sub '${AgentCodeName}_SEI_NETWORK'
+      Type: 'String'
+      Value: !Ref seiNetwork
+      Tier: 'Standard'
+      Description: 'Parameter for SEI_NETWORK'
+  AgentParamSeiRpcUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSeiRpcUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_SEI_RPC_URL'
+      Type: 'String'
+      Value: !Ref seiRpcUrl
+      Tier: 'Standard'
+      Description: 'Parameter for SEI_RPC_URL'

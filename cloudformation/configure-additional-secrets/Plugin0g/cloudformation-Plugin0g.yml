@@ -1,0 +1,76 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  zerogIndexerRpc:
+    Type: 'String'
+    Description: 'Parameter for ZEROG_INDEXER_RPC'
+    
+  zerogEvmRpc:
+    Type: 'String'
+    Description: 'Parameter for ZEROG_EVM_RPC'
+    
+  zerogPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for ZEROG_PRIVATE_KEY'
+    
+  zerogFlowAddress:
+    Type: 'String'
+    Description: 'Parameter for ZEROG_FLOW_ADDRESS'
+    
+Conditions:
+
+  HasZerogIndexerRpc: !Not [!Equals [!Ref zerogIndexerRpc, ""]]
+
+  HasZerogEvmRpc: !Not [!Equals [!Ref zerogEvmRpc, ""]]
+
+  HasZerogPrivateKey: !Not [!Equals [!Ref zerogPrivateKey, ""]]
+
+  HasZerogFlowAddress: !Not [!Equals [!Ref zerogFlowAddress, ""]]
+
+Resources:
+
+  AgentParamZerogIndexerRpcParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasZerogIndexerRpc
+    Properties:
+      Name: !Sub '${AgentCodeName}_ZEROG_INDEXER_RPC'
+      Type: 'String'
+      Value: !Ref zerogIndexerRpc
+      Tier: 'Standard'
+      Description: 'Parameter for ZEROG_INDEXER_RPC'
+  AgentParamZerogEvmRpcParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasZerogEvmRpc
+    Properties:
+      Name: !Sub '${AgentCodeName}_ZEROG_EVM_RPC'
+      Type: 'String'
+      Value: !Ref zerogEvmRpc
+      Tier: 'Standard'
+      Description: 'Parameter for ZEROG_EVM_RPC'
+  AgentParamZerogPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasZerogPrivateKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_ZEROG_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref zerogPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for ZEROG_PRIVATE_KEY'
+  AgentParamZerogFlowAddressParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasZerogFlowAddress
+    Properties:
+      Name: !Sub '${AgentCodeName}_ZEROG_FLOW_ADDRESS'
+      Type: 'String'
+      Value: !Ref zerogFlowAddress
+      Tier: 'Standard'
+      Description: 'Parameter for ZEROG_FLOW_ADDRESS'

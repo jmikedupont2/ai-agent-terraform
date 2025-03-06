@@ -1,0 +1,76 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  compassWalletPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for COMPASS_WALLET_PRIVATE_KEY'
+    
+  compassArbitrumRpcUrl:
+    Type: 'String'
+    Description: 'Parameter for COMPASS_ARBITRUM_RPC_URL'
+    
+  compassEthereumRpcUrl:
+    Type: 'String'
+    Description: 'Parameter for COMPASS_ETHEREUM_RPC_URL'
+    
+  compassBaseRpcUrl:
+    Type: 'String'
+    Description: 'Parameter for COMPASS_BASE_RPC_URL'
+    
+Conditions:
+
+  HasCompassWalletPrivateKey: !Not [!Equals [!Ref compassWalletPrivateKey, ""]]
+
+  HasCompassArbitrumRpcUrl: !Not [!Equals [!Ref compassArbitrumRpcUrl, ""]]
+
+  HasCompassEthereumRpcUrl: !Not [!Equals [!Ref compassEthereumRpcUrl, ""]]
+
+  HasCompassBaseRpcUrl: !Not [!Equals [!Ref compassBaseRpcUrl, ""]]
+
+Resources:
+
+  AgentParamCompassWalletPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasCompassWalletPrivateKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_COMPASS_WALLET_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref compassWalletPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for COMPASS_WALLET_PRIVATE_KEY'
+  AgentParamCompassArbitrumRpcUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasCompassArbitrumRpcUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_COMPASS_ARBITRUM_RPC_URL'
+      Type: 'String'
+      Value: !Ref compassArbitrumRpcUrl
+      Tier: 'Standard'
+      Description: 'Parameter for COMPASS_ARBITRUM_RPC_URL'
+  AgentParamCompassEthereumRpcUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasCompassEthereumRpcUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_COMPASS_ETHEREUM_RPC_URL'
+      Type: 'String'
+      Value: !Ref compassEthereumRpcUrl
+      Tier: 'Standard'
+      Description: 'Parameter for COMPASS_ETHEREUM_RPC_URL'
+  AgentParamCompassBaseRpcUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasCompassBaseRpcUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_COMPASS_BASE_RPC_URL'
+      Type: 'String'
+      Value: !Ref compassBaseRpcUrl
+      Tier: 'Standard'
+      Description: 'Parameter for COMPASS_BASE_RPC_URL'

@@ -1,0 +1,91 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  groqApiKey:
+    Type: 'String'
+    Description: 'Parameter for GROQ_API_KEY'
+    
+  smallGroqModel:
+    Type: 'String'
+    Description: 'Parameter for SMALL_GROQ_MODEL'
+    
+  mediumGroqModel:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_GROQ_MODEL'
+    
+  largeGroqModel:
+    Type: 'String'
+    Description: 'Parameter for LARGE_GROQ_MODEL'
+    
+  embeddingGroqModel:
+    Type: 'String'
+    Description: 'Parameter for EMBEDDING_GROQ_MODEL'
+    
+Conditions:
+
+  HasGroqApiKey: !Not [!Equals [!Ref groqApiKey, ""]]
+
+  HasSmallGroqModel: !Not [!Equals [!Ref smallGroqModel, ""]]
+
+  HasMediumGroqModel: !Not [!Equals [!Ref mediumGroqModel, ""]]
+
+  HasLargeGroqModel: !Not [!Equals [!Ref largeGroqModel, ""]]
+
+  HasEmbeddingGroqModel: !Not [!Equals [!Ref embeddingGroqModel, ""]]
+
+Resources:
+
+  AgentParamGroqApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasGroqApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_GROQ_API_KEY'
+      Type: 'String'
+      Value: !Ref groqApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for GROQ_API_KEY'
+  AgentParamSmallGroqModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSmallGroqModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_GROQ_MODEL'
+      Type: 'String'
+      Value: !Ref smallGroqModel
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_GROQ_MODEL'
+  AgentParamMediumGroqModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasMediumGroqModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_GROQ_MODEL'
+      Type: 'String'
+      Value: !Ref mediumGroqModel
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_GROQ_MODEL'
+  AgentParamLargeGroqModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasLargeGroqModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_GROQ_MODEL'
+      Type: 'String'
+      Value: !Ref largeGroqModel
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_GROQ_MODEL'
+  AgentParamEmbeddingGroqModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasEmbeddingGroqModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_EMBEDDING_GROQ_MODEL'
+      Type: 'String'
+      Value: !Ref embeddingGroqModel
+      Tier: 'Standard'
+      Description: 'Parameter for EMBEDDING_GROQ_MODEL'

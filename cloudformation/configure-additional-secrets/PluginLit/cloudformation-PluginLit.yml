@@ -1,0 +1,46 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  fundingPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for FUNDING_PRIVATE_KEY'
+    
+  evmRpcUrl:
+    Type: 'String'
+    Description: 'Parameter for EVM_RPC_URL'
+    
+Conditions:
+
+  HasFundingPrivateKey: !Not [!Equals [!Ref fundingPrivateKey, ""]]
+
+  HasEvmRpcUrl: !Not [!Equals [!Ref evmRpcUrl, ""]]
+
+Resources:
+
+  AgentParamFundingPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasFundingPrivateKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_FUNDING_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref fundingPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for FUNDING_PRIVATE_KEY'
+  AgentParamEvmRpcUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasEvmRpcUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_EVM_RPC_URL'
+      Type: 'String'
+      Value: !Ref evmRpcUrl
+      Tier: 'Standard'
+      Description: 'Parameter for EVM_RPC_URL'

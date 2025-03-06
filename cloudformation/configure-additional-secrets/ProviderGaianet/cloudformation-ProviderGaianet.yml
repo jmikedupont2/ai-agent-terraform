@@ -1,0 +1,166 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  gaianetModel:
+    Type: 'String'
+    Description: 'Parameter for GAIANET_MODEL'
+    
+  gaianetServerUrl:
+    Type: 'String'
+    Description: 'Parameter for GAIANET_SERVER_URL'
+    
+  smallGaianetModel:
+    Type: 'String'
+    Description: 'Parameter for SMALL_GAIANET_MODEL'
+    
+  smallGaianetServerUrl:
+    Type: 'String'
+    Description: 'Parameter for SMALL_GAIANET_SERVER_URL'
+    
+  mediumGaianetModel:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_GAIANET_MODEL'
+    
+  mediumGaianetServerUrl:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_GAIANET_SERVER_URL'
+    
+  largeGaianetModel:
+    Type: 'String'
+    Description: 'Parameter for LARGE_GAIANET_MODEL'
+    
+  largeGaianetServerUrl:
+    Type: 'String'
+    Description: 'Parameter for LARGE_GAIANET_SERVER_URL'
+    
+  gaianetEmbeddingModel:
+    Type: 'String'
+    Description: 'Parameter for GAIANET_EMBEDDING_MODEL'
+    
+  useGaianetEmbedding:
+    Type: 'String'
+    Description: 'Parameter for USE_GAIANET_EMBEDDING'
+    Default: 'false'
+Conditions:
+
+  HasGaianetModel: !Not [!Equals [!Ref gaianetModel, ""]]
+
+  HasGaianetServerUrl: !Not [!Equals [!Ref gaianetServerUrl, ""]]
+
+  HasSmallGaianetModel: !Not [!Equals [!Ref smallGaianetModel, ""]]
+
+  HasSmallGaianetServerUrl: !Not [!Equals [!Ref smallGaianetServerUrl, ""]]
+
+  HasMediumGaianetModel: !Not [!Equals [!Ref mediumGaianetModel, ""]]
+
+  HasMediumGaianetServerUrl: !Not [!Equals [!Ref mediumGaianetServerUrl, ""]]
+
+  HasLargeGaianetModel: !Not [!Equals [!Ref largeGaianetModel, ""]]
+
+  HasLargeGaianetServerUrl: !Not [!Equals [!Ref largeGaianetServerUrl, ""]]
+
+  HasGaianetEmbeddingModel: !Not [!Equals [!Ref gaianetEmbeddingModel, ""]]
+
+  HasUseGaianetEmbedding: !Not [!Equals [!Ref useGaianetEmbedding, ""]]
+
+Resources:
+
+  AgentParamGaianetModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasGaianetModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_GAIANET_MODEL'
+      Type: 'String'
+      Value: !Ref gaianetModel
+      Tier: 'Standard'
+      Description: 'Parameter for GAIANET_MODEL'
+  AgentParamGaianetServerUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasGaianetServerUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_GAIANET_SERVER_URL'
+      Type: 'String'
+      Value: !Ref gaianetServerUrl
+      Tier: 'Standard'
+      Description: 'Parameter for GAIANET_SERVER_URL'
+  AgentParamSmallGaianetModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSmallGaianetModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_GAIANET_MODEL'
+      Type: 'String'
+      Value: !Ref smallGaianetModel
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_GAIANET_MODEL'
+  AgentParamSmallGaianetServerUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSmallGaianetServerUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_GAIANET_SERVER_URL'
+      Type: 'String'
+      Value: !Ref smallGaianetServerUrl
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_GAIANET_SERVER_URL'
+  AgentParamMediumGaianetModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasMediumGaianetModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_GAIANET_MODEL'
+      Type: 'String'
+      Value: !Ref mediumGaianetModel
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_GAIANET_MODEL'
+  AgentParamMediumGaianetServerUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasMediumGaianetServerUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_GAIANET_SERVER_URL'
+      Type: 'String'
+      Value: !Ref mediumGaianetServerUrl
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_GAIANET_SERVER_URL'
+  AgentParamLargeGaianetModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasLargeGaianetModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_GAIANET_MODEL'
+      Type: 'String'
+      Value: !Ref largeGaianetModel
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_GAIANET_MODEL'
+  AgentParamLargeGaianetServerUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasLargeGaianetServerUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_GAIANET_SERVER_URL'
+      Type: 'String'
+      Value: !Ref largeGaianetServerUrl
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_GAIANET_SERVER_URL'
+  AgentParamGaianetEmbeddingModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasGaianetEmbeddingModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_GAIANET_EMBEDDING_MODEL'
+      Type: 'String'
+      Value: !Ref gaianetEmbeddingModel
+      Tier: 'Standard'
+      Description: 'Parameter for GAIANET_EMBEDDING_MODEL'
+  AgentParamUseGaianetEmbeddingParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasUseGaianetEmbedding
+    Properties:
+      Name: !Sub '${AgentCodeName}_USE_GAIANET_EMBEDDING'
+      Type: 'String'
+      Value: !Ref useGaianetEmbedding
+      Tier: 'Standard'
+      Description: 'Parameter for USE_GAIANET_EMBEDDING'

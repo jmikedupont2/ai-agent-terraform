@@ -1,4 +1,2 @@
 # this
-module "swarms" {
-  source = "./accounts/swarms"
-}
+# no top level code

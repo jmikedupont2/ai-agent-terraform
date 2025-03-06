@@ -1,0 +1,31 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  gelatoRelayApiKey:
+    Type: 'String'
+    Description: 'Parameter for GELATO_RELAY_API_KEY'
+    
+Conditions:
+
+  HasGelatoRelayApiKey: !Not [!Equals [!Ref gelatoRelayApiKey, ""]]
+
+Resources:
+
+  AgentParamGelatoRelayApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasGelatoRelayApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_GELATO_RELAY_API_KEY'
+      Type: 'String'
+      Value: !Ref gelatoRelayApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for GELATO_RELAY_API_KEY'

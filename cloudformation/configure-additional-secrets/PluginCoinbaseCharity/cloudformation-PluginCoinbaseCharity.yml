@@ -1,0 +1,106 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  isCharitable:
+    Type: 'String'
+    Description: 'Parameter for IS_CHARITABLE'
+    Default: 'false'
+  charityAddressBase:
+    Type: 'String'
+    Description: 'Parameter for CHARITY_ADDRESS_BASE'
+    
+  charityAddressSol:
+    Type: 'String'
+    Description: 'Parameter for CHARITY_ADDRESS_SOL'
+    
+  charityAddressEth:
+    Type: 'String'
+    Description: 'Parameter for CHARITY_ADDRESS_ETH'
+    
+  charityAddressArb:
+    Type: 'String'
+    Description: 'Parameter for CHARITY_ADDRESS_ARB'
+    
+  charityAddressPol:
+    Type: 'String'
+    Description: 'Parameter for CHARITY_ADDRESS_POL'
+    
+Conditions:
+
+  HasIsCharitable: !Not [!Equals [!Ref isCharitable, ""]]
+
+  HasCharityAddressBase: !Not [!Equals [!Ref charityAddressBase, ""]]
+
+  HasCharityAddressSol: !Not [!Equals [!Ref charityAddressSol, ""]]
+
+  HasCharityAddressEth: !Not [!Equals [!Ref charityAddressEth, ""]]
+
+  HasCharityAddressArb: !Not [!Equals [!Ref charityAddressArb, ""]]
+
+  HasCharityAddressPol: !Not [!Equals [!Ref charityAddressPol, ""]]
+
+Resources:
+
+  AgentParamIsCharitableParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasIsCharitable
+    Properties:
+      Name: !Sub '${AgentCodeName}_IS_CHARITABLE'
+      Type: 'String'
+      Value: !Ref isCharitable
+      Tier: 'Standard'
+      Description: 'Parameter for IS_CHARITABLE'
+  AgentParamCharityAddressBaseParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasCharityAddressBase
+    Properties:
+      Name: !Sub '${AgentCodeName}_CHARITY_ADDRESS_BASE'
+      Type: 'String'
+      Value: !Ref charityAddressBase
+      Tier: 'Standard'
+      Description: 'Parameter for CHARITY_ADDRESS_BASE'
+  AgentParamCharityAddressSolParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasCharityAddressSol
+    Properties:
+      Name: !Sub '${AgentCodeName}_CHARITY_ADDRESS_SOL'
+      Type: 'String'
+      Value: !Ref charityAddressSol
+      Tier: 'Standard'
+      Description: 'Parameter for CHARITY_ADDRESS_SOL'
+  AgentParamCharityAddressEthParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasCharityAddressEth
+    Properties:
+      Name: !Sub '${AgentCodeName}_CHARITY_ADDRESS_ETH'
+      Type: 'String'
+      Value: !Ref charityAddressEth
+      Tier: 'Standard'
+      Description: 'Parameter for CHARITY_ADDRESS_ETH'
+  AgentParamCharityAddressArbParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasCharityAddressArb
+    Properties:
+      Name: !Sub '${AgentCodeName}_CHARITY_ADDRESS_ARB'
+      Type: 'String'
+      Value: !Ref charityAddressArb
+      Tier: 'Standard'
+      Description: 'Parameter for CHARITY_ADDRESS_ARB'
+  AgentParamCharityAddressPolParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasCharityAddressPol
+    Properties:
+      Name: !Sub '${AgentCodeName}_CHARITY_ADDRESS_POL'
+      Type: 'String'
+      Value: !Ref charityAddressPol
+      Tier: 'Standard'
+      Description: 'Parameter for CHARITY_ADDRESS_POL'

@@ -1,0 +1,256 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  nvidiaNimEnv:
+    Type: 'String'
+    Description: 'Parameter for NVIDIA_NIM_ENV'
+    
+  nvidiaNimSpash:
+    Type: 'String'
+    Description: 'Parameter for NVIDIA_NIM_SPASH'
+    Default: 'false'
+  nvidiaNimApiKey:
+    Type: 'String'
+    Description: 'Parameter for NVIDIA_NIM_API_KEY'
+    
+  nvidiaNgcApiKey:
+    Type: 'String'
+    Description: 'Parameter for NVIDIA_NGC_API_KEY'
+    
+  nvidiaNimMaxRetries:
+    Type: 'Number'
+    Description: 'Parameter for NVIDIA_NIM_MAX_RETRIES'
+    
+  nvidiaNimRetryDelay:
+    Type: 'Number'
+    Description: 'Parameter for NVIDIA_NIM_RETRY_DELAY'
+    
+  nvidiaNimTimeout:
+    Type: 'Number'
+    Description: 'Parameter for NVIDIA_NIM_TIMEOUT'
+    
+  nvidiaGranularLog:
+    Type: 'String'
+    Description: 'Parameter for NVIDIA_GRANULAR_LOG'
+    Default: 'false'
+  nvidiaLogLevel:
+    Type: 'String'
+    Description: 'Parameter for NVIDIA_LOG_LEVEL'
+    
+  nvidiaOfftopicSystem:
+    Type: 'String'
+    Description: 'Parameter for NVIDIA_OFFTOPIC_SYSTEM'
+    
+  nvidiaOfftopicUser:
+    Type: 'String'
+    Description: 'Parameter for NVIDIA_OFFTOPIC_USER'
+    
+  nvidiaNimBaseVisionUrl:
+    Type: 'String'
+    Description: 'Parameter for NVIDIA_NIM_BASE_VISION_URL'
+    
+  nvidiaCosmosModel:
+    Type: 'String'
+    Description: 'Parameter for NVIDIA_COSMOS_MODEL'
+    
+  nvidiaCosmosInvokeUrl:
+    Type: 'String'
+    Description: 'Parameter for NVIDIA_COSMOS_INVOKE_URL'
+    
+  nvidiaCosmosAssetUrl:
+    Type: 'String'
+    Description: 'Parameter for NVIDIA_COSMOS_ASSET_URL'
+    
+  nvidiaCosmosMaxTokens:
+    Type: 'Number'
+    Description: 'Parameter for NVIDIA_COSMOS_MAX_TOKENS'
+    
+Conditions:
+
+  HasNvidiaNimEnv: !Not [!Equals [!Ref nvidiaNimEnv, ""]]
+
+  HasNvidiaNimSpash: !Not [!Equals [!Ref nvidiaNimSpash, ""]]
+
+  HasNvidiaNimApiKey: !Not [!Equals [!Ref nvidiaNimApiKey, ""]]
+
+  HasNvidiaNgcApiKey: !Not [!Equals [!Ref nvidiaNgcApiKey, ""]]
+
+  HasNvidiaNimMaxRetries: !Not [!Equals [!Ref nvidiaNimMaxRetries, ""]]
+
+  HasNvidiaNimRetryDelay: !Not [!Equals [!Ref nvidiaNimRetryDelay, ""]]
+
+  HasNvidiaNimTimeout: !Not [!Equals [!Ref nvidiaNimTimeout, ""]]
+
+  HasNvidiaGranularLog: !Not [!Equals [!Ref nvidiaGranularLog, ""]]
+
+  HasNvidiaLogLevel: !Not [!Equals [!Ref nvidiaLogLevel, ""]]
+
+  HasNvidiaOfftopicSystem: !Not [!Equals [!Ref nvidiaOfftopicSystem, ""]]
+
+  HasNvidiaOfftopicUser: !Not [!Equals [!Ref nvidiaOfftopicUser, ""]]
+
+  HasNvidiaNimBaseVisionUrl: !Not [!Equals [!Ref nvidiaNimBaseVisionUrl, ""]]
+
+  HasNvidiaCosmosModel: !Not [!Equals [!Ref nvidiaCosmosModel, ""]]
+
+  HasNvidiaCosmosInvokeUrl: !Not [!Equals [!Ref nvidiaCosmosInvokeUrl, ""]]
+
+  HasNvidiaCosmosAssetUrl: !Not [!Equals [!Ref nvidiaCosmosAssetUrl, ""]]
+
+  HasNvidiaCosmosMaxTokens: !Not [!Equals [!Ref nvidiaCosmosMaxTokens, ""]]
+
+Resources:
+
+  AgentParamNvidiaNimEnvParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasNvidiaNimEnv
+    Properties:
+      Name: !Sub '${AgentCodeName}_NVIDIA_NIM_ENV'
+      Type: 'String'
+      Value: !Ref nvidiaNimEnv
+      Tier: 'Standard'
+      Description: 'Parameter for NVIDIA_NIM_ENV'
+  AgentParamNvidiaNimSpashParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasNvidiaNimSpash
+    Properties:
+      Name: !Sub '${AgentCodeName}_NVIDIA_NIM_SPASH'
+      Type: 'String'
+      Value: !Ref nvidiaNimSpash
+      Tier: 'Standard'
+      Description: 'Parameter for NVIDIA_NIM_SPASH'
+  AgentParamNvidiaNimApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasNvidiaNimApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_NVIDIA_NIM_API_KEY'
+      Type: 'String'
+      Value: !Ref nvidiaNimApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for NVIDIA_NIM_API_KEY'
+  AgentParamNvidiaNgcApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasNvidiaNgcApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_NVIDIA_NGC_API_KEY'
+      Type: 'String'
+      Value: !Ref nvidiaNgcApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for NVIDIA_NGC_API_KEY'
+  AgentParamNvidiaNimMaxRetriesParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasNvidiaNimMaxRetries
+    Properties:
+      Name: !Sub '${AgentCodeName}_NVIDIA_NIM_MAX_RETRIES'
+      Type: 'String'
+      Value: !Ref nvidiaNimMaxRetries
+      Tier: 'Standard'
+      Description: 'Parameter for NVIDIA_NIM_MAX_RETRIES'
+  AgentParamNvidiaNimRetryDelayParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasNvidiaNimRetryDelay
+    Properties:
+      Name: !Sub '${AgentCodeName}_NVIDIA_NIM_RETRY_DELAY'
+      Type: 'String'
+      Value: !Ref nvidiaNimRetryDelay
+      Tier: 'Standard'
+      Description: 'Parameter for NVIDIA_NIM_RETRY_DELAY'
+  AgentParamNvidiaNimTimeoutParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasNvidiaNimTimeout
+    Properties:
+      Name: !Sub '${AgentCodeName}_NVIDIA_NIM_TIMEOUT'
+      Type: 'String'
+      Value: !Ref nvidiaNimTimeout
+      Tier: 'Standard'
+      Description: 'Parameter for NVIDIA_NIM_TIMEOUT'
+  AgentParamNvidiaGranularLogParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasNvidiaGranularLog
+    Properties:
+      Name: !Sub '${AgentCodeName}_NVIDIA_GRANULAR_LOG'
+      Type: 'String'
+      Value: !Ref nvidiaGranularLog
+      Tier: 'Standard'
+      Description: 'Parameter for NVIDIA_GRANULAR_LOG'
+  AgentParamNvidiaLogLevelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasNvidiaLogLevel
+    Properties:
+      Name: !Sub '${AgentCodeName}_NVIDIA_LOG_LEVEL'
+      Type: 'String'
+      Value: !Ref nvidiaLogLevel
+      Tier: 'Standard'
+      Description: 'Parameter for NVIDIA_LOG_LEVEL'
+  AgentParamNvidiaOfftopicSystemParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasNvidiaOfftopicSystem
+    Properties:
+      Name: !Sub '${AgentCodeName}_NVIDIA_OFFTOPIC_SYSTEM'
+      Type: 'String'
+      Value: !Ref nvidiaOfftopicSystem
+      Tier: 'Standard'
+      Description: 'Parameter for NVIDIA_OFFTOPIC_SYSTEM'
+  AgentParamNvidiaOfftopicUserParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasNvidiaOfftopicUser
+    Properties:
+      Name: !Sub '${AgentCodeName}_NVIDIA_OFFTOPIC_USER'
+      Type: 'String'
+      Value: !Ref nvidiaOfftopicUser
+      Tier: 'Standard'
+      Description: 'Parameter for NVIDIA_OFFTOPIC_USER'
+  AgentParamNvidiaNimBaseVisionUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasNvidiaNimBaseVisionUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_NVIDIA_NIM_BASE_VISION_URL'
+      Type: 'String'
+      Value: !Ref nvidiaNimBaseVisionUrl
+      Tier: 'Standard'
+      Description: 'Parameter for NVIDIA_NIM_BASE_VISION_URL'
+  AgentParamNvidiaCosmosModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasNvidiaCosmosModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_NVIDIA_COSMOS_MODEL'
+      Type: 'String'
+      Value: !Ref nvidiaCosmosModel
+      Tier: 'Standard'
+      Description: 'Parameter for NVIDIA_COSMOS_MODEL'
+  AgentParamNvidiaCosmosInvokeUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasNvidiaCosmosInvokeUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_NVIDIA_COSMOS_INVOKE_URL'
+      Type: 'String'
+      Value: !Ref nvidiaCosmosInvokeUrl
+      Tier: 'Standard'
+      Description: 'Parameter for NVIDIA_COSMOS_INVOKE_URL'
+  AgentParamNvidiaCosmosAssetUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasNvidiaCosmosAssetUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_NVIDIA_COSMOS_ASSET_URL'
+      Type: 'String'
+      Value: !Ref nvidiaCosmosAssetUrl
+      Tier: 'Standard'
+      Description: 'Parameter for NVIDIA_COSMOS_ASSET_URL'
+  AgentParamNvidiaCosmosMaxTokensParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasNvidiaCosmosMaxTokens
+    Properties:
+      Name: !Sub '${AgentCodeName}_NVIDIA_COSMOS_MAX_TOKENS'
+      Type: 'String'
+      Value: !Ref nvidiaCosmosMaxTokens
+      Tier: 'Standard'
+      Description: 'Parameter for NVIDIA_COSMOS_MAX_TOKENS'

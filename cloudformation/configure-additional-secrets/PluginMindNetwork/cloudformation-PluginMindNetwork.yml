@@ -1,0 +1,46 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  mindHotWalletPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for MIND_HOT_WALLET_PRIVATE_KEY'
+    
+  mindColdWalletAddress:
+    Type: 'String'
+    Description: 'Parameter for MIND_COLD_WALLET_ADDRESS'
+    
+Conditions:
+
+  HasMindHotWalletPrivateKey: !Not [!Equals [!Ref mindHotWalletPrivateKey, ""]]
+
+  HasMindColdWalletAddress: !Not [!Equals [!Ref mindColdWalletAddress, ""]]
+
+Resources:
+
+  AgentParamMindHotWalletPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasMindHotWalletPrivateKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_MIND_HOT_WALLET_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref mindHotWalletPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for MIND_HOT_WALLET_PRIVATE_KEY'
+  AgentParamMindColdWalletAddressParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasMindColdWalletAddress
+    Properties:
+      Name: !Sub '${AgentCodeName}_MIND_COLD_WALLET_ADDRESS'
+      Type: 'String'
+      Value: !Ref mindColdWalletAddress
+      Tier: 'Standard'
+      Description: 'Parameter for MIND_COLD_WALLET_ADDRESS'

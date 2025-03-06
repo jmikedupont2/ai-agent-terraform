@@ -1,0 +1,46 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  cronoszkevmAddress:
+    Type: 'String'
+    Description: 'Parameter for CRONOSZKEVM_ADDRESS'
+    
+  cronoszkevmPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for CRONOSZKEVM_PRIVATE_KEY'
+    
+Conditions:
+
+  HasCronoszkevmAddress: !Not [!Equals [!Ref cronoszkevmAddress, ""]]
+
+  HasCronoszkevmPrivateKey: !Not [!Equals [!Ref cronoszkevmPrivateKey, ""]]
+
+Resources:
+
+  AgentParamCronoszkevmAddressParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasCronoszkevmAddress
+    Properties:
+      Name: !Sub '${AgentCodeName}_CRONOSZKEVM_ADDRESS'
+      Type: 'String'
+      Value: !Ref cronoszkevmAddress
+      Tier: 'Standard'
+      Description: 'Parameter for CRONOSZKEVM_ADDRESS'
+  AgentParamCronoszkevmPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasCronoszkevmPrivateKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_CRONOSZKEVM_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref cronoszkevmPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for CRONOSZKEVM_PRIVATE_KEY'

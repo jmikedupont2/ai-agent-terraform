@@ -1,0 +1,31 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  artheraPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for ARTHERA_PRIVATE_KEY'
+    
+Conditions:
+
+  HasArtheraPrivateKey: !Not [!Equals [!Ref artheraPrivateKey, ""]]
+
+Resources:
+
+  AgentParamArtheraPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasArtheraPrivateKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_ARTHERA_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref artheraPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for ARTHERA_PRIVATE_KEY'

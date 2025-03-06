@@ -1,0 +1,76 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  anthropicApiKey:
+    Type: 'String'
+    Description: 'Parameter for ANTHROPIC_API_KEY'
+    
+  smallAnthropicModel:
+    Type: 'String'
+    Description: 'Parameter for SMALL_ANTHROPIC_MODEL'
+    
+  mediumAnthropicModel:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_ANTHROPIC_MODEL'
+    
+  largeAnthropicModel:
+    Type: 'String'
+    Description: 'Parameter for LARGE_ANTHROPIC_MODEL'
+    
+Conditions:
+
+  HasAnthropicApiKey: !Not [!Equals [!Ref anthropicApiKey, ""]]
+
+  HasSmallAnthropicModel: !Not [!Equals [!Ref smallAnthropicModel, ""]]
+
+  HasMediumAnthropicModel: !Not [!Equals [!Ref mediumAnthropicModel, ""]]
+
+  HasLargeAnthropicModel: !Not [!Equals [!Ref largeAnthropicModel, ""]]
+
+Resources:
+
+  AgentParamAnthropicApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAnthropicApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_ANTHROPIC_API_KEY'
+      Type: 'String'
+      Value: !Ref anthropicApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for ANTHROPIC_API_KEY'
+  AgentParamSmallAnthropicModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSmallAnthropicModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_ANTHROPIC_MODEL'
+      Type: 'String'
+      Value: !Ref smallAnthropicModel
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_ANTHROPIC_MODEL'
+  AgentParamMediumAnthropicModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasMediumAnthropicModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_ANTHROPIC_MODEL'
+      Type: 'String'
+      Value: !Ref mediumAnthropicModel
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_ANTHROPIC_MODEL'
+  AgentParamLargeAnthropicModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasLargeAnthropicModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_ANTHROPIC_MODEL'
+      Type: 'String'
+      Value: !Ref largeAnthropicModel
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_ANTHROPIC_MODEL'

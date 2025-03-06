@@ -1,0 +1,106 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  telegramBotToken:
+    Type: 'String'
+    Description: 'Parameter for TELEGRAM_BOT_TOKEN'
+    
+  telegramAccountPhone:
+    Type: 'String'
+    Description: 'Parameter for TELEGRAM_ACCOUNT_PHONE'
+    
+  telegramAccountAppId:
+    Type: 'String'
+    Description: 'Parameter for TELEGRAM_ACCOUNT_APP_ID'
+    
+  telegramAccountAppHash:
+    Type: 'String'
+    Description: 'Parameter for TELEGRAM_ACCOUNT_APP_HASH'
+    
+  telegramAccountDeviceModel:
+    Type: 'String'
+    Description: 'Parameter for TELEGRAM_ACCOUNT_DEVICE_MODEL'
+    
+  telegramAccountSystemVersion:
+    Type: 'String'
+    Description: 'Parameter for TELEGRAM_ACCOUNT_SYSTEM_VERSION'
+    
+Conditions:
+
+  HasTelegramBotToken: !Not [!Equals [!Ref telegramBotToken, ""]]
+
+  HasTelegramAccountPhone: !Not [!Equals [!Ref telegramAccountPhone, ""]]
+
+  HasTelegramAccountAppId: !Not [!Equals [!Ref telegramAccountAppId, ""]]
+
+  HasTelegramAccountAppHash: !Not [!Equals [!Ref telegramAccountAppHash, ""]]
+
+  HasTelegramAccountDeviceModel: !Not [!Equals [!Ref telegramAccountDeviceModel, ""]]
+
+  HasTelegramAccountSystemVersion: !Not [!Equals [!Ref telegramAccountSystemVersion, ""]]
+
+Resources:
+
+  AgentParamTelegramBotTokenParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasTelegramBotToken
+    Properties:
+      Name: !Sub '${AgentCodeName}_TELEGRAM_BOT_TOKEN'
+      Type: 'String'
+      Value: !Ref telegramBotToken
+      Tier: 'Standard'
+      Description: 'Parameter for TELEGRAM_BOT_TOKEN'
+  AgentParamTelegramAccountPhoneParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasTelegramAccountPhone
+    Properties:
+      Name: !Sub '${AgentCodeName}_TELEGRAM_ACCOUNT_PHONE'
+      Type: 'String'
+      Value: !Ref telegramAccountPhone
+      Tier: 'Standard'
+      Description: 'Parameter for TELEGRAM_ACCOUNT_PHONE'
+  AgentParamTelegramAccountAppIdParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasTelegramAccountAppId
+    Properties:
+      Name: !Sub '${AgentCodeName}_TELEGRAM_ACCOUNT_APP_ID'
+      Type: 'String'
+      Value: !Ref telegramAccountAppId
+      Tier: 'Standard'
+      Description: 'Parameter for TELEGRAM_ACCOUNT_APP_ID'
+  AgentParamTelegramAccountAppHashParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasTelegramAccountAppHash
+    Properties:
+      Name: !Sub '${AgentCodeName}_TELEGRAM_ACCOUNT_APP_HASH'
+      Type: 'String'
+      Value: !Ref telegramAccountAppHash
+      Tier: 'Standard'
+      Description: 'Parameter for TELEGRAM_ACCOUNT_APP_HASH'
+  AgentParamTelegramAccountDeviceModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasTelegramAccountDeviceModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_TELEGRAM_ACCOUNT_DEVICE_MODEL'
+      Type: 'String'
+      Value: !Ref telegramAccountDeviceModel
+      Tier: 'Standard'
+      Description: 'Parameter for TELEGRAM_ACCOUNT_DEVICE_MODEL'
+  AgentParamTelegramAccountSystemVersionParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasTelegramAccountSystemVersion
+    Properties:
+      Name: !Sub '${AgentCodeName}_TELEGRAM_ACCOUNT_SYSTEM_VERSION'
+      Type: 'String'
+      Value: !Ref telegramAccountSystemVersion
+      Tier: 'Standard'
+      Description: 'Parameter for TELEGRAM_ACCOUNT_SYSTEM_VERSION'

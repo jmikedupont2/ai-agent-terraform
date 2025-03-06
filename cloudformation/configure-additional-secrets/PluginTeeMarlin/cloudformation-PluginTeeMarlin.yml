@@ -1,0 +1,46 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  teeMarlin:
+    Type: 'String'
+    Description: 'Parameter for TEE_MARLIN'
+    
+  teeMarlinAttestationEndpoint:
+    Type: 'String'
+    Description: 'Parameter for TEE_MARLIN_ATTESTATION_ENDPOINT'
+    
+Conditions:
+
+  HasTeeMarlin: !Not [!Equals [!Ref teeMarlin, ""]]
+
+  HasTeeMarlinAttestationEndpoint: !Not [!Equals [!Ref teeMarlinAttestationEndpoint, ""]]
+
+Resources:
+
+  AgentParamTeeMarlinParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasTeeMarlin
+    Properties:
+      Name: !Sub '${AgentCodeName}_TEE_MARLIN'
+      Type: 'String'
+      Value: !Ref teeMarlin
+      Tier: 'Standard'
+      Description: 'Parameter for TEE_MARLIN'
+  AgentParamTeeMarlinAttestationEndpointParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasTeeMarlinAttestationEndpoint
+    Properties:
+      Name: !Sub '${AgentCodeName}_TEE_MARLIN_ATTESTATION_ENDPOINT'
+      Type: 'String'
+      Value: !Ref teeMarlinAttestationEndpoint
+      Tier: 'Standard'
+      Description: 'Parameter for TEE_MARLIN_ATTESTATION_ENDPOINT'

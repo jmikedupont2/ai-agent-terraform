@@ -1,0 +1,91 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  arbitrageEthereumWsUrl:
+    Type: 'String'
+    Description: 'Parameter for ARBITRAGE_ETHEREUM_WS_URL'
+    
+  arbitrageEvmProviderUrl:
+    Type: 'String'
+    Description: 'Parameter for ARBITRAGE_EVM_PROVIDER_URL'
+    
+  arbitrageEvmPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for ARBITRAGE_EVM_PRIVATE_KEY'
+    
+  flashbotsRelaySigningKey:
+    Type: 'String'
+    Description: 'Parameter for FLASHBOTS_RELAY_SIGNING_KEY'
+    
+  bundleExecutorAddress:
+    Type: 'String'
+    Description: 'Parameter for BUNDLE_EXECUTOR_ADDRESS'
+    
+Conditions:
+
+  HasArbitrageEthereumWsUrl: !Not [!Equals [!Ref arbitrageEthereumWsUrl, ""]]
+
+  HasArbitrageEvmProviderUrl: !Not [!Equals [!Ref arbitrageEvmProviderUrl, ""]]
+
+  HasArbitrageEvmPrivateKey: !Not [!Equals [!Ref arbitrageEvmPrivateKey, ""]]
+
+  HasFlashbotsRelaySigningKey: !Not [!Equals [!Ref flashbotsRelaySigningKey, ""]]
+
+  HasBundleExecutorAddress: !Not [!Equals [!Ref bundleExecutorAddress, ""]]
+
+Resources:
+
+  AgentParamArbitrageEthereumWsUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasArbitrageEthereumWsUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_ARBITRAGE_ETHEREUM_WS_URL'
+      Type: 'String'
+      Value: !Ref arbitrageEthereumWsUrl
+      Tier: 'Standard'
+      Description: 'Parameter for ARBITRAGE_ETHEREUM_WS_URL'
+  AgentParamArbitrageEvmProviderUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasArbitrageEvmProviderUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_ARBITRAGE_EVM_PROVIDER_URL'
+      Type: 'String'
+      Value: !Ref arbitrageEvmProviderUrl
+      Tier: 'Standard'
+      Description: 'Parameter for ARBITRAGE_EVM_PROVIDER_URL'
+  AgentParamArbitrageEvmPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasArbitrageEvmPrivateKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_ARBITRAGE_EVM_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref arbitrageEvmPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for ARBITRAGE_EVM_PRIVATE_KEY'
+  AgentParamFlashbotsRelaySigningKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasFlashbotsRelaySigningKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_FLASHBOTS_RELAY_SIGNING_KEY'
+      Type: 'String'
+      Value: !Ref flashbotsRelaySigningKey
+      Tier: 'Standard'
+      Description: 'Parameter for FLASHBOTS_RELAY_SIGNING_KEY'
+  AgentParamBundleExecutorAddressParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasBundleExecutorAddress
+    Properties:
+      Name: !Sub '${AgentCodeName}_BUNDLE_EXECUTOR_ADDRESS'
+      Type: 'String'
+      Value: !Ref bundleExecutorAddress
+      Tier: 'Standard'
+      Description: 'Parameter for BUNDLE_EXECUTOR_ADDRESS'

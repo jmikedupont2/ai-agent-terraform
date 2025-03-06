@@ -1,0 +1,31 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  stargazeEndpoint:
+    Type: 'String'
+    Description: 'Parameter for STARGAZE_ENDPOINT'
+    
+Conditions:
+
+  HasStargazeEndpoint: !Not [!Equals [!Ref stargazeEndpoint, ""]]
+
+Resources:
+
+  AgentParamStargazeEndpointParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasStargazeEndpoint
+    Properties:
+      Name: !Sub '${AgentCodeName}_STARGAZE_ENDPOINT'
+      Type: 'String'
+      Value: !Ref stargazeEndpoint
+      Tier: 'Standard'
+      Description: 'Parameter for STARGAZE_ENDPOINT'

@@ -1,0 +1,196 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  openaiApiKey:
+    Type: 'String'
+    Description: 'Parameter for OPENAI_API_KEY'
+    
+  openaiApiUrl:
+    Type: 'String'
+    Description: 'Parameter for OPENAI_API_URL'
+    
+  smallOpenaiModel:
+    Type: 'String'
+    Description: 'Parameter for SMALL_OPENAI_MODEL'
+    
+  mediumOpenaiModel:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_OPENAI_MODEL'
+    
+  largeOpenaiModel:
+    Type: 'String'
+    Description: 'Parameter for LARGE_OPENAI_MODEL'
+    
+  embeddingOpenaiModel:
+    Type: 'String'
+    Description: 'Parameter for EMBEDDING_OPENAI_MODEL'
+    
+  imageOpenaiModel:
+    Type: 'String'
+    Description: 'Parameter for IMAGE_OPENAI_MODEL'
+    
+  useOpenaiEmbedding:
+    Type: 'String'
+    Description: 'Parameter for USE_OPENAI_EMBEDDING'
+    Default: 'false'
+  enableOpenAiCommunityPlugin:
+    Type: 'String'
+    Description: 'Parameter for ENABLE_OPEN_AI_COMMUNITY_PLUGIN'
+    Default: 'false'
+  openaiDefaultModel:
+    Type: 'String'
+    Description: 'Parameter for OPENAI_DEFAULT_MODEL'
+    
+  openaiMaxTokens:
+    Type: 'Number'
+    Description: 'Parameter for OPENAI_MAX_TOKENS'
+    
+  openaiTemperature:
+    Type: 'Number'
+    Description: 'Parameter for OPENAI_TEMPERATURE'
+    
+Conditions:
+
+  HasOpenaiApiKey: !Not [!Equals [!Ref openaiApiKey, ""]]
+
+  HasOpenaiApiUrl: !Not [!Equals [!Ref openaiApiUrl, ""]]
+
+  HasSmallOpenaiModel: !Not [!Equals [!Ref smallOpenaiModel, ""]]
+
+  HasMediumOpenaiModel: !Not [!Equals [!Ref mediumOpenaiModel, ""]]
+
+  HasLargeOpenaiModel: !Not [!Equals [!Ref largeOpenaiModel, ""]]
+
+  HasEmbeddingOpenaiModel: !Not [!Equals [!Ref embeddingOpenaiModel, ""]]
+
+  HasImageOpenaiModel: !Not [!Equals [!Ref imageOpenaiModel, ""]]
+
+  HasUseOpenaiEmbedding: !Not [!Equals [!Ref useOpenaiEmbedding, ""]]
+
+  HasEnableOpenAiCommunityPlugin: !Not [!Equals [!Ref enableOpenAiCommunityPlugin, ""]]
+
+  HasOpenaiDefaultModel: !Not [!Equals [!Ref openaiDefaultModel, ""]]
+
+  HasOpenaiMaxTokens: !Not [!Equals [!Ref openaiMaxTokens, ""]]
+
+  HasOpenaiTemperature: !Not [!Equals [!Ref openaiTemperature, ""]]
+
+Resources:
+
+  AgentParamOpenaiApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasOpenaiApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_OPENAI_API_KEY'
+      Type: 'String'
+      Value: !Ref openaiApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for OPENAI_API_KEY'
+  AgentParamOpenaiApiUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasOpenaiApiUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_OPENAI_API_URL'
+      Type: 'String'
+      Value: !Ref openaiApiUrl
+      Tier: 'Standard'
+      Description: 'Parameter for OPENAI_API_URL'
+  AgentParamSmallOpenaiModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSmallOpenaiModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_OPENAI_MODEL'
+      Type: 'String'
+      Value: !Ref smallOpenaiModel
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_OPENAI_MODEL'
+  AgentParamMediumOpenaiModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasMediumOpenaiModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_OPENAI_MODEL'
+      Type: 'String'
+      Value: !Ref mediumOpenaiModel
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_OPENAI_MODEL'
+  AgentParamLargeOpenaiModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasLargeOpenaiModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_OPENAI_MODEL'
+      Type: 'String'
+      Value: !Ref largeOpenaiModel
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_OPENAI_MODEL'
+  AgentParamEmbeddingOpenaiModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasEmbeddingOpenaiModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_EMBEDDING_OPENAI_MODEL'
+      Type: 'String'
+      Value: !Ref embeddingOpenaiModel
+      Tier: 'Standard'
+      Description: 'Parameter for EMBEDDING_OPENAI_MODEL'
+  AgentParamImageOpenaiModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasImageOpenaiModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_IMAGE_OPENAI_MODEL'
+      Type: 'String'
+      Value: !Ref imageOpenaiModel
+      Tier: 'Standard'
+      Description: 'Parameter for IMAGE_OPENAI_MODEL'
+  AgentParamUseOpenaiEmbeddingParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasUseOpenaiEmbedding
+    Properties:
+      Name: !Sub '${AgentCodeName}_USE_OPENAI_EMBEDDING'
+      Type: 'String'
+      Value: !Ref useOpenaiEmbedding
+      Tier: 'Standard'
+      Description: 'Parameter for USE_OPENAI_EMBEDDING'
+  AgentParamEnableOpenAiCommunityPluginParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasEnableOpenAiCommunityPlugin
+    Properties:
+      Name: !Sub '${AgentCodeName}_ENABLE_OPEN_AI_COMMUNITY_PLUGIN'
+      Type: 'String'
+      Value: !Ref enableOpenAiCommunityPlugin
+      Tier: 'Standard'
+      Description: 'Parameter for ENABLE_OPEN_AI_COMMUNITY_PLUGIN'
+  AgentParamOpenaiDefaultModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasOpenaiDefaultModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_OPENAI_DEFAULT_MODEL'
+      Type: 'String'
+      Value: !Ref openaiDefaultModel
+      Tier: 'Standard'
+      Description: 'Parameter for OPENAI_DEFAULT_MODEL'
+  AgentParamOpenaiMaxTokensParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasOpenaiMaxTokens
+    Properties:
+      Name: !Sub '${AgentCodeName}_OPENAI_MAX_TOKENS'
+      Type: 'String'
+      Value: !Ref openaiMaxTokens
+      Tier: 'Standard'
+      Description: 'Parameter for OPENAI_MAX_TOKENS'
+  AgentParamOpenaiTemperatureParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasOpenaiTemperature
+    Properties:
+      Name: !Sub '${AgentCodeName}_OPENAI_TEMPERATURE'
+      Type: 'String'
+      Value: !Ref openaiTemperature
+      Tier: 'Standard'
+      Description: 'Parameter for OPENAI_TEMPERATURE'

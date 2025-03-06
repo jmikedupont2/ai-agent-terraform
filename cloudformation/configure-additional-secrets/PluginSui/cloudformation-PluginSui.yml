@@ -1,0 +1,46 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  suiPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for SUI_PRIVATE_KEY'
+    
+  suiNetwork:
+    Type: 'String'
+    Description: 'Parameter for SUI_NETWORK'
+    
+Conditions:
+
+  HasSuiPrivateKey: !Not [!Equals [!Ref suiPrivateKey, ""]]
+
+  HasSuiNetwork: !Not [!Equals [!Ref suiNetwork, ""]]
+
+Resources:
+
+  AgentParamSuiPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSuiPrivateKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_SUI_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref suiPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for SUI_PRIVATE_KEY'
+  AgentParamSuiNetworkParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSuiNetwork
+    Properties:
+      Name: !Sub '${AgentCodeName}_SUI_NETWORK'
+      Type: 'String'
+      Value: !Ref suiNetwork
+      Tier: 'Standard'
+      Description: 'Parameter for SUI_NETWORK'

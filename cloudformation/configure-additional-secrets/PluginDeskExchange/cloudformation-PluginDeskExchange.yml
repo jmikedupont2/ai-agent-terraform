@@ -1,0 +1,46 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  deskExchangePrivateKey:
+    Type: 'String'
+    Description: 'Parameter for DESK_EXCHANGE_PRIVATE_KEY'
+    
+  deskExchangeNetwork:
+    Type: 'String'
+    Description: 'Parameter for DESK_EXCHANGE_NETWORK'
+    
+Conditions:
+
+  HasDeskExchangePrivateKey: !Not [!Equals [!Ref deskExchangePrivateKey, ""]]
+
+  HasDeskExchangeNetwork: !Not [!Equals [!Ref deskExchangeNetwork, ""]]
+
+Resources:
+
+  AgentParamDeskExchangePrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasDeskExchangePrivateKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_DESK_EXCHANGE_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref deskExchangePrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for DESK_EXCHANGE_PRIVATE_KEY'
+  AgentParamDeskExchangeNetworkParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasDeskExchangeNetwork
+    Properties:
+      Name: !Sub '${AgentCodeName}_DESK_EXCHANGE_NETWORK'
+      Type: 'String'
+      Value: !Ref deskExchangeNetwork
+      Tier: 'Standard'
+      Description: 'Parameter for DESK_EXCHANGE_NETWORK'

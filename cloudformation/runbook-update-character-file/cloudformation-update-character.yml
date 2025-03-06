@@ -1,0 +1,47 @@
+Description: "agentUpdate"
+Resources:
+  UpdateCharacterAutomation:
+    Type: AWS::SSM::Document
+    Properties:
+      DocumentType: Automation
+      Content:
+        schemaVersion: "0.3"
+        description: "Update Character"
+        assumeRole: "{{AutomationAssumeRole}}"
+        parameters:
+          InstanceId:
+            description: "ID of the Instance."
+            type: "String"
+          CharUrl:
+            description: "public url of char file."
+            type: "String"
+            default: "https://raw.githubusercontent.com/meta-introspector/cloud-deployment-eliza/refs/heads/feature/signoz/characters/tine-test.character.json"
+          CharFilename:
+            description: "name of char file with no slashes or .json at the end"
+            type: "String"
+            default: "tine-test.character"
+            allowedPattern: "^[0-9a-z\\.\\-A-Z]+$"
+          AutomationAssumeRole:
+            default: ""
+            description: "(Optional) Rolename."
+            type: "String"
+        mainSteps:
+        - name: "agentUpdate"
+          action: "aws:runCommand"
+          maxAttempts: 3
+          timeoutSeconds: 3600
+          inputs:
+            DocumentName: "AWS-RunShellScript"
+            InstanceIds:
+            - "{{InstanceId}}"
+            Parameters:
+              commands:
+                - |
+                   #!/bin/bash
+                   sudo curl "{{CharUrl}}" -o "/opt/agent/characters/{{CharFilename}}.json"
+                   sudo docker restart agent-docker.service
+                   sudo docker logs agent-docker.service
+          outputs:
+          - Type: String
+            Name: payload
+            Selector: $.Payload

@@ -1,0 +1,31 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  zerionApiKey:
+    Type: 'String'
+    Description: 'Parameter for ZERION_API_KEY'
+    
+Conditions:
+
+  HasZerionApiKey: !Not [!Equals [!Ref zerionApiKey, ""]]
+
+Resources:
+
+  AgentParamZerionApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasZerionApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_ZERION_API_KEY'
+      Type: 'String'
+      Value: !Ref zerionApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for ZERION_API_KEY'

@@ -1,0 +1,31 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  fuelWalletPrivateKey:
+    Type: 'String'
+    Description: 'Parameter for FUEL_WALLET_PRIVATE_KEY'
+    
+Conditions:
+
+  HasFuelWalletPrivateKey: !Not [!Equals [!Ref fuelWalletPrivateKey, ""]]
+
+Resources:
+
+  AgentParamFuelWalletPrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasFuelWalletPrivateKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_FUEL_WALLET_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref fuelWalletPrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for FUEL_WALLET_PRIVATE_KEY'

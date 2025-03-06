@@ -1,0 +1,166 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  hyperbolicApiKey:
+    Type: 'String'
+    Description: 'Parameter for HYPERBOLIC_API_KEY'
+    
+  hyperbolicModel:
+    Type: 'String'
+    Description: 'Parameter for HYPERBOLIC_MODEL'
+    
+  imageHyperbolicModel:
+    Type: 'String'
+    Description: 'Parameter for IMAGE_HYPERBOLIC_MODEL'
+    
+  smallHyperbolicModel:
+    Type: 'String'
+    Description: 'Parameter for SMALL_HYPERBOLIC_MODEL'
+    
+  mediumHyperbolicModel:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_HYPERBOLIC_MODEL'
+    
+  largeHyperbolicModel:
+    Type: 'String'
+    Description: 'Parameter for LARGE_HYPERBOLIC_MODEL'
+    
+  hyperbolicEnv:
+    Type: 'String'
+    Description: 'Parameter for HYPERBOLIC_ENV'
+    
+  hyperbolicGranularLog:
+    Type: 'String'
+    Description: 'Parameter for HYPERBOLIC_GRANULAR_LOG'
+    Default: 'false'
+  hyperbolicSpash:
+    Type: 'String'
+    Description: 'Parameter for HYPERBOLIC_SPASH'
+    Default: 'false'
+  hyperbolicLogLevel:
+    Type: 'String'
+    Description: 'Parameter for HYPERBOLIC_LOG_LEVEL'
+    
+Conditions:
+
+  HasHyperbolicApiKey: !Not [!Equals [!Ref hyperbolicApiKey, ""]]
+
+  HasHyperbolicModel: !Not [!Equals [!Ref hyperbolicModel, ""]]
+
+  HasImageHyperbolicModel: !Not [!Equals [!Ref imageHyperbolicModel, ""]]
+
+  HasSmallHyperbolicModel: !Not [!Equals [!Ref smallHyperbolicModel, ""]]
+
+  HasMediumHyperbolicModel: !Not [!Equals [!Ref mediumHyperbolicModel, ""]]
+
+  HasLargeHyperbolicModel: !Not [!Equals [!Ref largeHyperbolicModel, ""]]
+
+  HasHyperbolicEnv: !Not [!Equals [!Ref hyperbolicEnv, ""]]
+
+  HasHyperbolicGranularLog: !Not [!Equals [!Ref hyperbolicGranularLog, ""]]
+
+  HasHyperbolicSpash: !Not [!Equals [!Ref hyperbolicSpash, ""]]
+
+  HasHyperbolicLogLevel: !Not [!Equals [!Ref hyperbolicLogLevel, ""]]
+
+Resources:
+
+  AgentParamHyperbolicApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasHyperbolicApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_HYPERBOLIC_API_KEY'
+      Type: 'String'
+      Value: !Ref hyperbolicApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for HYPERBOLIC_API_KEY'
+  AgentParamHyperbolicModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasHyperbolicModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_HYPERBOLIC_MODEL'
+      Type: 'String'
+      Value: !Ref hyperbolicModel
+      Tier: 'Standard'
+      Description: 'Parameter for HYPERBOLIC_MODEL'
+  AgentParamImageHyperbolicModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasImageHyperbolicModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_IMAGE_HYPERBOLIC_MODEL'
+      Type: 'String'
+      Value: !Ref imageHyperbolicModel
+      Tier: 'Standard'
+      Description: 'Parameter for IMAGE_HYPERBOLIC_MODEL'
+  AgentParamSmallHyperbolicModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSmallHyperbolicModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_HYPERBOLIC_MODEL'
+      Type: 'String'
+      Value: !Ref smallHyperbolicModel
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_HYPERBOLIC_MODEL'
+  AgentParamMediumHyperbolicModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasMediumHyperbolicModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_HYPERBOLIC_MODEL'
+      Type: 'String'
+      Value: !Ref mediumHyperbolicModel
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_HYPERBOLIC_MODEL'
+  AgentParamLargeHyperbolicModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasLargeHyperbolicModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_HYPERBOLIC_MODEL'
+      Type: 'String'
+      Value: !Ref largeHyperbolicModel
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_HYPERBOLIC_MODEL'
+  AgentParamHyperbolicEnvParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasHyperbolicEnv
+    Properties:
+      Name: !Sub '${AgentCodeName}_HYPERBOLIC_ENV'
+      Type: 'String'
+      Value: !Ref hyperbolicEnv
+      Tier: 'Standard'
+      Description: 'Parameter for HYPERBOLIC_ENV'
+  AgentParamHyperbolicGranularLogParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasHyperbolicGranularLog
+    Properties:
+      Name: !Sub '${AgentCodeName}_HYPERBOLIC_GRANULAR_LOG'
+      Type: 'String'
+      Value: !Ref hyperbolicGranularLog
+      Tier: 'Standard'
+      Description: 'Parameter for HYPERBOLIC_GRANULAR_LOG'
+  AgentParamHyperbolicSpashParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasHyperbolicSpash
+    Properties:
+      Name: !Sub '${AgentCodeName}_HYPERBOLIC_SPASH'
+      Type: 'String'
+      Value: !Ref hyperbolicSpash
+      Tier: 'Standard'
+      Description: 'Parameter for HYPERBOLIC_SPASH'
+  AgentParamHyperbolicLogLevelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasHyperbolicLogLevel
+    Properties:
+      Name: !Sub '${AgentCodeName}_HYPERBOLIC_LOG_LEVEL'
+      Type: 'String'
+      Value: !Ref hyperbolicLogLevel
+      Tier: 'Standard'
+      Description: 'Parameter for HYPERBOLIC_LOG_LEVEL'

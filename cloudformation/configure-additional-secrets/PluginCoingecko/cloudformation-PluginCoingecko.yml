@@ -1,0 +1,46 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  coingeckoApiKey:
+    Type: 'String'
+    Description: 'Parameter for COINGECKO_API_KEY'
+    
+  coingeckoProApiKey:
+    Type: 'String'
+    Description: 'Parameter for COINGECKO_PRO_API_KEY'
+    
+Conditions:
+
+  HasCoingeckoApiKey: !Not [!Equals [!Ref coingeckoApiKey, ""]]
+
+  HasCoingeckoProApiKey: !Not [!Equals [!Ref coingeckoProApiKey, ""]]
+
+Resources:
+
+  AgentParamCoingeckoApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasCoingeckoApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_COINGECKO_API_KEY'
+      Type: 'String'
+      Value: !Ref coingeckoApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for COINGECKO_API_KEY'
+  AgentParamCoingeckoProApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasCoingeckoProApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_COINGECKO_PRO_API_KEY'
+      Type: 'String'
+      Value: !Ref coingeckoProApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for COINGECKO_PRO_API_KEY'

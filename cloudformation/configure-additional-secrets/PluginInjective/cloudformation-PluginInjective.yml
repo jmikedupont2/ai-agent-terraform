@@ -1,0 +1,61 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  injectivePrivateKey:
+    Type: 'String'
+    Description: 'Parameter for INJECTIVE_PRIVATE_KEY'
+    
+  injectivePublicKey:
+    Type: 'String'
+    Description: 'Parameter for INJECTIVE_PUBLIC_KEY'
+    
+  injectiveNetwork:
+    Type: 'String'
+    Description: 'Parameter for INJECTIVE_NETWORK'
+    
+Conditions:
+
+  HasInjectivePrivateKey: !Not [!Equals [!Ref injectivePrivateKey, ""]]
+
+  HasInjectivePublicKey: !Not [!Equals [!Ref injectivePublicKey, ""]]
+
+  HasInjectiveNetwork: !Not [!Equals [!Ref injectiveNetwork, ""]]
+
+Resources:
+
+  AgentParamInjectivePrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasInjectivePrivateKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_INJECTIVE_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref injectivePrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for INJECTIVE_PRIVATE_KEY'
+  AgentParamInjectivePublicKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasInjectivePublicKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_INJECTIVE_PUBLIC_KEY'
+      Type: 'String'
+      Value: !Ref injectivePublicKey
+      Tier: 'Standard'
+      Description: 'Parameter for INJECTIVE_PUBLIC_KEY'
+  AgentParamInjectiveNetworkParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasInjectiveNetwork
+    Properties:
+      Name: !Sub '${AgentCodeName}_INJECTIVE_NETWORK'
+      Type: 'String'
+      Value: !Ref injectiveNetwork
+      Tier: 'Standard'
+      Description: 'Parameter for INJECTIVE_NETWORK'

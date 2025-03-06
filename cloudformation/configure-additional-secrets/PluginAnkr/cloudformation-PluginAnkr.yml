@@ -1,0 +1,151 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  ankrEnv:
+    Type: 'String'
+    Description: 'Parameter for ANKR_ENV'
+    
+  ankrWallet:
+    Type: 'String'
+    Description: 'Parameter for ANKR_WALLET'
+    
+  ankrMaxRetries:
+    Type: 'Number'
+    Description: 'Parameter for ANKR_MAX_RETRIES'
+    
+  ankrRetryDelay:
+    Type: 'Number'
+    Description: 'Parameter for ANKR_RETRY_DELAY'
+    
+  ankrTimeout:
+    Type: 'Number'
+    Description: 'Parameter for ANKR_TIMEOUT'
+    
+  ankrGranularLog:
+    Type: 'String'
+    Description: 'Parameter for ANKR_GRANULAR_LOG'
+    Default: 'false'
+  ankrLogLevel:
+    Type: 'String'
+    Description: 'Parameter for ANKR_LOG_LEVEL'
+    
+  ankrRuntimeCheckMode:
+    Type: 'String'
+    Description: 'Parameter for ANKR_RUNTIME_CHECK_MODE'
+    Default: 'false'
+  ankrSpash:
+    Type: 'String'
+    Description: 'Parameter for ANKR_SPASH'
+    Default: 'false'
+Conditions:
+
+  HasAnkrEnv: !Not [!Equals [!Ref ankrEnv, ""]]
+
+  HasAnkrWallet: !Not [!Equals [!Ref ankrWallet, ""]]
+
+  HasAnkrMaxRetries: !Not [!Equals [!Ref ankrMaxRetries, ""]]
+
+  HasAnkrRetryDelay: !Not [!Equals [!Ref ankrRetryDelay, ""]]
+
+  HasAnkrTimeout: !Not [!Equals [!Ref ankrTimeout, ""]]
+
+  HasAnkrGranularLog: !Not [!Equals [!Ref ankrGranularLog, ""]]
+
+  HasAnkrLogLevel: !Not [!Equals [!Ref ankrLogLevel, ""]]
+
+  HasAnkrRuntimeCheckMode: !Not [!Equals [!Ref ankrRuntimeCheckMode, ""]]
+
+  HasAnkrSpash: !Not [!Equals [!Ref ankrSpash, ""]]
+
+Resources:
+
+  AgentParamAnkrEnvParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAnkrEnv
+    Properties:
+      Name: !Sub '${AgentCodeName}_ANKR_ENV'
+      Type: 'String'
+      Value: !Ref ankrEnv
+      Tier: 'Standard'
+      Description: 'Parameter for ANKR_ENV'
+  AgentParamAnkrWalletParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAnkrWallet
+    Properties:
+      Name: !Sub '${AgentCodeName}_ANKR_WALLET'
+      Type: 'String'
+      Value: !Ref ankrWallet
+      Tier: 'Standard'
+      Description: 'Parameter for ANKR_WALLET'
+  AgentParamAnkrMaxRetriesParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAnkrMaxRetries
+    Properties:
+      Name: !Sub '${AgentCodeName}_ANKR_MAX_RETRIES'
+      Type: 'String'
+      Value: !Ref ankrMaxRetries
+      Tier: 'Standard'
+      Description: 'Parameter for ANKR_MAX_RETRIES'
+  AgentParamAnkrRetryDelayParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAnkrRetryDelay
+    Properties:
+      Name: !Sub '${AgentCodeName}_ANKR_RETRY_DELAY'
+      Type: 'String'
+      Value: !Ref ankrRetryDelay
+      Tier: 'Standard'
+      Description: 'Parameter for ANKR_RETRY_DELAY'
+  AgentParamAnkrTimeoutParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAnkrTimeout
+    Properties:
+      Name: !Sub '${AgentCodeName}_ANKR_TIMEOUT'
+      Type: 'String'
+      Value: !Ref ankrTimeout
+      Tier: 'Standard'
+      Description: 'Parameter for ANKR_TIMEOUT'
+  AgentParamAnkrGranularLogParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAnkrGranularLog
+    Properties:
+      Name: !Sub '${AgentCodeName}_ANKR_GRANULAR_LOG'
+      Type: 'String'
+      Value: !Ref ankrGranularLog
+      Tier: 'Standard'
+      Description: 'Parameter for ANKR_GRANULAR_LOG'
+  AgentParamAnkrLogLevelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAnkrLogLevel
+    Properties:
+      Name: !Sub '${AgentCodeName}_ANKR_LOG_LEVEL'
+      Type: 'String'
+      Value: !Ref ankrLogLevel
+      Tier: 'Standard'
+      Description: 'Parameter for ANKR_LOG_LEVEL'
+  AgentParamAnkrRuntimeCheckModeParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAnkrRuntimeCheckMode
+    Properties:
+      Name: !Sub '${AgentCodeName}_ANKR_RUNTIME_CHECK_MODE'
+      Type: 'String'
+      Value: !Ref ankrRuntimeCheckMode
+      Tier: 'Standard'
+      Description: 'Parameter for ANKR_RUNTIME_CHECK_MODE'
+  AgentParamAnkrSpashParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasAnkrSpash
+    Properties:
+      Name: !Sub '${AgentCodeName}_ANKR_SPASH'
+      Type: 'String'
+      Value: !Ref ankrSpash
+      Tier: 'Standard'
+      Description: 'Parameter for ANKR_SPASH'

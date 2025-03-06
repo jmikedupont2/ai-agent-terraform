@@ -1,0 +1,46 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  supabaseUrl:
+    Type: 'String'
+    Description: 'Parameter for SUPABASE_URL'
+    
+  supabaseAnonKey:
+    Type: 'String'
+    Description: 'Parameter for SUPABASE_ANON_KEY'
+    
+Conditions:
+
+  HasSupabaseUrl: !Not [!Equals [!Ref supabaseUrl, ""]]
+
+  HasSupabaseAnonKey: !Not [!Equals [!Ref supabaseAnonKey, ""]]
+
+Resources:
+
+  AgentParamSupabaseUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSupabaseUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_SUPABASE_URL'
+      Type: 'String'
+      Value: !Ref supabaseUrl
+      Tier: 'Standard'
+      Description: 'Parameter for SUPABASE_URL'
+  AgentParamSupabaseAnonKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSupabaseAnonKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_SUPABASE_ANON_KEY'
+      Type: 'String'
+      Value: !Ref supabaseAnonKey
+      Tier: 'Standard'
+      Description: 'Parameter for SUPABASE_ANON_KEY'

@@ -1,0 +1,121 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  ollamaServerUrl:
+    Type: 'String'
+    Description: 'Parameter for OLLAMA_SERVER_URL'
+    
+  ollamaModel:
+    Type: 'String'
+    Description: 'Parameter for OLLAMA_MODEL'
+    
+  useOllamaEmbedding:
+    Type: 'String'
+    Description: 'Parameter for USE_OLLAMA_EMBEDDING'
+    Default: 'false'
+  ollamaEmbeddingModel:
+    Type: 'String'
+    Description: 'Parameter for OLLAMA_EMBEDDING_MODEL'
+    
+  smallOllamaModel:
+    Type: 'String'
+    Description: 'Parameter for SMALL_OLLAMA_MODEL'
+    
+  mediumOllamaModel:
+    Type: 'String'
+    Description: 'Parameter for MEDIUM_OLLAMA_MODEL'
+    
+  largeOllamaModel:
+    Type: 'String'
+    Description: 'Parameter for LARGE_OLLAMA_MODEL'
+    
+Conditions:
+
+  HasOllamaServerUrl: !Not [!Equals [!Ref ollamaServerUrl, ""]]
+
+  HasOllamaModel: !Not [!Equals [!Ref ollamaModel, ""]]
+
+  HasUseOllamaEmbedding: !Not [!Equals [!Ref useOllamaEmbedding, ""]]
+
+  HasOllamaEmbeddingModel: !Not [!Equals [!Ref ollamaEmbeddingModel, ""]]
+
+  HasSmallOllamaModel: !Not [!Equals [!Ref smallOllamaModel, ""]]
+
+  HasMediumOllamaModel: !Not [!Equals [!Ref mediumOllamaModel, ""]]
+
+  HasLargeOllamaModel: !Not [!Equals [!Ref largeOllamaModel, ""]]
+
+Resources:
+
+  AgentParamOllamaServerUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasOllamaServerUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_OLLAMA_SERVER_URL'
+      Type: 'String'
+      Value: !Ref ollamaServerUrl
+      Tier: 'Standard'
+      Description: 'Parameter for OLLAMA_SERVER_URL'
+  AgentParamOllamaModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasOllamaModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_OLLAMA_MODEL'
+      Type: 'String'
+      Value: !Ref ollamaModel
+      Tier: 'Standard'
+      Description: 'Parameter for OLLAMA_MODEL'
+  AgentParamUseOllamaEmbeddingParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasUseOllamaEmbedding
+    Properties:
+      Name: !Sub '${AgentCodeName}_USE_OLLAMA_EMBEDDING'
+      Type: 'String'
+      Value: !Ref useOllamaEmbedding
+      Tier: 'Standard'
+      Description: 'Parameter for USE_OLLAMA_EMBEDDING'
+  AgentParamOllamaEmbeddingModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasOllamaEmbeddingModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_OLLAMA_EMBEDDING_MODEL'
+      Type: 'String'
+      Value: !Ref ollamaEmbeddingModel
+      Tier: 'Standard'
+      Description: 'Parameter for OLLAMA_EMBEDDING_MODEL'
+  AgentParamSmallOllamaModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasSmallOllamaModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_SMALL_OLLAMA_MODEL'
+      Type: 'String'
+      Value: !Ref smallOllamaModel
+      Tier: 'Standard'
+      Description: 'Parameter for SMALL_OLLAMA_MODEL'
+  AgentParamMediumOllamaModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasMediumOllamaModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_MEDIUM_OLLAMA_MODEL'
+      Type: 'String'
+      Value: !Ref mediumOllamaModel
+      Tier: 'Standard'
+      Description: 'Parameter for MEDIUM_OLLAMA_MODEL'
+  AgentParamLargeOllamaModelParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasLargeOllamaModel
+    Properties:
+      Name: !Sub '${AgentCodeName}_LARGE_OLLAMA_MODEL'
+      Type: 'String'
+      Value: !Ref largeOllamaModel
+      Tier: 'Standard'
+      Description: 'Parameter for LARGE_OLLAMA_MODEL'

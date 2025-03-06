@@ -1,0 +1,31 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  openWeatherApiKey:
+    Type: 'String'
+    Description: 'Parameter for OPEN_WEATHER_API_KEY'
+    
+Conditions:
+
+  HasOpenWeatherApiKey: !Not [!Equals [!Ref openWeatherApiKey, ""]]
+
+Resources:
+
+  AgentParamOpenWeatherApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasOpenWeatherApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_OPEN_WEATHER_API_KEY'
+      Type: 'String'
+      Value: !Ref openWeatherApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for OPEN_WEATHER_API_KEY'

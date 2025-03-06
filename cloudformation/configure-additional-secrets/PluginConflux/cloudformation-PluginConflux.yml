@@ -1,0 +1,91 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  confluxCorePrivateKey:
+    Type: 'String'
+    Description: 'Parameter for CONFLUX_CORE_PRIVATE_KEY'
+    
+  confluxCoreSpaceRpcUrl:
+    Type: 'String'
+    Description: 'Parameter for CONFLUX_CORE_SPACE_RPC_URL'
+    
+  confluxEspacePrivateKey:
+    Type: 'String'
+    Description: 'Parameter for CONFLUX_ESPACE_PRIVATE_KEY'
+    
+  confluxEspaceRpcUrl:
+    Type: 'String'
+    Description: 'Parameter for CONFLUX_ESPACE_RPC_URL'
+    
+  confluxMemeContractAddress:
+    Type: 'String'
+    Description: 'Parameter for CONFLUX_MEME_CONTRACT_ADDRESS'
+    
+Conditions:
+
+  HasConfluxCorePrivateKey: !Not [!Equals [!Ref confluxCorePrivateKey, ""]]
+
+  HasConfluxCoreSpaceRpcUrl: !Not [!Equals [!Ref confluxCoreSpaceRpcUrl, ""]]
+
+  HasConfluxEspacePrivateKey: !Not [!Equals [!Ref confluxEspacePrivateKey, ""]]
+
+  HasConfluxEspaceRpcUrl: !Not [!Equals [!Ref confluxEspaceRpcUrl, ""]]
+
+  HasConfluxMemeContractAddress: !Not [!Equals [!Ref confluxMemeContractAddress, ""]]
+
+Resources:
+
+  AgentParamConfluxCorePrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasConfluxCorePrivateKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_CONFLUX_CORE_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref confluxCorePrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for CONFLUX_CORE_PRIVATE_KEY'
+  AgentParamConfluxCoreSpaceRpcUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasConfluxCoreSpaceRpcUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_CONFLUX_CORE_SPACE_RPC_URL'
+      Type: 'String'
+      Value: !Ref confluxCoreSpaceRpcUrl
+      Tier: 'Standard'
+      Description: 'Parameter for CONFLUX_CORE_SPACE_RPC_URL'
+  AgentParamConfluxEspacePrivateKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasConfluxEspacePrivateKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_CONFLUX_ESPACE_PRIVATE_KEY'
+      Type: 'String'
+      Value: !Ref confluxEspacePrivateKey
+      Tier: 'Standard'
+      Description: 'Parameter for CONFLUX_ESPACE_PRIVATE_KEY'
+  AgentParamConfluxEspaceRpcUrlParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasConfluxEspaceRpcUrl
+    Properties:
+      Name: !Sub '${AgentCodeName}_CONFLUX_ESPACE_RPC_URL'
+      Type: 'String'
+      Value: !Ref confluxEspaceRpcUrl
+      Tier: 'Standard'
+      Description: 'Parameter for CONFLUX_ESPACE_RPC_URL'
+  AgentParamConfluxMemeContractAddressParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasConfluxMemeContractAddress
+    Properties:
+      Name: !Sub '${AgentCodeName}_CONFLUX_MEME_CONTRACT_ADDRESS'
+      Type: 'String'
+      Value: !Ref confluxMemeContractAddress
+      Tier: 'Standard'
+      Description: 'Parameter for CONFLUX_MEME_CONTRACT_ADDRESS'

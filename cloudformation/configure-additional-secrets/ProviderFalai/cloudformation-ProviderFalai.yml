@@ -1,0 +1,46 @@
+
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "https://github.com/meta-introspector/typescript-zos-introspector"
+Description: "parameters extracted from https://github.com/sekmet/synapzeai"
+Parameters:
+
+  AgentCodeName:
+    Type: 'String'
+    Description: 'Agent codename for finding parameters'
+    Default: 'tine_agent_2'
+
+  falApiKey:
+    Type: 'String'
+    Description: 'Parameter for FAL_API_KEY'
+    
+  falAiLoraPath:
+    Type: 'String'
+    Description: 'Parameter for FAL_AI_LORA_PATH'
+    
+Conditions:
+
+  HasFalApiKey: !Not [!Equals [!Ref falApiKey, ""]]
+
+  HasFalAiLoraPath: !Not [!Equals [!Ref falAiLoraPath, ""]]
+
+Resources:
+
+  AgentParamFalApiKeyParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasFalApiKey
+    Properties:
+      Name: !Sub '${AgentCodeName}_FAL_API_KEY'
+      Type: 'String'
+      Value: !Ref falApiKey
+      Tier: 'Standard'
+      Description: 'Parameter for FAL_API_KEY'
+  AgentParamFalAiLoraPathParameter:
+    Type: 'AWS::SSM::Parameter'
+    Condition: HasFalAiLoraPath
+    Properties:
+      Name: !Sub '${AgentCodeName}_FAL_AI_LORA_PATH'
+      Type: 'String'
+      Value: !Ref falAiLoraPath
+      Tier: 'Standard'
+      Description: 'Parameter for FAL_AI_LORA_PATH'
