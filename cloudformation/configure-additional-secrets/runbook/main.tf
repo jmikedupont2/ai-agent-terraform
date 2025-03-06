@@ -1,5 +1,5 @@
-variable runbook {}
-variable patch {}
+variable "runbook" {}
+variable "patch" {}
 module "runbook" {
   source  = "../../runbook"
   runbook = var.runbook

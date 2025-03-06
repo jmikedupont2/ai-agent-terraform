@@ -1,5 +1,5 @@
 locals {
-  patch ="v1"
+  patch = "v1"
 }
 module "deploy_Server" {
   source  = "../runbook"
@@ -7,11 +7,11 @@ module "deploy_Server" {
   patch   = local.patch
 }
 
- module "deploy_ClientDiscord" {
-           source  = "../runbook"
-           runbook = "ClientDiscord"
-           patch   = local.patch
-         }
+module "deploy_ClientDiscord" {
+  source  = "../runbook"
+  runbook = "ClientDiscord"
+  patch   = local.patch
+}
 # module "deploy_ClientFarcaster" {
 #           source  = "../runbook"
 #           runbook = "ClientFarcaster"
