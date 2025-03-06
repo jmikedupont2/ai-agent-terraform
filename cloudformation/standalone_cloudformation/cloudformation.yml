@@ -153,7 +153,16 @@ Resources:
       - "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
       - "arn:aws:iam::aws:policy/AmazonSSMPatchAssociation"
       - "arn:aws:iam::aws:policy/AmazonSSMManagedEC2InstanceDefaultPolicy"
-
+      Policies:
+        - PolicyName: 'SSMDescribeParametersPolicy'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Sid: 'VisualEditor0'
+                Effect: 'Allow'
+                Action: 'ssm:DescribeParameters'
+                Resource: '*'
+                
   IAMInstanceProfile:
     DependsOn:
       - IAMRoleAgent
