@@ -90,7 +90,7 @@ Resources:
   TineAgentAgentImageParameter:
     Type: 'AWS::SSM::Parameter'
     Properties:
-      Name: !Sub '${AgentCodeName}_agent_image'
+      Name: !Sub '${AgentCodeName}_AGENT_IMAGE'
       Type: 'String'
       Value: !Ref AgentImage
       Tier: 'Standard'
@@ -99,7 +99,7 @@ Resources:
   TineAgentGroqKey:
     Type: 'AWS::SSM::Parameter'
     Properties:
-      Name: !Sub '${AgentCodeName}_groq_key'
+      Name: !Sub '${AgentCodeName}_GROQ_API_KEY'
       Type: 'String'
       Value: !Ref GroqKey
       Tier: 'Standard'
@@ -108,7 +108,7 @@ Resources:
   TineAgentTokenizerImage:
     Type: 'AWS::SSM::Parameter'
     Properties:
-      Name: !Sub '${AgentCodeName}_tokenizer_image'
+      Name: !Sub '${AgentCodeName}_TOKENIZER_IMAGE'
       Type: 'String'
       Value: !Ref TokenizerImage
       Tier: 'Standard'
@@ -117,7 +117,7 @@ Resources:
   TineAgentTwitterEmail:
     Type: 'AWS::SSM::Parameter'
     Properties:
-      Name: !Sub '${AgentCodeName}_twitter_email'
+      Name: !Sub '${AgentCodeName}_TWITTER_EMAIL'
       Type: 'String'
       Value: !Ref TwitterEmail
       Tier: 'Standard'
@@ -126,7 +126,7 @@ Resources:
   TineAgentTwitterPassword:
     Type: 'AWS::SSM::Parameter'
     Properties:
-      Name: !Sub '${AgentCodeName}_twitter_password'
+      Name: !Sub '${AgentCodeName}_TWITTER_PASSWORD'
       Type: 'String'
       Value: !Ref TwitterPassword
       Tier: 'Standard'
@@ -135,7 +135,7 @@ Resources:
   TineAgentTwitterUserName:
     Type: 'AWS::SSM::Parameter'
     Properties:
-      Name: !Sub '${AgentCodeName}_twitter_username'
+      Name: !Sub '${AgentCodeName}_TWITTER_USERNAME'
       Type: 'String'
       Value: !Ref TwitterUserName
       Tier: 'Standard'
