@@ -9,12 +9,6 @@ Parameters:
     Description: "git repo for the agent you can modify this to your own repo"
     Default :  "https://github.com/meta-introspector/cloud-deployment-eliza/"
 
-  AgentCharacterFile:
-    Type: "String"
-    Description: "File name of agent to load, FIXME not used yet"
-    # referenced ~/cloud-deployment-eliza/systemd/agent-docker.service
-    Default: "/app/agent/characters/tine-test.character.json"
-
   GitBranch:
     Type: "String"
     Description: "git branch for the agent you can modify this to your own branch"
@@ -58,16 +52,6 @@ Parameters:
   AmiId:
     Type: "String"
     Description: 'aws image id that is specific to the region you must also accept the licence for the ami'
-
-  SSMParameterPattern:
-    Type: 'String'
-    Description: 'pattern for ssm parameter, leave default'
-    Default: "tine_agent_*"
-
-  S3BucketPattern:
-    Type: 'String'
-    Description: 'pattern for ssm parameter, leave default'
-    Default: "tine_agent_*"
 
   AgentImage:
     Type: 'String'
@@ -308,7 +292,13 @@ Resources:
     DependsOn:
       - EC2LaunchTemplate
       - AWSServiceRoleForAutoScaling
-    Properties:
+    
+    Properties:      
+      Tags:
+        -
+          Key : Name
+          Value: !Sub "${AgentCodeName}-agent"
+
       AutoScalingGroupName: "docker-agent-ami-t4g.small"
       LaunchTemplate:
         LaunchTemplateName:  "agent-docker-t4g.small-launch-template"
