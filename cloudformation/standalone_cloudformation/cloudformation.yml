@@ -252,6 +252,13 @@ Resources:
               export AGENT_NAME="${AgentCodeName}"
               export GIT_REPO="${GitRepo}" # FIXME
               export GIT_BRANCH="${GitBranch}" # FIXME
+
+              mkdir /etc/agent/
+              
+              echo AGENT_NAME="${AgentCodeName}" > /etc/agent/env
+              echo GIT_REPO="${GitRepo}" >> /etc/agent/env
+              echo GIT_BRANCH="${GitBranch}"  >> /etc/agent/env
+              
               export HOME=/root
               apt update
               apt-get install -y ec2-instance-connect git wget unzip systemd curl
@@ -270,7 +277,7 @@ Resources:
               git stash
               git fetch --all
               git checkout --track --force "origin/${GitBranch}"
-              bash -x /opt/agent/rundocker.sh
+              bash -x /opt/agent/scripts/rundocker.sh
 
         BlockDeviceMappings:
           -
