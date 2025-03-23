@@ -9,36 +9,10 @@ Parameters:
     Description: "git repo for the agent you can modify this to your own repo"
     Default :  "https://github.com/meta-introspector/cloud-deployment-eliza/"
 
-  AgentCharacterFile:
-    Type: "String"
-    Description: "File name of agent to load, FIXME not used yet"
-    # referenced ~/cloud-deployment-eliza/systemd/agent-docker.service
-    Default: "/app/agent/characters/tine-test.character.json"
-
   GitBranch:
     Type: "String"
     Description: "git branch for the agent you can modify this to your own branch"
-    Default: "feature/signoz"
-
-  GroqKey:
-    NoEcho: true
-    Type: 'String'
-    Description: 'secret groq key (hidden)'
-    
-  TwitterEmail:
-    NoEcho: true
-    Type: 'String'
-    Description: 'twitter email (hidden)'
-
-  TwitterPassword:
-    NoEcho: true
-    Type: 'String'
-    Description: 'twitter password (please dont use chars like single quote ()!"${} in the password due to known bugs (hidden)'
-
-  TwitterUserName:
-    NoEcho: true
-    Type: 'String'
-    Description: 'twitter username (hidden)'
+    Default: "feature/v2/telegram"
 
   AgentCodeName:
     Type: 'String'
@@ -58,16 +32,6 @@ Parameters:
   AmiId:
     Type: "String"
     Description: 'aws image id that is specific to the region you must also accept the licence for the ami'
-
-  SSMParameterPattern:
-    Type: 'String'
-    Description: 'pattern for ssm parameter, leave default'
-    Default: "tine_agent_*"
-
-  S3BucketPattern:
-    Type: 'String'
-    Description: 'pattern for ssm parameter, leave default'
-    Default: "tine_agent_*"
 
   AgentImage:
     Type: 'String'
@@ -96,15 +60,7 @@ Resources:
       Tier: 'Standard'
       Description: 'Parameter for Tine Agent image'
 
-  TineAgentGroqKey:
-    Type: 'AWS::SSM::Parameter'
-    Properties:
-      Name: !Sub '${AgentCodeName}_GROQ_API_KEY'
-      Type: 'String'
-      Value: !Ref GroqKey
-      Tier: 'Standard'
-      Description: 'Secret Parameter for Groq Key'
-      
+     
   TineAgentTokenizerImage:
     Type: 'AWS::SSM::Parameter'
     Properties:
@@ -114,32 +70,6 @@ Resources:
       Tier: 'Standard'
       Description: 'Parameter for Tokenizer Image'
       
-  TineAgentTwitterEmail:
-    Type: 'AWS::SSM::Parameter'
-    Properties:
-      Name: !Sub '${AgentCodeName}_TWITTER_EMAIL'
-      Type: 'String'
-      Value: !Ref TwitterEmail
-      Tier: 'Standard'
-      Description: 'Parameter for TwitterEmail'
-      
-  TineAgentTwitterPassword:
-    Type: 'AWS::SSM::Parameter'
-    Properties:
-      Name: !Sub '${AgentCodeName}_TWITTER_PASSWORD'
-      Type: 'String'
-      Value: !Ref TwitterPassword
-      Tier: 'Standard'
-      Description: 'Parameter for TwitterPassword'
-
-  TineAgentTwitterUserName:
-    Type: 'AWS::SSM::Parameter'
-    Properties:
-      Name: !Sub '${AgentCodeName}_TWITTER_USERNAME'
-      Type: 'String'
-      Value: !Ref TwitterUserName
-      Tier: 'Standard'
-      Description: 'Parameter for TwitterUserName'
 
   IAMRoleAgent:
     Type: "AWS::IAM::Role"
@@ -268,6 +198,13 @@ Resources:
               export AGENT_NAME="${AgentCodeName}"
               export GIT_REPO="${GitRepo}" # FIXME
               export GIT_BRANCH="${GitBranch}" # FIXME
+
+              mkdir /etc/agent/
+              
+              echo AGENT_NAME="${AgentCodeName}" > /etc/agent/env
+              echo GIT_REPO="${GitRepo}" >> /etc/agent/env
+              echo GIT_BRANCH="${GitBranch}"  >> /etc/agent/env
+              
               export HOME=/root
               apt update
               apt-get install -y ec2-instance-connect git wget unzip systemd curl
@@ -286,7 +223,7 @@ Resources:
               git stash
               git fetch --all
               git checkout --track --force "origin/${GitBranch}"
-              bash -x /opt/agent/rundocker.sh
+              bash -x /opt/agent/scripts/rundocker.sh
 
         BlockDeviceMappings:
           -
@@ -308,7 +245,14 @@ Resources:
     DependsOn:
       - EC2LaunchTemplate
       - AWSServiceRoleForAutoScaling
-    Properties:
+    
+    Properties:      
+      Tags:
+        -
+          Key : Name
+          Value: !Sub "${AgentCodeName}-agent"
+          PropagateAtLaunch : true
+
       AutoScalingGroupName: "docker-agent-ami-t4g.small"
       LaunchTemplate:
         LaunchTemplateName:  "agent-docker-t4g.small-launch-template"

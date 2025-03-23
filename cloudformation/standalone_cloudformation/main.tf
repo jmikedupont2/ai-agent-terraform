@@ -1,6 +1,6 @@
 locals {
-  patch           = "feb21" # create new cf template for this version to document the steps
-  agent_image     = "h4ckermike/elizaos-eliza:signoz"
+  patch           = "v2" # create new cf template for this version to document the steps
+  agent_image     = "h4ckermike/elizaos-eliza:feature-v2-telegram"
   tokenizer_image = "h4ckermike/arm64-tokenizers:feature-arm64"
 }
 # default
