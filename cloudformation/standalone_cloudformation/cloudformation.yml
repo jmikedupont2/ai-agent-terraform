@@ -41,7 +41,7 @@ Parameters:
   PeerIps:
     Type: List<String>
     Description: "List of peer IP addresses for Solana nodes (in CIDR notation, e.g., 192.168.1.100/32, 203.0.113.10/32)"
-    Default: ["8.8.8.8/32"]
+    #Default: ["8.8.8.8/32"]
 
 Resources:
   MyDHCPOptions:
