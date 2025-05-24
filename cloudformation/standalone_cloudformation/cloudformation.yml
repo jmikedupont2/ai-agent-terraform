@@ -424,7 +424,7 @@ Resources:
   EC2LaunchTemplate:
     Type: "AWS::EC2::LaunchTemplate"
     Properties:
-      LaunchTemplateName: "agent-docker-t4g.small-launch-template"
+      LaunchTemplateName: "solana-dockernode-t4g.small-launch-template"
       LaunchTemplateData:
         IamInstanceProfile:
           Name: !Ref IAMInstanceProfile
