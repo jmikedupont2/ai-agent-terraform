@@ -2,12 +2,12 @@ AWSTemplateFormatVersion: "2010-09-09"
 Metadata:
     Generator: "former2"
 Description: "minimal ec2 asg and lt for solfunmeme solana"
-Parameters:
 
+Parameters:
   GitRepo:
     Type: "String"
     Description: "git repo for the agent you can modify this to your own repo"
-    Default :  "https://github.com/meta-introspector/services/"
+    Default: "https://github.com/meta-introspector/services/"
 
   GitBranch:
     Type: "String"
@@ -27,7 +27,7 @@ Parameters:
   LaunchTemplateVersion:
     Type: "String"
     Default: "1"
-    Description: 'advanced option to use newer versions of launch templatesz'
+    Description: 'advanced option to use newer versions of launch templates'
 
   AvailabilityZone:
     Type: "String"
@@ -37,11 +37,39 @@ Parameters:
   AmiId:
     Type: "String"
     Description: 'aws image id that is specific to the region you must also accept the licence for the ami'
- 
-  PeerIps:
-    Type: List<String>
-    Description: "List of peer IP addresses for Solana nodes (in CIDR notation, e.g., 192.168.1.100/32, 203.0.113.10/32)"
-    #Default: ["8.8.8.8/32"]
+
+  # Individual optional peer IP parameters
+  PeerIp1:
+    Type: "String"
+    Description: "First peer IP address (CIDR notation, e.g., 192.168.1.100/32)"
+    Default: ""
+
+  PeerIp2:
+    Type: "String"
+    Description: "Second peer IP address (CIDR notation, e.g., 192.168.1.101/32)"
+    Default: ""
+
+  PeerIp3:
+    Type: "String"
+    Description: "Third peer IP address (CIDR notation, e.g., 192.168.1.102/32)"
+    Default: ""
+
+  PeerIp4:
+    Type: "String"
+    Description: "Fourth peer IP address (CIDR notation, e.g., 192.168.1.103/32)"
+    Default: ""
+
+  PeerIp5:
+    Type: "String"
+    Description: "Fifth peer IP address (CIDR notation, e.g., 192.168.1.104/32)"
+    Default: ""
+
+Conditions:
+  HasPeerIp1: !Not [!Equals [!Ref PeerIp1, ""]]
+  HasPeerIp2: !Not [!Equals [!Ref PeerIp2, ""]]
+  HasPeerIp3: !Not [!Equals [!Ref PeerIp3, ""]]
+  HasPeerIp4: !Not [!Equals [!Ref PeerIp4, ""]]
+  HasPeerIp5: !Not [!Equals [!Ref PeerIp5, ""]]
 
 Resources:
   MyDHCPOptions:
@@ -59,10 +87,9 @@ Resources:
       AssumeRolePolicyDocument: "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Sid\":\"\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"},\"Action\":\"sts:AssumeRole\"}]}"
       MaxSessionDuration: 3600
       ManagedPolicyArns:
-      #- IAMManagedPolicy2
-      - "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
-      - "arn:aws:iam::aws:policy/AmazonSSMPatchAssociation"
-      - "arn:aws:iam::aws:policy/AmazonSSMManagedEC2InstanceDefaultPolicy"
+        - "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+        - "arn:aws:iam::aws:policy/AmazonSSMPatchAssociation"
+        - "arn:aws:iam::aws:policy/AmazonSSMManagedEC2InstanceDefaultPolicy"
       Policies:
         - PolicyName: 'SSMDescribeParametersPolicy'
           PolicyDocument:
@@ -95,8 +122,7 @@ Resources:
     Properties:
         AvailabilityZone: !Sub "${AWS::Region}${AvailabilityZone}"
         CidrBlock: "10.0.4.0/24"
-        VpcId:
-          Ref: "EC2VPC"
+        VpcId: !Ref "EC2VPC"
         MapPublicIpOnLaunch: false
 
   ### setup vpc with routes
@@ -105,8 +131,7 @@ Resources:
     DependsOn:
       - InternetGateway
     Properties:
-      VpcId:
-        Ref: "EC2VPC"
+      VpcId: !Ref "EC2VPC"
         
   InternetGateway:
     Type: "AWS::EC2::InternetGateway"
@@ -116,8 +141,7 @@ Resources:
       - InternetGateway
     Type: "AWS::EC2::VPCGatewayAttachment"
     Properties:
-      VpcId:
-        Ref: "EC2VPC"
+      VpcId: !Ref "EC2VPC"
       InternetGatewayId: !Ref "InternetGateway"
       
   InternetRoute:
@@ -174,267 +198,228 @@ Resources:
           IpProtocol: "tcp"
           FromPort: 22
           ToPort: 22
-        - SourceSecurityGroupId: !Ref SolanaPeerSecurityGroup
-          Description: "Allow Solana TCP traffic from peer security group"
-          IpProtocol: "tcp"
-          FromPort: 8000
-          ToPort: 8899
-        - SourceSecurityGroupId: !Ref SolanaPeerSecurityGroup
-          Description: "Allow Solana UDP traffic from peer security group"
-          IpProtocol: "udp"
-          FromPort: 8000
-          ToPort: 8008
-      VpcId:
-        Ref: "EC2VPC"
+      VpcId: !Ref "EC2VPC"
 
-  SolanaPeerSecurityGroup:
-    Type: "AWS::EC2::SecurityGroup"
-    Properties:
-      GroupDescription: "Security group for Solana peer nodes"
-      GroupName: "solana-peer-group"
-      SecurityGroupEgress:
-        - CidrIp: "0.0.0.0/0"
-          Description: "All protocols IPv4"
-          IpProtocol: "-1"
-        - CidrIpv6: "::/0"
-          Description: "All protocols IPv6"
-          IpProtocol: "-1"
-      VpcId:
-        Ref: "EC2VPC"
-
-  # Dynamic ingress rules for PeerIps (up to 5 IPs)
-  PeerGossipTcpIngress0:
-    Type: "AWS::EC2::SecurityGroupIngress"
-    Properties:
-      GroupId: !Ref SolanaPeerSecurityGroup
-      IpProtocol: "tcp"
-      FromPort: 8000
-      ToPort: 8000
-      CidrIp: !Select [0, !Ref PeerIps]
-      Description: !Sub "Solana Gossip Protocol (TCP) from peer IP ${!Select [0, !Ref PeerIps]}"
-
-  PeerGossipUdpIngress0:
-    Type: "AWS::EC2::SecurityGroupIngress"
-    Properties:
-      GroupId: !Ref SolanaPeerSecurityGroup
-      IpProtocol: "udp"
-      FromPort: 8000
-      ToPort: 8000
-      CidrIp: !Select [0, !Ref PeerIps]
-      Description: !Sub "Solana Gossip Protocol (UDP) from peer IP ${!Select [0, !Ref PeerIps]}"
-
-  PeerRpcIngress0:
-    Type: "AWS::EC2::SecurityGroupIngress"
-    Properties:
-      GroupId: !Ref SolanaPeerSecurityGroup
-      IpProtocol: "tcp"
-      FromPort: 8899
-      ToPort: 8899
-      CidrIp: !Select [0, !Ref PeerIps]
-      Description: !Sub "Solana RPC Port (TCP) from peer IP ${!Select [0, !Ref PeerIps]}"
-
-  PeerTransactionIngress0:
-    Type: "AWS::EC2::SecurityGroupIngress"
-    Properties:
-      GroupId: !Ref SolanaPeerSecurityGroup
-      IpProtocol: "udp"
-      FromPort: 8001
-      ToPort: 8008
-      CidrIp: !Select [0, !Ref PeerIps]
-      Description: !Sub "Solana Transaction Forwarding (UDP) from peer IP ${!Select [0, !Ref PeerIps]}"
-
+  # Peer security group ingress rules - only created if peer IPs are provided
   PeerGossipTcpIngress1:
     Type: "AWS::EC2::SecurityGroupIngress"
     Condition: HasPeerIp1
     Properties:
-      GroupId: !Ref SolanaPeerSecurityGroup
+      GroupId: !Ref EC2SecurityGroup
       IpProtocol: "tcp"
       FromPort: 8000
       ToPort: 8000
-      CidrIp: !Select [1, !Ref PeerIps]
-      Description: !Sub "Solana Gossip Protocol (TCP) from peer IP ${!Select [1, !Ref PeerIps]}"
+      CidrIp: !Ref PeerIp1
+      Description: !Sub "Solana Gossip Protocol (TCP) from peer IP ${PeerIp1}"
 
   PeerGossipUdpIngress1:
     Type: "AWS::EC2::SecurityGroupIngress"
     Condition: HasPeerIp1
     Properties:
-      GroupId: !Ref SolanaPeerSecurityGroup
+      GroupId: !Ref EC2SecurityGroup
       IpProtocol: "udp"
       FromPort: 8000
       ToPort: 8000
-      CidrIp: !Select [1, !Ref PeerIps]
-      Description: !Sub "Solana Gossip Protocol (UDP) from peer IP ${!Select [1, !Ref PeerIps]}"
+      CidrIp: !Ref PeerIp1
+      Description: !Sub "Solana Gossip Protocol (UDP) from peer IP ${PeerIp1}"
 
   PeerRpcIngress1:
     Type: "AWS::EC2::SecurityGroupIngress"
     Condition: HasPeerIp1
     Properties:
-      GroupId: !Ref SolanaPeerSecurityGroup
+      GroupId: !Ref EC2SecurityGroup
       IpProtocol: "tcp"
       FromPort: 8899
       ToPort: 8899
-      CidrIp: !Select [1, !Ref PeerIps]
-      Description: !Sub "Solana RPC Port (TCP) from peer IP ${!Select [1, !Ref PeerIps]}"
+      CidrIp: !Ref PeerIp1
+      Description: !Sub "Solana RPC Port (TCP) from peer IP ${PeerIp1}"
 
   PeerTransactionIngress1:
     Type: "AWS::EC2::SecurityGroupIngress"
     Condition: HasPeerIp1
     Properties:
-      GroupId: !Ref SolanaPeerSecurityGroup
+      GroupId: !Ref EC2SecurityGroup
       IpProtocol: "udp"
       FromPort: 8001
       ToPort: 8008
-      CidrIp: !Select [1, !Ref PeerIps]
-      Description: !Sub "Solana Transaction Forwarding (UDP) from peer IP ${!Select [1, !Ref PeerIps]}"
+      CidrIp: !Ref PeerIp1
+      Description: !Sub "Solana Transaction Forwarding (UDP) from peer IP ${PeerIp1}"
 
   PeerGossipTcpIngress2:
     Type: "AWS::EC2::SecurityGroupIngress"
     Condition: HasPeerIp2
     Properties:
-      GroupId: !Ref SolanaPeerSecurityGroup
+      GroupId: !Ref EC2SecurityGroup
       IpProtocol: "tcp"
       FromPort: 8000
       ToPort: 8000
-      CidrIp: !Select [2, !Ref PeerIps]
-      Description: !Sub "Solana Gossip Protocol (TCP) from peer IP ${!Select [2, !Ref PeerIps]}"
+      CidrIp: !Ref PeerIp2
+      Description: !Sub "Solana Gossip Protocol (TCP) from peer IP ${PeerIp2}"
 
   PeerGossipUdpIngress2:
     Type: "AWS::EC2::SecurityGroupIngress"
     Condition: HasPeerIp2
     Properties:
-      GroupId: !Ref SolanaPeerSecurityGroup
+      GroupId: !Ref EC2SecurityGroup
       IpProtocol: "udp"
       FromPort: 8000
       ToPort: 8000
-      CidrIp: !Select [2, !Ref PeerIps]
-      Description: !Sub "Solana Gossip Protocol (UDP) from peer IP ${!Select [2, !Ref PeerIps]}"
+      CidrIp: !Ref PeerIp2
+      Description: !Sub "Solana Gossip Protocol (UDP) from peer IP ${PeerIp2}"
 
   PeerRpcIngress2:
     Type: "AWS::EC2::SecurityGroupIngress"
     Condition: HasPeerIp2
     Properties:
-      GroupId: !Ref SolanaPeerSecurityGroup
+      GroupId: !Ref EC2SecurityGroup
       IpProtocol: "tcp"
       FromPort: 8899
       ToPort: 8899
-      CidrIp: !Select [2, !Ref PeerIps]
-      Description: !Sub "Solana RPC Port (TCP) from peer IP ${!Select [2, !Ref PeerIps]}"
+      CidrIp: !Ref PeerIp2
+      Description: !Sub "Solana RPC Port (TCP) from peer IP ${PeerIp2}"
 
   PeerTransactionIngress2:
     Type: "AWS::EC2::SecurityGroupIngress"
     Condition: HasPeerIp2
     Properties:
-      GroupId: !Ref SolanaPeerSecurityGroup
+      GroupId: !Ref EC2SecurityGroup
       IpProtocol: "udp"
       FromPort: 8001
       ToPort: 8008
-      CidrIp: !Select [2, !Ref PeerIps]
-      Description: !Sub "Solana Transaction Forwarding (UDP) from peer IP ${!Select [2, !Ref PeerIps]}"
+      CidrIp: !Ref PeerIp2
+      Description: !Sub "Solana Transaction Forwarding (UDP) from peer IP ${PeerIp2}"
 
   PeerGossipTcpIngress3:
     Type: "AWS::EC2::SecurityGroupIngress"
     Condition: HasPeerIp3
     Properties:
-      GroupId: !Ref SolanaPeerSecurityGroup
+      GroupId: !Ref EC2SecurityGroup
       IpProtocol: "tcp"
       FromPort: 8000
       ToPort: 8000
-      CidrIp: !Select [3, !Ref PeerIps]
-      Description: !Sub "Solana Gossip Protocol (TCP) from peer IP ${!Select [3, !Ref PeerIps]}"
+      CidrIp: !Ref PeerIp3
+      Description: !Sub "Solana Gossip Protocol (TCP) from peer IP ${PeerIp3}"
 
   PeerGossipUdpIngress3:
     Type: "AWS::EC2::SecurityGroupIngress"
     Condition: HasPeerIp3
     Properties:
-      GroupId: !Ref SolanaPeerSecurityGroup
+      GroupId: !Ref EC2SecurityGroup
       IpProtocol: "udp"
       FromPort: 8000
       ToPort: 8000
-      CidrIp: !Select [3, !Ref PeerIps]
-      Description: !Sub "Solana Gossip Protocol (UDP) from peer IP ${!Select [3, !Ref PeerIps]}"
+      CidrIp: !Ref PeerIp3
+      Description: !Sub "Solana Gossip Protocol (UDP) from peer IP ${PeerIp3}"
 
   PeerRpcIngress3:
     Type: "AWS::EC2::SecurityGroupIngress"
     Condition: HasPeerIp3
     Properties:
-      GroupId: !Ref SolanaPeerSecurityGroup
+      GroupId: !Ref EC2SecurityGroup
       IpProtocol: "tcp"
       FromPort: 8899
       ToPort: 8899
-      CidrIp: !Select [3, !Ref PeerIps]
-      Description: !Sub "Solana RPC Port (TCP) from peer IP ${!Select [3, !Ref PeerIps]}"
+      CidrIp: !Ref PeerIp3
+      Description: !Sub "Solana RPC Port (TCP) from peer IP ${PeerIp3}"
 
   PeerTransactionIngress3:
     Type: "AWS::EC2::SecurityGroupIngress"
     Condition: HasPeerIp3
     Properties:
-      GroupId: !Ref SolanaPeerSecurityGroup
+      GroupId: !Ref EC2SecurityGroup
       IpProtocol: "udp"
       FromPort: 8001
       ToPort: 8008
-      CidrIp: !Select [3, !Ref PeerIps]
-      Description: !Sub "Solana Transaction Forwarding (UDP) from peer IP ${!Select [3, !Ref PeerIps]}"
+      CidrIp: !Ref PeerIp3
+      Description: !Sub "Solana Transaction Forwarding (UDP) from peer IP ${PeerIp3}"
 
   PeerGossipTcpIngress4:
     Type: "AWS::EC2::SecurityGroupIngress"
     Condition: HasPeerIp4
     Properties:
-      GroupId: !Ref SolanaPeerSecurityGroup
+      GroupId: !Ref EC2SecurityGroup
       IpProtocol: "tcp"
       FromPort: 8000
       ToPort: 8000
-      CidrIp: !Select [4, !Ref PeerIps]
-      Description: !Sub "Solana Gossip Protocol (TCP) from peer IP ${!Select [4, !Ref PeerIps]}"
+      CidrIp: !Ref PeerIp4
+      Description: !Sub "Solana Gossip Protocol (TCP) from peer IP ${PeerIp4}"
 
   PeerGossipUdpIngress4:
     Type: "AWS::EC2::SecurityGroupIngress"
     Condition: HasPeerIp4
     Properties:
-      GroupId: !Ref SolanaPeerSecurityGroup
+      GroupId: !Ref EC2SecurityGroup
       IpProtocol: "udp"
       FromPort: 8000
       ToPort: 8000
-      CidrIp: !Select [4, !Ref PeerIps]
-      Description: !Sub "Solana Gossip Protocol (UDP) from peer IP ${!Select [4, !Ref PeerIps]}"
+      CidrIp: !Ref PeerIp4
+      Description: !Sub "Solana Gossip Protocol (UDP) from peer IP ${PeerIp4}"
 
   PeerRpcIngress4:
     Type: "AWS::EC2::SecurityGroupIngress"
     Condition: HasPeerIp4
     Properties:
-      GroupId: !Ref SolanaPeerSecurityGroup
+      GroupId: !Ref EC2SecurityGroup
       IpProtocol: "tcp"
       FromPort: 8899
       ToPort: 8899
-      CidrIp: !Select [4, !Ref PeerIps]
-      Description: !Sub "Solana RPC Port (TCP) from peer IP ${!Select [4, !Ref PeerIps]}"
+      CidrIp: !Ref PeerIp4
+      Description: !Sub "Solana RPC Port (TCP) from peer IP ${PeerIp4}"
 
   PeerTransactionIngress4:
     Type: "AWS::EC2::SecurityGroupIngress"
     Condition: HasPeerIp4
     Properties:
-      GroupId: !Ref SolanaPeerSecurityGroup
+      GroupId: !Ref EC2SecurityGroup
       IpProtocol: "udp"
       FromPort: 8001
       ToPort: 8008
-      CidrIp: !Select [4, !Ref PeerIps]
-      Description: !Sub "Solana Transaction Forwarding (UDP) from peer IP ${!Select [4, !Ref PeerIps]}"
+      CidrIp: !Ref PeerIp4
+      Description: !Sub "Solana Transaction Forwarding (UDP) from peer IP ${PeerIp4}"
 
-  EC2SecurityGroup:
-    Type: "AWS::EC2::SecurityGroup"
+  PeerGossipTcpIngress5:
+    Type: "AWS::EC2::SecurityGroupIngress"
+    Condition: HasPeerIp5
     Properties:
-      GroupDescription: "An internal security group"
-      GroupName: "solfunmeme-internal"
-      SecurityGroupEgress:
-        -
-          CidrIp: "0.0.0.0/0"
-          Description: "All protocols"
-          IpProtocol: "-1"
-        -
-          CidrIpv6: "::/0"
-          Description: "All protocols"
-          IpProtocol: "-1"
-      VpcId:
-        Ref: "EC2VPC"
+      GroupId: !Ref EC2SecurityGroup
+      IpProtocol: "tcp"
+      FromPort: 8000
+      ToPort: 8000
+      CidrIp: !Ref PeerIp5
+      Description: !Sub "Solana Gossip Protocol (TCP) from peer IP ${PeerIp5}"
+
+  PeerGossipUdpIngress5:
+    Type: "AWS::EC2::SecurityGroupIngress"
+    Condition: HasPeerIp5
+    Properties:
+      GroupId: !Ref EC2SecurityGroup
+      IpProtocol: "udp"
+      FromPort: 8000
+      ToPort: 8000
+      CidrIp: !Ref PeerIp5
+      Description: !Sub "Solana Gossip Protocol (UDP) from peer IP ${PeerIp5}"
+
+  PeerRpcIngress5:
+    Type: "AWS::EC2::SecurityGroupIngress"
+    Condition: HasPeerIp5
+    Properties:
+      GroupId: !Ref EC2SecurityGroup
+      IpProtocol: "tcp"
+      FromPort: 8899
+      ToPort: 8899
+      CidrIp: !Ref PeerIp5
+      Description: !Sub "Solana RPC Port (TCP) from peer IP ${PeerIp5}"
+
+  PeerTransactionIngress5:
+    Type: "AWS::EC2::SecurityGroupIngress"
+    Condition: HasPeerIp5
+    Properties:
+      GroupId: !Ref EC2SecurityGroup
+      IpProtocol: "udp"
+      FromPort: 8001
+      ToPort: 8008
+      CidrIp: !Ref PeerIp5
+      Description: !Sub "Solana Transaction Forwarding (UDP) from peer IP ${PeerIp5}"
 
   EC2LaunchTemplate:
     Type: "AWS::EC2::LaunchTemplate"
@@ -444,15 +429,11 @@ Resources:
         IamInstanceProfile:
           Name: !Ref IAMInstanceProfile
         NetworkInterfaces:
-          -
-            AssociatePublicIpAddress: true
-            # this will cost if you have more than one instance
-            
+          - AssociatePublicIpAddress: true
             DeleteOnTermination: true
             DeviceIndex: 0
             Groups:
               - !Ref EC2SecurityGroup
-              - !Ref SolanaPeerSecurityGroup
             NetworkCardIndex: 0
         ImageId: !Sub "${AmiId}"
         InstanceType: "t4g.small"
@@ -461,13 +442,13 @@ Resources:
               #!/bin/bash -xe
               export AGENT_NAME="${AgentCodeName}"
               export CHAIN_NAME="${ChainName}"
-              export GIT_REPO="${GitRepo}" # FIXME
-              export GIT_BRANCH="${GitBranch}" # FIXME
-              mkdir /etc/solana/              
+              export GIT_REPO="${GitRepo}"
+              export GIT_BRANCH="${GitBranch}"
+              mkdir -p /etc/solana/              
               echo AGENT_NAME="${AgentCodeName}" > /etc/solana/env
               echo CHAIN_NAME="${ChainName}" >> /etc/solana/env
               echo GIT_REPO="${GitRepo}" >> /etc/solana/env
-              echo GIT_BRANCH="${GitBranch}"  >> /etc/solana/env
+              echo GIT_BRANCH="${GitBranch}" >> /etc/solana/env
               export HOME=/root
               apt update
               apt-get install -y ec2-instance-connect git wget unzip systemd curl
@@ -478,19 +459,15 @@ Resources:
               if [ ! -d "/opt/agent/" ]; then
                 git clone "${GitRepo}" "/opt/agent/"
               fi
-              cd "/opt/services/" || exit 1
+              cd "/opt/agent/" || exit 1
               git stash
               git fetch --all
               git checkout --track --force "origin/${GitBranch}"
-              bash -x /opt/services/scripts/bootstrap.sh
-              
-
+              bash -x /opt/agent/scripts/bootstrap.sh
         BlockDeviceMappings:
-          -
-            DeviceName: "/dev/sda1"
+          - DeviceName: "/dev/sda1"
             Ebs:
               Encrypted: true
-              # free https://www.reddit.com/r/aws/comments/8vulq0/does_encryption_cost_money_on_aws_ebs_volumes/
               VolumeSize: 30
               VolumeType: "gp3"
 
@@ -505,17 +482,14 @@ Resources:
     DependsOn:
       - EC2LaunchTemplate
       - AWSServiceRoleForAutoScaling
-    
     Properties:      
       Tags:
-        -
-          Key : Name
+        - Key: Name
           Value: !Sub "${AgentCodeName}-agent"
-          PropagateAtLaunch : true
-
+          PropagateAtLaunch: true
       AutoScalingGroupName: "docker-agent-ami-t4g.small"
       LaunchTemplate:
-        LaunchTemplateName:  "agent-docker-t4g.small-launch-template"
+        LaunchTemplateName: "agent-docker-t4g.small-launch-template"
         Version: !Ref LaunchTemplateVersion
       MinSize: 1
       MaxSize: 2
@@ -523,7 +497,6 @@ Resources:
       Cooldown: 300
       AvailabilityZones:
         - !Sub "${AWS::Region}${AvailabilityZone}"
-        #              - "us-west-1b"
       HealthCheckType: "EC2"
       HealthCheckGracePeriod: 300
       VPCZoneIdentifier:
@@ -532,9 +505,3 @@ Resources:
         - "Default"
       ServiceLinkedRoleARN: !Sub "arn:aws:iam::${AWS::AccountId}:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling_${AgentCodeName}"
       NewInstancesProtectedFromScaleIn: false
-
-Conditions:
-  HasPeerIp1: !Not [!Equals [!Select [1, !Ref PeerIps], ""]]
-  HasPeerIp2: !Not [!Equals [!Select [2, !Ref PeerIps], ""]]
-  HasPeerIp3: !Not [!Equals [!Select [3, !Ref PeerIps], ""]]
-  HasPeerIp4: !Not [!Equals [!Select [4, !Ref PeerIps], ""]]
