@@ -17,7 +17,7 @@ Parameters:
   AgentCodeName:
     Type: 'String'
     Description: 'Agent codename for finding parameters'
-    Default: 'tine_agent_2'
+    Default: 'SOLANA_agent_2'
       
   ChainName:
     Type: 'String'
@@ -83,7 +83,7 @@ Resources:
     Type: "AWS::IAM::Role"
     Properties:
       Path: "/"
-      RoleName: !Sub '${ChainName}_ssm-tine-deploy-agent-role'
+      RoleName: !Sub '${ChainName}_ssm-solana-deploy-agent-role'
       AssumeRolePolicyDocument: "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Sid\":\"\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"},\"Action\":\"sts:AssumeRole\"}]}"
       MaxSessionDuration: 3600
       ManagedPolicyArns:

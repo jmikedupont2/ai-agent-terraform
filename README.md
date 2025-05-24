@@ -1,3 +1,10 @@
+# setup
+
+1. debian running systemd on wsl
+2. terraform on debian
+3. docker for testing scripts
+4. boostrap via services repo
+
 # cloudformation files
 
 here are files from terraform in clouformation, needs to be cleaned up.

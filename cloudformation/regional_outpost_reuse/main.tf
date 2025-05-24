@@ -10,12 +10,6 @@ terraform {
 variable "region" {}
 variable "patch" {} # was v3
 
-# resource "aws_s3_bucket" "template_bucket" {
-#   count = 0 # dont create now
-#   bucket        = "zos-solfunmeme-tine-cf-template-${var.region}" # Replace with your desired bucket name
-#   force_destroy = true
-# }
-
 data "aws_s3_bucket" "template_bucket" {
   bucket = "zos-solfunmeme-tine-cf-template-${var.region}" # Replace with your desired bucket name
 
@@ -67,7 +61,7 @@ locals {
 }
 
 locals {
-  cf_template_url = "https://${var.region}.console.aws.amazon.com/cloudformation/home?region=${var.region}#/stacks/quickcreate?templateURL=${local.template_url}&stackName=zos-solfunmeme-tine-the-introspector-is-not-eliza-stack-template-one-click-installer&param_S3BucketPattern=tine_agent_*&param_GroqKey=&param_TwitterPassword=&param_NameTag=tine-dev&param_AgentCodeName=tine_agent_4&param_SSMParameterPattern=tine_agent_*&param_AmiId=${data.aws_ami.ami.id}"
+  cf_template_url = "https://${var.region}.console.aws.amazon.com/cloudformation/home?region=${var.region}#/stacks/quickcreate?templateURL=${local.template_url}&stackName=zos-solfunmeme-solana-stack-template-one-click-installer&param_GroqKey=&param_TwitterPassword=&param_AgentCodeName=tine_agent_4&param_SSMParameterPattern=tine_agent_*&param_AmiId=${data.aws_ami.ami.id}"
   image_url       = "![Launch ${var.region} Stack](https://cdn.rawgit.com/buildkite/cloudformation-launch-stack-button-svg/master/launch-stack.svg)"
 }
 
