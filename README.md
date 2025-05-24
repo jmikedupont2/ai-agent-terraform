@@ -4,6 +4,7 @@
 2. terraform on debian
 3. docker for testing scripts
 4. boostrap via services repo
+Boostrap calls itself again to get the latest version. 
 
 # cloudformation files
 
