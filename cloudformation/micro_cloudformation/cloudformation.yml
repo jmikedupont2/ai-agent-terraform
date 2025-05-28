@@ -12,7 +12,7 @@ Parameters:
   GitBranch:
     Type: "String"
     Description: "git branch for the agent you can modify this to your own branch"
-    Default: "deployment/v0.0.1-solana-test-validator-x86"
+    Default: "deployment/v0.0.01-solana-test-validator-x86_64"
 
   AgentCodeName:
     Type: 'String'

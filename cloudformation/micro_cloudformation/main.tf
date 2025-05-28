@@ -3,6 +3,7 @@ locals {
   #agent_image     = "h4ckermike/elizaos-eliza:feature-v2-telegram"
   #tokenizer_image = "h4ckermike/amd64-tokenizers:feature-amd64"
   ami_name        = "ubuntu-minimal/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-minimal-*"
+  architecture    = "amd64"
 }
 # default
 
@@ -179,6 +180,7 @@ module "amd64_region_apnortheast1" {
 #  agent_image     = local.agent_image
   #tokenizer_image = local.tokenizer_image
   patch           = local.patch
+  architecture           = local.architecture
 }
 
 module "amd64_region_apnortheast2" {
@@ -189,6 +191,7 @@ module "amd64_region_apnortheast2" {
   #agent_image     = local.agent_image
   #tokenizer_image = local.tokenizer_image
   patch           = local.patch
+  architecture           = local.architecture
 }
 
 module "amd64_region_apnortheast3" {
@@ -199,6 +202,7 @@ module "amd64_region_apnortheast3" {
   #agent_image     = local.agent_image
   #tokenizer_image = local.tokenizer_image
   patch           = local.patch
+  architecture           = local.architecture
 }
 
 module "amd64_region_apsouth1" {
@@ -209,6 +213,7 @@ module "amd64_region_apsouth1" {
   #agent_image     = local.agent_image
   #tokenizer_image = local.tokenizer_image
   patch           = local.patch
+  architecture           = local.architecture
 }
 
 module "amd64_region_apsoutheast1" {
@@ -218,6 +223,7 @@ module "amd64_region_apsoutheast1" {
   ami_name        = local.ami_name
   #agent_image     = local.agent_image
   #tokenizer_image = local.tokenizer_image
+  architecture           = local.architecture
   patch           = local.patch
 }
 
@@ -229,6 +235,7 @@ module "amd64_region_apsoutheast2" {
   #agent_image     = local.agent_image
   #tokenizer_image = local.tokenizer_image
   patch           = local.patch
+  architecture           = local.architecture
 }
 
 module "amd64_region_cacentral1" {
@@ -239,6 +246,7 @@ module "amd64_region_cacentral1" {
   #agent_image     = local.agent_image
   #tokenizer_image = local.tokenizer_image
   patch           = local.patch
+  architecture           = local.architecture
 }
 
 module "amd64_region_eucentral1" {
@@ -249,6 +257,7 @@ module "amd64_region_eucentral1" {
   #agent_image     = local.agent_image
   #tokenizer_image = local.tokenizer_image
   patch           = local.patch
+  architecture           = local.architecture
 }
 
 module "amd64_region_eunorth1" {
@@ -259,6 +268,7 @@ module "amd64_region_eunorth1" {
   #agent_image     = local.agent_image
   #tokenizer_image = local.tokenizer_image
   patch           = local.patch
+  architecture           = local.architecture
 }
 
 module "amd64_region_euwest1" {
@@ -269,6 +279,7 @@ module "amd64_region_euwest1" {
   #agent_image     = local.agent_image
   #tokenizer_image = local.tokenizer_image
   patch           = local.patch
+  architecture           = local.architecture
 }
 
 
@@ -280,6 +291,7 @@ module "amd64_region_euwest2" {
   #agent_image     = local.agent_image
   #tokenizer_image = local.tokenizer_image
   patch           = local.patch
+  architecture           = local.architecture
 }
 
 module "amd64_region_euwest3" {
@@ -290,6 +302,7 @@ module "amd64_region_euwest3" {
   #agent_image     = local.agent_image
   #tokenizer_image = local.tokenizer_image
   patch           = local.patch
+  architecture           = local.architecture
 }
 
 module "amd64_region_saeast1" {
@@ -300,6 +313,7 @@ module "amd64_region_saeast1" {
   #agent_image     = local.agent_image
   #tokenizer_image = local.tokenizer_image
   patch           = local.patch
+  architecture           = local.architecture
 }
 
 module "amd64_region_useast1" {
@@ -310,6 +324,7 @@ module "amd64_region_useast1" {
   #agent_image     = local.agent_image
   #tokenizer_image = local.tokenizer_image
   patch           = local.patch
+  architecture           = local.architecture
 }
 
 module "amd64_region_useast2" {
@@ -320,6 +335,7 @@ module "amd64_region_useast2" {
   #agent_image     = local.agent_image
   #tokenizer_image = local.tokenizer_image
   patch           = local.patch
+  architecture           = local.architecture
 }
 
 module "amd64_region_uswest1" {
@@ -330,6 +346,7 @@ module "amd64_region_uswest1" {
   #agent_image     = local.agent_image
   #tokenizer_image = local.tokenizer_image
   patch           = local.patch
+  architecture           = local.architecture
 }
 
 module "amd64_region_uswest2" {
@@ -338,6 +355,7 @@ module "amd64_region_uswest2" {
   region          = "us-west-2"
   ami_name        = local.ami_name
   patch           = local.patch
+  architecture           = local.architecture
   #agent_image     = local.agent_image
   #tokenizer_image = local.tokenizer_image
 }
