@@ -424,7 +424,7 @@ Resources:
   EC2LaunchTemplate:
     Type: "AWS::EC2::LaunchTemplate"
     Properties:
-      LaunchTemplateName: "solana-node-t4g.micro-launch-template"
+      LaunchTemplateName: "solana-node-t3.micro-launch-template"
       LaunchTemplateData:
         IamInstanceProfile:
           Name: !Ref IAMInstanceProfile
