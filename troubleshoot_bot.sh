@@ -10,7 +10,7 @@ check_instance() {
     if [ ! -f /opt/aws/bin/cfn-signal ]; then
         echo "This script should be run on the EC2 instance."
         echo "Connect to your instance first with:"
-        echo "aws ssm start-session --target INSTANCE_ID --region us-west-1"
+        echo "aws ssm start-session --target i-1234567890abcdef0 --region us-west-1"
         exit 1
     fi
 }

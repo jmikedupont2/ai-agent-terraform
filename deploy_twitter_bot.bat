@@ -58,14 +58,14 @@ echo.
 
 REM Set up secrets in AWS SSM
 echo Setting up secrets in AWS SSM Parameter Store...
-aws ssm put-parameter --name "agent_groq_key" --value "%GROQ_API_KEY%" --type "SecureString" --overwrite --region us-west-1
-aws ssm put-parameter --name "twitter_username" --value "%TWITTER_USERNAME%" --type "String" --overwrite --region us-west-1
-aws ssm put-parameter --name "twitter_password" --value "%TWITTER_PASSWORD%" --type "SecureString" --overwrite --region us-west-1
-aws ssm put-parameter --name "twitter_email" --value "%TWITTER_EMAIL%" --type "SecureString" --overwrite --region us-west-1
+aws ssm put-parameter --name "agent_groq_key" --value "%GROQ_API_KEY%" --type "SecureString" --overwrite --region us-east-1
+aws ssm put-parameter --name "twitter_username" --value "%TWITTER_USERNAME%" --type "String" --overwrite --region us-east-1
+aws ssm put-parameter --name "twitter_password" --value "%TWITTER_PASSWORD%" --type "SecureString" --overwrite --region us-east-1
+aws ssm put-parameter --name "twitter_email" --value "%TWITTER_EMAIL%" --type "SecureString" --overwrite --region us-east-1
 
 REM Create ECR repositories
 echo Creating ECR repositories...
-aws ecr create-repository --repository-name agent/eliza --region us-west-1 2>nul || echo Repository agent/eliza already exists
+aws ecr create-repository --repository-name agent/eliza --region us-east-1 2>nul || echo Repository agent/eliza already exists
 
 REM Deploy infrastructure
 echo Deploying infrastructure...
@@ -90,10 +90,10 @@ echo Your Eliza Twitter bot with Ultima personality is being deployed!
 echo.
 echo To check the status:
 echo 1. Find your instance ID:
-echo    aws ec2 describe-instances --region us-west-1 --filters "Name=tag:project,Values=ai-token-team" --query "Reservations[*].Instances[*].[InstanceId,State.Name]" --output table
+echo    aws ec2 describe-instances --region us-east-1 --filters "Name=tag:project,Values=ai-token-team" --query "Reservations[*].Instances[*].[InstanceId,State.Name]" --output table
 echo.
 echo 2. Connect to the instance:
-echo    aws ssm start-session --target INSTANCE_ID --region us-west-1
+echo    aws ssm start-session --target i-1234567890abcdef0 --region us-east-1
 echo.
 echo 3. Check the bot status:
 echo    sudo systemctl status eliza-twitter

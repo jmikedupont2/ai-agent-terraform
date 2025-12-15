@@ -36,7 +36,7 @@ aws ssm put-parameter \
     --value "${GROQ_API_KEY}" \
     --type "SecureString" \
     --overwrite \
-    --region us-west-1
+    --region us-east-1
 
 # Set Twitter credentials
 echo "Setting Twitter username..."
@@ -45,7 +45,7 @@ aws ssm put-parameter \
     --value "${TWITTER_USERNAME}" \
     --type "String" \
     --overwrite \
-    --region us-west-1
+    --region us-east-1
 
 echo "Setting Twitter password..."
 aws ssm put-parameter \
@@ -53,7 +53,7 @@ aws ssm put-parameter \
     --value "${TWITTER_PASSWORD}" \
     --type "SecureString" \
     --overwrite \
-    --region us-west-1
+    --region us-east-1
 
 echo "Setting Twitter email..."
 aws ssm put-parameter \
@@ -61,10 +61,10 @@ aws ssm put-parameter \
     --value "${TWITTER_EMAIL}" \
     --type "SecureString" \
     --overwrite \
-    --region us-west-1
+    --region us-east-1
 
 echo "All secrets have been set successfully!"
 echo ""
 echo "To verify, you can check the parameters:"
-echo "aws ssm get-parameter --name agent_groq_key --region us-west-1"
-echo "aws ssm get-parameter --name twitter_username --region us-west-1"
+echo "aws ssm get-parameter --name agent_groq_key --region us-east-1"
+echo "aws ssm get-parameter --name twitter_username --region us-east-1"

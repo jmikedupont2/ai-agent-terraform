@@ -5,10 +5,10 @@ set -e
 echo "Starting Eliza Twitter bot with Ultima character..."
 
 # Set environment variables
-export GROQ_API_KEY=$(aws ssm get-parameter --name "agent_groq_key" --with-decryption --query 'Parameter.Value' --output text --region us-west-1)
+export GROQ_API_KEY=$(aws ssm get-parameter --name "agent_groq_key" --with-decryption --query 'Parameter.Value' --output text --region us-east-1)
 export TWITTER_USERNAME=${TWITTER_USERNAME:-"UltimaAI"}
-export TWITTER_PASSWORD=$(aws ssm get-parameter --name "twitter_password" --with-decryption --query 'Parameter.Value' --output text --region us-west-1 2>/dev/null || echo "")
-export TWITTER_EMAIL=$(aws ssm get-parameter --name "twitter_email" --with-decryption --query 'Parameter.Value' --output text --region us-west-1 2>/dev/null || echo "")
+export TWITTER_PASSWORD=$(aws ssm get-parameter --name "twitter_password" --with-decryption --query 'Parameter.Value' --output text --region us-east-1 2>/dev/null || echo "")
+export TWITTER_EMAIL=$(aws ssm get-parameter --name "twitter_email" --with-decryption --query 'Parameter.Value' --output text --region us-east-1 2>/dev/null || echo "")
 
 # Pull latest Eliza image
 docker pull elizaos/eliza:latest

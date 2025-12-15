@@ -1,12 +1,12 @@
 provider "aws" {
-  region  = "us-west-1"
+  region  = "us-east-1"
   #profile = "ai-token-team"
   profile = "default"
 }
 
 locals {
   dns      = "aitokenteam.com" # fixme
-  region   = "us-west-1"
+  region   = "us-east-1"
   project  = "ai-token-team" # dont change
 }
 
@@ -54,7 +54,7 @@ module "ssm_setup" {
 
  ]
    repo = "https://github.com/meta-introspector/cloud-deployment-eliza/"
-   aws_availability_zones = ["us-west-1a",
-     #"us-west-1b",
-     "us-west-1c"]
+   aws_availability_zones = ["us-east-1a",
+     "us-east-1b",
+     "us-east-1c"]
  }
