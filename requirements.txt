@@ -1,0 +1,2 @@
+# Kiddush HaChodesh Kernel Core
+# No external dependencies required
