@@ -1,0 +1,43 @@
+/* CRITICAL: Chart Container Styling per Requirements */
+.chart-container {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 300px; /* Base height */
+    max-height: 400px;
+}
+
+@media (min-width: 768px) {
+    .chart-container {
+        height: 350px;
+    }
+}
+
+/* Custom Scrollbar for clean look */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #f5f5f4;
+}
+::-webkit-scrollbar-thumb {
+    background: #d6d3d1;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #a8a29e;
+}
+
+.step-circle.active {
+    background-color: #292524; /* stone-800 */
+    color: white;
+    border-color: #292524;
+}
+.step-line.active {
+    background-color: #292524;
+}
+.modal-overlay {
+    background-color: rgba(41, 37, 36, 0.9); /* stone-800 semi-transparent */
+}

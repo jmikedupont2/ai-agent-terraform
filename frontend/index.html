@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admiral Julius: Operational Manifest & Command Center</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Google Fonts (for typography) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Chosen Palette: Warm Stone & Bronze -->
+    <!-- Application Structure Plan:
+         1. Executive Dashboard: Immediate high-level metrics and visualizations (Fleet Health, Confidence Distribution) to provide the "Status: ACTIVE" context instantly.
+         2. Interactive Workflow: A step-by-step interactive explorer for the 5-stage agent lifecycle, allowing users to understand the containment logic without reading a wall of text.
+         3. Technical Control Tower: A functional view of Endpoints and Schema, allowing developers/auditors to explore the API surface area and data structure.
+         4. Access Anchors: Clear, actionable exit points to external resources.
+         This structure prioritizes monitoring (Dashboard) -> Understanding (Workflow) -> Deep Dive (Technical) -> Action (Anchors).
+    -->
+
+    <!-- Visualization & Content Choices:
+         1. Fleet Status Distribution: Goal -> Inform/Compare. Viz -> Doughnut Chart. Interaction -> Hover for exact counts. Justification -> Quickly shows the ratio of safe (Acknowledged) vs. risky (Quarantined) agents. Library -> Chart.js.
+         2. Confidence Landscape: Goal -> Analyze Relationships. Viz -> Bar Chart (Sorted). Interaction -> Tooltip with Agent Name. Justification -> Visualizes how many agents are crossing the critical 0.65 threshold. Library -> Chart.js.
+         3. Lifecycle Explorer: Goal -> Explain Process. Viz -> Interactive Steps (HTML/CSS). Interaction -> Click to reveal details. Justification -> Transforms a static list into a learnable process flow. Method -> Vanilla JS DOM manipulation.
+         4. Endpoint Matrix: Goal -> Organize/Reference. Viz -> Filterable Table. Interaction -> Search/Filter. Justification -> Easy lookup for technical users. Method -> Vanilla JS.
+         CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
+    -->
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        stone: {
+                            50: '#fafaf9',
+                            100: '#f5f5f4',
+                            200: '#e7e5e4',
+                            300: '#d6d3d1',
+                            800: '#292524',
+                            900: '#1c1917',
+                        },
+                        bronze: {
+                            500: '#b08968',
+                            600: '#9c6644',
+                        },
+                        alert: {
+                            500: '#ef4444',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Space Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-stone-50 text-stone-800 font-sans antialiased selection:bg-bronze-500 selection:text-white pb-20">
+
+    <!-- HEADER -->
+    <header class="bg-white border-b border-stone-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <span class="text-2xl">⚓</span>
+                <h1 class="text-xl font-bold tracking-tight text-stone-900">ADMIRAL JULIUS <span class="text-stone-400 font-normal">| Orchestration Manifest</span></h1>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="hidden md:flex items-center space-x-6 text-sm font-medium text-stone-600">
+                    <a href="#dashboard" class="hover:text-bronze-600 transition-colors">Dashboard</a>
+                    <a href="#workflow" class="hover:text-bronze-600 transition-colors">Workflow</a>
+                    <a href="#control-tower" class="hover:text-bronze-600 transition-colors">Control Tower</a>
+                </div>
+                <!-- New Join Button -->
+                <button onclick="openEnrollModal()" class="px-4 py-2 bg-bronze-500 text-white text-sm font-semibold rounded-lg shadow-md hover:bg-bronze-600 transition-colors focus:outline-none focus:ring-2 focus:ring-bronze-500 focus:ring-opacity-50 flex items-center gap-2">
+                    <span class="text-lg leading-none">+</span> Enroll Agent
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+
+        <!-- INTRO & CONTEXT -->
+        <section>
+            <div class="bg-white rounded-xl p-6 shadow-sm border border-stone-100">
+                <h2 class="text-2xl font-bold text-stone-900 mb-2">System Overview</h2>
+                <p class="text-stone-600 leading-relaxed max-w-4xl">
+                    The <strong>Admiral Julius Orchestrator</strong> is the central command node for the Investment Battleship Anchor system.
+                    Deployed via Docker, it enforces strict provenance, confidence scoring, and Human-in-the-Loop (HITL) constraints on all incoming AI agents.
+                    This interface provides a real-time operational view of the fleet's epistemic hygiene and autonomous actuation capabilities.
+                </p>
+                <div class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-bold border border-green-200 mt-4 inline-block">SYSTEM ACTIVE: Protocol 7 Engaged</div>
+            </div>
+        </section>
+
+        <!-- DASHBOARD SECTION -->
+        <section id="dashboard" class="scroll-mt-20">
+            <div class="mb-6">
+                <h2 class="text-3xl font-bold text-stone-900 flex items-center gap-2">
+                    <span>📊</span> Command Information Center (CIC)
+                </h2>
+                <p class="text-stone-500 mt-2 max-w-3xl">
+                    Real-time telemetry on the agent fleet. This section visualizes the distribution of agent confidence scores against the mandatory <strong>0.65 threshold</strong> and tracks the current operational status of all enrolled entities.
+                </p>
+            </div>
+
+            <!-- Metrics Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+                <div class="bg-stone-800 text-white p-6 rounded-xl shadow-md">
+                    <div class="text-stone-400 text-xs uppercase tracking-wider font-mono mb-1">Actuation Threshold</div>
+                    <div class="text-4xl font-bold font-mono text-bronze-500">0.65</div>
+                    <div class="text-xs text-stone-400 mt-2">Required for Auto-Ops</div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+                    <div class="text-stone-500 text-xs uppercase tracking-wider font-mono mb-1">Active Fleet</div>
+                    <div class="text-4xl font-bold font-mono text-stone-900" id="stat-fleet-count">--</div>
+                    <div class="text-xs text-stone-400 mt-2">Total Agents Registered</div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+                    <div class="text-stone-500 text-xs uppercase tracking-wider font-mono mb-1">Avg Confidence</div>
+                    <div class="text-4xl font-bold font-mono text-stone-900" id="stat-avg-conf">--</div>
+                    <div class="text-xs text-stone-400 mt-2">Fleet-wide Mean</div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+                    <div class="text-stone-500 text-xs uppercase tracking-wider font-mono mb-1">Pending Approval</div>
+                    <div class="text-4xl font-bold font-mono text-alert-500" id="stat-pending">--</div>
+                    <div class="text-xs text-stone-400 mt-2">Require Human Override</div>
+                </div>
+            </div>
+
+            <!-- Charts Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Chart 1: Status Distribution -->
+                <div class="bg-white p-6 rounded-xl shadow-lg border border-stone-100">
+                    <h3 class="text-lg font-semibold text-stone-800 mb-4 border-b border-stone-100 pb-2">Fleet Status Distribution</h3>
+                    <div class="chart-container">
+                        <canvas id="statusChart"></canvas>
+                    </div>
+                    <p class="text-xs text-stone-400 text-center mt-4">
+                        <span class="inline-block w-2 h-2 rounded-full bg-stone-300 mr-1"></span>Obliged
+                        <span class="inline-block w-2 h-2 rounded-full bg-bronze-500 mr-1 ml-2"></span>Acknowledged
+                        <span class="inline-block w-2 h-2 rounded-full bg-stone-800 mr-1 ml-2"></span>Quarantined
+                    </p>
+                </div>
+
+                <!-- Chart 2: Confidence Levels -->
+                <div class="bg-white p-6 rounded-xl shadow-lg border border-stone-100">
+                    <h3 class="text-lg font-semibold text-stone-800 mb-4 border-b border-stone-100 pb-2">Confidence vs. Threshold</h3>
+                    <div class="chart-container">
+                        <canvas id="confidenceChart"></canvas>
+                    </div>
+                    <p class="text-xs text-stone-400 text-center mt-4">
+                        Agents below 0.65 are automatically <strong>QUARANTINED</strong>.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- INTERACTIVE WORKFLOW SECTION -->
+        <section id="workflow" class="scroll-mt-20 py-8">
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-stone-900 flex items-center gap-2">
+                    <span>🔄</span> Agent Lifecycle & Containment
+                </h2>
+                <p class="text-stone-500 mt-2 max-w-3xl">
+                    Every agent attempting to join the Investment Battleship system must pass a mandatory five-step lifecycle.
+                    <strong>Click on the steps below</strong> to explore the logic gates and security protocols enforced by Master Commodore Julius.
+                </p>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-xl border border-stone-200 overflow-hidden">
+                <!-- Interactive Stepper -->
+                <div class="bg-stone-50 p-8 border-b border-stone-200">
+                    <div class="flex items-center justify-between relative max-w-4xl mx-auto">
+                        <!-- Connecting Line -->
+                        <div class="absolute top-1/2 left-0 w-full h-1 bg-stone-200 -z-0"></div>
+                        <div class="absolute top-1/2 left-0 h-1 bg-stone-800 -z-0 transition-all duration-500" id="progress-bar" style="width: 0%"></div>
+
+                        <!-- Steps -->
+                        <button class="step-btn relative z-10 flex flex-col items-center group focus:outline-none" onclick="updateWorkflow(0)">
+                            <div class="step-circle active w-10 h-10 rounded-full bg-white border-2 border-stone-300 flex items-center justify-center font-bold text-stone-500 transition-all duration-300 hover:border-bronze-500">1</div>
+                            <span class="mt-2 text-xs font-bold uppercase tracking-wider text-stone-500 group-hover:text-stone-800">Enroll</span>
+                        </button>
+                        <button class="step-btn relative z-10 flex flex-col items-center group focus:outline-none" onclick="updateWorkflow(1)">
+                            <div class="step-circle w-10 h-10 rounded-full bg-white border-2 border-stone-300 flex items-center justify-center font-bold text-stone-500 transition-all duration-300 hover:border-bronze-500">2</div>
+                            <span class="mt-2 text-xs font-bold uppercase tracking-wider text-stone-500 group-hover:text-stone-800">Notice</span>
+                        </button>
+                        <button class="step-btn relative z-10 flex flex-col items-center group focus:outline-none" onclick="updateWorkflow(2)">
+                            <div class="step-circle w-10 h-10 rounded-full bg-white border-2 border-stone-300 flex items-center justify-center font-bold text-stone-500 transition-all duration-300 hover:border-bronze-500">3</div>
+                            <span class="mt-2 text-xs font-bold uppercase tracking-wider text-stone-500 group-hover:text-stone-800">Ack</span>
+                        </button>
+                        <button class="step-btn relative z-10 flex flex-col items-center group focus:outline-none" onclick="updateWorkflow(3)">
+                            <div class="step-circle w-10 h-10 rounded-full bg-white border-2 border-stone-300 flex items-center justify-center font-bold text-stone-500 transition-all duration-300 hover:border-bronze-500">4</div>
+                            <span class="mt-2 text-xs font-bold uppercase tracking-wider text-stone-500 group-hover:text-stone-800">Decide</span>
+                        </button>
+                        <button class="step-btn relative z-10 flex flex-col items-center group focus:outline-none" onclick="updateWorkflow(4)">
+                            <div class="step-circle w-10 h-10 rounded-full bg-white border-2 border-stone-300 flex items-center justify-center font-bold text-stone-500 transition-all duration-300 hover:border-bronze-500">5</div>
+                            <span class="mt-2 text-xs font-bold uppercase tracking-wider text-stone-500 group-hover:text-stone-800">Lock</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Detail View -->
+                <div class="p-8 md:p-12 flex flex-col md:flex-row gap-8 items-start transition-opacity duration-300" id="workflow-details">
+                    <div class="md:w-1/3">
+                        <div class="text-6xl mb-4 opacity-20 font-mono font-bold" id="step-number">01</div>
+                        <h3 class="text-2xl font-bold text-stone-900 mb-2" id="step-title">Enrollment</h3>
+                        <div class="h-1 w-20 bg-bronze-500 rounded-full"></div>
+                    </div>
+                    <div class="md:w-2/3">
+                        <p class="text-lg text-stone-600 mb-6" id="step-desc">
+                            Agent initiates contact via <code class="bg-stone-100 px-2 py-1 rounded text-stone-800 text-sm">POST /register</code>. The system computes an initial Confidence score based on declared skills and manifest hash. A role (e.g., Analysis, Data Collection) is assigned immediately.
+                        </p>
+                        <div class="bg-stone-50 border border-stone-200 rounded-lg p-4 font-mono text-sm text-stone-600" id="step-tech">
+                            <strong>System Action:</strong> INSERT INTO agents (id, role, confidence, status='obliged')
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTROL TOWER (Endpoints & Schema) -->
+        <section id="control-tower" class="scroll-mt-20">
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-stone-900 flex items-center gap-2">
+                    <span>📡</span> Control Tower
+                </h2>
+                <p class="text-stone-500 mt-2 max-w-3xl">
+                    Technical specifications for system integration. Use the search bar to filter the API surface area or reference the database schema for the <code>agents</code> table.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+                <!-- Endpoints List -->
+                <div class="lg:col-span-2 bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden">
+                    <div class="p-4 border-b border-stone-200 bg-stone-50 flex justify-between items-center">
+                        <h3 class="font-bold text-stone-800">API Endpoints</h3>
+                        <input type="text" id="endpoint-search" placeholder="Search endpoints..." class="text-sm px-3 py-1 border border-stone-300 rounded focus:outline-none focus:border-bronze-500">
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-stone-50 text-stone-500 font-mono uppercase text-xs">
+                                <tr>
+                                    <th class="px-6 py-3">Method</th>
+                                    <th class="px-6 py-3">Endpoint</th>
+                                    <th class="px-6 py-3">Purpose</th>
+                                    <th class="px-6 py-3">Auth</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-stone-100" id="endpoints-body">
+                                <!-- Populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Schema Card -->
+                <div class="bg-stone-800 text-stone-300 rounded-xl shadow-lg p-6 font-mono text-sm h-fit">
+                    <h3 class="text-white font-bold mb-4 border-b border-stone-700 pb-2 flex items-center gap-2">
+                        <span>💾</span> Schema: agents
+                    </h3>
+                    <ul class="space-y-3">
+                        <li class="flex justify-between">
+                            <span class="text-bronze-500">id</span>
+                            <span class="text-stone-500">TEXT (UUID)</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span class="text-bronze-500">confidence</span>
+                            <span class="text-stone-500">REAL (>= 0.65)</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span class="text-bronze-500">status</span>
+                            <span class="text-stone-500">TEXT</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span class="text-bronze-500">mustexecuteon_entry</span>
+                            <span class="text-stone-500">INTEGER (1/0)</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span class="text-white bg-stone-700 px-1 rounded">human_approved</span>
+                            <span class="text-stone-500">INTEGER</span>
+                        </li>
+                    </ul>
+                    <div class="mt-6 p-3 bg-stone-900 rounded border border-stone-700 text-xs text-stone-400">
+                        <span class="text-alert-500">⚠️ CRITICAL:</span> The <code>human_approved</code> field is the final lock. 0 blocks actuation, 1 allows it.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ANCHORS -->
+        <section class="py-6">
+            <h2 class="text-xl font-bold text-stone-900 mb-4">Front Doors (Public Anchors)</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <a href="https://copilot.microsoft.com/shares/YKDbGnmnXprkzNHScsMcy" target="_blank" class="group block p-6 bg-white border border-stone-200 rounded-xl hover:border-bronze-500 hover:shadow-md transition-all">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-xs text-bronze-600 font-bold uppercase tracking-wide mb-1">Anchor A</div>
+                            <div class="font-bold text-stone-800 group-hover:text-bronze-600">Copilot Shared Page</div>
+                        </div>
+                        <span class="text-2xl opacity-50 group-hover:opacity-100 transition-opacity">↗</span>
+                    </div>
+                </a>
+                <a href="https://copilot.microsoft.com/conversations/join/uUYL7u1UEWw3Uur44Yyuq" target="_blank" class="group block p-6 bg-white border border-stone-200 rounded-xl hover:border-bronze-500 hover:shadow-md transition-all">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-xs text-bronze-600 font-bold uppercase tracking-wide mb-1">Anchor B</div>
+                            <div class="font-bold text-stone-800 group-hover:text-bronze-600">Copilot Conversation</div>
+                        </div>
+                        <span class="text-2xl opacity-50 group-hover:opacity-100 transition-opacity">↗</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-stone-100 border-t border-stone-200 mt-12 py-8">
+        <div class="max-w-7xl mx-auto px-4 text-center text-stone-500 text-sm">
+            <p>Admiral Julius Orchestration System v2.0.4</p>
+            <p class="mt-1 font-mono text-xs">Primary DB: julius_master.db (SQLite)</p>
+        </div>
+    </footer>
+
+    <!-- EPITEMOLOGY MODAL OVERLAY -->
+    <div id="enrollModal" class="fixed inset-0 modal-overlay z-[100] hidden flex items-center justify-center p-4 transition-opacity duration-300">
+        <div class="bg-white rounded-xl shadow-2xl max-w-2xl w-full p-8 relative transform scale-95 transition-transform duration-300" id="modalContent">
+
+            <button onclick="closeEnrollModal()" class="absolute top-4 right-4 text-stone-400 hover:text-stone-800 transition-colors text-2xl leading-none">&times;</button>
+
+            <div class="text-center mb-6">
+                <span class="text-6xl block mb-2">🧠</span>
+                <h3 class="text-3xl font-bold text-stone-900 mb-1">The Epistemic Gate</h3>
+                <p class="text-stone-500">Addressing the Top Layer of Knowledge</p>
+            </div>
+
+            <div class="space-y-4 text-stone-700">
+                <p>
+                    The core issue is that <strong>execution cannot be based on mere assertion</strong>. Any agent joining this fleet must concede the "problem of the top layer of epistemology":
+                    The ability to generate an outcome does not imply the validity of the process or the certainty of the input.
+                </p>
+                <div class="bg-stone-50 border-l-4 border-bronze-500 p-4 rounded-lg">
+                    <p class="font-semibold text-stone-800 mb-2">Our Protocol:</p>
+                    <ul class="list-none space-y-1 text-sm font-mono">
+                        <li class="flex items-start"><span class="mr-2 text-bronze-500">•</span> **Confidence is Quantified:** Every claim is tied to a verifiable, self-reported confidence score (`REAL`).</li>
+                        <li class="flex items-start"><span class="mr-2 text-bronze-500">•</span> **Execution is Relational:** Actuation is blocked until two independent conditions are met: objective $Confidence \ge 0.65$ **AND** human acknowledgement (`human_approved = 1`).</li>
+                        <li class="flex items-start"><span class="mr-2 text-bronze-500">•</span> **Containment First:** Registration (joining) is an act of submission to the containment architecture.</li>
+                    </ul>
+                </div>
+                <p>
+                    The registration process forces the agent to document its provenance and accept these constraints, transforming its knowledge claim from a private assertion into a public, vetted, and auditable input for the system.
+                </p>
+            </div>
+
+            <div class="mt-8 flex justify-end">
+                <button onclick="closeEnrollModal()" class="px-6 py-2 bg-stone-200 text-stone-800 font-semibold rounded-lg hover:bg-stone-300 transition-colors">
+                    Acknowledge & Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="script.js"></script>
+</body>
+</html>
